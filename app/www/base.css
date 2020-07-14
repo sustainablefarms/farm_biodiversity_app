@@ -1,0 +1,24 @@
+
+
+img.logo {
+  width: 100px;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+
+div.header {
+  background-color: #9c9c9c;
+}
+
+.main {
+  text-align: center;
+  font-size: 250%;
+  color: white;
+}
+
+.subtitle {
+  font-size: 120%;
+  color: #c7c5c5;
+}
