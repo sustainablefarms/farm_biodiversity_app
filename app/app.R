@@ -13,28 +13,24 @@ ui <- fluidPage(
       <span class='subtitle'>by Martin Westgate & Kassel Hingee</span>
     </div>
   ")),
-  fluidRow(
-    column(width = 2),
-    column(width = 4,
-      selectInput(
-        inputId = "spatial_type",
-        label = "Select Zonation",
-        choices = list(
-          "None selected" = "none",
-          "ABS SA2 regions" = "abs_sa2",
-          "Federal Electorates" = "electorates_federal"
-        )
+  column(width = 1),
+  column(width = 3,
+    selectInput(
+      inputId = "spatial_type",
+      label = "Select Zonation",
+      choices = list(
+        "None selected" = "none",
+        "ABS SA2 regions" = "abs_sa2",
+        "Federal Electorates" = "electorates_federal"
       )
     ),
-    column(width = 4,
-      uiOutput(outputId = "region_selector")
-    )
+    plotlyOutput("plot_points"),
+    plotOutput("map")
   ),
+  column(width = 4),
   fluidRow(
     column(width = 1),
-    column(width = 4,
-      plotOutput("map")
-    )
+    column(width = 4)
   ),
   title = "SF Model Visualiser",
   theme = shinytheme("lumen")
@@ -44,46 +40,74 @@ ui <- fluidPage(
 server <- function(input, output) {
 
   data <- reactiveValues(
-    spatial = NULL,
-    regions = NULL,
+    points = NULL,
+    polygons = NULL,
+    # regions = NULL,
     selected_region = NULL
   )
 
   # choose what spatial data to use
   observeEvent(input$spatial_type, {
     if(input$spatial_type != "none"){
-      data$spatial <- readRDS("data/spatial_sa2.rds")
-      data$regions <- data$spatial$SA2_NAME16
+      data$points <- readRDS("data/sa2_points.rds")
     }
   })
 
-  # choose a region
-  output$region_selector <- renderUI({
-    if(!is.null(data$spatial)){
-      selectInput(
-        inputId = "region_choice",
-        label = "Select region",
-        choices = data$regions
-      )
-    }
+  # draw a scatterplot of the centroids of selected zones
+  output$plot_points <- renderPlotly({
+    validate(
+      need(data$points, "")
+    )
+    plot_ly(
+      data$points,
+      x = ~longitude,
+      y = ~latitude,
+      type = "scatter",
+      mode = "markers",
+      source = "region_map",
+      marker = list(
+        size = 10,
+        color = ~color
+      ),
+      hoverinfo = "text",
+      text = ~label
+    ) %>% layout(
+      xaxis = list(title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE),
+      yaxis = list(scaleanchor = "x",
+        title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE),
+      margin = list(l = 0, r = 0, b = 0, t = 0, pad = 0)
+    )
+    # event_register(p, 'plotly_click')
   })
 
-  # save region choice
-  observeEvent(input$region_choice, {
-    if(is.null(data$spatial)){
-      data$selected_region <- NULL
-    }else{
-      data$selected_region <- input$region_choice
+  # observe clicks on the region plot
+  observe({
+    if(!is.null(data$points)){
+      click_region <- event_data(
+        event = "plotly_click",
+        source = "region_map"
+      )$pointNumber + 1 # Note: plotly uses Python-style indexing, hence +1
+      data$selected_region <- data$points$label[click_region]
     }
   })
 
   # draw a map
   output$map <- renderPlot({
-    if(!is.null(data$selected_region)){
-      ggplot(data$spatial[data$spatial$SA2_NAME16 == data$selected_region, ]) +
-        geom_sf() +
-        theme_void()
-    }
+    validate(
+      need(data$selected_region, "")
+    )
+    data$polygons <- readRDS("data/sa2_polygons.rds")
+    map_text <- data$points[data$points$label == data$selected_region, ]
+    map_text$label <- paste(strsplit(map_text$label, " ")[[1]], collapse = "\n")
+    ggplot(data$polygons[data$polygons$SA2_NAME16 == data$selected_region, ]) +
+      geom_sf() +
+      geom_text(data = map_text,
+        mapping = aes(x = longitude, y = latitude, label = label),
+        color = "grey30",
+        alpha = 0.5,
+        size = 10
+      ) +
+      theme_void()
   })
 
 } # end server
