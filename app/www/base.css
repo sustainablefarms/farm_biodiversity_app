@@ -12,6 +12,10 @@ div.header {
   background-color: #9c9c9c;
 }
 
+div.subheader {
+  background-color: #d9d9d9;
+}
+
 .main {
   text-align: center;
   font-size: 250%;
@@ -21,4 +25,50 @@ div.header {
 .subtitle {
   font-size: 120%;
   color: #c7c5c5;
+}
+
+h2 {
+  text-align: center;
+  font-size: 150%;
+  color: white;
+}
+
+
+.irs-bar {
+  background: #bfbfbf;
+  border: #bfbfbf;
+}
+.irs-bar-edge {
+  background: #bfbfbf;
+  border: #bfbfbf;
+}
+.irs-grid-text {
+  color: #858585;
+}
+.irs-grid-pol{
+  background: #858585;
+}
+.irs-single {
+  color: white;
+  background: #bfbfbf;
+}
+.irs-from {
+  color: #858585;
+  background: #bfbfbf;
+}
+.irs-to {
+  color: #858585;
+  background: #bfbfbf;
+}
+
+
+.action-button {
+  color: #fff;
+  background: #bfbfbf;
+  border-width: 0px;
+}
+.action-button:hover {
+  color: #fff;
+  background: black;
+  border-width: 0px;
 }

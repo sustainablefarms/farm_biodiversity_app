@@ -92,15 +92,60 @@ colnames(plot_data) <- c("longitude", "latitude")
 plot_data$label <- kept_centroids$SA2_NAME16
 plot_data$state <- kept_centroids$STE_NAME16
 plot_data$color <- c("#4e9c63", "#4e839c")[as.numeric(as.factor(plot_data$state))]
-saveRDS(plot_data, "./app/data/sa2_points.rds")
+# saveRDS(plot_data, "./app/data/sa2_points.rds")
 # ggplotly(ggplot(plot_data, aes(x = longitude, y = latitude, color = state)) +
 #   geom_point() +
 #   theme_void())
 
+# extract climate data per region, add to plot data
+## NOTE: This method extracts values at centroids.
+## THIS IS NOT THE SAME AS GETTING THE AVERAGE VALUE ACROSS A POLYGON
+## ergo some updating will be needed later
 
+library(raster)
+# plot_data <- readRDS("./app/data/sa2_points.rds")
+# get a set of cordinates that fall within four tiles that our data could be in
+lookup_coordinates <- data.frame(
+  latitude = c(-28, -28, -34, -34),
+  longitude = c(144, 152, 144, 152))
+# get data and extract relevant points
+worldclim_list <- lapply(
+  split(lookup_coordinates, seq_len(4)),
+  function(a){
+    temp_data <- getData(
+      name = "worldclim",
+      download = TRUE,
+      res = 0.5,
+      var = "bio",
+      lon = a$longitude,
+      lat =  a$latitude)
+    return(raster::extract(temp_data, plot_data[, 1:2]))
+  })
+# look up which list entry to get each datum from
+row_index <- apply(
+  do.call(cbind,
+    lapply(worldclim_list, function(a){apply(a, 1, function(x){all(!is.na(x))})})),
+  1,
+  which)
+# extract correct data for each row
+result_df <- as.data.frame(do.call(rbind,
+  lapply(seq_along(row_index), function(a){worldclim_list[[row_index[a]]][a, ]})
+))[, c(1, 12, 7, 15, 18)]
+colnames(result_df) <- c("AnnMeanTemp", "AnnPrec", "AnnTempRange", "PrecSeasonality", "PrecWarmQ")
+# any(is.na(result_df)) # == FALSE
+plot_data <- cbind(plot_data, result_df)
+# delete downloaded files
+unlink("wc0.5", recursive = TRUE)
+# save
+saveRDS(plot_data, "./app/data/sa2_points.rds")
+
+
+
+# save polygons that we have kept
+# NOTE: needs updating to exclude forested regions (outside of study envelope)
 saveRDS(abs_regions[abs_regions$SA2_NAME16 %in% plot_data$label, ], "./app/data/sa2_polygons.rds")
 
-# example plot
+# example map
 plot_ly(
   plot_data,
   x = ~longitude,
@@ -118,7 +163,6 @@ plot_ly(
   yaxis = list(scaleanchor = "x")
 )
 
-
 ) %>%
   add_markers(
     x = ~longitude,
@@ -127,3 +171,41 @@ plot_ly(
 
   colors = c("red", "blue")
 )
+
+# example climate plot
+# unique(plot_data$color)
+library(ggbeeswarm)
+plot_data2 <- data.frame(
+  label = rep(plot_data$label, 4),
+  variable = rep(
+    c("Annual Mean Temperature", "Annual Preciptiation",
+      "Annual Temperature Range", "Precipitation Seasonality"),
+    each = nrow(plot_data)),
+  value = c(plot_data$AnnMeanTemp * 0.1, plot_data$AnnPrec,
+    plot_data$AnnTempRange * 0.1, plot_data$PrecSeasonality))
+
+ggplot(plot_data2, aes(x = value, y = 1, color = variable)) +
+  facet_wrap(vars(variable), ncol = 2, scales = "free_x") +
+  geom_quasirandom(
+    data = plot_data2[plot_data$label != "Goulburn Region", ],
+    size = 2, groupOnX = FALSE) +
+  geom_quasirandom(
+    data = plot_data2[plot_data$label == "Goulburn Region", ],
+    size = 4, groupOnX = FALSE, color = "black") +
+  theme_bw() +
+  scale_color_manual(values = c("#4e839c", "#4e9c63", "#81a2b3", "#82b38f")) +
+  theme(
+    legend.position = "none",
+    strip.background = element_blank(),
+    axis.title = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    # axis.line.y = element_blank(),
+    panel.grid.minor.x = element_line(color = "grey70"),
+    panel.grid.major.x = element_line(color = "grey70"),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.background = element_rect(fill = "grey90", colour = NA),
+    panel.border = element_blank()
+    # plot.background = element_rect(fill = "#d9d9d9", colour = NA)
+  )
