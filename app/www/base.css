@@ -33,6 +33,12 @@ h2 {
   color: white;
 }
 
+h3 {
+  text-align: center;
+  font-size: 150%;
+  color: white;
+}
+
 
 .irs-bar {
   background: #bfbfbf;
@@ -62,13 +68,21 @@ h2 {
 }
 
 
-.action-button {
-  color: #fff;
-  background: #bfbfbf;
-  border-width: 0px;
+.badge {
+  border: none;
+  color: white;
+  background-color: #4e839c;
+  text-align: center;
+  font-size: 16px;
+  margin: 0px;
+  transition-duration: 0.4s;
+  height: 150px;
+  width: 150px;
+  border-radius: 5px;
+  cursor: pointer;
 }
-.action-button:hover {
-  color: #fff;
-  background: black;
-  border-width: 0px;
+
+.badge:hover {
+  color: white;
+  background-color: #81a2b3;
 }

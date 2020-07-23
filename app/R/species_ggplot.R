@@ -19,6 +19,7 @@ species_ggplot <- function(df, title = "", add_plus = FALSE){
       size = 4, hjust = 0) +
     coord_flip() +
     scale_x_discrete(limits = rev(levels(df$species))) +
+    scale_y_continuous(expand = c(0, 0)) +
     expand_limits(y = c(0, max(df$value) + 0.1)) +
     theme_void() +
     ggtitle(title) +

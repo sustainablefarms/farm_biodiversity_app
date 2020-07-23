@@ -25,7 +25,7 @@ ui <- fluidPage(
   fluidRow(HTML("
     <div class='header'>
       <img class='logo' src='SF Logo Vertical - Transparent Background.png' alt='SF logo'>
-      <span class='main'>BGGW Bird Biodiversity Estimator</span>
+      <span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>
       <span class='subtitle'>by Martin Westgate & Kassel Hingee</span>
     </div>
   ")),
@@ -49,10 +49,12 @@ ui <- fluidPage(
     fluidRow(
       HTML("<div class='subheader'><h2>FARM</h2></div>"),
       column(width = 3,
-        sliderInput(
-          inputId = "n_patches",
-          label = "Number of vegetation patches",
-          min = 1, max = 6, step = 1, value = 1)),
+        # actionButton(
+        #   inputId = "n_patches",
+        #   label = HTML("Number of<br>vegetation<br>patches"),
+        #     class = "badge")
+       uiOutput("patch_selector")
+      ),
       column(width = 3,
         sliderInput(
           inputId = "pc_woody_veg",
@@ -61,7 +63,7 @@ ui <- fluidPage(
       column(width = 3,
         sliderInput(
           inputId = "pc_midstorey",
-          label = "Amount of shrub cover (%)",
+          label = "Amount of midstorey cover (%)",
           min = 0, max = 10, step = 1, value = 6)),
       column(width = 3,
         sliderInput(
@@ -114,8 +116,43 @@ server <- function(input, output) {
     climate = NULL,
     polygons = NULL,
     selected_region = c(),
-    species_predictions = NULL
-  )
+    species_predictions = NULL)
+  farm_attr <- reactiveValues(
+    patches = 1,
+    woody_veg = 8,
+    midstorey = 6,
+    year = 2018)
+
+  ## FARM
+  output$patch_selector <- renderUI({
+    actionButton2(
+      inputId = "choose_n_patches",
+      label = HTML(paste0("Number of<br>patches<br><h3>", farm_attr$patches, "</h3>")),
+      class = "badge",
+      width = "100%"
+    )
+  })
+
+  observeEvent(input$choose_n_patches, {
+    showModal(
+      modalDialog(
+        sliderInput(
+          inputId = "n_patches",
+          label = "Number of vegetation patches",
+          min = 1, max = 6, step = 1, value = farm_attr$patches),
+        actionButton("choose_n_patches_execute", "Save"),
+        modalButton("Cancel"),
+        title = "Select number of patches",
+        footer = NULL,
+        easyClose = FALSE
+      )
+    )
+  })
+
+  observeEvent(input$choose_n_patches_execute, {
+    farm_attr$patches <- input$n_patches
+    removeModal()
+  })
 
   ## REGION
   # choose what spatial data to use
@@ -192,7 +229,6 @@ server <- function(input, output) {
   })
 
   ## CLIMATE
-
   output$climate <- renderPlot({
     validate(need(data$selected_region, ""))
     ggplot(data$climate, aes(x = value, y = 1, color = variable)) +
@@ -271,7 +307,7 @@ server <- function(input, output) {
 
       # richness calculations
       # get richness
-      richness_data <- list(new_data, new_data, new_data)
+      richness_data <- list(new_data_mean, new_data_mean, new_data_mean)
       richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
       richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
       richness_predictions <- lapply(richness_data, function(a){
@@ -294,14 +330,14 @@ server <- function(input, output) {
     validate(need(data$species_predictions, ""))
     species_ggplot(
       df = data$species_predictions$common,
-      title = "    Most common species",
+      title = "Most common species",
       add_plus = FALSE)
   })
   output$different_species <- renderPlot({
     validate(need(data$species_predictions, ""))
     species_ggplot(
       df = data$species_predictions$different,
-      title = "    Locally prevalent species",
+      title = "Locally prevalent species",
       add_plus = TRUE)
   })
 
@@ -311,7 +347,8 @@ server <- function(input, output) {
     ggplot(data$species_richness, aes(x = category, y = Erichness, fill = category)) +
       geom_bar(stat = "identity") +
       scale_y_continuous(expand = c(0, 0)) +
-      expand_limits(y = c(0, max(richness_df$Erichness + richness_df$Vrichness) + 3)) +
+      expand_limits(
+        y = c(0, max(data$species_richness$Erichness + data$species_richness$Vrichness) + 3)) +
       scale_x_discrete(position = "top") +
       scale_discrete_manual(aesthetics = "fill", values = c("#81a2b3", "#4e839c", "#81a2b3")) +
       geom_errorbar(aes(ymin = Erichness - Vrichness, ymax = Erichness + Vrichness), width = 0.2) +
