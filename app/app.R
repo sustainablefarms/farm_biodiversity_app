@@ -12,8 +12,10 @@
     # what you could do to improve this
 
 # load requisite packages
+library(sf)
 library(shiny)
 library(shinythemes)
+library(plotly)
 library(Rfast)
 library(ggbeeswarm)
 
@@ -79,13 +81,13 @@ ui <- fluidPage(
     ),
     fluidRow(
       HTML("<div class='subheader'><h2>BIODIVERSITY</h2></div>"),
-      HTML("<i>Richness plot goes here</i>"),
+      plotOutput("species_richness", height = "200px"),
       fluidRow(
         column(width = 6, # first biodiversity plot
           plotOutput("common_species", height = "300px")
         ),
         column(width = 6,
-          HTML("<i>Second species plot goes here</i>")
+          plotOutput("different_species", height = "300px")
         )
       )
     )
@@ -98,7 +100,15 @@ ui <- fluidPage(
 server <- function(input, output) {
 
   # set up required data
+  # 1. from model
   model_data <- readRDS("data/model_data.rds")
+  new_data_mean <- as.data.frame(
+    matrix(data = model_data$XoccProcess$center, nrow = 1, ncol = 11))
+  colnames(new_data_mean) <- names(model_data$XoccProcess$center)
+  new_data_mean <- new_data_mean[, c(2:10)]
+  new_data_mean$NMdetected[1] <- 1
+
+  # 2. reactive values
   data <- reactiveValues(
     points = NULL,
     climate = NULL,
@@ -198,6 +208,7 @@ server <- function(input, output) {
       theme(
         legend.position = "none",
         strip.background = element_blank(),
+        strip.text = element_text(hjust = 0, size = 10),
         axis.title = element_blank(),
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
@@ -217,7 +228,7 @@ server <- function(input, output) {
     input$pc_midstorey
     input$year
     input$noisy_miner
-    data$points
+    data$selected_region
   }, {
     if(length(data$selected_region) > 0){
       new_data <- data.frame(
@@ -231,46 +242,94 @@ server <- function(input, output) {
         ms = input$pc_midstorey,
         NMdetected = as.numeric(input$noisy_miner)
       )
-      # data$species_predictions <- new_data
-      species_prediction_matrix <- poccupancy_standalone_nolv(
-        new_data,
-        model_data$XoccProcess,
-        model_data$u.b)
       species_prediction_df <- data.frame(
-        species = colnames(species_prediction_matrix),
-        prediction_current = as.numeric(species_prediction_matrix))
-      species_prediction_df <- species_prediction_df[
-        order(species_prediction_df$prediction_current, decreasing = TRUE), ]
-      data$species_predictions <- species_prediction_df
+        species = rownames(model_data$u.b),
+        prediction_current = as.numeric(poccupancy_standalone_nolv(
+          new_data,
+          model_data$XoccProcess,
+          model_data$u.b)),
+        prediction_mean = as.numeric(poccupancy_standalone_nolv(
+          new_data_mean,
+          model_data$XoccProcess,
+          model_data$u.b)))
+      species_prediction_df$difference <- species_prediction_df$prediction_current -
+        species_prediction_df$prediction_mean
+
+      # get dataset of top 10 most common species
+      sp_current <- species_prediction_df[
+        order(species_prediction_df$prediction_current, decreasing = TRUE)[1:10], c(1:2)]
+      colnames(sp_current)[2] <- "value"
+
+      # ditto for 'most different' species
+      sp_different <- species_prediction_df[
+        order(species_prediction_df$difference, decreasing = TRUE)[1:10], c(1, 4)]
+      colnames(sp_different)[2] <- "value"
+
+      data$species_predictions <- list(
+        common = sp_current,
+        different = sp_different)
+
+      # richness calculations
+      # get richness
+      richness_data <- list(new_data, new_data, new_data)
+      richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
+      richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
+      richness_predictions <- lapply(richness_data, function(a){
+        multisiterichness_nolv(a, model_data$XoccProcess, model_data$u.b)
+      })
+      richness_df <- as.data.frame(do.call(rbind, richness_predictions))
+      richness_df$category <- factor(seq_len(3), levels = seq_len(3),
+        labels = c("Less vegetation", "Your estimate", "More vegetation"))
+
+      data$species_richness <- richness_df
+
     }else{
       data$species_predictions <- NULL
+      data$species_richness <- NULL
     }
   })
 
-  # draw common species plot
+  # draw species plots
   output$common_species <- renderPlot({
     validate(need(data$species_predictions, ""))
-    species_prediction_df_small <- data$species_predictions[1:10, ]
-    species_prediction_df_small$species <- factor(
-      seq_len(10),
-      levels = seq_len(10),
-      labels = species_prediction_df_small$species)
-    ggplot(species_prediction_df_small,
-      aes(x = species, y = prediction_current, fill = prediction_current)) +
-      geom_bar(stat = "identity") +
-      geom_text(aes(y = 0.02, label = species), size = 4, color = "white", hjust = 0) +
-      geom_text(aes(
-        y = prediction_current + 0.05,
-        label = paste0(round(prediction_current*100, 0), "%"),
-        color = prediction_current),
-        size = 4, hjust = 0) +
-      coord_flip() +
-      scale_x_discrete(limits = rev(levels(species_prediction_df_small$species))) +
-      expand_limits(y = c(0, 1.1)) +
-      ggtitle("Most common species:") +
-      theme_void() +
-      theme(legend.position = "none")
+    species_ggplot(
+      df = data$species_predictions$common,
+      title = "    Most common species",
+      add_plus = FALSE)
   })
+  output$different_species <- renderPlot({
+    validate(need(data$species_predictions, ""))
+    species_ggplot(
+      df = data$species_predictions$different,
+      title = "    Locally prevalent species",
+      add_plus = TRUE)
+  })
+
+  # draw species richness
+  output$species_richness <- renderPlot({
+    validate(need(data$species_richness, ""))
+    ggplot(data$species_richness, aes(x = category, y = Erichness, fill = category)) +
+      geom_bar(stat = "identity") +
+      scale_y_continuous(expand = c(0, 0)) +
+      expand_limits(y = c(0, max(richness_df$Erichness + richness_df$Vrichness) + 3)) +
+      scale_x_discrete(position = "top") +
+      scale_discrete_manual(aesthetics = "fill", values = c("#81a2b3", "#4e839c", "#81a2b3")) +
+      geom_errorbar(aes(ymin = Erichness - Vrichness, ymax = Erichness + Vrichness), width = 0.2) +
+      coord_flip() +
+      ggtitle("Number of bird species") +
+      theme(legend.position = "none",
+        axis.title = element_blank(),
+        axis.text.y = element_text(size = 12),
+        axis.ticks.y = element_blank(),
+        panel.grid.minor.x = element_line(color = "grey80"),
+        panel.grid.major.x = element_line(color = "grey80"),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.background = element_rect(fill = "grey90", colour = NA),
+        panel.border = element_blank()
+      )
+  })
+
 
 } # end server
 
