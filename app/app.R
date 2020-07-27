@@ -41,44 +41,34 @@ ui <- fluidPage(
       width = "100%"),
     plotlyOutput("plot_points", height = "200px"),
     plotOutput("map", height = "200px"),
-    HTML("<div class='subheader'><h2>CLIMATE</h2></div>"),
-    plotOutput("climate", height = "300px")
+    # HTML("<div class='subheader'><h2>CLIMATE</h2></div>"),
+    HTML("<br>"),
+    column(width = 6,
+      uiOutput("show_tempmean"),
+      uiOutput("show_temprange")
+    ),
+    column(width = 6,
+      uiOutput("show_precip"),
+      uiOutput("show_precipwarmq")
+    )
+    # plotOutput("climate", height = "300px")
   ),
   column(width = 1),
   column(width = 6,
     fluidRow(
       HTML("<div class='subheader'><h2>FARM</h2></div>"),
+      verbatimTextOutput("text"),
       column(width = 3,
-        # actionButton(
-        #   inputId = "n_patches",
-        #   label = HTML("Number of<br>vegetation<br>patches"),
-        #     class = "badge")
-       uiOutput("patch_selector")
+        uiOutput("patch_selector"),
+        uiOutput("year_selector")
       ),
-      column(width = 3,
-        sliderInput(
-          inputId = "pc_woody_veg",
-          label = "Amount of woody vegetation (%)",
-          min = 2, max = 20, step = 2, value = 8)),
-      column(width = 3,
-        sliderInput(
-          inputId = "pc_midstorey",
-          label = "Amount of midstorey cover (%)",
-          min = 0, max = 10, step = 1, value = 6)),
-      column(width = 3,
-        sliderInput(
-          inputId = "year",
-          label = HTML("<br>Year"), # for consistency in arrangement with other labels
-          sep = "",
-          min = 2000, max = 2018, step = 2, value = 2018))
-    ),
-    fluidRow(
-      column(width = 8),
-      column(width = 4,
-        checkboxInput(
-          inputId = "noisy_miner",
-          label = "Noisy Miners present?",
-          value = TRUE)
+      column(width = 1),
+      column(width = 8,
+        actionButton2(
+          inputId = "patch_number_1",
+          label = "Patch #1",
+          class = "patch_badge"),
+        div(id = "placeholder")
       )
     ),
     fluidRow(
@@ -117,29 +107,48 @@ server <- function(input, output) {
     polygons = NULL,
     selected_region = c(),
     species_predictions = NULL)
-  farm_attr <- reactiveValues(
+  current_values <- reactiveValues(
     patches = 1,
-    woody_veg = 8,
-    midstorey = 6,
-    year = 2018)
+    woody_veg = NA,
+    midstorey = NA,
+    noisy_miner = NA,
+    year = 2018,
+    AnnMeanTemp = NULL,
+    AnnPrec = NULL,
+    AnnTempRange = NULL,
+    PrecSeasonality = NULL,
+    PrecWarmQ = NULL)
+  previous_values <- reactiveValues(
+    patches = 1,
+    patch_buttons = c(0),
+    selected_patch = NULL)
+  update <- reactiveValues(
+    add_logical = FALSE,
+    add_values = NULL,
+    remove_logical = FALSE,
+    remove_values = NULL)
+  click_values <- reactiveValues(
+    patches = NULL,
+    climate = NULL,
+    climate_title = NULL)
 
   ## FARM
+
+  # number of patches
   output$patch_selector <- renderUI({
     actionButton2(
       inputId = "choose_n_patches",
-      label = HTML(paste0("Number of<br>patches<br><h3>", farm_attr$patches, "</h3>")),
-      class = "badge",
-      width = "100%"
+      label = HTML(paste0("Number of<br>patches<br><h3>", current_values$patches, "</h3>")),
+      class = "badge"
     )
   })
-
   observeEvent(input$choose_n_patches, {
     showModal(
       modalDialog(
         sliderInput(
           inputId = "n_patches",
           label = "Number of vegetation patches",
-          min = 1, max = 6, step = 1, value = farm_attr$patches),
+          min = 1, max = 6, step = 1, value = current_values$patches),
         actionButton("choose_n_patches_execute", "Save"),
         modalButton("Cancel"),
         title = "Select number of patches",
@@ -149,8 +158,134 @@ server <- function(input, output) {
     )
   })
 
+  # once number of patches is chosen, decide whether to add or subtract 'patch' buttons
   observeEvent(input$choose_n_patches_execute, {
-    farm_attr$patches <- input$n_patches
+    current_values$patches <- input$n_patches
+    if(previous_values$patches > current_values$patches){
+      update$add_logical <- FALSE
+      update$add_values <- NULL
+      update$remove_logical <- TRUE
+      update$remove_values <- seq_len(previous_values$patches)[-seq_len(current_values$patches)]
+    }
+    if(previous_values$patches == current_values$patches){
+      update$add_logical <- FALSE
+      update$add_values <- NULL
+      update$remove_logical <- FALSE
+      update$remove_values <- NULL
+    }
+    if(previous_values$patches < current_values$patches){
+      update$add_logical <- TRUE
+      update$add_values <- seq_len(current_values$patches)[-seq_len(previous_values$patches)]
+      update$remove_logical <- FALSE
+      update$remove_values <- NULL
+    }
+    removeModal()
+  })
+
+  # add 'patch' buttons
+  observeEvent(update$add_values, {
+    if(!is.null(input$n_patches) & update$add_logical){
+      lapply(update$add_values, function(a){
+        add_reference_ui(
+          entry_number = a,
+          ui_selector = "placeholder"
+        )
+      })
+      update$add_logical <- FALSE
+      previous_values$patches <- current_values$patches
+      current_values$woody_veg[update$add_values] <- NA
+      current_values$midstorey[update$add_values] <- NA
+      current_values$noisy_miner[update$add_values] <- NA
+    }
+  })
+
+  # substract 'patch' buttons
+  observeEvent(update$remove_values, {
+    if(!is.null(input$n_patches) & update$remove_logical){
+      lapply(update$remove_values, function(a){
+        removeUI(
+          selector = paste0("#patch_number_", a)
+        )
+      })
+      update$remove_logical <- FALSE
+      previous_values$patches <- current_values$patches
+      current_values$woody_veg <- current_values$woody_veg[-update$remove_values]
+      current_values$midstorey <- current_values$midstorey[-update$remove_values]
+      current_values$noisy_miner <- current_values$noisy_miner[-update$remove_values]
+    }
+  })
+
+  # prediction year
+  output$year_selector <- renderUI({
+    actionButton2(
+      inputId = "choose_prediction_year",
+      label = current_values$year, #HTML(paste0("<h3>", current_values$year, "</h3>")),
+      class = "badge_small"
+    )
+  })
+  observeEvent(input$choose_prediction_year, {
+    showModal(
+      modalDialog(
+        selectInput(
+          inputId = "choose_year",
+          label = "Prediction Year",
+          choices = seq(2001, 2018, 1),
+          selected = current_values$year,
+          width = "100%"
+        ),
+        actionButton("choose_prediction_year_execute", "Save"),
+        modalButton("Cancel"),
+        title = "Select prediction year",
+        footer = NULL,
+        easyClose = FALSE
+      )
+    )
+  })
+  observeEvent(input$choose_prediction_year_execute, {
+    current_values$year <- as.numeric(input$choose_year)
+    removeModal()
+  })
+
+  # output$text <- renderPrint({
+  #   # paste(
+  #   #   paste(current_values$mistorey, collapse = "; "),
+  #      paste(current_values$woody_veg, collapse = "; ")
+  #   #   paste(current_values$noisy_miner, collapse = "; "),
+  #   # collapse = "  |   ")
+  # })
+  # output$text <- renderPrint({previous_values$selected_patch})
+  # output$text <- renderPrint({paste(current_values$woody_veg, collapse = "; ")})
+  # output$text <- renderPrint({str(click_values$patches)})
+
+  # for each patch, launch a modal to set new values
+  observe({
+    click_values$patches <- input_tracker(
+      input = input,
+      string = "patch_number_[[:digit:]]+"
+    )
+    if(nrow(click_values$patches) == length(previous_values$patch_buttons)){
+      update_check <- (click_values$patches$value > previous_values$patch_buttons)
+      if(any(update_check)){
+        previous_values$selected_patch <- click_values$patches$id[which(update_check)]
+        patch_modal(
+          value = previous_values$selected_patch,
+          woody_veg = current_values$woody_veg[previous_values$selected_patch],
+          midstorey = current_values$midstorey[previous_values$selected_patch],
+          noisy_miner = current_values$noisy_miner[previous_values$selected_patch]
+        )
+      }
+    }
+    previous_values$patch_buttons <- click_values$patches$value
+  })
+
+  # collect input values from modal
+  observeEvent(input$choose_patch_attributes_execute, {
+    current_values$woody_veg[previous_values$selected_patch] <- input[[
+      paste0("pc_woody_veg_", previous_values$selected_patch)]]
+    current_values$midstorey[previous_values$selected_patch] <- input[[
+      paste0("pc_midstorey_", previous_values$selected_patch)]]
+    current_values$noisy_miner[previous_values$selected_patch] <- input[[
+      paste0("noisy_miner_", previous_values$selected_patch)]]
     removeModal()
   })
 
@@ -159,14 +294,6 @@ server <- function(input, output) {
   observeEvent(input$spatial_type, {
     if(input$spatial_type != "none"){
       data$points <- readRDS("data/sa2_points.rds")
-      data$climate <- data.frame(
-        label = rep(data$points$label, 4),
-        variable = rep(
-          c("Annual Mean Temperature", "Annual Preciptiation",
-            "Annual Temperature Range", "Precipitation Seasonality"),
-          each = nrow(data$points)),
-        value = c(data$points$AnnMeanTemp * 0.1, data$points$AnnPrec,
-          data$points$AnnTempRange * 0.1, data$points$PrecSeasonality))
     }
   })
 
@@ -208,6 +335,13 @@ server <- function(input, output) {
         source = "region_map"
       )$pointNumber + 1 # Note: plotly uses Python-style indexing, hence +1
       data$selected_region <- data$points$label[click_region]
+      # add climate data
+      climate_row <- which(data$points$label == data$selected_region)
+      current_values$AnnMeanTemp <- data$points$AnnMeanTemp[climate_row]
+      current_values$AnnTempRange <- data$points$AnnTempRange[climate_row]
+      current_values$AnnPrec <- data$points$AnnPrec[climate_row]
+      current_values$PrecSeasonality <- data$points$PrecSeasonality[climate_row]
+      current_values$PrecWarmQ <- data$points$PrecWarmQ[climate_row]
     }
   })
 
@@ -229,54 +363,116 @@ server <- function(input, output) {
   })
 
   ## CLIMATE
-  output$climate <- renderPlot({
-    validate(need(data$selected_region, ""))
-    ggplot(data$climate, aes(x = value, y = 1, color = variable)) +
-      facet_wrap(vars(variable), ncol = 2, scales = "free_x") +
-      geom_quasirandom(
-        data = data$climate[data$climate$label != data$selected_region, ],
-        size = 2, groupOnX = FALSE) +
-      geom_quasirandom(
-        data = data$climate[data$climate$label == data$selected_region, ],
-        size = 4, groupOnX = FALSE, color = "black") +
-      theme_bw() +
-      scale_color_manual(values = c("#4e839c", "#4e9c63", "#81a2b3", "#82b38f")) +
-      theme(
-        legend.position = "none",
-        strip.background = element_blank(),
-        strip.text = element_text(hjust = 0, size = 10),
-        axis.title = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        panel.grid.minor.x = element_line(color = "grey80"),
-        panel.grid.major.x = element_line(color = "grey80"),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_blank(),
-        panel.background = element_rect(fill = "grey90", colour = NA),
-        panel.border = element_blank()
+  output$show_tempmean <- renderUI({
+    if(length(data$selected_region) > 0){
+      actionButton2(
+        inputId = "show_tempmean_modal",
+        label = HTML(paste0(
+          "Annual<br>Mean<br>Temperature<h3>",
+          round(current_values$AnnMeanTemp * 0.1, 1),
+          "&deg;C</h3>")),
+        class = "badge",
+        width = "100%"
       )
+    }
   })
 
-  ## BIODIVERSITY
-  observeEvent({
-    # input$n_patches # not implemented yet
-    input$pc_woody_veg
-    input$pc_midstorey
-    input$year
-    input$noisy_miner
-    data$selected_region
-  }, {
+  output$show_temprange <- renderUI({
     if(length(data$selected_region) > 0){
+      actionButton2(
+        inputId = "show_temprange_modal",
+        label = HTML(paste0(
+          "Annual<br>Temperature<br>Range<h3>",
+          format(current_values$AnnTempRange * 0.1, digits = 3, trim = TRUE),
+          "&deg;C</h3>")),
+        class = "badge",
+        width = "100%"
+      )
+    }
+  })
+
+  output$show_precip <- renderUI({
+    if(length(data$selected_region) > 0){
+      actionButton2(
+        inputId = "show_precip_modal",
+        label = HTML(paste0(
+          "Annual<br>Preciptiation<h3>",
+          current_values$AnnPrec,
+          "ml</h3>")),
+        class = "badge",
+        width = "100%"
+      )
+    }
+  })
+
+  output$show_precipwarmq <- renderUI({
+    if(length(data$selected_region) > 0){
+      actionButton2(
+        inputId = "show_precipwarmq_modal",
+        label = HTML(paste0(
+          "Precipitation<br>Warmest<br>Quarter<h3>",
+          current_values$PrecWarmQ,
+          "ml</h3>")),
+        class = "badge",
+        width = "100%"
+      )
+    }
+  })
+
+  output$climate_plot <- renderPlot({
+    if(!is.null(click_values$climate)){
+      climate_plot(
+        data = data$points,
+        variable = click_values$climate,
+        region = data$selected_region,
+        title = click_values$climate_title)
+    }
+  })
+  # run a different modal for each climate variable
+  observeEvent(input$show_tempmean_modal, {
+    validate(need(data$selected_region, ""))
+    click_values$climate <- "AnnMeanTemp"
+    click_values$climate_title <- "Mean annual temperature (Celsius)"
+    climate_modal()
+  })
+  observeEvent(input$show_temprange_modal, {
+    validate(need(data$selected_region, ""))
+    click_values$climate <- "AnnTempRange"
+    click_values$climate_title <- "Annual temperature range (Celsius)"
+    climate_modal()
+  })
+  observeEvent(input$show_precip_modal, {
+    validate(need(data$selected_region, ""))
+    click_values$climate <- "AnnPrec"
+    click_values$climate_title <- "Annual precipitation (ml)"
+    climate_modal()
+  })
+  observeEvent(input$show_precipwarmq_modal, {
+    validate(need(data$selected_region, ""))
+    click_values$climate <- "PrecWarmQ"
+    click_values$climate_title <- "Precipitation of the warmest quarter (ml)"
+    climate_modal()
+  })
+
+
+
+  ## BIODIVERSITY
+  observe({
+    if(
+      length(data$selected_region) > 0 &
+      length(current_values$woody_veg) == current_values$patches &
+      !any(is.na(current_values$woody_veg))
+    ){
       new_data <- data.frame(
         AnnMeanTemp = data$points$AnnMeanTemp[data$points$label == data$selected_region],
         AnnPrec = data$points$AnnPrec[data$points$label == data$selected_region],
         AnnTempRange = data$points$AnnTempRange[data$points$label == data$selected_region],
         PrecSeasonality = data$points$PrecSeasonality[data$points$label == data$selected_region],
-        SurveyYear = input$year,
         PrecWarmQ = data$points$PrecWarmQ[data$points$label == data$selected_region],
-        woody500m = input$pc_woody_veg,
-        ms = input$pc_midstorey,
-        NMdetected = as.numeric(input$noisy_miner)
+        SurveyYear = current_values$year,
+        woody500m = current_values$woody_veg,
+        ms = current_values$midstorey,
+        NMdetected = current_values$noisy_miner
       )
       species_prediction_df <- data.frame(
         species = rownames(model_data$u.b),
@@ -307,9 +503,11 @@ server <- function(input, output) {
 
       # richness calculations
       # get richness
-      richness_data <- list(new_data_mean, new_data_mean, new_data_mean)
+      richness_data <- list(new_data_mean, new_data, new_data_mean)
       richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
+      richness_data[[1]] <- richness_data[[1]][rep(1, nrow(new_data)), ]
       richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
+      richness_data[[3]] <- richness_data[[3]][rep(1, nrow(new_data)), ]
       richness_predictions <- lapply(richness_data, function(a){
         multisiterichness_nolv(a, model_data$XoccProcess, model_data$u.b)
       })

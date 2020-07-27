@@ -1,6 +1,6 @@
 # This content is altered from Shiny base code
 # it has been altered to improve appearance of actionbuttons
-actionButton2 <- function(inputId, label, class, icon = NULL, width = NULL, ...){
+actionButton2 <- function(inputId, label, class = "badge", icon = NULL, width = NULL, ...){
   value <- shiny::restoreInput(id = inputId, default = NULL)
   tags$button(id = inputId,
     style = if (!is.null(width))paste0("width: ", validateCssUnit(width), ";"),
