@@ -93,7 +93,7 @@ server <- function(input, output) {
 
   # set up required data
   # 1. from model
-  model_data <- readRDS("data/model_data.rds")
+  model_data <- readRDS("./data/model_data.rds")
   new_data_mean <- as.data.frame(
     matrix(data = model_data$XoccProcess$center, nrow = 1, ncol = 11))
   colnames(new_data_mean) <- names(model_data$XoccProcess$center)
@@ -293,7 +293,7 @@ server <- function(input, output) {
   # choose what spatial data to use
   observeEvent(input$spatial_type, {
     if(input$spatial_type != "none"){
-      data$points <- readRDS("data/sa2_points.rds")
+      data$points <- readRDS("./data/sa2_points.rds")
     }
   })
 
@@ -348,7 +348,7 @@ server <- function(input, output) {
   # draw a map
   output$map <- renderPlot({
     validate(need(data$selected_region, ""))
-    data$polygons <- readRDS("data/sa2_polygons.rds")
+    data$polygons <- readRDS("./data/sa2_polygons.rds")
     map_text <- data$points[data$points$label == data$selected_region, ]
     map_text$label <- paste(strsplit(map_text$label, " ")[[1]], collapse = "\n")
     ggplot(data$polygons[data$polygons$SA2_NAME16 == data$selected_region, ]) +
