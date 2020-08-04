@@ -528,7 +528,7 @@ server <- function(input, output) {
     validate(need(data$species_predictions, ""))
     species_ggplot(
       df = data$species_predictions$common,
-      title = "Most common species",
+      title = "Most likely species",
       add_plus = FALSE)
   })
   output$different_species <- renderPlot({
