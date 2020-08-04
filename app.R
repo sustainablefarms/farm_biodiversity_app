@@ -18,6 +18,7 @@ library(shinythemes)
 library(plotly)
 library(Rfast)
 library(ggbeeswarm)
+library(ggplot2)
 
 # UI
 ui <- fluidPage(
