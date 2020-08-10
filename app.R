@@ -23,13 +23,24 @@ library(ggplot2)
 # UI
 ui <- fluidPage(
   includeCSS("./www/base.css"),
-  fluidRow(HTML("
-    <div class='header'>
+  # fluidRow(HTML("
+  #   <div class='header'>
+  #     <img class='logo' src='SF Logo Vertical - Transparent Background.png' alt='SF logo'>
+  #     <span class='main'>DRAFT Woodland Remnant Bird Biodiversity Estimator</span>
+  #     <span class='subtitle'><br>Version 0.1. By Martin Westgate & Kassel Hingee</span>
+  #   </div>
+  # ")),
+  HTML("<div class='header'>"),
+  fluidRow(
+    column(width = 2,
+    HTML("
       <img class='logo' src='SF Logo Vertical - Transparent Background.png' alt='SF logo'>
-      <span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>
-      <span class='subtitle'>by Martin Westgate & Kassel Hingee</span>
-    </div>
   ")),
+  column(width = 10, offset = 0, HTML("
+    <span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>
+    <span class='subtitle'><br>Version 0.1 (DRAFT). By Martin Westgate & Kassel Hingee</span>
+  "))),
+  HTML("</div>"),
   column(width = 1),
   column(width = 3,
     HTML("<div class='subheader'><h2>REGION</h2></div>"),
