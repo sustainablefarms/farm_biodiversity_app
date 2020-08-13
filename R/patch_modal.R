@@ -12,12 +12,12 @@ patch_modal <- function(
       sliderInput(
         inputId = paste0("pc_woody_veg_", value),
         label = "Amount of woody vegetation (%)",
-        min = 2, max = 20, step = 2,
+        min = 0, max = 100, step = 2,
         value = woody_veg),
       sliderInput(
         inputId = paste0("pc_midstorey_", value),
         label = "Amount of midstorey cover (%)",
-        min = 0, max = 10, step = 1,
+        min = 0, max = 100, step = 1,
         value = midstorey),
       checkboxInput(
         inputId = paste0("noisy_miner_", value),
