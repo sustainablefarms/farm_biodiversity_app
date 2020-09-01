@@ -17,23 +17,21 @@ patch_modal <- function(
         "The amount of woody vegetation canopy within 500m of the patch centre, as a percentage of the area within 500m."
         # "The percentage of area within 500m of the patch centre covered by woody vegetation canopy."
         ),
-      popify(sliderInput(
+      tipify(sliderInput(
         inputId = paste0("pc_midstorey_", value),
-        label = "Vegetation between 2m and 10m high (% area of patch)",
+        label = "Midstorey vegetation (2m - 10m tall) in patch (% area of patch)",
         min = 0, max = 10, step = 1,
         value = midstorey),
-        title = "",
-        content = "The percentage of the patch that has vegetation between 2m and 10m tall (e.g regrowth eucalypt or acacia). Here are examples of what this looks like (insert insert...).<br> If you're interested in greater robustness, our ecologists estimated this quantity using 2x 50m point-intersect transects.",
+        "The percentage of the patch that has vegetation between 2m and 10m tall (e.g regrowth eucalypt or acacia). Our ecologists estimated this quantity using 2x 50m point-intersect transects.",
         placement = "top",
         options = list(html = "true",
                        viewport = "viewport")),
-      popify(checkboxInput(
+      tipify(checkboxInput(
         inputId = paste0("noisy_miner_", value),
         label = "Noisy Miners present?",
         value = noisy_miner),
-        title = "",
-        content = 'Noisy miners are territorial, loud, and easily detected. <a href="https://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:afd.taxon:88df188e-fbc8-4220-82c1-d2fc03f2f83a#">Photos</a>. They are less likely to be present in patches with high midstorey.',
-        trigger = "focus",
+        'Noisy miners are territorial, loud, and easily detected. <a href="https://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:afd.taxon:88df188e-fbc8-4220-82c1-d2fc03f2f83a#">Photos</a>. They are less likely to be present in patches with high midstorey.',
+        trigger = "hover focus",
         options = list(html = "true")
       ),
       actionButton(inputId = "choose_patch_attributes_execute", label = "Save"),
