@@ -24,7 +24,9 @@ patch_modal <- function(
         value = midstorey),
         title = "",
         content = "The percentage of the patch that has vegetation between 2m and 10m tall (e.g regrowth eucalypt or acacia). Here are examples of what this looks like (insert insert...).<br> If you're interested in greater robustness, our ecologists estimated this quantity using 2x 50m point-intersect transects.",
-        options = list(html = "true")),
+        placement = "top",
+        options = list(html = "true",
+                       viewport = "viewport")),
       checkboxInput(
         inputId = paste0("noisy_miner_", value),
         label = "Noisy Miners present?",
