@@ -27,10 +27,15 @@ patch_modal <- function(
         placement = "top",
         options = list(html = "true",
                        viewport = "viewport")),
-      checkboxInput(
+      popify(checkboxInput(
         inputId = paste0("noisy_miner_", value),
         label = "Noisy Miners present?",
         value = noisy_miner),
+        title = "",
+        content = 'Noisy miners are territorial, loud, and easily detected. <a href="https://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:afd.taxon:88df188e-fbc8-4220-82c1-d2fc03f2f83a#">Photos</a>. They are less likely to be present in patches with high midstorey.',
+        trigger = "focus",
+        options = list(html = "true")
+      ),
       actionButton(inputId = "choose_patch_attributes_execute", label = "Save"),
       modalButton("Cancel"),
     title = paste0("Select attributes for patch #", value),
