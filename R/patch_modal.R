@@ -11,7 +11,7 @@ patch_modal <- function(
     modalDialog(
       tipify(sliderInput(
         inputId = paste0("pc_woody_veg_", value),
-        label = "Amount of woody vegetation (%)",
+        label = "Woody vegetation canopy within 500m of patch centre (% area)",
         min = 2, max = 20, step = 2,
         value = woody_veg),
         "The amount of woody vegetation canopy within 500m of the patch centre, as a percentage of the area within 500m."
