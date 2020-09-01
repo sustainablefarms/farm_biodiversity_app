@@ -19,7 +19,7 @@ patch_modal <- function(
         ),
       tipify(sliderInput(
         inputId = paste0("pc_midstorey_", value),
-        label = "Midstorey vegetation (2m - 10m tall) in patch (% area of patch)",
+        label = "Midstorey vegetation (2m - 10m tall) within patch (% area of patch)",
         min = 0, max = 10, step = 1,
         value = midstorey),
         "The percentage of the patch that has vegetation between 2m and 10m tall (e.g regrowth eucalypt or acacia). Our ecologists estimated this quantity using 2x 50m point-intersect transects.",
