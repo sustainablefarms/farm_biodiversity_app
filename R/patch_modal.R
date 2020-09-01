@@ -9,11 +9,14 @@ patch_modal <- function(
   if(is.null(noisy_miner) | is.na(noisy_miner)){noisy_miner <- TRUE}
   showModal(
     modalDialog(
-      sliderInput(
+      tipify(sliderInput(
         inputId = paste0("pc_woody_veg_", value),
         label = "Amount of woody vegetation (%)",
         min = 2, max = 20, step = 2,
         value = woody_veg),
+        "The amount of woody vegetation canopy within 500m of the patch centre, as a percentage of the area within 500m."
+        # "The percentage of area within 500m of the patch centre covered by woody vegetation canopy."
+        ),
       sliderInput(
         inputId = paste0("pc_midstorey_", value),
         label = "Amount of midstorey cover (%)",
