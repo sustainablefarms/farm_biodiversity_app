@@ -81,10 +81,9 @@ ui <- fluidPage(
           inputId = "patch_number_1",
           label = "Patch #1",
           class = "patch_badge"),
-        bsPopover("patch_number_1", 
-                  "<h2>A patch is...<h2>",
-                  "a region of woody vegetation that is (1) 1ha - 10ha (to check) in area, (2) has similar vegetation structure throughout and (3) is approximately 50m from other woody vegetation.",
-                  ),
+        bsTooltip("patch_number_1", 
+                  "A patch is a region of woody vegetation that is (1) 1ha - 10ha (to check) in area, (2) has similar vegetation structure throughout and (3) is approximately 50m from other woody vegetation.",
+                  options = list(html = "true")), #see JS Popover options for Twitter 3 Bootstrap
         div(id = "placeholder")
       )
     ),
