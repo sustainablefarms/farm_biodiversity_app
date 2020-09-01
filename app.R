@@ -20,6 +20,7 @@ library(Rfast)
 library(ggbeeswarm)
 library(ggplot2)
 library(shinyBS)
+library(tippy)
 
 # UI
 ui <- fluidPage(
@@ -81,10 +82,16 @@ ui <- fluidPage(
           inputId = "patch_number_1",
           label = "Patch #1",
           class = "patch_badge"),
-        bsTooltip("patch_number_1", 
-                  paste("A patch is a region of woody vegetation that is (1) 1ha - 10ha (to check) in area, (2) has similar vegetation structure throughout and (3) is approximately 50m from other woody vegetation.",
-                  "<br><br> Currently the patch must be remnant box gum grassy woodlands."),
-                  options = list(html = "true")), #see JS Tooltip options for Twitter 3 Bootstrap
+        tippy::tippy_this("patch_number_1", 
+                  paste('<div style="text-align: left">A patch is a region of woodland vegetation that is',
+                  '<br>(1) 1ha - 10ha (TBC) in area, ',
+                  '<br>(2) has similar vegetation structure throughout, and',
+                  '<br>(3) is approximately 50m from other woody vegetation.',
+                  '<br><br> Currently the patch must be remnant box gum grassy woodlands.</div>'),
+                  arrow = TRUE,
+                  interactive = TRUE,
+                  options = list(html = "true",
+                                 arrow = "roundArrow")),
         div(id = "placeholder")
       )
     ),
@@ -158,8 +165,8 @@ server <- function(input, output) {
       label = HTML(paste0("Number of<br>patches<br><h3>", current_values$patches, "</h3>")),
       class = "badge"
     ), 
-    paste("A patch is a region of woody vegetation that is (1) 1ha - 10ha (to check) in area, (2) has similar vegetation structure throughout and (3) is approximately 50m from other woody vegetation.",
-    "<br><br> Currently the patch must be remnant box gum grassy woodlands."),
+    paste('<div style="text-align: left">A patch is a region of woodland vegetation that <br>(1) is 1ha - 10ha <em>(TBC)</em> in area, <br>(2) has similar vegetation structure throughout, and <br>(3) is approximately 50m from other woody vegetation.',
+    '<br><br> Currently the patch must be remnant box gum grassy woodlands.</div>'),
     options = list(html = TRUE)
     )
   })
