@@ -83,7 +83,7 @@ ui <- fluidPage(
           class = "patch_badge"),
         bsTooltip("patch_number_1", 
                   "A patch is a region of woody vegetation that is (1) 1ha - 10ha (to check) in area, (2) has similar vegetation structure throughout and (3) is approximately 50m from other woody vegetation.",
-                  options = list(html = "true")), #see JS Popover options for Twitter 3 Bootstrap
+                  options = list(html = "true")), #see JS Tooltip options for Twitter 3 Bootstrap
         div(id = "placeholder")
       )
     ),
