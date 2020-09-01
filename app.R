@@ -19,6 +19,7 @@ library(plotly)
 library(Rfast)
 library(ggbeeswarm)
 library(ggplot2)
+library(shinyBS)
 
 # UI
 ui <- fluidPage(
@@ -148,11 +149,11 @@ server <- function(input, output) {
 
   # number of patches
   output$patch_selector <- renderUI({
-    actionButton2(
+    shinyBS::tipify(actionButton2(
       inputId = "choose_n_patches",
       label = HTML(paste0("Number of<br>patches<br><h3>", current_values$patches, "</h3>")),
       class = "badge"
-    )
+    ), "A patch is a region of woody vegetation that is (1) 1ha - 10ha (to check) in area, (2) has similar vegetation structure throughout and (3) is approximately 50m from other woody vegetation.")
   })
   observeEvent(input$choose_n_patches, {
     showModal(
