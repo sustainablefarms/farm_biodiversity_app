@@ -96,7 +96,7 @@ ui <- fluidPage(
       )
     ),
     fluidRow(
-      HTML("<div class='subheader'><h2>BIODIVERSITY</h2></div>"),
+      HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
       plotOutput("species_richness", height = "200px"),
       fluidRow(
         column(width = 6, # first biodiversity plot
