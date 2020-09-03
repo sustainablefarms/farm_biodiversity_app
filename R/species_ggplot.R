@@ -17,10 +17,10 @@ species_ggplot <- function(df, title = "", add_plus = FALSE){
       size = 4, color = "white", hjust = 0) +
     geom_text(aes(y = value, label = label, color = value),
       size = 4, hjust = 0) +
-    coord_flip() +
+    coord_flip(clip = "off") +
     scale_x_discrete(limits = rev(levels(df$species))) +
     scale_y_continuous(expand = c(0, 0)) +
-    expand_limits(y = c(0, max(df$value) + 0.1)) +
+    expand_limits(y = c(0, max(df$value) * 1.1)) +
     theme_void() +
     ggtitle(title) +
     theme(legend.position = "none")
