@@ -512,8 +512,8 @@ server <- function(input, output) {
           new_data_mean,
           model_data$XoccProcess,
           model_data$u.b)))
-      species_prediction_df$difference <- species_prediction_df$prediction_current -
-        species_prediction_df$prediction_mean
+      species_prediction_df$difference <- (species_prediction_df$prediction_current -
+        species_prediction_df$prediction_mean) / species_prediction_df$prediction_mean
 
       # get dataset of top 10 most common species
       sp_current <- species_prediction_df[
