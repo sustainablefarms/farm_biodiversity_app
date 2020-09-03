@@ -531,11 +531,9 @@ server <- function(input, output) {
 
       # richness calculations
       # get richness
-      richness_data <- list(new_data_mean, new_data, new_data_mean)
+      richness_data <- list(new_data, new_data, new_data)
       richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
-      richness_data[[1]] <- richness_data[[1]][rep(1, nrow(new_data)), ]
       richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
-      richness_data[[3]] <- richness_data[[3]][rep(1, nrow(new_data)), ]
       richness_predictions <- lapply(richness_data, function(a){
         multisiterichness_nolv(a, model_data$XoccProcess, model_data$u.b)
       })
