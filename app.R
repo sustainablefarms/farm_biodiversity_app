@@ -426,7 +426,7 @@ server <- function(input, output) {
         label = HTML(paste0(
           "Annual<br>Preciptiation<h3>",
           current_values$AnnPrec,
-          "ml</h3>")),
+          "mm</h3>")),
         class = "badge",
         width = "100%"
       )
@@ -440,7 +440,7 @@ server <- function(input, output) {
         label = HTML(paste0(
           "Precipitation<br>Warmest<br>Quarter<h3>",
           current_values$PrecWarmQ,
-          "ml</h3>")),
+          "mm</h3>")),
         class = "badge",
         width = "100%"
       )
