@@ -577,7 +577,7 @@ server <- function(input, output) {
         y = c(0, max(data$species_richness$Erichness + data$species_richness$Vrichness) + 3)) +
       scale_x_discrete(position = "top") +
       scale_discrete_manual(aesthetics = "fill", values = c("#81a2b3", "#4e839c", "#81a2b3")) +
-      geom_errorbar(aes(ymin = Erichness - Vrichness, ymax = Erichness + Vrichness), width = 0.2) +
+      geom_errorbar(aes(ymin = Erichness - 2 * sqrt(Vrichness), ymax = Erichness + 2 * sqrt(Vrichness)), width = 0.2) +
       coord_flip() +
       ggtitle("Number of bird species") +
       theme(legend.position = "none",
