@@ -11,7 +11,16 @@
     # richness (estimate)
     # what you could do to improve this
 
+# This page is quite informative on using custom package dependencies: https://github.com/rstudio/rsconnect/issues/88
+# rsconnect::appDependencies()
+# rsconnect::deployApp(appName = "birdbio_dev2")
+# rsconnect::terminateApp("birdbio_dev2")
+# rsconnect::purgeApp("birdbio_dev2")
+
+
 # load requisite packages
+# devtools::install_github("https://github.com/sustainablefarms/msod")
+library(msod)
 library(sf)
 library(shiny)
 library(shinythemes)
