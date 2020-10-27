@@ -509,15 +509,15 @@ server <- function(input, output) {
         SurveyYear = current_values$year,
         woody500m = current_values$woody_veg,
         ms = current_values$midstorey,
-        NMdetected = current_values$noisy_miner
+        NMdetected = as.numeric(current_values$noisy_miner)
       )
       species_prediction_df <- data.frame(
         species = rownames(model_data$u.b),
-        prediction_current = as.numeric(poccupancy_standalone_nolv(
+        prediction_current = as.numeric(msod::poccupancy_standalone_nolv(
           new_data,
           model_data$XoccProcess,
           model_data$u.b)),
-        prediction_mean = as.numeric(poccupancy_standalone_nolv(
+        prediction_mean = as.numeric(msod::poccupancy_standalone_nolv(
           new_data_mean,
           model_data$XoccProcess,
           model_data$u.b)))
@@ -544,7 +544,7 @@ server <- function(input, output) {
       richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
       richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
       richness_predictions <- lapply(richness_data, function(a){
-        multisiterichness_nolv(a, model_data$XoccProcess, model_data$u.b)
+        msod::multisiterichness_nolv(a, model_data$XoccProcess, model_data$u.b)
       })
       richness_df <- as.data.frame(do.call(rbind, richness_predictions))
       richness_df$category <- factor(seq_len(3), levels = seq_len(3),
