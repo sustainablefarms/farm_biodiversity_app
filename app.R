@@ -13,7 +13,7 @@
 
 # This page is quite informative on using custom package dependencies: https://github.com/rstudio/rsconnect/issues/88
 # rsconnect::appDependencies()
-# rsconnect::deployApp(appName = "birdbio_dev2")
+# rsconnect::deployApp(appName = "birdbio_dev3")
 # rsconnect::terminateApp("birdbio_dev2")
 # rsconnect::purgeApp("birdbio_dev2")
 
