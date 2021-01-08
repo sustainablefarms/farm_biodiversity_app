@@ -132,6 +132,8 @@ server <- function(input, output) {
   colnames(new_data_mean) <- names(model_data$XoccProcess$center)
   # new_data_mean <- new_data_mean[, c(2:10)]
   new_data_mean$NMdetected[1] <- 1
+  new_data_mean$woody500m <- exp(new_data_mean$log.woody500m.)
+  new_data_mean$log.woody500m. <- NULL
 
   # 2. reactive values
   data <- reactiveValues(
@@ -515,14 +517,14 @@ server <- function(input, output) {
         ms = current_values$midstorey,
         NMdetected = as.numeric(current_values$noisy_miner)
       )
+      prediction_current_wlimits = msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
+                                                                                new_data)
       species_prediction_df <- data.frame(
-        species = rownames(model_data$u.b),
-        prediction_current = as.numeric(msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
-          new_data)),
-        prediction_mean = as.numeric(msod::poccupancy_standalone_nolv(
-          new_data_mean,
-          model_data$XoccProcess,
-          model_data$u.b)))
+        species = rownames(model_data$species),
+        prediction_current = as.numeric(prediction_current_wlimits[, "median"]),
+        prediction_mean = as.numeric(msod::poccupancy_mostfavourablesite.jsodm_lv(
+          model_data,
+          new_data_mean)[, "median"]))
       species_prediction_df$difference <- (species_prediction_df$prediction_current -
         species_prediction_df$prediction_mean) / species_prediction_df$prediction_mean
 
