@@ -524,7 +524,9 @@ server <- function(input, output) {
         prediction_current = as.numeric(prediction_current_wlimits[, "median"]),
         prediction_mean = as.numeric(msod::poccupancy_mostfavourablesite.jsodm_lv(
           model_data,
-          new_data_mean)[, "median"]))
+          new_data_mean)[, "median"]),
+        prediction_current_upper = as.numeric(prediction_current_wlimits[, "upper"]),
+        prediction_current_lower = as.numeric(prediction_current_wlimits[, "lower"]))
       species_prediction_df$difference <- (species_prediction_df$prediction_current -
         species_prediction_df$prediction_mean) / species_prediction_df$prediction_mean
 
@@ -532,6 +534,7 @@ server <- function(input, output) {
       sp_current <- species_prediction_df[
         order(species_prediction_df$prediction_current, decreasing = TRUE)[1:10], c(1:2)]
       colnames(sp_current)[2] <- "value"
+      
 
       # ditto for 'most different' species
       sp_different <- species_prediction_df[
