@@ -128,9 +128,9 @@ server <- function(input, output) {
   # 1. from model
   model_data <- readRDS("data/model_data.rds")
   new_data_mean <- as.data.frame(
-    matrix(data = model_data$XoccProcess$center, nrow = 1, ncol = 11))
+    matrix(data = model_data$XoccProcess$center, nrow = 1))
   colnames(new_data_mean) <- names(model_data$XoccProcess$center)
-  new_data_mean <- new_data_mean[, c(2:10)]
+  # new_data_mean <- new_data_mean[, c(2:10)]
   new_data_mean$NMdetected[1] <- 1
 
   # 2. reactive values
@@ -146,7 +146,11 @@ server <- function(input, output) {
     midstorey = NA,
     noisy_miner = NA,
     year = 2018,
-    AnnMeanTemp = NULL,
+    AnnPrec = NULL,
+    MaxTWarmMonth = NULL,
+    MinTColdMonth = NULL,
+    PrecSeasonality = NULL,
+    latitude = NULL,
     AnnPrec = NULL,
     AnnTempRange = NULL,
     PrecSeasonality = NULL,
@@ -330,7 +334,7 @@ server <- function(input, output) {
   # choose what spatial data to use
   observeEvent(input$spatial_type, {
     if(input$spatial_type != "none"){
-      data$points <- readRDS("data/sa2_points.rds")
+      data$points <- readRDS("data/sa2_points_climate.rds")
     }
   })
 
@@ -406,7 +410,7 @@ server <- function(input, output) {
         inputId = "show_tempmean_modal",
         label = HTML(paste0(
           "Annual<br>Mean<br>Temperature<h3>",
-          round(current_values$AnnMeanTemp * 0.1, 1),
+          round(current_values$MinTColdMonth * 0.1, 1),
           "&deg;C</h3>")),
         class = "badge",
         width = "100%"
@@ -420,7 +424,7 @@ server <- function(input, output) {
         inputId = "show_temprange_modal",
         label = HTML(paste0(
           "Annual<br>Temperature<br>Range<h3>",
-          format(current_values$AnnTempRange * 0.1, digits = 3, trim = TRUE),
+          format(current_values$MaxTWarmMonth * 0.1, digits = 3, trim = TRUE),
           "&deg;C</h3>")),
         class = "badge",
         width = "100%"
@@ -448,7 +452,7 @@ server <- function(input, output) {
         inputId = "show_precipwarmq_modal",
         label = HTML(paste0(
           "Precipitation<br>Warmest<br>Quarter<h3>",
-          current_values$PrecWarmQ,
+          current_values$PrecSeasonality,
           "mm</h3>")),
         class = "badge",
         width = "100%"
@@ -501,11 +505,11 @@ server <- function(input, output) {
       !any(is.na(current_values$woody_veg))
     ){
       new_data <- data.frame(
-        AnnMeanTemp = data$points$AnnMeanTemp[data$points$label == data$selected_region],
         AnnPrec = data$points$AnnPrec[data$points$label == data$selected_region],
-        AnnTempRange = data$points$AnnTempRange[data$points$label == data$selected_region],
+        MaxTWarmMonth = data$points$MaxTWarmMonth[data$points$label == data$selected_region],
+        MinTColdMonth = data$points$MinTColdMonth[data$points$label == data$selected_region],
         PrecSeasonality = data$points$PrecSeasonality[data$points$label == data$selected_region],
-        PrecWarmQ = data$points$PrecWarmQ[data$points$label == data$selected_region],
+        latitude = data$points$latitude[data$points$label == data$selected_region],
         SurveyYear = current_values$year,
         woody500m = current_values$woody_veg,
         ms = current_values$midstorey,
@@ -513,10 +517,8 @@ server <- function(input, output) {
       )
       species_prediction_df <- data.frame(
         species = rownames(model_data$u.b),
-        prediction_current = as.numeric(msod::poccupancy_standalone_nolv(
-          new_data,
-          model_data$XoccProcess,
-          model_data$u.b)),
+        prediction_current = as.numeric(msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
+          new_data)),
         prediction_mean = as.numeric(msod::poccupancy_standalone_nolv(
           new_data_mean,
           model_data$XoccProcess,
