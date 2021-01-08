@@ -520,7 +520,7 @@ server <- function(input, output) {
       prediction_current_wlimits = msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
                                                                                 new_data)
       species_prediction_df <- data.frame(
-        species = rownames(model_data$species),
+        species = model_data$species,
         prediction_current = as.numeric(prediction_current_wlimits[, "median"]),
         prediction_mean = as.numeric(msod::poccupancy_mostfavourablesite.jsodm_lv(
           model_data,
@@ -545,10 +545,11 @@ server <- function(input, output) {
       # richness calculations
       # get richness
       richness_data <- list(new_data, new_data, new_data)
+      richness_data[[1]]$NMdetected <- 0; richness_data[[3]]$NMdetected <- 1
       richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
       richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
       richness_predictions <- lapply(richness_data, function(a){
-        msod::multisiterichness_nolv(a, model_data$XoccProcess, model_data$u.b)
+        msod:::specrichness_avsite.jsodm_lv(model_data, a)
       })
       richness_df <- as.data.frame(do.call(rbind, richness_predictions))
       richness_df$category <- factor(seq_len(3), levels = seq_len(3),
@@ -581,14 +582,14 @@ server <- function(input, output) {
   # draw species richness
   output$species_richness <- renderPlot({
     validate(need(data$species_richness, ""))
-    ggplot(data$species_richness, aes(x = category, y = Erichness, fill = category)) +
+    ggplot(data$species_richness, aes(x = category, y = E, fill = category)) +
       geom_bar(stat = "identity") +
       scale_y_continuous(expand = c(0, 0)) +
       expand_limits(
-        y = c(0, max(data$species_richness$Erichness + data$species_richness$Vrichness) + 3)) +
+        y = c(0, max(data$species_richness$E + 2 * sqrt(data$species_richness$V)) + 3)) +
       scale_x_discrete(position = "top") +
       scale_discrete_manual(aesthetics = "fill", values = c("#81a2b3", "#4e839c", "#81a2b3")) +
-      geom_errorbar(aes(ymin = Erichness - 2 * sqrt(Vrichness), ymax = Erichness + 2 * sqrt(Vrichness)), width = 0.2) +
+      geom_errorbar(aes(ymin = E - 2 * sqrt(V), ymax = E + 2 * sqrt(V)), width = 0.2) +
       coord_flip() +
       ggtitle("Number of bird species") +
       theme(legend.position = "none",
