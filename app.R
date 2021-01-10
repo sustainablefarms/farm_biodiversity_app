@@ -532,8 +532,10 @@ server <- function(input, output) {
 
       # get dataset of top 10 most common species
       sp_current <- species_prediction_df[
-        order(species_prediction_df$prediction_current, decreasing = TRUE)[1:10], c(1:2)]
+        order(species_prediction_df$prediction_current, decreasing = TRUE)[1:10], c(1,2,4,5)]
       colnames(sp_current)[2] <- "value"
+      colnames(sp_current)[3] <- "upper"
+      colnames(sp_current)[4] <- "lower"
       
 
       # ditto for 'most different' species
@@ -548,7 +550,7 @@ server <- function(input, output) {
       # richness calculations
       # get richness
       richness_data <- list(new_data, new_data, new_data)
-      richness_data[[1]]$NMdetected <- 0; richness_data[[3]]$NMdetected <- 1
+      # richness_data[[1]]$NMdetected <- 0; richness_data[[3]]$NMdetected <- 1
       richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
       richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
       richness_predictions <- lapply(richness_data, function(a){
@@ -572,7 +574,8 @@ server <- function(input, output) {
     species_ggplot(
       df = data$species_predictions$common,
       title = "Most likely species",
-      add_plus = FALSE)
+      add_plus = FALSE,
+      errorbar = TRUE)
   })
   output$different_species <- renderPlot({
     validate(need(data$species_predictions, ""))

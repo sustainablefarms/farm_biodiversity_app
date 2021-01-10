@@ -1,5 +1,5 @@
 # function to plot species barcharts
-species_ggplot <- function(df, title = "", add_plus = FALSE){
+species_ggplot <- function(df, title = "", add_plus = FALSE, errorbar = FALSE){
   df$species <- factor(
     seq_len(10),
     levels = seq_len(10),
@@ -24,6 +24,10 @@ species_ggplot <- function(df, title = "", add_plus = FALSE){
     theme_void() +
     ggtitle(title) +
     theme(legend.position = "none")
+  
+  if (errorbar){
+    plot <- plot + geom_errorbar(aes(ymin = lower, ymax = upper))
+  }
 
   return(plot)
 }
