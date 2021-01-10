@@ -500,61 +500,10 @@ server <- function(input, output) {
       length(current_values$woody_veg) == current_values$patches &
       !any(is.na(current_values$woody_veg))
     ){
-      new_data <- data.frame(
-        AnnPrec = data$points$AnnPrec[data$points$label == data$selected_region],
-        MaxTWarmMonth = data$points$MaxTWarmMonth[data$points$label == data$selected_region],
-        MinTColdMonth = data$points$MinTColdMonth[data$points$label == data$selected_region],
-        PrecSeasonality = data$points$PrecSeasonality[data$points$label == data$selected_region],
-        latitude = data$points$latitude[data$points$label == data$selected_region],
-        SurveyYear = current_values$year,
-        woody500m = current_values$woody_veg,
-        ms = current_values$midstorey,
-        NMdetected = as.numeric(current_values$noisy_miner)
-      )
-      prediction_current_wlimits = msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
-                                                                                new_data)
-      species_prediction_df <- data.frame(
-        species = model_data$species,
-        prediction_current = as.numeric(prediction_current_wlimits[, "median"]),
-        prediction_mean = as.numeric(msod::poccupancy_mostfavourablesite.jsodm_lv(
-          model_data,
-          new_data_mean)[, "median"]),
-        prediction_current_upper = as.numeric(prediction_current_wlimits[, "upper"]),
-        prediction_current_lower = as.numeric(prediction_current_wlimits[, "lower"]))
-      species_prediction_df$difference <- (species_prediction_df$prediction_current -
-        species_prediction_df$prediction_mean) / species_prediction_df$prediction_mean
-
-      # get dataset of top 10 most common species
-      sp_current <- species_prediction_df[
-        order(species_prediction_df$prediction_current, decreasing = TRUE)[1:10], c(1,2,4,5)]
-      colnames(sp_current)[2] <- "value"
-      colnames(sp_current)[3] <- "upper"
-      colnames(sp_current)[4] <- "lower"
-      
-
-      # ditto for 'most different' species
-      sp_different <- species_prediction_df[
-        order(species_prediction_df$difference, decreasing = TRUE)[1:10], c(1, 4)]
-      colnames(sp_different)[2] <- "value"
-
-      data$species_predictions <- list(
-        common = sp_current,
-        different = sp_different)
-
-      # richness calculations
-      # get richness
-      richness_data <- list(new_data, new_data, new_data)
-      # richness_data[[1]]$NMdetected <- 0; richness_data[[3]]$NMdetected <- 1
-      richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
-      richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
-      richness_predictions <- lapply(richness_data, function(a){
-        msod:::specrichness_avsite.jsodm_lv(model_data, a)
-      })
-      richness_df <- as.data.frame(do.call(rbind, richness_predictions))
-      richness_df$category <- factor(seq_len(3), levels = seq_len(3),
-        labels = c("Less vegetation", "Your estimate", "More vegetation"))
-
-      data$species_richness <- richness_df
+      preddata <- compute_prediction_data(model_data, current_values, new_data_mean,
+                                          data$points, data$selected_region)
+      data$species_predictions <- preddata$species_predictions
+      data$species_richness <- preddata$species_richness
 
     }else{
       data$species_predictions <- NULL
