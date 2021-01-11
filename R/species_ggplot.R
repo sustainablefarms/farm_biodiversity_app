@@ -1,5 +1,7 @@
 # function to plot species barcharts
 species_ggplot <- function(df, title = "", add_plus = FALSE, errorbar = FALSE){
+  set.seed(1)
+  df <- df[order(df$value), ]
   df$species <- factor(
     seq_len(10),
     levels = seq_len(10),
@@ -18,7 +20,7 @@ species_ggplot <- function(df, title = "", add_plus = FALSE, errorbar = FALSE){
     geom_text(aes(y = value, label = label, color = value),
       size = 4, hjust = 0) +
     coord_flip(clip = "off") +
-    scale_x_discrete(limits = rev(levels(df$species))) +
+    scale_x_discrete(limits = levels(df$species)) +
     scale_y_continuous(expand = c(0, 0)) +
     expand_limits(y = c(0, max(df$value) * 1.1)) +
     theme_void() +

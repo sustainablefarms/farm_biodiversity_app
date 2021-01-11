@@ -1,5 +1,5 @@
 # test that all plots can be built
-test_that("plots for Gundagai", {
+test_that("prediction plots for Gundagai", {
   model_data <- load_model_data()
   new_data_mean <- get_new_data_mean(model_data)
   selected_region <- "Gundagai"
