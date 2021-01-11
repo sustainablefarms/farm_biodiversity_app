@@ -1,4 +1,4 @@
-test_that("compute prediction data runs", {
+test_that("compute prediction data runs on Gundagai", {
   model_data <- load_model_data()
   new_data_mean <- get_new_data_mean(model_data)
   selected_region <- "Gundagai"
