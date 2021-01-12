@@ -1,6 +1,8 @@
 
 compute_prediction_data <- function(model_data, current_values, new_data_mean,
                                     points, selected_region){
+  # points <- data$points; selected_region <- data$selected_region;
+  # current_values <- reactiveValuesToList(current_values)
   new_data <- data.frame(
     AnnPrec = points$AnnPrec[points$label == selected_region],
     MaxTWarmMonth = points$MaxTWarmMonth[points$label == selected_region],
@@ -49,6 +51,7 @@ compute_prediction_data <- function(model_data, current_values, new_data_mean,
   richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
   richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
   richness_predictions <- lapply(richness_data, function(a){
+    set.seed(4444)
     msod:::specrichness_avsite.jsodm_lv(model_data, a)
   })
   richness_df <- as.data.frame(do.call(rbind, richness_predictions))

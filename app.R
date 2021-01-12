@@ -122,7 +122,7 @@ ui <- fluidPage(
 )
 
 # SERVER
-server <- function(input, output) {
+server <- function(input, output, session) {
 
   # set up required data
   # 1. from model
@@ -516,7 +516,7 @@ server <- function(input, output) {
     validate(need(data$species_predictions, ""))
     species_ggplot(
       df = data$species_predictions$common,
-      title = "Most likely species",
+      title = "Most likely species at any patch",
       add_plus = FALSE,
       errorbar = TRUE)
   })
