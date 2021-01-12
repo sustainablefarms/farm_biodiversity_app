@@ -10,7 +10,7 @@ richness_plot <- function(species_richness){
   scale_discrete_manual(aesthetics = "fill", values = c("#81a2b3", "#4e839c", "#81a2b3")) +
   geom_errorbar(aes(ymin = E - 2 * sqrt(V), ymax = E + 2 * sqrt(V)), width = 0.2) +
   coord_flip() +
-  ggtitle("Number of bird species") +
+  ggtitle("Expected Number of Bird Species at a Patch Chosen at Random") +
   theme(legend.position = "none",
         axis.title = element_blank(),
         axis.text.y = element_text(size = 12),
