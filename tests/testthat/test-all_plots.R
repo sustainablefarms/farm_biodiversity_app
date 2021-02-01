@@ -1,4 +1,6 @@
 # test that all plots can be built
+devtools::load_all()
+
 test_that("prediction plots for Gundagai", {
   model_data <- load_model_data()
   new_data_mean <- get_new_data_mean(model_data)
