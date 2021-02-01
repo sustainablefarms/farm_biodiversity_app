@@ -1,4 +1,6 @@
 climate_plot <- function(data, variable, region, title = ""){
+  if (variable == "MaxTWarmMonth"){data[, variable] <- data[, variable]/10}
+  if (variable == "MinTColdMonth"){data[, variable] <- data[, variable]/10}
   ggplot(data, aes_string(x = variable, y = 1)) +
     geom_quasirandom(
       data = data[data$label != region, ],
