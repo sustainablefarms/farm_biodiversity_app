@@ -3,17 +3,8 @@ compute_prediction_data <- function(model_data, current_values, new_data_mean,
                                     points, selected_region){
   # points <- data$points; selected_region <- data$selected_region;
   # current_values <- reactiveValuesToList(current_values)
-  new_data <- data.frame(
-    AnnPrec = points$AnnPrec[points$label == selected_region],
-    MaxTWarmMonth = points$MaxTWarmMonth[points$label == selected_region],
-    MinTColdMonth = points$MinTColdMonth[points$label == selected_region],
-    PrecSeasonality = points$PrecSeasonality[points$label == selected_region],
-    latitude = points$latitude[points$label == selected_region],
-    SurveyYear = current_values$year,
-    woody500m = current_values$woody_veg,
-    ms = current_values$midstorey,
-    NMdetected = as.numeric(current_values$noisy_miner)
-  )
+  new_data <- newXocc_fromselected(model_data, current_values,
+                                   points, selected_region)
   prediction_current_wlimits = msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
                                                                             new_data)
   species_prediction_df <- data.frame(
@@ -50,9 +41,10 @@ compute_prediction_data <- function(model_data, current_values, new_data_mean,
   # richness_data[[1]]$NMdetected <- 0; richness_data[[3]]$NMdetected <- 1
   richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
   richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
+  pbapply::pboptions(type = "none")
   richness_predictions <- lapply(richness_data, function(a){
     set.seed(4444)
-    msod:::specrichness_avsite.jsodm_lv(model_data, a)
+    msod:::occspecrichness_avsite.jsodm_lv(model_data, a)
   })
   richness_df <- as.data.frame(do.call(rbind, richness_predictions))
   richness_df$category <- factor(seq_len(3), levels = seq_len(3),
