@@ -15,3 +15,10 @@ test_that("test plot of Maximum Temp for Gundagai", {
   climate_plot(data, variable, region, title)
 })
 
+test_that("test plot of Minimum Temperatues for Gundagai", {
+  data <- readRDS("data/sa2_points_climate.rds")
+  variable  <- "MinTColdMonth"
+  region <- "Gundagai"
+  title <- "test climate plot"
+  climate_plot(data, variable, region, title)
+})
