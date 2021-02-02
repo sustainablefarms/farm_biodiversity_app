@@ -106,6 +106,7 @@ ui <- fluidPage(
     ),
     fluidRow(
       HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
+      actionButton("moredetail", "View More Detail"),
       plotOutput("species_richness", height = "200px"),
       fluidRow(
         column(width = 6, # first biodiversity plot
@@ -531,6 +532,19 @@ server <- function(input, output, session) {
     richness_plot(data$species_richness)
   })
 
+  observeEvent(input$moredetail, {
+      showModal(modalDialog(
+        "Are you sure you want to continue?",
+        title = "Deleting files",
+        footer = tagList(
+          actionButton("hide", "Hide"),
+        )
+      ))
+    })
+    
+    observeEvent(input$hide, 
+                 removeModal()
+  )
 
 } # end server
 
