@@ -31,6 +31,22 @@ library(ggplot2)
 library(shinyBS)
 library(tippy)
 
+moredetailModalUI <- function(id) {
+  ns <- NS(id)
+  actionButton(ns("moredetail"), "More Detail")
+}
+
+moredetailModal <- function(input, output, session){
+  observeEvent(input$moredetail, {
+    showModal(modalDialog(
+      "Are you sure you want to continue?",
+      title = "Deleting files",
+      footer = modalButton("Close"),
+    )
+    )
+  })  
+}
+
 # UI
 ui <- fluidPage(
   includeCSS("./www/base.css"),
@@ -106,7 +122,7 @@ ui <- fluidPage(
     ),
     fluidRow(
       HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
-      actionButton("moredetail", "View More Detail"),
+      moredetailModalUI("moredetailid"),
       plotOutput("species_richness", height = "200px"),
       fluidRow(
         column(width = 6, # first biodiversity plot
@@ -532,19 +548,8 @@ server <- function(input, output, session) {
     richness_plot(data$species_richness)
   })
 
-  observeEvent(input$moredetail, {
-      showModal(modalDialog(
-        "Are you sure you want to continue?",
-        title = "Deleting files",
-        footer = tagList(
-          actionButton("hide", "Hide"),
-        )
-      ))
-    })
-    
-    observeEvent(input$hide, 
-                 removeModal()
-  )
+  callModule(moredetailModal, "moredetailid")
+
 
 } # end server
 
