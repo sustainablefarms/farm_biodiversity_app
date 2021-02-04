@@ -532,10 +532,12 @@ server <- function(input, output, session) {
     richness_plot(data$species_richness)
   })
 
+  # modal more detail stuff
   observeEvent(input$moredetail, {
       showModal(modalDialog(
-        "Are you sure you want to continue?",
-        title = "Deleting files",
+        plotOutput("species_probInModal"),
+        plotOutput("functdivplot"),
+        title = "More Detail on Predictions",
         footer = tagList(
           actionButton("hide", "Hide"),
         )
@@ -545,6 +547,15 @@ server <- function(input, output, session) {
     observeEvent(input$hide, 
                  removeModal()
   )
+    
+  output$species_probInModal <- renderPlot({
+      species_ggplotInModal(model_data, current_values, new_data_mean,
+                            data$points, data$selected_region)
+    })
+  output$functdivplot <- renderPlot({
+    functdivplot(model_data, current_values, 
+                          data$points, data$selected_region)[[2]]
+  })
 
 } # end server
 

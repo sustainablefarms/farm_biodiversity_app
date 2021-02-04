@@ -33,3 +33,45 @@ species_ggplot <- function(df, title = "", add_plus = FALSE, errorbar = FALSE){
 
   return(plot)
 }
+
+species_ggplotInModal <- function(model_data, current_values, new_data_mean,
+                           points, selected_region){
+  newXocc <- newXocc_fromselected(model_data, current_values,
+                                   points, selected_region)
+  prediction_current_wlimits = data.frame(msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
+                                                                                       newXocc))
+  prediction_current_wlimits$species = rownames(prediction_current_wlimits)
+  
+  traits <- read.csv("../sflddata/private/data/raw/Australian_Bird_Data_Version_1.csv", stringsAsFactors = FALSE)
+  pltdata <- traits %>%
+    dplyr::filter(X3_Taxon_common_name_2 %in% model_data$species) %>%
+    dplyr::select(`Common Name` = X3_Taxon_common_name_2,
+                  `Scientific Name` = X7_Taxon_scientific_name_CandB_2, 
+                  `Body Length` = X96_Body_length_8,
+                  `Body Mass` = X99_Body_mass_average_8) %>%
+    dplyr::mutate(`Body Length` = as.numeric(`Body Length`),
+                  `Body Mass` = as.numeric(`Body Mass`)) %>%
+    dplyr::right_join(prediction_current_wlimits, by = c(`Common Name` = "species"))
+  
+  reorder(pltdata$`Common Name`, pltdata$`Body Length`)
+  
+  plt <- pltdata %>%
+    dplyr::mutate(`Common Name` =
+                    reorder(as.factor(`Common Name`), `Body Length`)) %>%
+    dplyr::arrange(`Common Name`) %>%
+    ggplot(aes(x = `Common Name`, y = median, fill = median)) +
+    # geom_text(aes(y = 0, label = paste0("  ", `Common Name`)),
+    #           size = 1, color = "white", hjust = 0) +
+    geom_bar(stat = "identity") +
+    geom_errorbar(aes(ymin = lower, ymax = upper)) +
+    # geom_text(aes(y = 0, label = paste0("  ", `Common Name`)),
+    #           size = 1, color = "white", hjust = 0) +
+    coord_flip(clip = "off") +
+    ylim(0,1) +
+    # coord_polar() +
+    scale_x_discrete(name = "Increasing Body Length ---->") +
+    # scale_y_continuous(expand = c(0, 0)) +
+    theme_minimal() +
+    theme(legend.position = "none")
+  return(plt)
+}
