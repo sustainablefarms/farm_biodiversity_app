@@ -206,7 +206,8 @@ selectpatchServer <- function(id){
           value = previous_values$selected_patch,
           woody_veg = current_values$woody_veg[previous_values$selected_patch],
           midstorey = current_values$midstorey[previous_values$selected_patch],
-          noisy_miner = current_values$noisy_miner[previous_values$selected_patch]
+          noisy_miner = current_values$noisy_miner[previous_values$selected_patch],
+          ns
         )
       }
     }
@@ -223,6 +224,8 @@ selectpatchServer <- function(id){
       paste0("noisy_miner_", previous_values$selected_patch)]]
     removeModal()
   })
+  
+  current_values
 
   }
 )

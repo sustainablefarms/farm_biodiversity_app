@@ -145,7 +145,6 @@ server <- function(input, output, session) {
       length(current_values$woody_veg) == current_values$patches &
       !any(is.na(current_values$woody_veg))
     ){
-      print(current_values)
       preddata <- compute_prediction_data(model_data, current_values, new_data_mean)
       data$species_predictions <- preddata$species_predictions
       data$species_richness <- preddata$species_richness

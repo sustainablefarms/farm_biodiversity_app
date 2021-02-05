@@ -2,7 +2,8 @@ patch_modal <- function(
   value = 1,
   woody_veg = NULL,
   midstorey = NULL,
-  noisy_miner = NULL
+  noisy_miner = NULL,
+  ns #the namespace function
 ){
   if(is.null(woody_veg) | is.na(woody_veg)){woody_veg <- 8}
   if(is.null(midstorey) | is.na(midstorey)){midstorey <- 6}
@@ -10,7 +11,7 @@ patch_modal <- function(
   showModal(
     modalDialog(
       tipify(sliderInput(
-        inputId = paste0("pc_woody_veg_", value),
+        inputId = ns(paste0("pc_woody_veg_", value)),
         label = "Woody vegetation canopy within 500m of patch centre (% area)",
         min = 2, max = 20, step = 2,
         value = woody_veg),
@@ -18,7 +19,7 @@ patch_modal <- function(
         # "The percentage of area within 500m of the patch centre covered by woody vegetation canopy."
         ),
       tipify(sliderInput(
-        inputId = paste0("pc_midstorey_", value),
+        inputId = ns(paste0("pc_midstorey_", value)),
         label = "Midstorey vegetation (2m - 10m tall) within patch (% area of patch)",
         min = 0, max = 10, step = 1,
         value = midstorey),
@@ -27,14 +28,14 @@ patch_modal <- function(
         options = list(html = "true",
                        viewport = "viewport")),
       tipify(checkboxInput(
-        inputId = paste0("noisy_miner_", value),
+        inputId = ns(paste0("noisy_miner_", value)),
         label = "Noisy Miners present?",
         value = noisy_miner),
         'Noisy miners are territorial, loud, and easily detected. <a href="https://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:afd.taxon:88df188e-fbc8-4220-82c1-d2fc03f2f83a#">Photos</a>. They are less likely to be present in patches with high midstorey.',
         trigger = "hover focus",
         options = list(html = "true")
       ),
-      actionButton(inputId = "choose_patch_attributes_execute", label = "Save"),
+      actionButton(inputId = ns("choose_patch_attributes_execute"), label = "Save"),
       modalButton("Cancel"),
     title = paste0("Select attributes for patch #", value),
     footer = NULL,
