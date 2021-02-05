@@ -113,10 +113,6 @@ server <- function(input, output, session) {
 
   # 2. reactive values
   data <- reactiveValues(
-    points = NULL,
-    climate = NULL,
-    polygons = NULL,
-    selected_region = c(),
     species_predictions = NULL)
   current_values <- reactiveValues(
     patches = 1,
@@ -143,9 +139,7 @@ server <- function(input, output, session) {
     remove_logical = FALSE,
     remove_values = NULL)
   click_values <- reactiveValues(
-    patches = NULL,
-    climate = NULL,
-    climate_title = NULL)
+    patches = NULL)
 
   ## FARM
 
@@ -313,14 +307,10 @@ server <- function(input, output, session) {
   observe({
     data$selected_region <- outOfModule$selected_region
     current_values$AnnPrec <- outOfModule$AnnPrec
-    data$points <- outOfModule$points
     current_values$MaxTWarmMonth                   <- outOfModule$MaxTWarmMonth
     current_values$MinTColdMonth                   <- outOfModule$MinTColdMonth
     current_values$PrecSeasonality                   <- outOfModule$PrecSeasonality
     current_values$latitude  <- outOfModule$latitude
-    current_values$AnnTempRange  <- outOfModule$AnnTempRange
-    current_values$PrecSeasonality                   <- outOfModule$PrecSeasonality
-    current_values$PrecWarmQ                   <- outOfModule$PrecWarmQ
   })
 
   ## BIODIVERSITY
@@ -330,8 +320,8 @@ server <- function(input, output, session) {
       length(current_values$woody_veg) == current_values$patches &
       !any(is.na(current_values$woody_veg))
     ){
-      preddata <- compute_prediction_data(model_data, current_values, new_data_mean,
-                                          data$points, data$selected_region)
+      print(current_values)
+      preddata <- compute_prediction_data(model_data, current_values, new_data_mean)
       data$species_predictions <- preddata$species_predictions
       data$species_richness <- preddata$species_richness
 

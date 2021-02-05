@@ -97,7 +97,10 @@ selectlocationServer <- function(id){
             # add climate data
             climate_row <- which(outOfModule$points$label == outOfModule$selected_region)
             outOfModule$AnnPrec <- outOfModule$points$AnnPrec[climate_row]
-            outOfModule$PrecSeasonality <- outOfModule$points$PrecSeasonality[climate_row]
+            outOfModule$MaxTWarmMonth = outOfModule$points$MaxTWarmMonth[climate_row]
+            outOfModule$MinTColdMonth = outOfModule$points$MinTColdMonth[climate_row]
+            outOfModule$PrecSeasonality = outOfModule$points$PrecSeasonality[climate_row]
+            outOfModule$latitude = outOfModule$points$latitude[climate_row]
           }
         })
         

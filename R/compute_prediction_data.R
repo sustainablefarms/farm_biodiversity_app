@@ -1,10 +1,7 @@
 
-compute_prediction_data <- function(model_data, current_values, new_data_mean,
-                                    points, selected_region){
-  # points <- data$points; selected_region <- data$selected_region;
+compute_prediction_data <- function(model_data, current_values, new_data_mean){
   # current_values <- reactiveValuesToList(current_values)
-  new_data <- newXocc_fromselected(model_data, current_values,
-                                   points, selected_region)
+  new_data <- newXocc_fromselected(current_values)
   prediction_current_wlimits = msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
                                                                             new_data)
   species_prediction_df <- data.frame(
