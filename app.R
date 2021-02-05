@@ -319,20 +319,17 @@ server <- function(input, output, session) {
   ## REGION
   outOfModule <- selectlocationServer("location")
   observe({
-    if(length(outOfModule$selected_region) > 0)
-      print(outOfModule)
+    data$selected_region <- outOfModule$selected_region
+    current_values$AnnPrec <- outOfModule$AnnPrec
+    data$points <- outOfModule$points
+    current_values$MaxTWarmMonth                   <- outOfModule$MaxTWarmMonth
+    current_values$MinTColdMonth                   <- outOfModule$MinTColdMonth
+    current_values$PrecSeasonality                   <- outOfModule$PrecSeasonality
+    current_values$latitude  <- outOfModule$latitude
+    current_values$AnnTempRange  <- outOfModule$AnnTempRange
+    current_values$PrecSeasonality                   <- outOfModule$PrecSeasonality
+    current_values$PrecWarmQ                   <- outOfModule$PrecWarmQ
   })
-  observe({data$selected_region <- outOfModule$selected_region})
-  observe({current_values$AnnPrec <- outOfModule$AnnPrec})
-  observe({
-  data$points <- outOfModule$points
-  current_values$MaxTWarmMonth                   <- outOfModule$MaxTWarmMonth
-  current_values$MinTColdMonth                   <- outOfModule$MinTColdMonth
-  current_values$PrecSeasonality                   <- outOfModule$PrecSeasonality
-  current_values$latitude  <- outOfModule$latitude
-  current_values$AnnTempRange  <- outOfModule$AnnTempRange
-  current_values$PrecSeasonality                   <- outOfModule$PrecSeasonality
-  current_values$PrecWarmQ                   <- outOfModule$PrecWarmQ})
 
 
   ## CLIMATE
