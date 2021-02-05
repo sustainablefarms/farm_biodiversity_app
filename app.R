@@ -55,14 +55,6 @@ ui <- fluidPage(
   column(width = 1),
   column(width = 3,
     selectlocationUI("location"),
-    column(width = 6,
-      uiOutput("show_maxtemp"),
-      uiOutput("show_mintemp")
-    ),
-    column(width = 6,
-      uiOutput("show_precip"),
-      uiOutput("show_precseason")
-    )
     # plotOutput("climate", height = "300px")
   ),
   column(width = 1),
@@ -330,101 +322,6 @@ server <- function(input, output, session) {
     current_values$PrecSeasonality                   <- outOfModule$PrecSeasonality
     current_values$PrecWarmQ                   <- outOfModule$PrecWarmQ
   })
-
-
-  ## CLIMATE
-  output$show_maxtemp <- renderUI({
-    if(length(data$selected_region) > 0){
-      actionButton2(
-        inputId = "show_maxtemp_modal",
-        label = HTML(paste0(
-          "Maximum<br>Temperature<h3>",
-          round(current_values$MaxTColdMonth * 0.1, 1),
-          "&deg;C</h3>")),
-        class = "badge",
-        width = "100%"
-      )
-    }
-  })
-
-  output$show_mintemp <- renderUI({
-    if(length(data$selected_region) > 0){
-      actionButton2(
-        inputId = "show_mintemp_modal",
-        label = HTML(paste0(
-          "Minimum<br>Temperature<h3>",
-          format(current_values$MinTColdMonth * 0.1, digits = 3, trim = TRUE),
-          "&deg;C</h3>")),
-        class = "badge",
-        width = "100%"
-      )
-    }
-  })
-
-  output$show_precip <- renderUI({
-    if(length(data$selected_region) > 0){
-      actionButton2(
-        inputId = "show_precip_modal",
-        label = HTML(paste0(
-          "Annual<br>Preciptiation<h3>",
-          current_values$AnnPrec,
-          "mm</h3>")),
-        class = "badge",
-        width = "100%"
-      )
-    }
-  })
-
-  output$show_precseason <- renderUI({
-    if(length(data$selected_region) > 0){
-      actionButton2(
-        inputId = "show_precseason_modal",
-        label = HTML(paste0(
-          "Precipitation<br>Seasonality<h3>",
-          current_values$PrecSeasonality,
-          "</h3>")),
-        class = "badge",
-        width = "100%"
-      )
-    }
-  })
-
-  output$climate_plot <- renderPlot({
-    if(!is.null(click_values$climate)){
-      climate_plot(
-        data = data$points,
-        variable = click_values$climate,
-        region = data$selected_region,
-        title = click_values$climate_title)
-    }
-  })
-  # run a different modal for each climate variable
-  observeEvent(input$show_maxtemp_modal, {
-    validate(need(data$selected_region, ""))
-    click_values$climate <- "MaxTWarmMonth"
-    click_values$climate_title <- "Maximum temperature (Celsius)"
-    climate_modal()
-  })
-  observeEvent(input$show_mintemp_modal, {
-    validate(need(data$selected_region, ""))
-    click_values$climate <- "MinTColdMonth"
-    click_values$climate_title <- "Minimum temperature (Celsius)"
-    climate_modal()
-  })
-  observeEvent(input$show_precip_modal, {
-    validate(need(data$selected_region, ""))
-    click_values$climate <- "AnnPrec"
-    click_values$climate_title <- "Annual precipitation (mm)"
-    climate_modal()
-  })
-  observeEvent(input$show_precseason_modal, {
-    validate(need(data$selected_region, ""))
-    click_values$climate <- "PrecSeasonality"
-    click_values$climate_title <- "Precipitation seasonality"
-    climate_modal()
-  })
-
-
 
   ## BIODIVERSITY
   observe({

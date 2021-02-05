@@ -13,7 +13,16 @@ selectlocationUI <- function(id){
          plotlyOutput(ns("plot_points"), height = "200px"),
          plotOutput(ns("map"), height = "200px"),
          # HTML("<div class='subheader'><h2>CLIMATE</h2></div>"),
-         HTML("<br>"))
+         HTML("<br>"),
+         column(width = 6,
+              uiOutput(ns("show_maxtemp")),
+              uiOutput(ns("show_mintemp"))
+            ),
+            column(width = 6,
+              uiOutput(ns("show_precip")),
+              uiOutput(ns("show_precseason"))
+            )
+         )
 }
 
 selectlocationServer <- function(id){
@@ -38,6 +47,9 @@ selectlocationServer <- function(id){
         PrecSeasonality = NULL,
         PrecWarmQ = NULL
       )
+      click_values <- reactiveValues(
+        climate = NULL,
+        climate_title = NULL)
       
       
       observeEvent(input$spatial_type, {
@@ -106,6 +118,101 @@ selectlocationServer <- function(id){
             theme_void()
         })
       })
+      
+  ## CLIMATE buttons and plots
+      ns <- session$ns
+  output$show_maxtemp <- renderUI({
+    if(length(outOfModule$selected_region) > 0){
+      actionButton2(
+        inputId = ns("show_maxtemp_modal"),
+        label = HTML(paste0(
+          "Maximum<br>Temperature<h3>",
+          round(outOfModule$MaxTColdMonth * 0.1, 1),
+          "&deg;C</h3>")),
+        class = "badge",
+        width = "100%"
+      )
+    }
+  })
+
+  output$show_mintemp <- renderUI({
+    if(length(outOfModule$selected_region) > 0){
+      actionButton2(
+        inputId = ns("show_mintemp_modal"),
+        label = HTML(paste0(
+          "Minimum<br>Temperature<h3>",
+          format(outOfModule$MinTColdMonth * 0.1, digits = 3, trim = TRUE),
+          "&deg;C</h3>")),
+        class = "badge",
+        width = "100%"
+      )
+    }
+  })
+
+  output$show_precip <- renderUI({
+    if(length(outOfModule$selected_region) > 0){
+      actionButton2(
+        inputId = ns("show_precip_modal"),
+        label = HTML(paste0(
+          "Annual<br>Preciptiation<h3>",
+          outOfModule$AnnPrec,
+          "mm</h3>")),
+        class = "badge",
+        width = "100%"
+      )
+    }
+  })
+
+  output$show_precseason <- renderUI({
+    if(length(outOfModule$selected_region) > 0){
+      actionButton2(
+        inputId = ns("show_precseason_modal"),
+        label = HTML(paste0(
+          "Precipitation<br>Seasonality<h3>",
+          outOfModule$PrecSeasonality,
+          "</h3>")),
+        class = "badge",
+        width = "100%"
+      )
+    }
+  })
+
+  output$climate_plot <- renderPlot({
+    if(!is.null(click_values$climate)){
+      climate_plot(
+        data = outOfModule$points,
+        variable = click_values$climate,
+        region = outOfModule$selected_region,
+        title = click_values$climate_title)
+    }
+  })
+  # run a different modal for each climate variable
+  observeEvent(input$show_maxtemp_modal, {
+    validate(need(outOfModule$selected_region, ""))
+    click_values$climate <- "MaxTWarmMonth"
+    click_values$climate_title <- "Maximum temperature (Celsius)"
+    climate_modal(ns)
+  })
+  observeEvent(input$show_mintemp_modal, {
+    validate(need(outOfModule$selected_region, ""))
+    click_values$climate <- "MinTColdMonth"
+    click_values$climate_title <- "Minimum temperature (Celsius)"
+    climate_modal(ns)
+  })
+  observeEvent(input$show_precip_modal, {
+    validate(need(outOfModule$selected_region, ""))
+    click_values$climate <- "AnnPrec"
+    click_values$climate_title <- "Annual precipitation (mm)"
+    climate_modal(ns)
+  })
+  observeEvent(input$show_precseason_modal, {
+    validate(need(outOfModule$selected_region, ""))
+    click_values$climate <- "PrecSeasonality"
+    click_values$climate_title <- "Precipitation seasonality"
+    climate_modal(ns)
+  })
+      
+      
       outOfModule
     }
   )

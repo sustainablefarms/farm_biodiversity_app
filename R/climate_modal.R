@@ -1,7 +1,7 @@
-climate_modal <- function(){
+climate_modal <- function(ns){
   showModal(
     modalDialog(
-      plotOutput("climate_plot"),
+      plotOutput(ns("climate_plot")),
       footer = NULL,
       easyClose = TRUE
     )
