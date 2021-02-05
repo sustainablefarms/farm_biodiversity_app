@@ -90,6 +90,7 @@ server <- function(input, output, session) {
 
   # 2. reactive values
   data <- reactiveValues(
+    selected_region = NULL,
     species_predictions = NULL)
   current_values <- reactiveValues(
     patches = 1,
@@ -106,17 +107,6 @@ server <- function(input, output, session) {
     AnnTempRange = NULL,
     PrecSeasonality = NULL,
     PrecWarmQ = NULL)
-  previous_values <- reactiveValues(
-    patches = 1,
-    patch_buttons = c(0),
-    selected_patch = NULL)
-  update <- reactiveValues(
-    add_logical = FALSE,
-    add_values = NULL,
-    remove_logical = FALSE,
-    remove_values = NULL)
-  click_values <- reactiveValues(
-    patches = NULL)
 
   frompatch <- selectpatchServer("patch")
   observe({
