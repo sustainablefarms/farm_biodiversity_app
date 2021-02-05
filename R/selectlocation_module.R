@@ -130,7 +130,7 @@ selectlocationServer <- function(id){
         inputId = ns("show_maxtemp_modal"),
         label = HTML(paste0(
           "Maximum<br>Temperature<h3>",
-          round(outOfModule$MaxTColdMonth * 0.1, 1),
+          round(outOfModule$MaxTWarmMonth * 0.1, 1),
           "&deg;C</h3>")),
         class = "badge",
         width = "100%"
