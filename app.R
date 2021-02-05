@@ -120,7 +120,7 @@ server <- function(input, output, session) {
   })
 
   ## PREDICTIONS
-  predictionsServer("pred", data, current_values,
+  predictionsServer("pred", reactive(data$selected_region), current_values,
                     model_data, new_data_mean)
 
 } # end server

@@ -17,31 +17,29 @@ predictionsUI <- function(id){
 }
 
 predictionsServer <- function(id, 
-                              data,
+                              selected_region,
                               current_values,
                               model_data,
                               new_data_mean){
   moduleServer(
     id,
     function(input, output, session){
-      # data <- reactiveValues(
-      #   species_predictions = NULL,
-      #   species_richness = NULL)
+      data <- reactiveValues(
+        species_predictions = NULL,
+        species_richness = NULL)
       ns <- session$ns
       
       observe({
         if(
-          length(data$selected_region) > 0 &
+          length(selected_region) > 0 &
           length(current_values$woody_veg) == current_values$patches &
           !any(is.na(current_values$woody_veg))
         ){
-          print(current_values)
           preddata <- compute_prediction_data(model_data, current_values, new_data_mean)
           data$species_predictions <- preddata$species_predictions
           data$species_richness <- preddata$species_richness
           
         }else{
-          print(data$selected_region)
           data$species_predictions <- NULL
           data$species_richness <- NULL
         }
