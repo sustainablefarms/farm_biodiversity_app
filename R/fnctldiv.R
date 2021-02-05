@@ -35,9 +35,8 @@
 # fd_meansite$V <- NULL
 # saveRDS(fd_meansite, file = "./data/saved_meansite_fctldiv.rds")
 
-functdivplot <- function(model_data, current_values, points, selected_region){
-  newXocc <- newXocc_fromselected(model_data, current_values,
-                                  points, selected_region)
+functdivplot <- function(model_data, current_values){
+  newXocc <- newXocc_fromselected(current_values)
   traits <- readRDS("./data/processedtraits.rds")
   fd_meansite <- readRDS("./data/saved_meansite_fctldiv.rds")
   pocc <- msod::apply_to_new_data(msod::poccupy, model_data, newXocc,
