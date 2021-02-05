@@ -73,7 +73,6 @@ predictionsServer <- function(id,
       observeEvent(input$moredetail, {
         showModal(modalDialog(
           plotOutput(ns("species_probInModal")),
-          plotOutput(ns("functdivplot")),
           title = "More Detail on Predictions",
           footer = tagList(
             actionButton(ns("hide"), "Hide"),
@@ -86,12 +85,7 @@ predictionsServer <- function(id,
       )
       
       output$species_probInModal <- renderPlot({
-        species_ggplotInModal(model_data, current_values, new_data_mean,
-                              data$points, selected_region)
-      })
-      output$functdivplot <- renderPlot({
-        functdivplot(model_data, current_values, 
-                     data$points, selected_region)[[2]]
+        species_ggplotInModal(model_data, current_values, new_data_mean)
       })
     })
 }

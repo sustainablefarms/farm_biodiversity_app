@@ -14,7 +14,12 @@ species_ggplot <- function(df, title = "", add_plus = FALSE, errorbar = FALSE){
 
   plot <- ggplot(df,
     aes(x = species, y = value, fill = value)) +
-    geom_bar(stat = "identity") +
+    geom_bar(stat = "identity")
+  if (errorbar){
+    plot <- plot + geom_errorbar(aes(ymin = lower, ymax = upper),
+                                 width = 0.3)
+  }
+  plot <- plot +
     geom_text(aes(y = 0, label = paste0("  ", species)),
       size = 4, color = "white", hjust = 0) +
     geom_text(aes(y = value, label = label, color = value),
@@ -27,17 +32,12 @@ species_ggplot <- function(df, title = "", add_plus = FALSE, errorbar = FALSE){
     ggtitle(title) +
     theme(legend.position = "none")
   
-  if (errorbar){
-    plot <- plot + geom_errorbar(aes(ymin = lower, ymax = upper))
-  }
 
   return(plot)
 }
 
-species_ggplotInModal <- function(model_data, current_values, new_data_mean,
-                           points, selected_region){
-  newXocc <- newXocc_fromselected(model_data, current_values,
-                                   points, selected_region)
+species_ggplotInModal <- function(model_data, current_values, new_data_mean){
+  newXocc <- newXocc_fromselected(current_values)
   prediction_current_wlimits = data.frame(msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
                                                                                        newXocc))
   prediction_current_wlimits$species = rownames(prediction_current_wlimits)
