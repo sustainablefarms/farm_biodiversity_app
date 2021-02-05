@@ -318,16 +318,21 @@ server <- function(input, output, session) {
 
   ## REGION
   outOfModule <- selectlocationServer("location")
-  reactive({data$selected_region <- outOfModule$selected_region
-  current_values$AnnPrec                   <- outofModule$AnnPrec
-  current_values$MaxTWarmMonth                   <- outofModule$MaxTWarmMonth
-  current_values$MinTColdMonth                   <- outofModule$MinTColdMonth
-  current_values$PrecSeasonality                   <- outofModule$PrecSeasonality
-  current_values$latitude  <- outofModule$latitude
-  current_values$AnnPrec                   <- outofModule$AnnPrec
-  current_values$AnnTempRange  <- outofModule$AnnTempRange
-  current_values$PrecSeasonality                   <- outofModule$PrecSeasonality
-  current_values$PrecWarmQ                   <- outofModule$PrecWarmQ})
+  observe({
+    if(length(outOfModule$selected_region) > 0)
+      print(outOfModule)
+  })
+  observe({data$selected_region <- outOfModule$selected_region})
+  observe({current_values$AnnPrec <- outOfModule$AnnPrec})
+  observe({
+  data$points <- outOfModule$points
+  current_values$MaxTWarmMonth                   <- outOfModule$MaxTWarmMonth
+  current_values$MinTColdMonth                   <- outOfModule$MinTColdMonth
+  current_values$PrecSeasonality                   <- outOfModule$PrecSeasonality
+  current_values$latitude  <- outOfModule$latitude
+  current_values$AnnTempRange  <- outOfModule$AnnTempRange
+  current_values$PrecSeasonality                   <- outOfModule$PrecSeasonality
+  current_values$PrecWarmQ                   <- outOfModule$PrecWarmQ})
 
 
   ## CLIMATE

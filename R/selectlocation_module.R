@@ -22,11 +22,11 @@ selectlocationServer <- function(id){
     function(input, output, session){
       # set up reactive values
       data <- reactiveValues(
-        points = NULL,
         climate = NULL,
         polygons = NULL
         )
       outOfModule <- reactiveValues(
+        points = NULL,
         selected_region = c(),
         AnnPrec = NULL,
         MaxTWarmMonth = NULL,
@@ -42,15 +42,15 @@ selectlocationServer <- function(id){
       
       observeEvent(input$spatial_type, {
         if(input$spatial_type != "none"){
-          data$points <- readRDS("data/sa2_points_climate.rds")
+          outOfModule$points <- readRDS("data/sa2_points_climate.rds")
         }
         # draw a scatterplot of the centroids of selected zones
         output$plot_points <- renderPlotly({
           validate(
-            need(data$points, "")
+            need(outOfModule$points, "")
           )
           plot_ly(
-            data$points,
+            outOfModule$points,
             x = ~longitude,
             y = ~latitude,
             type = "scatter",
@@ -76,16 +76,16 @@ selectlocationServer <- function(id){
         
         # observe clicks on the region plot
         observe({
-          if(!is.null(data$points)){
+          if(!is.null(outOfModule$points)){
             click_region <- event_data(
               event = "plotly_click",
               source = "region_map"
             )$pointNumber + 1 # Note: plotly uses Python-style indexing, hence +1
-            outOfModule$selected_region <- data$points$label[click_region]
+            outOfModule$selected_region <- outOfModule$points$label[click_region]
             # add climate data
-            climate_row <- which(data$points$label == outOfModule$selected_region)
-            outOfModule$AnnPrec <- data$points$AnnPrec[climate_row]
-            outOfModule$PrecSeasonality <- data$points$PrecSeasonality[climate_row]
+            climate_row <- which(outOfModule$points$label == outOfModule$selected_region)
+            outOfModule$AnnPrec <- outOfModule$points$AnnPrec[climate_row]
+            outOfModule$PrecSeasonality <- outOfModule$points$PrecSeasonality[climate_row]
           }
         })
         
@@ -93,7 +93,7 @@ selectlocationServer <- function(id){
         output$map <- renderPlot({
           validate(need(outOfModule$selected_region, ""))
           data$polygons <- readRDS("data/sa2_polygons.rds")
-          map_text <- data$points[data$points$label == outOfModule$selected_region, ]
+          map_text <- outOfModule$points[outOfModule$points$label == outOfModule$selected_region, ]
           map_text$label <- paste(strsplit(map_text$label, " ")[[1]], collapse = "\n")
           ggplot(data$polygons[data$polygons$SA2_NAME16 == outOfModule$selected_region, ]) +
             geom_sf(fill = "grey90", color = "grey30") +
@@ -106,7 +106,7 @@ selectlocationServer <- function(id){
             theme_void()
         })
       })
-      return(outOfModule)
+      outOfModule
     }
   )
 }
