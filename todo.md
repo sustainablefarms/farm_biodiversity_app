@@ -1,22 +1,25 @@
 ---get suggestions from summary of minutes too---
 
-+ climate variables are in mm, not ml
-+ Ask Dan for patch areas, to look for maximum in our data
-
+# Inputs
++ use photos for midstorey (all veg surveys had 1 - 2 photos)
 + Include link to woody veg data in the woody veg tool tip
+
+
+# Caveats
++ Ask Dan for patch areas, to look for maximum in our data
 + Investigate and comment on difference between quadrat method and point-intersect method
-
 + patch definition: make clear that it is for our model, not a general definition of patch
-
 + __spring birds__, not winter birds
 
+# Outputs
 + add description of error bars as popup
-+ more vegetation, less vegetation
-+ Striated Thornbill is too big for plot in Tumut on default patch info!
-
 + for relative probability: show what the baseline is. Relative to what!?
++ print out results
 
-+ use SF colors
+# Overall
++ Colors:
+  + change color schemes to make titles easier to read?
+  + use SF colors
 
 --- 
 ## Love to do
