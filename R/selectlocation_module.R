@@ -3,13 +3,13 @@ selectlocationUI <- function(id){
   ns <- NS(id)
   tagList(
          HTML("<div class='subheader'><h2>REGION</h2></div>"),
-         selectInput(
-           inputId = ns("spatial_type"),
-           label = NULL,
-           choices = list(
-             "ABS SA2 regions" = "abs_sa2",
-             "Federal Electorates" = "electorates_federal"),
-           width = "100%"),
+         # selectInput(
+         #   inputId = ns("spatial_type"),
+         #   label = NULL,
+         #   choices = list(
+         #     "ABS SA2 regions" = "abs_sa2",
+         #     "Federal Electorates" = "electorates_federal"),
+         #   width = "100%"),
          plotlyOutput(ns("plot_points"), height = "200px"),
          plotOutput(ns("map"), height = "200px"),
          # HTML("<div class='subheader'><h2>CLIMATE</h2></div>"),
@@ -52,10 +52,10 @@ selectlocationServer <- function(id){
         climate_title = NULL)
       
       
-      observeEvent(input$spatial_type, {
-        if(input$spatial_type != "none"){
+      # observeEvent(input$spatial_type, {
+        # if(input$spatial_type != "none"){
           outOfModule$points <- readRDS("data/sa2_points_climate.rds")
-        }
+        # }
         # draw a scatterplot of the centroids of selected zones
         output$plot_points <- renderPlotly({
           validate(
@@ -120,7 +120,7 @@ selectlocationServer <- function(id){
             ) +
             theme_void()
         })
-      })
+      # })
       
   ## CLIMATE buttons and plots
       ns <- session$ns
