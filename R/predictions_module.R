@@ -31,7 +31,7 @@ predictionsServer <- function(id,
       
       observe({
         if(
-          length(selected_region) > 0 &
+          length(current_values$AnnPrec) > 0 & #this is here because for some reason selected_region doesn't work
           length(current_values$woody_veg) == current_values$patches &
           !any(is.na(current_values$woody_veg))
         ){
