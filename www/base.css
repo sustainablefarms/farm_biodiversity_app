@@ -14,10 +14,6 @@ div.subheader {
   background-color: #006666;
 }
 
-div.plotheader {
-  background-color: #ffffff;
-}
-
 .main {
   text-align: center;
   font-size: 250%;
@@ -41,11 +37,6 @@ h3 {
   color: white;
 }
 
-h4 {
-  text-align: left
-  font-size: 150%;
-  color: black;
-}
 
 .irs-bar {
   background: #bfbfbf;
