@@ -10,13 +10,31 @@ plot_ly(data = data,
         y = ~species,
         x = ~value,
         color = ~value,
-        text = paste0(round(data$value, digits = 2) * 100, "%"),
-        textposition = 'auto',
-        hovertemplate = paste('<i>Bird information for</i>: %species'),
+        marker = list(colorscale = "Blues", #"[[0, 'rgb(0,0,255)'], [1, 'rgb(14, 17, 60)']]", 
+                      reversescale = TRUE, cmax = 1.2), #cmin = 0, cmax = 1),
+        # text = paste0(round(data$value, digits = 2) * 100, "%"),
+        text = data$tooltip,
+        # hoverinfo = 'text',
+        # textposition = 'auto',
+        hovertemplate = paste('<b>%{text}</b><extra></extra>'), #the <extra></extra> removes the 'trace 0' extra information
         error_x = ~list(type = 'data',
           array = upper - value,
           arrayminus = value - lower,
           symmetric = FALSE,
           color = '#000000'),
         type = "bar") %>%
-  layout(yaxis = ~list(categoryorder = "array", categoryarray = value))
+  add_annotations(x  = ~value, 
+                  y = ~species, 
+                  text = ~paste0(round(value, digits = 2) * 100, "%"),
+                  showarrow = FALSE) %>%
+  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed")) %>%
+  hide_colorbar()
+
+plot_ly(data = data,
+        y = ~species,
+        x = ~value,
+        text = paste0(round(data$value, digits = 2) * 100, "%"),
+        hovertemplate = paste('<b>%{text}</b>'),
+        type = "bar") %>%
+  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed")) %>%
+  hide_colorbar()
