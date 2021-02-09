@@ -49,7 +49,7 @@ ui <- fluidPage(
   ")),
   column(width = 10, offset = 0, HTML("
     <span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>
-    <span class='subtitle'><br>Version 0.1 (DRAFT). By Martin Westgate & Kassel Hingee</span>
+    <span class='subtitle'><br>Version 0.2 (DRAFT). By Martin Westgate & Kassel Hingee</span>
   "))),
   HTML("</div>"),
   column(width = 1),
@@ -67,7 +67,8 @@ ui <- fluidPage(
     )
   ),
   title = "SF Model Visualiser",
-  theme = shinytheme("lumen")
+  theme = bslib::bs_theme(version = 3, "lumen")
+  # theme = shinytheme("lumen")
 )
 
 # SERVER
