@@ -7,22 +7,22 @@ img.logo {
 }
 
 div.header {
-  background-color: #9c9c9c;
+  background-color: #ffffff;
 }
 
 div.subheader {
-  background-color: #d9d9d9;
+  background-color: #006666;
 }
 
 .main {
   text-align: center;
   font-size: 250%;
-  color: white;
+  color: #006666;
 }
 
 .subtitle {
   font-size: 120%;
-  color: #c7c5c5;
+  color: #0e113c;
 }
 
 h2 {
@@ -69,7 +69,7 @@ h3 {
 .badge {
   border: none;
   color: white;
-  background-color: #4e839c;
+  background-color: #178BCA;
   text-align: center;
   font-size: 16px;
   margin: 5px;
@@ -83,7 +83,7 @@ h3 {
 .badge_small {
   border: none;
   color: white;
-  background-color: #4e839c;
+  background-color: #178BCA;
   text-align: center;
   font-size: 16px;
   margin: 5px;
@@ -97,7 +97,7 @@ h3 {
 .patch_badge {
   border: none;
   color: white;
-  background-color: #4e9c63;
+  background-color: #178BCA;
   text-align: center;
   font-size: 16px;
   margin: 5px;
