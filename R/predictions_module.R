@@ -3,7 +3,7 @@ predictionsUI <- function(id){
   ns <- NS(id)
   tagList(
       HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
-      actionButton(ns("moredetail"), "View More Detail"),
+      uiOutput(ns("species_richness_title")),
       plotOutput(ns("species_richness"), height = "200px"),
       fluidRow(
         column(width = 6, # first biodiversity plot
@@ -44,6 +44,12 @@ predictionsServer <- function(id,
           data$species_predictions <- NULL
           data$species_richness <- NULL
         }
+      })
+      
+      
+      output$species_richness_title <- renderUI({
+        validate(need(data$species_predictions, ""))
+        actionButton(ns("moredetail"), "View More Detail")
       })
       
       # draw species plots
