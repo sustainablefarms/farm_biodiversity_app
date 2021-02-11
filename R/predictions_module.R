@@ -17,7 +17,6 @@ predictionsUI <- function(id){
 }
 
 predictionsServer <- function(id, 
-                              selected_region,
                               current_values,
                               model_data,
                               new_data_mean){
