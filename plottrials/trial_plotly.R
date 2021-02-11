@@ -23,18 +23,13 @@ plot_ly(data = data,
           symmetric = FALSE,
           color = '#000000'),
         type = "bar") %>%
-  add_annotations(x  = ~value, 
+  add_annotations(x  = ~lower, 
                   y = ~species, 
                   text = ~paste0(round(value, digits = 2) * 100, "%"),
+                  xanchor = "right",
+                  xshift = -3,
+                  bgcolor = "rgba(255,255,255,1)",
                   showarrow = FALSE) %>%
-  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed")) %>%
-  hide_colorbar()
-
-plot_ly(data = data,
-        y = ~species,
-        x = ~value,
-        text = paste0(round(data$value, digits = 2) * 100, "%"),
-        hovertemplate = paste('<b>%{text}</b>'),
-        type = "bar") %>%
-  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed")) %>%
+  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed", title = "")) %>%
+  layout(xaxis = list(title = "")) %>%
   hide_colorbar()
