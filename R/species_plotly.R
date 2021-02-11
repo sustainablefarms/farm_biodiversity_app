@@ -49,7 +49,8 @@ species_plotly_common <- function(df){
                     showarrow = FALSE,
                     showlegend = FALSE) %>%
   # alter order
-  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed")) 
+  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed"))
+  #despite the descriptions, the above line actually seems to order things as they are given in df
 }
 
 species_plotly_different <- function(df){
@@ -75,5 +76,47 @@ species_plotly_both <- function(species_prob_current, spec_different){
   cmn <- species_plotly_common(tocommon(species_prob_current))
   dft <- species_plotly_different(spec_different)
   subplot(cmn, dft) %>%
+    config(displayModeBar = FALSE)
+}
+
+species_plotly_modal <- function(species_prob_current, spec_different){
+  species_prob_current <- data.frame(species = rownames(species_prob_current), species_prob_current)
+  
+  df_both <- dplyr::full_join(species_prob_current, spec_different, by = "species", suffix = c(".cur", ".ref"))
+  
+  traits <- read.csv("../sflddata/private/data/raw/Australian_Bird_Data_Version_1.csv", 
+                     stringsAsFactors = FALSE) %>%
+    dplyr::filter(X3_Taxon_common_name_2 %in% rownames(species_prob_current)) %>%
+    dplyr::select(`Common Name` = X3_Taxon_common_name_2,
+                  `Scientific Name` = X7_Taxon_scientific_name_CandB_2, 
+                  `Body Length` = X96_Body_length_8,
+                  `Body Mass` = X99_Body_mass_average_8) %>%
+    dplyr::mutate(`Body Length` = as.numeric(`Body Length`),
+                  `Body Mass` = as.numeric(`Body Mass`)) 
+  df_both <- dplyr::left_join(df_both, traits, by = c(species = "Common Name"))
+  
+  # arrange input data frames
+  df_both <- df_both %>% dplyr::arrange(- `Body Length`)
+  
+  df_probs <- df_both[, c("species", "lower", "upper", "value.cur", "bestsite", "Body Length", "Body Mass")]
+  colnames(df_probs)[4] <- "value"
+  
+
+  probsplt <- plot_ly_specroot(df_probs) %>%
+    # add error bars
+    style(error_x = list(visible = TRUE,
+                         type = 'data',
+                         array = df_probs$upper - df_probs$value,
+                         arrayminus = df_probs$value - df_probs$lower,
+                         symmetric = FALSE,
+                         color = '#000000')) %>%
+    layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = TRUE))
+  
+  df_ratio <- df_both[, c("species", "lower", "upper", "value", "bestsite", "Body Length", "Body Mass")]
+  colnames(df_ratio)[4] <- "value"
+  ratioplt <- plot_ly_specroot(df_ratio) %>%
+    layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = TRUE))
+  
+  subplot(probsplt, ratioplt, shareY = TRUE) %>%
     config(displayModeBar = FALSE)
 }

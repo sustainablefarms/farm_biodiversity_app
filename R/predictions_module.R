@@ -74,7 +74,7 @@ predictionsServer <- function(id,
       # modal more detail stuff
       observeEvent(input$moredetail, {
         showModal(modalDialog(
-          plotOutput(ns("species_probInModal"), height = "800px"),
+          plotlyOutput(ns("species_InModal"), height = "800px"),
           title = "More Detail on Predictions",
           size = "l",
           footer = tagList(
@@ -87,8 +87,8 @@ predictionsServer <- function(id,
                    removeModal()
       )
       
-      output$species_probInModal <- renderPlot({
-        species_ggplotInModal(model_data, current_values, new_data_mean)
+      output$species_InModal <- renderPlotly({
+        species_plotly_modal(data$species_prob_current, data$spec_different)
       })
     })
 }
