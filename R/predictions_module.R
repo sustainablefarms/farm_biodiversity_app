@@ -7,7 +7,7 @@ predictionsUI <- function(id){
       plotOutput(ns("species_richness"), height = "200px"),
       fluidRow(
         column(width = 6, # first biodiversity plot
-          plotOutput(ns("common_species"), height = "300px")
+          plotlyOutput(ns("common_species"), height = "300px")
         ),
         column(width = 6,
           plotOutput(ns("different_species"), height = "300px")
@@ -53,9 +53,9 @@ predictionsServer <- function(id,
       })
       
       # draw species plots
-      output$common_species <- renderPlot({
+      output$common_species <- renderPlotly({
         validate(need(data$species_predictions, ""))
-        species_ggplot(
+        species_plotly(
           df = data$species_predictions$common,
           title = "Most likely species at any patch",
           add_plus = FALSE,
@@ -80,6 +80,7 @@ predictionsServer <- function(id,
         showModal(modalDialog(
           plotOutput(ns("species_probInModal")),
           title = "More Detail on Predictions",
+          size = "l",
           footer = tagList(
             actionButton(ns("hide"), "Hide"),
           )
