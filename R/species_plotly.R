@@ -66,7 +66,7 @@ species_plotly <- function(df, title = "", add_plus = FALSE, errorbar = FALSE){
                     xshift = 3,
                     font = list(color = "rgba(255,255,255,1)"),
                     showarrow = FALSE) %>%
-    layout(yaxis = ~list(categoryorder = "array", categoryarray = value, visible = FALSE)) %>%
+    layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed", visible = FALSE)) %>%
     layout(xaxis = list(visible = FALSE),
            margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
     hide_colorbar() %>%
