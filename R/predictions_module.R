@@ -78,7 +78,7 @@ predictionsServer <- function(id,
       # modal more detail stuff
       observeEvent(input$moredetail, {
         showModal(modalDialog(
-          plotOutput(ns("species_probInModal")),
+          plotOutput(ns("species_probInModal"), height = "800px"),
           title = "More Detail on Predictions",
           size = "l",
           footer = tagList(
