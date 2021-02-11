@@ -9,7 +9,27 @@ df$label <- paste0("", round(df$value * 100, 0), "%")
 
 df$tooltip <- paste0(df$species, " has some interest features.")
 
+traits <- read.csv("../sflddata/private/data/raw/Australian_Bird_Data_Version_1.csv", stringsAsFactors = FALSE)
+pltdata <- traits %>%
+  dplyr::filter(X3_Taxon_common_name_2 %in% df$species) %>%
+  dplyr::select(`Common Name` = X3_Taxon_common_name_2,
+                `Scientific Name` = X7_Taxon_scientific_name_CandB_2, 
+                `Body Length` = X96_Body_length_8,
+                `Body Mass` = X99_Body_mass_average_8) %>%
+  dplyr::mutate(`Body Length` = as.numeric(`Body Length`),
+                `Body Mass` = as.numeric(`Body Mass`)) %>%
+  dplyr::right_join(df, by = c(`Common Name` = "species"))
 
+colnames(pltdata)[[1]] <- "species"
+
+
+pltdata %>%
+  arrange(`Body Length`) %>%
+  plot_ly_specroot() %>%
+  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed"))
+
+plot_ly_specroot(df) %>%
+  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed"))
 
 plt1 <- plot_ly_specroot(df) %>%
   # add error bars
