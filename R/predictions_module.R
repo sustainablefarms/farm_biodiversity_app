@@ -6,11 +6,8 @@ predictionsUI <- function(id){
       uiOutput(ns("species_richness_title")),
       plotOutput(ns("species_richness"), height = "200px"),
       fluidRow(
-        column(width = 6, # first biodiversity plot
-          plotlyOutput(ns("common_species"), height = "300px")
-        ),
-        column(width = 6,
-          plotOutput(ns("different_species"), height = "300px")
+        column(width = 12, # first biodiversity plot
+          plotlyOutput(ns("common_dif_species"), height = "300px")
         )
       )
   )
@@ -60,21 +57,13 @@ predictionsServer <- function(id,
       })
       
       # draw species plots
-      output$common_species <- renderPlotly({
+      output$common_dif_species <- renderPlotly({
         validate(need(data$species_prob_current, ""))
-        species_plotly(
-          df = tocommon(data$species_prob_current),
-          title = "Most likely species at any patch",
-          add_plus = FALSE,
-          errorbar = TRUE)
+        species_plotly_both(
+          tocommon(data$species_prob_current),
+          data$spec_different)
       })
-      output$different_species <- renderPlot({
-        validate(need(data$spec_different, ""))
-        species_ggplot(
-          df = data$spec_different,
-          title = "Locally prevalent species",
-          add_plus = TRUE)
-      })
+
       
       # draw species richness
       output$species_richness <- renderPlot({

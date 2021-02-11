@@ -11,14 +11,7 @@ test_that("prediction plots for Gundagai and a single patch using plotly", {
                                                                    new_data_mean)
   spec_different <- todifferent(species_prob_current, species_prob_ref)
 
-
-  species_plotly(
-    df = tocommon(species_prob_current),
-    title = "Most likely species",
-    add_plus = FALSE,
-    errorbar = TRUE)
-  species_plotly(
-    df = spec_different,
-    title = "Locally prevalent species",
-    add_plus = TRUE)
+  species_plotly_common(tocommon(species_prob_current))
+  species_plotly_different(spec_different)
+  species_plotly_both(species_prob_current, spec_different)
 })
