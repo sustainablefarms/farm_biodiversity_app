@@ -41,6 +41,9 @@ species_ggplotInModal <- function(model_data, current_values, new_data_mean){
   prediction_current_wlimits = data.frame(msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
                                                                                        newXocc))
   prediction_current_wlimits$species = rownames(prediction_current_wlimits)
+  # prediction_of_mean = data.frame(msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
+  #                                                                              new_data_mean))
+  # prediction_of_mean$species = rownames(prediction_of_mean)
   
   traits <- read.csv("../sflddata/private/data/raw/Australian_Bird_Data_Version_1.csv", stringsAsFactors = FALSE)
   pltdata <- traits %>%
@@ -55,6 +58,9 @@ species_ggplotInModal <- function(model_data, current_values, new_data_mean){
   
   reorder(pltdata$`Common Name`, pltdata$`Body Length`)
   
+  # pltdata <- dplyr::left_join(pltdata, prediction_of_mean[, c("species", "median")], by = c(`Common Name` = "species"), suffix = c("", ".m")) %>%
+  #   dplyr::mutate(ratio = median / median.m)
+  
   plt <- pltdata %>%
     dplyr::mutate(`Common Name` =
                     reorder(as.factor(`Common Name`), `Body Length`)) %>%
@@ -63,15 +69,17 @@ species_ggplotInModal <- function(model_data, current_values, new_data_mean){
     # geom_text(aes(y = 0, label = paste0("  ", `Common Name`)),
     #           size = 1, color = "white", hjust = 0) +
     geom_bar(stat = "identity") +
-    geom_errorbar(aes(ymin = lower, ymax = upper)) +
+    geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.5) +
     # geom_text(aes(y = 0, label = paste0("  ", `Common Name`)),
     #           size = 1, color = "white", hjust = 0) +
     coord_flip(clip = "off") +
-    ylim(0,1) +
     # coord_polar() +
     scale_x_discrete(name = "Increasing Body Length ---->") +
     # scale_y_continuous(expand = c(0, 0)) +
-    theme_minimal() +
-    theme(legend.position = "none")
+    scale_y_continuous(limits = c(0, 1), expand = expansion()) +
+    theme_bw() +
+    theme(legend.position = "none",
+          axis.title.x = element_blank(),
+          panel.grid = element_blank())
   return(plt)
 }
