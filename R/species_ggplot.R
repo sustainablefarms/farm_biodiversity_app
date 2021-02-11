@@ -1,13 +1,14 @@
 # function to plot species barcharts
 species_ggplot <- function(df, title = "", add_plus = FALSE, errorbar = FALSE){
   set.seed(1)
+  df <- topnrows(df, 10, "value")
   df <- df[order(df$value), ]
   df$species <- factor(
     seq_len(10),
     levels = seq_len(10),
     labels = df$species)
   if(add_plus){
-    df$label <- paste0("  +", round(df$value * 100, 0), "%")
+    df$label <- paste0("  x", round(df$value * 100, 0), "%")
   }else{
     df$label <- paste0("  ", round(df$value * 100, 0), "%")
   }

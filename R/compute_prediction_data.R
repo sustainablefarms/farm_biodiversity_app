@@ -1,40 +1,46 @@
+tocommon <- function(species_prob_current){ #this function only changes column names and adds species name as a column
+  colnam <- colnames(species_prob_current)
+  colnames(species_prob_current) <- dplyr::case_when(
+    colnam == "median" ~ "value",
+    TRUE ~ colnam
+  )
 
-compute_prediction_data <- function(model_data, current_values, new_data_mean){
-  # current_values <- reactiveValuesToList(current_values)
-  new_data <- newXocc_fromselected(current_values)
-  prediction_current_wlimits = msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
-                                                                            new_data)
-  species_prediction_df <- data.frame(
-    species = model_data$species,
-    prediction_current = as.numeric(prediction_current_wlimits[, "median"]),
-    prediction_mean = as.numeric(msod::poccupancy_mostfavourablesite.jsodm_lv(
-      model_data,
-      new_data_mean)[, "median"]),
-    prediction_current_upper = as.numeric(prediction_current_wlimits[, "upper"]),
-    prediction_current_lower = as.numeric(prediction_current_wlimits[, "lower"]))
-  species_prediction_df$difference <- (species_prediction_df$prediction_current -
-                                         species_prediction_df$prediction_mean) / species_prediction_df$prediction_mean
+  sp_current <- data.frame(species = rownames(species_prob_current), species_prob_current)
+  return(sp_current)
+}
+
+todifferent <- function(species_prob_current, species_prob_ref){
+  colnam <- colnames(species_prob_current)
+  colnames(species_prob_current) <- dplyr::case_when(
+    colnam == "median" ~ "value",
+    TRUE ~ colnam
+  )
+  colnam <- colnames(species_prob_ref)
+  colnames(species_prob_ref) <- dplyr::case_when(
+    colnam == "median" ~ "value",
+    TRUE ~ colnam
+  )
   
-  # get dataset of top 10 most common species
-  sp_current <- species_prediction_df[
-    order(species_prediction_df$prediction_current, decreasing = TRUE)[1:10], c(1,2,4,5)]
-  colnames(sp_current)[2] <- "value"
-  colnames(sp_current)[3] <- "upper"
-  colnames(sp_current)[4] <- "lower"
+  species_prob_current <- data.frame(species = rownames(species_prob_current), value = species_prob_current[, "value"])
+  species_prob_ref <- data.frame(species = rownames(species_prob_ref), value = species_prob_ref[, "value"])
   
-  
-  # ditto for 'most different' species
-  sp_different <- species_prediction_df[
-    order(species_prediction_df$difference, decreasing = TRUE)[1:10], c(1, 4)]
-  colnames(sp_different)[2] <- "value"
-  
-  species_predictions <- list(
-    common = sp_current,
-    different = sp_different)
-  
+  sp_diff <- dplyr::inner_join(species_prob_current, species_prob_ref, by = "species", suffix = c(".cur", ".ref"))
+  sp_diff$value <- sp_diff$value.cur / sp_diff$value.ref
+  return(sp_diff)
+}
+
+#' @param df A matrix or data frame
+#' @param n The number of rows to extract, ordered by `rankingcolumn`
+#' @param rankingcolumn The values in `rankingcolumn` are used to order the rows.
+#' @description Returns the top `n` rows according to `rankingcolumn`
+topnrows <- function(df, n, rankingcolumn){
+  return(df[order(df[, rankingcolumn], decreasing = TRUE)[1:n], ])
+}
+
+compute_richness <- function(model_data, Xocc){
   # richness calculations
   # get richness
-  richness_data <- list(new_data, new_data, new_data)
+  richness_data <- list(low = Xocc, current = Xocc, high = Xocc)
   # richness_data[[1]]$NMdetected <- 0; richness_data[[3]]$NMdetected <- 1
   richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
   richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
@@ -50,9 +56,5 @@ compute_prediction_data <- function(model_data, current_values, new_data_mean){
   species_richness <- richness_df
   
   
-  return(
-    list(
-      species_predictions = species_predictions,
-      species_richness = species_richness
-  ))
+  return(species_richness)
 }

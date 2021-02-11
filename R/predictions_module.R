@@ -24,7 +24,9 @@ predictionsServer <- function(id,
     id,
     function(input, output, session){
       data <- reactiveValues(
-        species_predictions = NULL,
+        Xocc = NULL,
+        species_prob_current = NULL,
+        species_prob_ref = NULL,
         species_richness = NULL)
       ns <- session$ns
       
@@ -35,35 +37,41 @@ predictionsServer <- function(id,
           !any(is.na(current_values$woody_veg))
         ){
           # saveRDS(current_values, file = "current_values.rds"); stop("Saving current values - app is in debug mode and will end")
-          preddata <- compute_prediction_data(model_data, current_values, new_data_mean)
-          data$species_predictions <- preddata$species_predictions
-          data$species_richness <- preddata$species_richness
-          
+          data$Xocc <- newXocc_fromselected(current_values) 
+          data$species_prob_current <- msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
+                                                                                    data$Xocc)
+          data$species_prob_ref <- msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
+            new_data_mean)
+          data$spec_different <- todifferent(data$species_prob_current, data$species_prob_ref)
+          data$species_richness <- compute_richness(model_data, data$Xocc)
         }else{
-          data$species_predictions <- NULL
+          # data <- lapply(data, function(x) NULL)
+          data$Xocc <- NULL
+          data$species_prob_current <- NULL
+          data$species_prob_ref <- NULL
           data$species_richness <- NULL
         }
       })
       
       
       output$species_richness_title <- renderUI({
-        validate(need(data$species_predictions, ""))
+        validate(need(data$species_prob_current, ""))
         actionButton(ns("moredetail"), "View More Detail")
       })
       
       # draw species plots
       output$common_species <- renderPlotly({
-        validate(need(data$species_predictions, ""))
+        validate(need(data$species_prob_current, ""))
         species_plotly(
-          df = data$species_predictions$common,
+          df = tocommon(data$species_prob_current),
           title = "Most likely species at any patch",
           add_plus = FALSE,
           errorbar = TRUE)
       })
       output$different_species <- renderPlot({
-        validate(need(data$species_predictions, ""))
+        validate(need(data$spec_different, ""))
         species_ggplot(
-          df = data$species_predictions$different,
+          df = data$spec_different,
           title = "Locally prevalent species",
           add_plus = TRUE)
       })

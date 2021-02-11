@@ -1,6 +1,6 @@
 species_plotly <- function(df, title = "", add_plus = FALSE, errorbar = FALSE){
   set.seed(1)
-  df <- df[order(df$value), ]
+  df <- topnrows(df, 10, "value")
   # df$species <- factor(
   #   seq_len(10),
   #   levels = seq_len(10),
