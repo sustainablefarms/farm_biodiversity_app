@@ -8,14 +8,37 @@ df <- topnrows(tocommon(species_prob_current), 10, "value")
 df$label <- paste0("", round(df$value * 100, 0), "%")
 
 df$tooltip <- paste0(df$species, " has some interest features.")
-plot_ly(data = df) %>% #initiate plot
-  add_trace(type = "bar",  #make a bar plot
-            y = ~species,
-            x = ~value,
-            color = ~value,
-            marker = list(colorscale = "Blues", #"[[0, '#006666ff'], [1, '#178BCAff']]", 
-                          reversescale = TRUE, cmax = 1.2, cmin = 0.3) #cmin = 0, cmax = 1)
-            ) %>%
+
+plot_ly_specbyvalue <- function(df){
+  plot_ly(data = df) %>% #initiate plot
+    add_trace(type = "bar",  #make a bar plot
+              y = ~species,
+              x = ~value,
+              color = ~value,
+              marker = list(colorscale = "Blues", #"[[0, '#006666ff'], [1, '#178BCAff']]", 
+                            reversescale = TRUE, cmax = 1.2, cmin = 0.3), #cmin = 0, cmax = 1)
+              showlegend = FALSE
+              ) %>%
+    # tooltips
+    style(text = df$tooltip,
+      hovertemplate = paste('<b>%{text}</b><extra></extra>')) %>% #the <extra></extra> removes the 'trace 0' extra information
+    # add the species names
+    add_annotations(x  = 0, 
+                    y = ~species, 
+                    text = ~species,
+                    xanchor = "left",
+                    xshift = 3,
+                    font = list(color = "rgba(255,255,255,1)"),
+                    showarrow = FALSE) %>%
+    # alter layout
+    layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed", visible = FALSE)) %>%
+    layout(xaxis = list(visible = FALSE),
+           margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
+    hide_colorbar() %>%
+    config(displayModeBar = FALSE)
+}
+
+plt1 <- plot_ly_specbyvalue(df) %>%
   # add error bars
   style(error_x = list(visible = TRUE,
                         type = 'data',
@@ -30,20 +53,8 @@ plot_ly(data = df) %>% #initiate plot
                   xanchor = "right",
                   xshift = -3,
                   bgcolor = "rgba(255,255,255,1)",
-                  showarrow = FALSE) %>%
-  # add the species names
-  add_annotations(x  = 0, 
-                  y = ~species, 
-                  text = ~species,
-                  xanchor = "left",
-                  xshift = 3,
-                  font = list(color = "rgba(255,255,255,1)"),
-                  showarrow = FALSE) %>%
-  # alter layout
-  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed", visible = FALSE)) %>%
-  layout(xaxis = list(visible = FALSE),
-         margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
-  hide_colorbar() %>%
-  config(displayModeBar = FALSE)
-
+                  showarrow = FALSE,
+                  showlegend = FALSE)
+plt2 <- plot_ly_specbyvalue(df)
+subplot(plt1, plt2)
 
