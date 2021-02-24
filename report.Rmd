@@ -1,0 +1,9 @@
+---
+title: "Species Predictions"
+output: pdf_document
+---
+
+```{r species}
+species_plotly_modal(isolate(data$species_prob_current),
+                     isolate(data$spec_different))
+```

@@ -84,15 +84,6 @@ species_plotly_modal <- function(species_prob_current, spec_different){
   
   df_both <- dplyr::full_join(species_prob_current, spec_different, by = "species", suffix = c(".cur", ".ref"))
   
-  traits <- read.csv("../sflddata/private/data/raw/Australian_Bird_Data_Version_1.csv", 
-                     stringsAsFactors = FALSE) %>%
-    dplyr::filter(X3_Taxon_common_name_2 %in% rownames(species_prob_current)) %>%
-    dplyr::select(`Common Name` = X3_Taxon_common_name_2,
-                  `Scientific Name` = X7_Taxon_scientific_name_CandB_2, 
-                  `Body Length` = X96_Body_length_8,
-                  `Body Mass` = X99_Body_mass_average_8) %>%
-    dplyr::mutate(`Body Length` = as.numeric(`Body Length`),
-                  `Body Mass` = as.numeric(`Body Mass`)) 
   df_both <- dplyr::left_join(df_both, traits, by = c(species = "Common Name"))
   
   # arrange input data frames

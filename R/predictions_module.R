@@ -104,6 +104,23 @@ predictionsServer <- function(id,
           colnames(outdata)[colnames(outdata) == "bestsite"] <- "Patch"
           write.csv(outdata, file, row.names = FALSE)
         })
+      
+      output$downloadreport <- downloadHandler(
+        filename = "report.pdf",
+        content = function(file) {
+          id <- showNotification(
+            "Rendering report...",
+            duration = NULL,
+            closeButton = FALSE
+          )
+          on.exit(removeNotification(id), add = TRUE)
+          
+          rmarkdown::render(input = report_path, 
+                            output_file = file,
+                            envir = new.env(parent = parent.frame())
+          )
+        }
+      )
     })
 }
 
