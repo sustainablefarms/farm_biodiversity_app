@@ -139,7 +139,7 @@ selectpatchServer <- function(id){
     if(!is.null(input$n_patches) & update$remove_logical){
       lapply(update$remove_values, function(a){
         removeUI(
-          selector = paste0("#patch_number_", a)
+          selector = paste0("#patch_number_", a)  #the '#' here tells jQuery to find the UI element based on element id.
         )
       })
       update$remove_logical <- FALSE

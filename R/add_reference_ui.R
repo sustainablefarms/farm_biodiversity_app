@@ -7,12 +7,11 @@ add_reference_ui <- function(
   insertUI(
     selector = paste0("#", ui_selector),
     ui = div(
-      list(
-        actionButton2(
-          inputId = ns(paste0("patch_number_", entry_number)),
-          label = paste0("Patch #", entry_number),
-          class = "patch_badge"
-        )
+      id = paste0("patch_number_", entry_number),
+      actionButton2(
+        inputId = ns(paste0("patch_number_", entry_number)),
+        label = paste0("Patch #", entry_number),
+        class = "patch_badge"
       )
     )
   )
