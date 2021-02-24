@@ -35,7 +35,7 @@ library(tippy)
 model_data <- load_model_data()
 new_data_mean <- get_new_data_mean(model_data)
 
-traits <- read.csv("../sflddata/private/data/raw/Australian_Bird_Data_Version_1.csv", 
+traits <<- read.csv("../sflddata/private/data/raw/Australian_Bird_Data_Version_1.csv", 
                    stringsAsFactors = FALSE) %>%
   dplyr::filter(X3_Taxon_common_name_2 %in% model_data$species) %>%
   dplyr::select(`Common Name` = X3_Taxon_common_name_2,

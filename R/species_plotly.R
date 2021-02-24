@@ -84,6 +84,7 @@ species_plotly_modal <- function(species_prob_current, spec_different){
   
   df_both <- dplyr::full_join(species_prob_current, spec_different, by = "species", suffix = c(".cur", ".ref"))
   
+  traits <- get("traits", envir = globalenv())
   df_both <- dplyr::left_join(df_both, traits, by = c(species = "Common Name"))
   
   # arrange input data frames
