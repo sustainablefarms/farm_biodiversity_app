@@ -21,7 +21,8 @@ stopifnot(file.copy("report.Rmd", report_path, overwrite = TRUE))
 shinyApp(predictionsUI("pred"),
          function(input, output, session){
            predictionsServer("pred", current_values,
-                             model_data, new_data_mean)
+                             model_data, new_data_mean,
+                             report_path)
            })
 
 devtools::load_all()

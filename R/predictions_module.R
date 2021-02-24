@@ -16,7 +16,8 @@ predictionsUI <- function(id){
 predictionsServer <- function(id, 
                               current_values,
                               model_data,
-                              new_data_mean){
+                              new_data_mean,
+                              report_path){
   moduleServer(
     id,
     function(input, output, session){
@@ -117,7 +118,7 @@ predictionsServer <- function(id,
           
           rmarkdown::render(input = report_path, 
                             output_file = file,
-                            envir = new.env(parent = parent.frame())
+                            envir = new.env(parent = environment())
           )
         }
       )
