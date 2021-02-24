@@ -53,7 +53,11 @@ predictionsServer <- function(id,
       
       output$species_richness_title <- renderUI({
         validate(need(data$species_prob_current, ""))
-        actionButton(ns("moredetail"), "View More Detail")
+        list(
+          actionButton(ns("moredetail"), "View More Detail"),
+          downloadButton(ns("downloaddata"), "Download to .csv"),
+          downloadButton(ns("downloadreport"), "Download to Report")
+        )
       })
       
       # draw species plots
@@ -90,6 +94,16 @@ predictionsServer <- function(id,
       output$species_InModal <- renderPlotly({
         species_plotly_modal(data$species_prob_current, data$spec_different)
       })
+      
+      output$downloaddata <- downloadHandler(
+        filename = "predictions.csv",
+        content = function(file) {
+          outdata <- data$species_prob_current
+          outdata <- cbind(Species = rownames(outdata), as.data.frame(outdata))
+          colnames(outdata)[colnames(outdata) == "median"] <- "Predicted Probability"
+          colnames(outdata)[colnames(outdata) == "bestsite"] <- "Patch"
+          write.csv(outdata, file, row.names = FALSE)
+        })
     })
 }
 
