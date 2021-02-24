@@ -1,5 +1,6 @@
 # test that all plots can be built
 devtools::load_all()
+library(msod)
 
 test_that("prediction plots for Gundagai and a single patch", {
   model_data <- load_model_data()

@@ -14,7 +14,7 @@
 # Outputs
 + add description of error bars as popup
 + for relative probability: show what the baseline is. Relative to what!?
-+ print out results
++ print out results (csv for quick version)
 
 # Overall
 + Colors:
