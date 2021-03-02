@@ -105,9 +105,11 @@ server <- function(input, output, session) {
   })
   
   ## PREDICTIONS
+  if (!isTRUE(getOption("shiny.testmode"))){
   predictionsServer("pred", current_values,
                     model_data, new_data_mean,
                     report_path)
+  }
 
 } # end server
 
