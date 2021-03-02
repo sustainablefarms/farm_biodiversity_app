@@ -15,6 +15,6 @@ preptraits <- function(model_data){
 }
 
 loadtraits2global <- function(){
-  traits <<- read.rds("./data/traits.rds")
+  traits <<- readRDS("./data/traits.rds")
   return(traits)
 }
