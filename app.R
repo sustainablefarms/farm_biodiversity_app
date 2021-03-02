@@ -13,13 +13,13 @@
 
 # This page is quite informative on using custom package dependencies: https://github.com/rstudio/rsconnect/issues/88
 # rsconnect::appDependencies()
-# rsconnect::deployApp(appName = "birdbio_dev3")
+# rsconnect::deployApp(appName = "birdbio_dev4")
 # rsconnect::terminateApp("birdbio_dev2")
 # rsconnect::purgeApp("birdbio_dev2")
 
 
 # load requisite packages
-# devtools::install_github("https://github.com/sustainablefarms/msod")
+# devtools::install_github("https://github.com/sustainablefarms/msod", ref = "modelclasses")
 pkgload::load_all(".")
 library(msod)
 library(sf)
@@ -31,5 +31,4 @@ library(ggbeeswarm)
 library(ggplot2)
 library(shinyBS)
 library(tippy)
-
 myapp()

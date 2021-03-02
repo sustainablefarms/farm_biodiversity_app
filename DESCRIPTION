@@ -12,7 +12,13 @@ Depends:
 Suggests:
     testthat,
     msod,
+    sf,
+    shiny,
+    shinythemes,
+    plotly,
+    ggbeeswarm,
     ggplot2,
-    plotly
+    shinyBS,
+    tippy
 Encoding: UTF-8
 ByteCompile: true
