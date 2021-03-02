@@ -41,21 +41,18 @@ selectlocationServer <- function(id){
         MaxTWarmMonth = NULL,
         MinTColdMonth = NULL,
         PrecSeasonality = NULL,
-        latitude = NULL,
-        AnnPrec = NULL,
-        AnnTempRange = NULL,
-        PrecSeasonality = NULL,
-        PrecWarmQ = NULL
+        latitude = NULL
       )
       click_values <- reactiveValues(
         climate = NULL,
         climate_title = NULL)
-      
+
       
       # observeEvent(input$spatial_type, {
         # if(input$spatial_type != "none"){
           outOfModule$points <- readRDS("data/sa2_points_climate.rds")
         # }
+
         # draw a scatterplot of the centroids of selected zones
         output$plot_points <- renderPlotly({
           validate(
