@@ -215,7 +215,6 @@ selectlocationServer <- function(id){
     climate_modal(ns)
   })
       
-      
       outOfModule
     }
   )

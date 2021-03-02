@@ -1,19 +1,19 @@
 # overarching UI and Server
 myapp <- function(){
+  options(shiny.testmode = TRUE)
   
-# Data Preparations
-model_data <- load_model_data()
-new_data_mean <- get_new_data_mean(model_data)
-
-# preptraits(model_data)
-loadtraits2global()
-tempdir <- tempdir()
-report_path <- paste0(tempdir, "/", "report.Rmd") #file location assumes host is a unix machine
-stopifnot(file.copy("report.Rmd", report_path, overwrite = TRUE)) 
+  # Data Preparations
+  model_data <<- load_model_data()
+  new_data_mean <<- get_new_data_mean(model_data)
+  
+  # preptraits(model_data)
+  loadtraits2global()
+  tempdir <- tempdir()
+  report_path <<- paste0(tempdir, "/", "report.Rmd") #file location assumes host is a unix machine
+  stopifnot(file.copy("report.Rmd", report_path, overwrite = TRUE)) 
   
   shinyApp(ui, server)
 }
-
   
 # UI
 ui <- function(){
@@ -81,6 +81,7 @@ server <- function(input, output, session) {
     AnnTempRange = NULL,
     PrecSeasonality = NULL,
     PrecWarmQ = NULL)
+  exportTestValues(selected_region = data$selected_region) 
 
   ## PATCH (and year)
   frompatch <- selectpatchServer("patch")
@@ -102,7 +103,7 @@ server <- function(input, output, session) {
     current_values$PrecSeasonality                   <- outOfModule$PrecSeasonality
     current_values$latitude  <- outOfModule$latitude
   })
-
+  
   ## PREDICTIONS
   predictionsServer("pred", current_values,
                     model_data, new_data_mean,

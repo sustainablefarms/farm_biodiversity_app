@@ -4,7 +4,6 @@
 + use photos for midstorey (all veg surveys had 1 - 2 photos)
 + Include link to woody veg data in the woody veg tool tip
 
-
 # Caveats
 + Ask Dan for patch areas, to look for maximum in our data
 + Investigate and comment on difference between quadrat method and point-intersect method
@@ -20,6 +19,9 @@
 + Colors:
   + change color schemes to make titles easier to read?
   + use SF colors
+
+# Other
++ Include contact details for bugs etc
 
 --- 
 ## Love to do
