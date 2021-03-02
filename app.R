@@ -32,14 +32,4 @@ library(ggplot2)
 library(shinyBS)
 library(tippy)
 
-# Data Preparations
-model_data <- load_model_data()
-new_data_mean <- get_new_data_mean(model_data)
-
-# preptraits(model_data)
-loadtraits2global()
-tempdir <- tempdir()
-report_path <- paste0(tempdir, "/", "report.Rmd") #file location assumes host is a unix machine
-stopifnot(file.copy("report.Rmd", report_path, overwrite = TRUE)) 
-
 myapp()

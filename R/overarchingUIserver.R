@@ -1,7 +1,23 @@
 # overarching UI and Server
 myapp <- function(){
+  
+# Data Preparations
+model_data <- load_model_data()
+new_data_mean <- get_new_data_mean(model_data)
+
+# preptraits(model_data)
+loadtraits2global()
+tempdir <- tempdir()
+report_path <- paste0(tempdir, "/", "report.Rmd") #file location assumes host is a unix machine
+stopifnot(file.copy("report.Rmd", report_path, overwrite = TRUE)) 
+  
+  shinyApp(ui, server)
+}
+
+  
 # UI
-  ui <- fluidPage(
+ui <- function(){
+  out <- fluidPage(
     includeCSS("./www/base.css"),
     # fluidRow(HTML("
     #   <div class='header'>
@@ -39,7 +55,7 @@ myapp <- function(){
     theme = bslib::bs_theme(version = 3, "lumen")
     # theme = shinytheme("lumen")
   )
-
+}
 
 # SERVER
 server <- function(input, output, session) {
@@ -95,5 +111,3 @@ server <- function(input, output, session) {
 } # end server
 
 
-shinyApp(ui, server)
-}
