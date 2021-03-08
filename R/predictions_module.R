@@ -7,7 +7,7 @@ predictionsUI <- function(id){
       plotOutput(ns("species_richness"), height = "200px"),
       fluidRow(
         column(width = 12, # first biodiversity plot
-          plotlyOutput(ns("common_dif_species"), height = "300px")
+          plotly::plotlyOutput(ns("common_dif_species"), height = "300px")
         )
       )
   )
@@ -62,7 +62,7 @@ predictionsServer <- function(id,
       })
       
       # draw species plots
-      output$common_dif_species <- renderPlotly({
+      output$common_dif_species <- plotly::renderPlotly({
         validate(need(data$species_prob_current, ""))
         species_plotly_both(
           tocommon(data$species_prob_current),
@@ -79,7 +79,7 @@ predictionsServer <- function(id,
       # modal more detail stuff
       observeEvent(input$moredetail, {
         showModal(modalDialog(
-          plotlyOutput(ns("species_InModal"), height = "800px"),
+          plotly::plotlyOutput(ns("species_InModal"), height = "800px"),
           title = "More Detail on Predictions",
           size = "l",
           footer = tagList(
@@ -92,7 +92,7 @@ predictionsServer <- function(id,
                    removeModal()
       )
       
-      output$species_InModal <- renderPlotly({
+      output$species_InModal <- plotly::renderPlotly({
         species_plotly_modal(data$species_prob_current, data$spec_different)
       })
       

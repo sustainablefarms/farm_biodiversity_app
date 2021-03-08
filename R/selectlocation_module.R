@@ -10,7 +10,7 @@ selectlocationUI <- function(id){
          #     "ABS SA2 regions" = "abs_sa2",
          #     "Federal Electorates" = "electorates_federal"),
          #   width = "100%"),
-         plotlyOutput(ns("plot_points"), height = "200px"),
+         plotly::plotlyOutput(ns("plot_points"), height = "200px"),
          plotOutput(ns("map"), height = "200px"),
          # HTML("<div class='subheader'><h2>CLIMATE</h2></div>"),
          HTML("<br>"),
@@ -54,11 +54,11 @@ selectlocationServer <- function(id){
         # }
 
         # draw a scatterplot of the centroids of selected zones
-        output$plot_points <- renderPlotly({
+        output$plot_points <- plotly::renderPlotly({
           validate(
             need(outOfModule$points, "")
           )
-          plot_ly(
+          plotly::plot_ly(
             outOfModule$points,
             x = ~longitude,
             y = ~latitude,
@@ -71,7 +71,7 @@ selectlocationServer <- function(id){
             ),
             hoverinfo = "text",
             text = ~label
-          ) %>% layout(
+          ) %>% plotly::layout(
             xaxis = list(title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE),
             yaxis = list(scaleanchor = "x",
                          title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE),
@@ -79,14 +79,14 @@ selectlocationServer <- function(id){
             paper_bgcolor='transparent',
             plot_bgcolor = 'transparent'
           ) %>%
-            config(displayModeBar = FALSE)
+            plotly::config(displayModeBar = FALSE)
           # event_register(p, 'plotly_click')
         })
         
         # observe clicks on the region plot
         observe({
           if(!is.null(outOfModule$points)){
-            click_region <- event_data(
+            click_region <- plotly::event_data(
               event = "plotly_click",
               source = "region_map"
             )$pointNumber + 1 # Note: plotly uses Python-style indexing, hence +1

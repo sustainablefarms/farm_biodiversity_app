@@ -1,7 +1,5 @@
 # overarching UI and Server
 myapp <- function(){
-  options(shiny.testmode = TRUE)
-  
   # Data Preparations
   model_data <<- load_model_data()
   new_data_mean <<- get_new_data_mean(model_data)

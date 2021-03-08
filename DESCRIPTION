@@ -9,17 +9,17 @@ Description: To be filled.
 License: GPL (>= 2)
 Depends:
     shiny,
-    rmarkdown
-Suggests:
-    testthat,
+    rmarkdown,
+    ggplot2,
+    plotly
+Imports:
     msod,
     sf,
-    shiny,
     shinythemes,
-    plotly,
     ggbeeswarm,
-    ggplot2,
     shinyBS,
     tippy
+Suggests:
+    testthat
 Encoding: UTF-8
 ByteCompile: true

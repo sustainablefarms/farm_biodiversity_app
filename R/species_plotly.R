@@ -20,7 +20,7 @@ plot_ly_specroot <- function(df){
                     font = list(color = "rgba(255,255,255,1)"),
                     showarrow = FALSE) %>%
   # alter layout
-  layout(xaxis = list(visible = FALSE),
+  plotly::layout(xaxis = list(visible = FALSE),
          yaxis = list(visible = FALSE),
          margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
   hide_colorbar()
@@ -49,7 +49,7 @@ species_plotly_common <- function(df){
                     showarrow = FALSE,
                     showlegend = FALSE) %>%
   # alter order
-  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed"))
+  plotly::layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed"))
   #despite the descriptions, the above line actually seems to order things as they are given in df
 }
 
@@ -69,14 +69,14 @@ species_plotly_different <- function(df){
                   showarrow = FALSE,
                   showlegend = FALSE) %>%
   # alter order
-  layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed")) 
+  plotly::layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed")) 
 }
 
 species_plotly_both <- function(species_prob_current, spec_different){
   cmn <- species_plotly_common(tocommon(species_prob_current))
   dft <- species_plotly_different(spec_different)
   subplot(cmn, dft) %>%
-    config(displayModeBar = FALSE)
+    plotly::config(displayModeBar = FALSE)
 }
 
 species_plotly_modal <- function(species_prob_current, spec_different){
@@ -110,5 +110,5 @@ species_plotly_modal <- function(species_prob_current, spec_different){
     layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = TRUE))
   
   subplot(probsplt, ratioplt, shareY = TRUE) %>%
-    config(displayModeBar = FALSE)
+    plotly::config(displayModeBar = FALSE)
 }

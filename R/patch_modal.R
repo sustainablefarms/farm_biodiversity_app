@@ -10,7 +10,7 @@ patch_modal <- function(
   if(is.null(noisy_miner) | is.na(noisy_miner)){noisy_miner <- TRUE}
   showModal(
     modalDialog(
-      tipify(sliderInput(
+      shinyBS::tipify(sliderInput(
         inputId = ns(paste0("pc_woody_veg_", value)),
         label = "Woody vegetation canopy within 500m of patch centre (% area)",
         min = 2, max = 20, step = 2,
@@ -18,7 +18,7 @@ patch_modal <- function(
         "The amount of woody vegetation canopy within 500m of the patch centre, as a percentage of the area within 500m."
         # "The percentage of area within 500m of the patch centre covered by woody vegetation canopy."
         ),
-      tipify(sliderInput(
+      shinyBS::tipify(sliderInput(
         inputId = ns(paste0("pc_midstorey_", value)),
         label = "Midstorey vegetation (2m - 10m tall) within patch (% area of patch)",
         min = 0, max = 10, step = 1,
@@ -27,7 +27,7 @@ patch_modal <- function(
         placement = "top",
         options = list(html = "true",
                        viewport = "viewport")),
-      tipify(checkboxInput(
+      shinyBS::tipify(checkboxInput(
         inputId = ns(paste0("noisy_miner_", value)),
         label = "Noisy Miners present?",
         value = noisy_miner),
