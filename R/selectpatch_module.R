@@ -21,8 +21,8 @@ selectpatchUI <- function(id){
                   '<br><br> Currently the patch must be remnant box gum grassy woodlands.</div>'),
                   arrow = TRUE,
                   interactive = TRUE,
-                  options = list(html = "true",
-                                 arrow = "roundArrow")),
+                  allowHTML = "true"),
+                  # arrow = "roundArrow"),
         div(id = "placeholder")
       ))
 }
