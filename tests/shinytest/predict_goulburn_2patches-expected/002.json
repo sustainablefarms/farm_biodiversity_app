@@ -1,0 +1,133 @@
+{
+  "input": {
+    "location-fake_region_number": 1,
+    "location-show_maxtemp_modal": 0,
+    "location-show_mintemp_modal": 0,
+    "location-show_precip_modal": 0,
+    "location-show_precseason_modal": 0,
+    "patch-choose_n_patches": 0,
+    "patch-choose_n_patches_execute": 1,
+    "patch-choose_patch_attributes_execute": 0,
+    "patch-choose_prediction_year": 0,
+    "patch-n_patches": 2,
+    "patch-noisy_miner_1": true,
+    "patch-patch_number_1": 1,
+    "patch-patch_number_2": 0,
+    "patch-pc_midstorey_1": 8,
+    "patch-pc_woody_veg_1": 14
+  },
+  "output": {
+    "location-map": {
+      "src": "[image data sha1: 34833989be0fde6a5799b7fe004f7a74e3479141]",
+      "width": 211,
+      "height": 200,
+      "alt": "Plot object",
+      "coordmap": {
+        "panels": [
+          {
+            "panel": 1,
+            "row": 1,
+            "col": 1,
+            "panel_vars": {
+
+            },
+            "log": {
+              "x": null,
+              "y": null
+            },
+            "domain": {
+              "left": 148.93630566015,
+              "right": 150.40006456885,
+              "bottom": -35.1740286358499,
+              "top": -33.8265807571499
+            },
+            "mapping": {
+              "x": null,
+              "y": null,
+              "geometry": "geometry"
+            },
+            "range": {
+              "left": 15.9738921247373,
+              "right": 195.026107875263,
+              "bottom": 200,
+              "top": 0
+            }
+          }
+        ],
+        "dims": {
+          "width": 211,
+          "height": 200
+        }
+      }
+    },
+    "location-show_maxtemp": {
+      "html": "<button id=\"location-show_maxtemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Maximum<br>Temperature<h3>25.4&deg;C<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "location-show_mintemp": {
+      "html": "<button id=\"location-show_mintemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Minimum<br>Temperature<h3>-0.5&deg;C<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "location-show_precip": {
+      "html": "<button id=\"location-show_precip_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Annual<br>Preciptiation<h3>897mm<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "location-show_precseason": {
+      "html": "<button id=\"location-show_precseason_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Precipitation<br>Seasonality<h3>10<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "patch-patch_selector": {
+      "html": "<button id=\"patch-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>2<\/h3><\/button>\n<script>$(document).ready(function() {setTimeout(function() {shinyBS.addTooltip('patch-choose_n_patches', 'tooltip', {'html': 'TRUE', 'placement': 'bottom', 'trigger': 'hover', 'title': '<div style=\"text-align: left\">A patch is a region of woodland vegetation that <br>(1) is 1ha - 10ha <em>(TBC)<\/em> in area, <br>(2) has similar vegetation structure throughout, and <br>(3) is approximately 50m from other woody vegetation. <br><br> Currently the patch must be remnant box gum grassy woodlands.<\/div>'})}, 500)});<\/script>",
+      "deps": [
+        {
+          "name": "shinyBS",
+          "version": "0.61",
+          "src": {
+            "href": "sbs"
+          },
+          "meta": null,
+          "script": "shinyBS.js",
+          "stylesheet": "shinyBS.css",
+          "head": null,
+          "attachment": null,
+          "package": null,
+          "all_files": true
+        }
+      ]
+    },
+    "patch-year_selector": {
+      "html": "<button id=\"patch-choose_prediction_year\" type=\"button\" class=\"action-button badge_small\">2018<\/button>",
+      "deps": [
+
+      ]
+    },
+    "pred-species_richness": {
+      "message": "",
+      "call": "NULL",
+      "type": [
+        "shiny.silent.error",
+        "validation"
+      ]
+    },
+    "pred-species_richness_title": {
+      "message": "",
+      "call": "NULL",
+      "type": [
+        "shiny.silent.error",
+        "validation"
+      ]
+    }
+  },
+  "export": {
+    "patches": 2,
+    "selected_region": "Goulburn Region"
+  }
+}
