@@ -1,0 +1,1660 @@
+{
+  "input": {
+    ".clientValue-default-plotlyCrosstalkOpts": {
+      "on": "plotly_click",
+      "persistent": false,
+      "dynamic": false,
+      "selectize": false,
+      "opacityDim": 0.2,
+      "selected": {
+        "opacity": 1
+      },
+      "debounce": 0,
+      "color": [
+
+      ]
+    },
+    "location-fake_region_number": 1,
+    "location-show_maxtemp_modal": 0,
+    "location-show_mintemp_modal": 0,
+    "location-show_precip_modal": 0,
+    "location-show_precseason_modal": 0,
+    "patch-choose_n_patches": 0,
+    "patch-choose_patch_attributes_execute": 1,
+    "patch-choose_prediction_year": 0,
+    "patch-noisy_miner_1": true,
+    "patch-patch_number_1": 1,
+    "patch-pc_midstorey_1": 6,
+    "patch-pc_woody_veg_1": 8,
+    "plotly_afterplot-A": "\"pred-common_dif_species\"",
+    "pred-moredetail": 0
+  },
+  "output": {
+    "location-map": {
+      "src": "[image data sha1: 34833989be0fde6a5799b7fe004f7a74e3479141]",
+      "width": 211,
+      "height": 200,
+      "alt": "Plot object",
+      "coordmap": {
+        "panels": [
+          {
+            "panel": 1,
+            "row": 1,
+            "col": 1,
+            "panel_vars": {
+
+            },
+            "log": {
+              "x": null,
+              "y": null
+            },
+            "domain": {
+              "left": 148.93630566015,
+              "right": 150.40006456885,
+              "bottom": -35.1740286358499,
+              "top": -33.8265807571499
+            },
+            "mapping": {
+              "x": null,
+              "y": null,
+              "geometry": "geometry"
+            },
+            "range": {
+              "left": 15.9738921247373,
+              "right": 195.026107875263,
+              "bottom": 200,
+              "top": 0
+            }
+          }
+        ],
+        "dims": {
+          "width": 211,
+          "height": 200
+        }
+      }
+    },
+    "location-show_maxtemp": {
+      "html": "<button id=\"location-show_maxtemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Maximum<br>Temperature<h3>25.4&deg;C<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "location-show_mintemp": {
+      "html": "<button id=\"location-show_mintemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Minimum<br>Temperature<h3>-0.5&deg;C<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "location-show_precip": {
+      "html": "<button id=\"location-show_precip_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Annual<br>Preciptiation<h3>897mm<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "location-show_precseason": {
+      "html": "<button id=\"location-show_precseason_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Precipitation<br>Seasonality<h3>10<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "patch-patch_selector": {
+      "html": "<button id=\"patch-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>1<\/h3><\/button>\n<script>$(document).ready(function() {setTimeout(function() {shinyBS.addTooltip('patch-choose_n_patches', 'tooltip', {'html': 'TRUE', 'placement': 'bottom', 'trigger': 'hover', 'title': '<div style=\"text-align: left\">A patch is a region of woodland vegetation that <br>(1) is 1ha - 10ha <em>(TBC)<\/em> in area, <br>(2) has similar vegetation structure throughout, and <br>(3) is approximately 50m from other woody vegetation. <br><br> Currently the patch must be remnant box gum grassy woodlands.<\/div>'})}, 500)});<\/script>",
+      "deps": [
+        {
+          "name": "shinyBS",
+          "version": "0.61",
+          "src": {
+            "href": "sbs"
+          },
+          "meta": null,
+          "script": "shinyBS.js",
+          "stylesheet": "shinyBS.css",
+          "head": null,
+          "attachment": null,
+          "package": null,
+          "all_files": true
+        }
+      ]
+    },
+    "patch-year_selector": {
+      "html": "<button id=\"patch-choose_prediction_year\" type=\"button\" class=\"action-button badge_small\">2018<\/button>",
+      "deps": [
+
+      ]
+    },
+    "pred-common_dif_species": {
+      "x": {
+        "data": [
+          {
+            "type": "bar",
+            "y": [
+              "Eastern Rosella",
+              "Crimson Rosella",
+              "Striated Pardalote",
+              "Australian Magpie",
+              "Laughing Kookaburra",
+              "Common Starling",
+              "Yellow-rumped Thornbill",
+              "Yellow-faced Honeyeater",
+              "Galah",
+              "Grey Fantail"
+            ],
+            "x": [
+              0.967867520926432,
+              0.950811451094893,
+              0.94769695670517,
+              0.866338591250618,
+              0.639156311988629,
+              0.62026715957503,
+              0.594122440691433,
+              0.587702079605148,
+              0.582674692611928,
+              0.535946274933906
+            ],
+            "marker": {
+              "colorbar": {
+                "title": "value",
+                "ticklen": 2
+              },
+              "cmin": 0.3,
+              "cmax": 1.2,
+              "colorscale": "Blues",
+              "showscale": false,
+              "color": [
+                0.967867520926432,
+                0.950811451094893,
+                0.94769695670517,
+                0.866338591250618,
+                0.639156311988629,
+                0.62026715957503,
+                0.594122440691433,
+                0.587702079605148,
+                0.582674692611928,
+                0.535946274933906
+              ],
+              "reversescale": true,
+              "line": {
+                "colorbar": {
+                  "title": "",
+                  "ticklen": 2
+                },
+                "cmin": 0.535946274933906,
+                "cmax": 0.967867520926432,
+                "colorscale": [
+                  [
+                    "0",
+                    "rgba(68,1,84,1)"
+                  ],
+                  [
+                    "0.0416666666666665",
+                    "rgba(70,19,97,1)"
+                  ],
+                  [
+                    "0.0833333333333334",
+                    "rgba(72,32,111,1)"
+                  ],
+                  [
+                    "0.125",
+                    "rgba(71,45,122,1)"
+                  ],
+                  [
+                    "0.166666666666667",
+                    "rgba(68,58,128,1)"
+                  ],
+                  [
+                    "0.208333333333333",
+                    "rgba(64,70,135,1)"
+                  ],
+                  [
+                    "0.25",
+                    "rgba(60,82,138,1)"
+                  ],
+                  [
+                    "0.291666666666667",
+                    "rgba(56,93,140,1)"
+                  ],
+                  [
+                    "0.333333333333333",
+                    "rgba(49,104,142,1)"
+                  ],
+                  [
+                    "0.375",
+                    "rgba(46,114,142,1)"
+                  ],
+                  [
+                    "0.416666666666667",
+                    "rgba(42,123,142,1)"
+                  ],
+                  [
+                    "0.458333333333333",
+                    "rgba(38,133,141,1)"
+                  ],
+                  [
+                    "0.5",
+                    "rgba(37,144,140,1)"
+                  ],
+                  [
+                    "0.541666666666667",
+                    "rgba(33,154,138,1)"
+                  ],
+                  [
+                    "0.583333333333333",
+                    "rgba(39,164,133,1)"
+                  ],
+                  [
+                    "0.625",
+                    "rgba(47,174,127,1)"
+                  ],
+                  [
+                    "0.666666666666667",
+                    "rgba(53,183,121,1)"
+                  ],
+                  [
+                    "0.708333333333333",
+                    "rgba(79,191,110,1)"
+                  ],
+                  [
+                    "0.75",
+                    "rgba(98,199,98,1)"
+                  ],
+                  [
+                    "0.791666666666667",
+                    "rgba(119,207,85,1)"
+                  ],
+                  [
+                    "0.833333333333333",
+                    "rgba(147,214,70,1)"
+                  ],
+                  [
+                    "0.875",
+                    "rgba(172,220,52,1)"
+                  ],
+                  [
+                    "0.916666666666667",
+                    "rgba(199,225,42,1)"
+                  ],
+                  [
+                    "0.958333333333333",
+                    "rgba(226,228,40,1)"
+                  ],
+                  [
+                    "1",
+                    "rgba(253,231,37,1)"
+                  ]
+                ],
+                "showscale": false,
+                "color": [
+                  0.967867520926432,
+                  0.950811451094893,
+                  0.94769695670517,
+                  0.866338591250618,
+                  0.639156311988629,
+                  0.62026715957503,
+                  0.594122440691433,
+                  0.587702079605148,
+                  0.582674692611928,
+                  0.535946274933906
+                ]
+              }
+            },
+            "showlegend": false,
+            "orientation": "h",
+            "xaxis": "x",
+            "yaxis": "y",
+            "frame": null,
+            "text": [
+              "Eastern Rosella has some interest features.",
+              "Crimson Rosella has some interest features.",
+              "Striated Pardalote has some interest features.",
+              "Australian Magpie has some interest features.",
+              "Laughing Kookaburra has some interest features.",
+              "Common Starling has some interest features.",
+              "Yellow-rumped Thornbill has some interest features.",
+              "Yellow-faced Honeyeater has some interest features.",
+              "Galah has some interest features.",
+              "Grey Fantail has some interest features."
+            ],
+            "hovertemplate": "<b>%{text}<\/b><extra><\/extra>",
+            "error_x": {
+              "visible": true,
+              "type": "data",
+              "array": [
+                0.0247712270833315,
+                0.0347936336682851,
+                0.0401767146602859,
+                0.0796563475136829,
+                0.224797815374925,
+                0.142545957560712,
+                0.140949657987575,
+                0.123071707569392,
+                0.15680001575051,
+                0.115708321943345
+              ],
+              "arrayminus": [
+                0.0376337190320473,
+                0.0573222255591604,
+                0.047776829168552,
+                0.110195834871582,
+                0.243253830437024,
+                0.139864225962273,
+                0.160087863075693,
+                0.144985933320481,
+                0.148614515051394,
+                0.139250591229358
+              ],
+              "symmetric": false,
+              "color": "#000000"
+            }
+          },
+          {
+            "x": [
+              0.535946274933906,
+              0.967867520926432
+            ],
+            "y": [
+              "Australian Magpie",
+              "Yellow-rumped Thornbill"
+            ],
+            "type": "scatter",
+            "mode": "markers",
+            "opacity": 0,
+            "hoverinfo": "none",
+            "showlegend": false,
+            "marker": {
+              "colorbar": {
+                "title": "value",
+                "ticklen": 2,
+                "len": 0.5,
+                "lenmode": "fraction",
+                "y": 1,
+                "yanchor": "top"
+              },
+              "cmin": 0.535946274933906,
+              "cmax": 0.967867520926432,
+              "colorscale": [
+                [
+                  "0",
+                  "rgba(68,1,84,1)"
+                ],
+                [
+                  "0.0416666666666665",
+                  "rgba(70,19,97,1)"
+                ],
+                [
+                  "0.0833333333333334",
+                  "rgba(72,32,111,1)"
+                ],
+                [
+                  "0.125",
+                  "rgba(71,45,122,1)"
+                ],
+                [
+                  "0.166666666666667",
+                  "rgba(68,58,128,1)"
+                ],
+                [
+                  "0.208333333333333",
+                  "rgba(64,70,135,1)"
+                ],
+                [
+                  "0.25",
+                  "rgba(60,82,138,1)"
+                ],
+                [
+                  "0.291666666666667",
+                  "rgba(56,93,140,1)"
+                ],
+                [
+                  "0.333333333333333",
+                  "rgba(49,104,142,1)"
+                ],
+                [
+                  "0.375",
+                  "rgba(46,114,142,1)"
+                ],
+                [
+                  "0.416666666666667",
+                  "rgba(42,123,142,1)"
+                ],
+                [
+                  "0.458333333333333",
+                  "rgba(38,133,141,1)"
+                ],
+                [
+                  "0.5",
+                  "rgba(37,144,140,1)"
+                ],
+                [
+                  "0.541666666666667",
+                  "rgba(33,154,138,1)"
+                ],
+                [
+                  "0.583333333333333",
+                  "rgba(39,164,133,1)"
+                ],
+                [
+                  "0.625",
+                  "rgba(47,174,127,1)"
+                ],
+                [
+                  "0.666666666666667",
+                  "rgba(53,183,121,1)"
+                ],
+                [
+                  "0.708333333333333",
+                  "rgba(79,191,110,1)"
+                ],
+                [
+                  "0.75",
+                  "rgba(98,199,98,1)"
+                ],
+                [
+                  "0.791666666666667",
+                  "rgba(119,207,85,1)"
+                ],
+                [
+                  "0.833333333333333",
+                  "rgba(147,214,70,1)"
+                ],
+                [
+                  "0.875",
+                  "rgba(172,220,52,1)"
+                ],
+                [
+                  "0.916666666666667",
+                  "rgba(199,225,42,1)"
+                ],
+                [
+                  "0.958333333333333",
+                  "rgba(226,228,40,1)"
+                ],
+                [
+                  "1",
+                  "rgba(253,231,37,1)"
+                ]
+              ],
+              "showscale": false,
+              "color": [
+                0.535946274933906,
+                0.967867520926432
+              ],
+              "line": {
+                "color": "rgba(255,127,14,1)"
+              }
+            },
+            "xaxis": "x",
+            "yaxis": "y",
+            "frame": null,
+            "text": [
+              "Eastern Rosella has some interest features.",
+              "Crimson Rosella has some interest features.",
+              "Striated Pardalote has some interest features.",
+              "Australian Magpie has some interest features.",
+              "Laughing Kookaburra has some interest features.",
+              "Common Starling has some interest features.",
+              "Yellow-rumped Thornbill has some interest features.",
+              "Yellow-faced Honeyeater has some interest features.",
+              "Galah has some interest features.",
+              "Grey Fantail has some interest features."
+            ],
+            "hovertemplate": "<b>%{text}<\/b><extra><\/extra>",
+            "error_x": {
+              "visible": true,
+              "type": "data",
+              "array": [
+                0.0247712270833315,
+                0.0347936336682851,
+                0.0401767146602859,
+                0.0796563475136829,
+                0.224797815374925,
+                0.142545957560712,
+                0.140949657987575,
+                0.123071707569392,
+                0.15680001575051,
+                0.115708321943345
+              ],
+              "arrayminus": [
+                0.0376337190320473,
+                0.0573222255591604,
+                0.047776829168552,
+                0.110195834871582,
+                0.243253830437024,
+                0.139864225962273,
+                0.160087863075693,
+                0.144985933320481,
+                0.148614515051394,
+                0.139250591229358
+              ],
+              "symmetric": false,
+              "color": "#000000"
+            }
+          },
+          {
+            "type": "bar",
+            "y": [
+              "Striated Thornbill",
+              "Brown Thornbill",
+              "Yellow-faced Honeyeater",
+              "White-throated Treecreeper",
+              "Leaden Flycatcher",
+              "Grey Fantail",
+              "Buff-rumped Thornbill",
+              "Silvereye",
+              "Spotted Pardalote",
+              "Brown-headed Honeyeater"
+            ],
+            "x": [
+              11.5001423516294,
+              9.93102036242218,
+              9.75907399895042,
+              6.71669366270672,
+              6.06882062608901,
+              5.12484589856164,
+              4.9948224712667,
+              3.88131651920818,
+              3.73647006722908,
+              3.55365159378865
+            ],
+            "marker": {
+              "colorbar": {
+                "title": "value",
+                "ticklen": 2
+              },
+              "cmin": 0.3,
+              "cmax": 1.2,
+              "colorscale": "Blues",
+              "showscale": false,
+              "color": [
+                11.5001423516294,
+                9.93102036242218,
+                9.75907399895042,
+                6.71669366270672,
+                6.06882062608901,
+                5.12484589856164,
+                4.9948224712667,
+                3.88131651920818,
+                3.73647006722908,
+                3.55365159378865
+              ],
+              "reversescale": true,
+              "line": {
+                "colorbar": {
+                  "title": "",
+                  "ticklen": 2
+                },
+                "cmin": 3.55365159378865,
+                "cmax": 11.5001423516294,
+                "colorscale": [
+                  [
+                    "0",
+                    "rgba(68,1,84,1)"
+                  ],
+                  [
+                    "0.0416666666666666",
+                    "rgba(70,19,97,1)"
+                  ],
+                  [
+                    "0.0833333333333333",
+                    "rgba(72,32,111,1)"
+                  ],
+                  [
+                    "0.125",
+                    "rgba(71,45,122,1)"
+                  ],
+                  [
+                    "0.166666666666667",
+                    "rgba(68,58,128,1)"
+                  ],
+                  [
+                    "0.208333333333333",
+                    "rgba(64,70,135,1)"
+                  ],
+                  [
+                    "0.25",
+                    "rgba(60,82,138,1)"
+                  ],
+                  [
+                    "0.291666666666667",
+                    "rgba(56,93,140,1)"
+                  ],
+                  [
+                    "0.333333333333333",
+                    "rgba(49,104,142,1)"
+                  ],
+                  [
+                    "0.375",
+                    "rgba(46,114,142,1)"
+                  ],
+                  [
+                    "0.416666666666667",
+                    "rgba(42,123,142,1)"
+                  ],
+                  [
+                    "0.458333333333333",
+                    "rgba(38,133,141,1)"
+                  ],
+                  [
+                    "0.5",
+                    "rgba(37,144,140,1)"
+                  ],
+                  [
+                    "0.541666666666667",
+                    "rgba(33,154,138,1)"
+                  ],
+                  [
+                    "0.583333333333333",
+                    "rgba(39,164,133,1)"
+                  ],
+                  [
+                    "0.625",
+                    "rgba(47,174,127,1)"
+                  ],
+                  [
+                    "0.666666666666667",
+                    "rgba(53,183,121,1)"
+                  ],
+                  [
+                    "0.708333333333333",
+                    "rgba(79,191,110,1)"
+                  ],
+                  [
+                    "0.75",
+                    "rgba(98,199,98,1)"
+                  ],
+                  [
+                    "0.791666666666667",
+                    "rgba(119,207,85,1)"
+                  ],
+                  [
+                    "0.833333333333333",
+                    "rgba(147,214,70,1)"
+                  ],
+                  [
+                    "0.875",
+                    "rgba(172,220,52,1)"
+                  ],
+                  [
+                    "0.916666666666667",
+                    "rgba(199,225,42,1)"
+                  ],
+                  [
+                    "0.958333333333333",
+                    "rgba(226,228,40,1)"
+                  ],
+                  [
+                    "1",
+                    "rgba(253,231,37,1)"
+                  ]
+                ],
+                "showscale": false,
+                "color": [
+                  11.5001423516294,
+                  9.93102036242218,
+                  9.75907399895042,
+                  6.71669366270672,
+                  6.06882062608901,
+                  5.12484589856164,
+                  4.9948224712667,
+                  3.88131651920818,
+                  3.73647006722908,
+                  3.55365159378865
+                ]
+              }
+            },
+            "showlegend": false,
+            "orientation": "h",
+            "xaxis": "x2",
+            "yaxis": "y2",
+            "frame": null,
+            "text": [
+              "Striated Thornbill has some interest features.",
+              "Brown Thornbill has some interest features.",
+              "Yellow-faced Honeyeater has some interest features.",
+              "White-throated Treecreeper has some interest features.",
+              "Leaden Flycatcher has some interest features.",
+              "Grey Fantail has some interest features.",
+              "Buff-rumped Thornbill has some interest features.",
+              "Silvereye has some interest features.",
+              "Spotted Pardalote has some interest features.",
+              "Brown-headed Honeyeater has some interest features."
+            ],
+            "hovertemplate": "<b>%{text}<\/b><extra><\/extra>"
+          },
+          {
+            "x": [
+              3.55365159378865,
+              11.5001423516294
+            ],
+            "y": [
+              "Brown Thornbill",
+              "Yellow-faced Honeyeater"
+            ],
+            "type": "scatter",
+            "mode": "markers",
+            "opacity": 0,
+            "hoverinfo": "none",
+            "showlegend": false,
+            "marker": {
+              "colorbar": {
+                "title": "value",
+                "ticklen": 2,
+                "len": 0.5,
+                "lenmode": "fraction",
+                "y": 0.5,
+                "yanchor": "top"
+              },
+              "cmin": 3.55365159378865,
+              "cmax": 11.5001423516294,
+              "colorscale": [
+                [
+                  "0",
+                  "rgba(68,1,84,1)"
+                ],
+                [
+                  "0.0416666666666666",
+                  "rgba(70,19,97,1)"
+                ],
+                [
+                  "0.0833333333333333",
+                  "rgba(72,32,111,1)"
+                ],
+                [
+                  "0.125",
+                  "rgba(71,45,122,1)"
+                ],
+                [
+                  "0.166666666666667",
+                  "rgba(68,58,128,1)"
+                ],
+                [
+                  "0.208333333333333",
+                  "rgba(64,70,135,1)"
+                ],
+                [
+                  "0.25",
+                  "rgba(60,82,138,1)"
+                ],
+                [
+                  "0.291666666666667",
+                  "rgba(56,93,140,1)"
+                ],
+                [
+                  "0.333333333333333",
+                  "rgba(49,104,142,1)"
+                ],
+                [
+                  "0.375",
+                  "rgba(46,114,142,1)"
+                ],
+                [
+                  "0.416666666666667",
+                  "rgba(42,123,142,1)"
+                ],
+                [
+                  "0.458333333333333",
+                  "rgba(38,133,141,1)"
+                ],
+                [
+                  "0.5",
+                  "rgba(37,144,140,1)"
+                ],
+                [
+                  "0.541666666666667",
+                  "rgba(33,154,138,1)"
+                ],
+                [
+                  "0.583333333333333",
+                  "rgba(39,164,133,1)"
+                ],
+                [
+                  "0.625",
+                  "rgba(47,174,127,1)"
+                ],
+                [
+                  "0.666666666666667",
+                  "rgba(53,183,121,1)"
+                ],
+                [
+                  "0.708333333333333",
+                  "rgba(79,191,110,1)"
+                ],
+                [
+                  "0.75",
+                  "rgba(98,199,98,1)"
+                ],
+                [
+                  "0.791666666666667",
+                  "rgba(119,207,85,1)"
+                ],
+                [
+                  "0.833333333333333",
+                  "rgba(147,214,70,1)"
+                ],
+                [
+                  "0.875",
+                  "rgba(172,220,52,1)"
+                ],
+                [
+                  "0.916666666666667",
+                  "rgba(199,225,42,1)"
+                ],
+                [
+                  "0.958333333333333",
+                  "rgba(226,228,40,1)"
+                ],
+                [
+                  "1",
+                  "rgba(253,231,37,1)"
+                ]
+              ],
+              "showscale": false,
+              "color": [
+                3.55365159378865,
+                11.5001423516294
+              ],
+              "line": {
+                "color": "rgba(214,39,40,1)"
+              }
+            },
+            "xaxis": "x2",
+            "yaxis": "y2",
+            "frame": null,
+            "text": [
+              "Striated Thornbill has some interest features.",
+              "Brown Thornbill has some interest features.",
+              "Yellow-faced Honeyeater has some interest features.",
+              "White-throated Treecreeper has some interest features.",
+              "Leaden Flycatcher has some interest features.",
+              "Grey Fantail has some interest features.",
+              "Buff-rumped Thornbill has some interest features.",
+              "Silvereye has some interest features.",
+              "Spotted Pardalote has some interest features.",
+              "Brown-headed Honeyeater has some interest features."
+            ],
+            "hovertemplate": "<b>%{text}<\/b><extra><\/extra>"
+          }
+        ],
+        "layout": {
+          "xaxis": {
+            "domain": [
+              0,
+              0.48
+            ],
+            "automargin": true,
+            "visible": false,
+            "anchor": "y"
+          },
+          "xaxis2": {
+            "domain": [
+              0.52,
+              1
+            ],
+            "automargin": true,
+            "visible": false,
+            "anchor": "y2"
+          },
+          "yaxis2": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "category",
+            "categoryorder": "array",
+            "categoryarray": [
+              11.5001423516294,
+              9.93102036242218,
+              9.75907399895042,
+              6.71669366270672,
+              6.06882062608901,
+              5.12484589856164,
+              4.9948224712667,
+              3.88131651920818,
+              3.73647006722908,
+              3.55365159378865
+            ],
+            "visible": false,
+            "autorange": "reversed",
+            "anchor": "x2"
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "category",
+            "categoryorder": "array",
+            "categoryarray": [
+              0.967867520926432,
+              0.950811451094893,
+              0.94769695670517,
+              0.866338591250618,
+              0.639156311988629,
+              0.62026715957503,
+              0.594122440691433,
+              0.587702079605148,
+              0.582674692611928,
+              0.535946274933906
+            ],
+            "visible": false,
+            "autorange": "reversed",
+            "anchor": "x"
+          },
+          "annotations": [
+            {
+              "text": "Eastern Rosella",
+              "x": 0,
+              "y": "Eastern Rosella",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "Crimson Rosella",
+              "x": 0,
+              "y": "Crimson Rosella",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "Striated Pardalote",
+              "x": 0,
+              "y": "Striated Pardalote",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "Australian Magpie",
+              "x": 0,
+              "y": "Australian Magpie",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "Laughing Kookaburra",
+              "x": 0,
+              "y": "Laughing Kookaburra",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "Common Starling",
+              "x": 0,
+              "y": "Common Starling",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "Yellow-rumped Thornbill",
+              "x": 0,
+              "y": "Yellow-rumped Thornbill",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "Yellow-faced Honeyeater",
+              "x": 0,
+              "y": "Yellow-faced Honeyeater",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "Galah",
+              "x": 0,
+              "y": "Galah",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "Grey Fantail",
+              "x": 0,
+              "y": "Grey Fantail",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "97%",
+              "x": 0.930233801894385,
+              "y": "Eastern Rosella",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "95%",
+              "x": 0.893489225535733,
+              "y": "Crimson Rosella",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "95%",
+              "x": 0.899920127536618,
+              "y": "Striated Pardalote",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "87%",
+              "x": 0.756142756379036,
+              "y": "Australian Magpie",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "64%",
+              "x": 0.395902481551605,
+              "y": "Laughing Kookaburra",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "62%",
+              "x": 0.480402933612756,
+              "y": "Common Starling",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "59%",
+              "x": 0.43403457761574,
+              "y": "Yellow-rumped Thornbill",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "59%",
+              "x": 0.442716146284668,
+              "y": "Yellow-faced Honeyeater",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "58%",
+              "x": 0.434060177560533,
+              "y": "Galah",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "54%",
+              "x": 0.396695683704548,
+              "y": "Grey Fantail",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x",
+              "yref": "y"
+            },
+            {
+              "text": "Striated Thornbill",
+              "x": 0,
+              "y": "Striated Thornbill",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "Brown Thornbill",
+              "x": 0,
+              "y": "Brown Thornbill",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "Yellow-faced Honeyeater",
+              "x": 0,
+              "y": "Yellow-faced Honeyeater",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "White-throated Treecreeper",
+              "x": 0,
+              "y": "White-throated Treecreeper",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "Leaden Flycatcher",
+              "x": 0,
+              "y": "Leaden Flycatcher",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "Grey Fantail",
+              "x": 0,
+              "y": "Grey Fantail",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "Buff-rumped Thornbill",
+              "x": 0,
+              "y": "Buff-rumped Thornbill",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "Silvereye",
+              "x": 0,
+              "y": "Silvereye",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "Spotted Pardalote",
+              "x": 0,
+              "y": "Spotted Pardalote",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "Brown-headed Honeyeater",
+              "x": 0,
+              "y": "Brown-headed Honeyeater",
+              "xanchor": "left",
+              "xshift": 3,
+              "font": {
+                "color": "rgba(255,255,255,1)"
+              },
+              "showarrow": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "x 11.5",
+              "x": 11.5001423516294,
+              "y": "Striated Thornbill",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "x 9.93",
+              "x": 9.93102036242218,
+              "y": "Brown Thornbill",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "x 9.76",
+              "x": 9.75907399895042,
+              "y": "Yellow-faced Honeyeater",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "x 6.72",
+              "x": 6.71669366270672,
+              "y": "White-throated Treecreeper",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "x 6.07",
+              "x": 6.06882062608901,
+              "y": "Leaden Flycatcher",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "x 5.12",
+              "x": 5.12484589856164,
+              "y": "Grey Fantail",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "x 4.99",
+              "x": 4.9948224712667,
+              "y": "Buff-rumped Thornbill",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "x 3.88",
+              "x": 3.88131651920818,
+              "y": "Silvereye",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "x 3.74",
+              "x": 3.73647006722908,
+              "y": "Spotted Pardalote",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x2",
+              "yref": "y2"
+            },
+            {
+              "text": "x 3.55",
+              "x": 3.55365159378865,
+              "y": "Brown-headed Honeyeater",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false,
+              "xref": "x2",
+              "yref": "y2"
+            }
+          ],
+          "shapes": [
+
+          ],
+          "images": [
+
+          ],
+          "margin": {
+            "b": 0,
+            "l": 0,
+            "t": 0,
+            "r": 0
+          },
+          "hovermode": "closest",
+          "showlegend": false,
+          "legend": {
+            "yanchor": "top",
+            "y": 0.5
+          }
+        },
+        "source": "A",
+        "config": {
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.2,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "subplot": true,
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.1.1",
+          "src": {
+            "href": "crosstalk-1.1.1"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "1.57.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-1.57.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "1.57.1",
+          "src": {
+            "href": "plotly-main-1.57.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "pred-species_richness": {
+      "src": "[image data sha1: 302b10c7265414578dd7b4ac9715e1c234a9f47b]",
+      "width": 481,
+      "height": 200,
+      "alt": "Plot object",
+      "coordmap": {
+        "panels": [
+          {
+            "panel": 1,
+            "row": 1,
+            "col": 1,
+            "panel_vars": {
+
+            },
+            "log": {
+              "x": null,
+              "y": null
+            },
+            "domain": {
+              "left": 0,
+              "right": 32.6700139666171,
+              "bottom": 0.4,
+              "top": 3.6,
+              "discrete_limits": {
+                "y": [
+                  "Less vegetation",
+                  "Your estimate",
+                  "More vegetation"
+                ]
+              }
+            },
+            "mapping": {
+              "x": "E",
+              "y": "category",
+              "fill": "category"
+            },
+            "range": {
+              "left": 5.47945205479452,
+              "right": 382.58904109589,
+              "bottom": 180.58904109589,
+              "top": 5.47945205479452
+            }
+          }
+        ],
+        "dims": {
+          "width": 481,
+          "height": 200
+        }
+      }
+    },
+    "pred-species_richness_title": {
+      "html": "<button id=\"pred-moredetail\" type=\"button\" class=\"btn btn-default action-button\">View More Detail<\/button>\n<a id=\"pred-downloaddata\" class=\"btn btn-default shiny-download-link \" href=\"\" target=\"_blank\" download>\n  <i class=\"fa fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n  Download to .csv\n<\/a>\n<a id=\"pred-downloadreport\" class=\"btn btn-default shiny-download-link \" href=\"\" target=\"_blank\" download>\n  <i class=\"fa fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n  Download to Report\n<\/a>",
+      "deps": [
+        {
+          "name": "font-awesome",
+          "version": "5.13.0",
+          "src": {
+            "href": "font-awesome-5.13.0"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": [
+            "css/all.min.css",
+            "css/v4-shims.min.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    }
+  },
+  "export": {
+    "patches": 1,
+    "selected_region": "Goulburn Region"
+  }
+}

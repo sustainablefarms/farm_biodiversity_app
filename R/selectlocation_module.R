@@ -10,7 +10,11 @@ selectlocationUI <- function(id){
          #     "ABS SA2 regions" = "abs_sa2",
          #     "Federal Electorates" = "electorates_federal"),
          #   width = "100%"),
-         plotly::plotlyOutput(ns("plot_points"), height = "200px"),
+         if (isTRUE(getOption("shiny.testmode"))){
+           actionButton(ns("fake_region_number"), label = "Next Region")
+         } else {
+           plotly::plotlyOutput(ns("plot_points"), height = "200px")
+         },
          plotOutput(ns("map"), height = "200px"),
          # HTML("<div class='subheader'><h2>CLIMATE</h2></div>"),
          HTML("<br>"),
@@ -47,7 +51,6 @@ selectlocationServer <- function(id){
         climate = NULL,
         climate_title = NULL)
 
-      
       # observeEvent(input$spatial_type, {
         # if(input$spatial_type != "none"){
           outOfModule$points <- readRDS("data/sa2_points_climate.rds")
@@ -84,6 +87,19 @@ selectlocationServer <- function(id){
         })
         
         # observe clicks on the region plot
+      if (isTRUE(getOption("shiny.testmode"))){
+        observe({
+          input$fake_region_number
+          outOfModule$selected_region <- outOfModule$points$label[input$fake_region_number]
+          # add climate data
+          climate_row <- which(outOfModule$points$label == outOfModule$selected_region)
+          outOfModule$AnnPrec <- outOfModule$points$AnnPrec[climate_row]
+          outOfModule$MaxTWarmMonth = outOfModule$points$MaxTWarmMonth[climate_row]
+          outOfModule$MinTColdMonth = outOfModule$points$MinTColdMonth[climate_row]
+          outOfModule$PrecSeasonality = outOfModule$points$PrecSeasonality[climate_row]
+          outOfModule$latitude = outOfModule$points$latitude[climate_row]
+        })
+      } else {
         observe({
           if(!is.null(outOfModule$points)){
             click_region <- plotly::event_data(
@@ -100,6 +116,7 @@ selectlocationServer <- function(id){
             outOfModule$latitude = outOfModule$points$latitude[climate_row]
           }
         })
+      }
         
         # draw a map
         output$map <- renderPlot({
