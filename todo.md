@@ -21,6 +21,7 @@
   + use SF colors
 
 # Other
++ Get the SF logo back on the page
 + Include contact details for bugs etc
 
 --- 
