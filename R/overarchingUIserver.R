@@ -79,7 +79,8 @@ server <- function(input, output, session) {
     AnnTempRange = NULL,
     PrecSeasonality = NULL,
     PrecWarmQ = NULL)
-  exportTestValues(selected_region = data$selected_region) 
+  exportTestValues(selected_region = data$selected_region,
+                   patches = current_values$patches) 
 
   ## PATCH (and year)
   frompatch <- selectpatchServer("patch")
