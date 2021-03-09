@@ -62,11 +62,14 @@ predictionsServer <- function(id,
       })
       
       # draw species plots
-      output$common_dif_species <- plotly::renderPlotly({
-        validate(need(data$species_prob_current, ""))
-        species_plotly_both(
-          tocommon(data$species_prob_current),
-          data$spec_different)
+      observe({
+        # req(data$species_prob_current)
+        validate(need(data$species_prob_current, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
+        output$common_dif_species <- plotly::renderPlotly({
+          species_plotly_both(
+            tocommon(data$species_prob_current),
+            data$spec_different)
+        })
       })
 
       
