@@ -12,14 +12,15 @@ selectpatchUI <- function(id){
         actionButton2(
           inputId = ns("patch_number_1"),
           label = "Patch #1",
-          class = "patch_badge"),
-        tippy::tippy_this(ns("patch_number_1"), 
+          class = "patch_badge") %>%
+        tippy::with_tippy(# 
                   paste('<div style="text-align: left">A patch is a region of woodland vegetation that is',
                   '<br>(1) 1ha - 10ha (TBC) in area, ',
                   '<br>(2) has similar vegetation structure throughout, and',
                   '<br>(3) is approximately 50m from other woody vegetation.',
                   '<br><br> Currently the patch must be remnant box gum grassy woodlands.</div>'),
-                  arrow = TRUE,
+                  arrow = "true",
+                  zIndex = 100,
                   interactive = TRUE,
                   allowHTML = "true"),
                   # arrow = "roundArrow"),
@@ -82,7 +83,11 @@ selectpatchServer <- function(id){
         sliderInput(
           inputId = ns("n_patches"),
           label = "Number of vegetation patches",
-          min = 1, max = 6, step = 1, value = current_values$patches),
+          min = 1, max = 6, step = 1, value = current_values$patches) %>%
+          tippy::with_tippy(
+            paste('<div style="text-align: left">A patch is a region of woodland vegetation that <br>(1) is 1ha - 10ha <em>(TBC)</em> in area, <br>(2) has similar vegetation structure throughout, and <br>(3) is approximately 50m from other woody vegetation.',
+                                 '<br><br> Currently the patch must be remnant box gum grassy woodlands.</div>'),
+            allowHTML = TRUE),
         actionButton(ns("choose_n_patches_execute"), "Save"),
         modalButton("Cancel"),
         title = "Select number of patches",

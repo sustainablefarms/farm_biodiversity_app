@@ -122,3 +122,7 @@ h3 {
   color: white;
   background-color: #8bb095;
 }
+
+.tooltip {
+    z-index: 2000 !important;
+}
