@@ -66,14 +66,21 @@ selectpatchServer <- function(id){
 
   # number of patches
   output$patch_selector <- renderUI({
-    shinyBS::tipify(actionButton2(
+    tags$div(
+    actionButton2(
       inputId = ns("choose_n_patches"),
       label = HTML(paste0("Number of<br>patches<br><h3>", current_values$patches, "</h3>")),
       class = "badge"
     ), 
-    paste('<div style="text-align: left">A patch is a region of woodland vegetation that <br>(1) is 1ha - 10ha <em>(TBC)</em> in area, <br>(2) has similar vegetation structure throughout, and <br>(3) is approximately 50m from other woody vegetation.',
-    '<br><br> Currently the patch must be remnant box gum grassy woodlands.</div>'),
-    options = list(html = TRUE)
+    `data-toggle`="tooltip",
+    `data-html` = TRUE,
+    title = tags$p(style="text-align: left",
+                HTML("A patch is a region of woodland vegetation that<br>"),
+                HTML("(1) is 1ha - 10ha (TBC) in area<br>"),
+                HTML("(2) has similar vegetation structure throughout, and <br>(3) is approximately 50m from other woody vegetation."),
+                HTML("<br><br>"),
+                HTML("Currently the patch must be remnant box gum grassy woodlands.")
+                )
     )
   })
   observeEvent(input$choose_n_patches, {
