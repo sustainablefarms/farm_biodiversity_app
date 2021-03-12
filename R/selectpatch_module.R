@@ -1,6 +1,10 @@
 selectpatchUI <- function(id){
   ns <- NS(id)
   tagList(
+      tags$script("$(function () {
+          $('[data-toggle=tooltip]').tooltip()
+        })"
+      ),
       HTML("<div class='subheader'><h2>FARM</h2></div>"),
       verbatimTextOutput("text"),
       column(width = 3,
@@ -67,14 +71,15 @@ selectpatchServer <- function(id){
   # number of patches
   output$patch_selector <- renderUI({
     tags$div(
-    actionButton2(
+    tags$div(actionButton2(
       inputId = ns("choose_n_patches"),
       label = HTML(paste0("Number of<br>patches<br><h3>", current_values$patches, "</h3>")),
       class = "badge"
-    ), 
+    )), 
     `data-toggle`="tooltip",
     `data-html` = TRUE,
-    title = tags$p(style="text-align: left",
+    title =
+      tags$div(style="text-align: left",
                 HTML("A patch is a region of woodland vegetation that<br>"),
                 HTML("(1) is 1ha - 10ha (TBC) in area<br>"),
                 HTML("(2) has similar vegetation structure throughout, and <br>(3) is approximately 50m from other woody vegetation."),
