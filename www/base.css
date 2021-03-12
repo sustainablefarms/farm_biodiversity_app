@@ -122,7 +122,3 @@ h3 {
   color: white;
   background-color: #8bb095;
 }
-
-.popover, .tooltip {
-    z-index: 1060 !important;
-}

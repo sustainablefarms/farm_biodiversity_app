@@ -10,7 +10,7 @@ patch_modal <- function(
   if(is.null(noisy_miner) | is.na(noisy_miner)){noisy_miner <- TRUE}
   showModal(
     modalDialog(
-      # enables popovers in this modal!!
+      # enables popovers in this modal!! (this doesn't work in the module UI)
       tags$script("$(function () {
       $('[data-toggle=popover]').popover()
     })"),
@@ -27,10 +27,13 @@ patch_modal <- function(
         )),
       shinyBS::tipify(sliderInput(
         inputId = ns(paste0("pc_midstorey_", value)),
-        label = HTML('<span>Woody vegetation canopy within 500m of patch centre (% area)</span>',
-      # '<p>This <a href="#" role="button" class="btn btn-default popover-test" title="" data-content="And heres some amazing content. Its very engaging. right?" data-original-title="A Title">button</a> should trigger a popover on click.</p>',
-                     '<button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And heres some amazing content. Its very engaging. Right?">Click to toggle popover</button>',
-),
+        label = tags$html(tags$span('Woody vegetation canopy within 500m of patch centre (% area)'),
+                          tags$button(type="button",
+                                      class="btn btn-lg btn-danger",
+                                      `data-toggle`="popover",
+                                      title="Popover title",
+                                      `data-content`="And heres some amazing content. Its very engaging. Right?",
+                                      "Click to toggle popover")),
         min = 0, max = 10, step = 1,
         value = midstorey),
         "The percentage of the patch that has vegetation between 2m and 10m tall (e.g regrowth eucalypt or acacia). Our ecologists estimated this quantity using 2x 50m point-intersect transects.",
