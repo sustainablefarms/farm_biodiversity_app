@@ -17,6 +17,10 @@ myapp <- function(){
 ui <- function(){
   out <- fluidPage(
     includeCSS("./www/base.css"),
+    tags$script("$(function () {
+        $('[data-toggle=tooltip]').tooltip()
+      })"
+    ),
     # fluidRow(HTML("
     #   <div class='header'>
     #     <img class='logo' src='SF Logo Vertical - Transparent Background.png' alt='SF logo'>
@@ -32,7 +36,7 @@ ui <- function(){
     ")),
     column(width = 10, offset = 0, HTML("
       <span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>
-      <span class='subtitle'><br>Version 0.2 (DRAFT). By Martin Westgate & Kassel Hingee</span>
+      <span class='subtitle' data-toggle='tooltip' title='Some tooltip text!'><br>Version 0.2 (DRAFT). By Martin Westgate & Kassel Hingee</span>
     "))),
     HTML("</div>"),
     column(width = 1),

@@ -10,6 +10,9 @@ patch_modal <- function(
   if(is.null(noisy_miner) | is.na(noisy_miner)){noisy_miner <- TRUE}
   showModal(
     modalDialog(
+      div(
+      `data-toggle`='tooltip',
+      title='Some tooltip text!',
       shinyBS::tipify(sliderInput(
         inputId = ns(paste0("pc_woody_veg_", value)),
         label = "Woody vegetation canopy within 500m of patch centre (% area)",
@@ -17,7 +20,7 @@ patch_modal <- function(
         value = woody_veg),
         "The amount of woody vegetation canopy within 500m of the patch centre, as a percentage of the area within 500m."
         # "The percentage of area within 500m of the patch centre covered by woody vegetation canopy."
-        ),
+        )),
       shinyBS::tipify(sliderInput(
         inputId = ns(paste0("pc_midstorey_", value)),
         label = "Midstorey vegetation (2m - 10m tall) within patch (% area of patch)",
