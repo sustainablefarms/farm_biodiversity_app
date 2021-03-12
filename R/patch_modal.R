@@ -14,40 +14,32 @@ patch_modal <- function(
       tags$script("$(function () {
       $('[data-toggle=popover]').popover()
     })"),
-      div(
-      `data-toggle`='tooltip',
-      title='Some tooltip text!',
-      shinyBS::tipify(sliderInput(
+      sliderInput(
         inputId = ns(paste0("pc_woody_veg_", value)),
-        label = "Woody vegetation canopy within 500m of patch centre (% area)",
+        label = tags$html(tags$span("Woody vegetation canopy within 500m of patch centre (% area)",
+                                    `data-toggle` = "tooltip",
+                                    title = "The amount of woody vegetation canopy within 500m of the patch centre, as a percentage of the area within 500m.")),
         min = 2, max = 20, step = 2,
         value = woody_veg),
-        "The amount of woody vegetation canopy within 500m of the patch centre, as a percentage of the area within 500m."
-        # "The percentage of area within 500m of the patch centre covered by woody vegetation canopy."
-        )),
-      shinyBS::tipify(sliderInput(
+      sliderInput(
         inputId = ns(paste0("pc_midstorey_", value)),
-        label = tags$html(tags$span('Woody vegetation canopy within 500m of patch centre (% area)'),
+        label = tags$html(tags$span('Midstorey vegetation (2m - 10m tall) within patch (% area of patch)'),
                           tags$button(type="button",
                                       class="btn btn-lg btn-danger",
                                       `data-toggle`="popover",
-                                      title="Popover title",
-                                      `data-content`="And heres some amazing content. Its very engaging. Right?",
+                                      title="Midstorey Definition Detail",
+                                      `data-content`="Midstorey vegetation (2m - 10m tall) within patch (% area of patch)",
                                       "Click to toggle popover")),
         min = 0, max = 10, step = 1,
         value = midstorey),
-        "The percentage of the patch that has vegetation between 2m and 10m tall (e.g regrowth eucalypt or acacia). Our ecologists estimated this quantity using 2x 50m point-intersect transects.",
-        placement = "top",
-        options = list(html = "true",
-                       viewport = "viewport")),
-      shinyBS::tipify(checkboxInput(
+      checkboxInput(
         inputId = ns(paste0("noisy_miner_", value)),
-        label = "Noisy Miners present?",
+        label = tags$html(tags$span("Noisy Miners present?",
+                                    `data-toggle` = "popover",
+                                    title = "Noisy Miners",
+                                    `data-html` = TRUE,
+                                    `data-content` =  'Noisy miners are territorial, loud, and easily detected. <a href="https://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:afd.taxon:88df188e-fbc8-4220-82c1-d2fc03f2f83a#">Photos</a>. They are less likely to be present in patches with high midstorey.')),
         value = noisy_miner),
-        'Noisy miners are territorial, loud, and easily detected. <a href="https://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:afd.taxon:88df188e-fbc8-4220-82c1-d2fc03f2f83a#">Photos</a>. They are less likely to be present in patches with high midstorey.',
-        trigger = "hover focus",
-        options = list(html = "true")
-      ),
       actionButton(inputId = ns("choose_patch_attributes_execute"), label = "Save"),
       modalButton("Cancel"),
     title = paste0("Select attributes for patch #", value),
