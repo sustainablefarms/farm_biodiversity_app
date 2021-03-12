@@ -17,10 +17,15 @@ myapp <- function(){
 ui <- function(){
   out <- fluidPage(
     includeCSS("./www/base.css"),
+    # the following enables bootstrap 3's inbuilt tooltips
     tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
+    # the following enables bootstrap 3's inbuilt popovers
+    tags$script("$(function () {
+      $('[data-toggle=popover]').popover()
+    })"),
     # fluidRow(HTML("
     #   <div class='header'>
     #     <img class='logo' src='SF Logo Vertical - Transparent Background.png' alt='SF logo'>
@@ -34,10 +39,12 @@ ui <- function(){
       HTML("
         <img class='logo' src='SF Logo Vertical - Transparent Background.png' alt='SF logo'>
     ")),
-    column(width = 10, offset = 0, HTML("
-      <span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>
-      <span class='subtitle' data-toggle='tooltip' title='Some tooltip text!'><br>Version 0.2 (DRAFT). By Martin Westgate & Kassel Hingee</span>
-    "))),
+    column(width = 10, offset = 0, 
+    HTML("<span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>",
+      '<p>This <a href="#" role="button" title="" data-toggle="popover" data-content="And heres some amazing content. Its very engaging. right?" data-original-title="A Title">button</a> should trigger a popover on click.</p>',
+      "<span class='subtitle' data-toggle='tooltip' title='Some tooltip text!'><br>Version 0.2 (DRAFT). By Martin Westgate & Kassel Hingee</span>",
+      '<button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And heres some amazing content. Its very engaging. Right?">Click to toggle popover</button>'
+    ))),
     HTML("</div>"),
     column(width = 1),
     column(width = 3,
