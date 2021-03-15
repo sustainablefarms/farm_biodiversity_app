@@ -16,7 +16,7 @@ selectpatchUI <- function(id){
           class = "patch_badge"),
         `data-toggle`="tooltip",
         `data-html` = TRUE,
-        `data-placement` = "below",
+        `data-placement` = "bottom",
         title =
           tags$div(HTML("A patch is a region of woodland vegetation that<br>"),
                    HTML("(1) is 1ha - 10ha (TBC) in area<br>"),
@@ -79,7 +79,9 @@ selectpatchServer <- function(id){
     )), 
     `data-toggle`="tooltip",
     `data-html` = TRUE,
-    `data-placement` = "left",
+    `data-placement` = "auto bottom",
+    `data-container` = "body", #this made the width of the tooltip better
+    `data-vieport` = '#viewport',
     title =
       tags$div(
                 HTML("A patch is a region of woodland vegetation that<br>"),
