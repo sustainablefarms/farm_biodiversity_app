@@ -9,20 +9,21 @@ selectpatchUI <- function(id){
       ),
       column(width = 1),
       column(width = 8,
+       div(
         actionButton2(
           inputId = ns("patch_number_1"),
           label = "Patch #1",
           class = "patch_badge"),
-        tippy::tippy_this(ns("patch_number_1"), 
-                  paste('<div style="text-align: left">A patch is a region of woodland vegetation that is',
-                  '<br>(1) 1ha - 10ha (TBC) in area, ',
-                  '<br>(2) has similar vegetation structure throughout, and',
-                  '<br>(3) is approximately 50m from other woody vegetation.',
-                  '<br><br> Currently the patch must be remnant box gum grassy woodlands.</div>'),
-                  arrow = TRUE,
-                  interactive = TRUE,
-                  allowHTML = "true"),
-                  # arrow = "roundArrow"),
+        `data-toggle`="tooltip",
+        `data-html` = TRUE,
+        `data-placement` = "below",
+        title =
+          tags$div(HTML("A patch is a region of woodland vegetation that<br>"),
+                   HTML("(1) is 1ha - 10ha (TBC) in area<br>"),
+                   HTML("(2) has similar vegetation structure throughout, and <br>(3) is approximately 50m from other woody vegetation."),
+                   HTML("<br><br>"),
+                   HTML("Currently the patch must be remnant box gum grassy woodlands.")
+          )),
         div(id = "placeholder")
       ))
 }
@@ -80,7 +81,7 @@ selectpatchServer <- function(id){
     `data-html` = TRUE,
     `data-placement` = "left",
     title =
-      tags$div(style="text-align: left",
+      tags$div(
                 HTML("A patch is a region of woodland vegetation that<br>"),
                 HTML("(1) is 1ha - 10ha (TBC) in area<br>"),
                 HTML("(2) has similar vegetation structure throughout, and <br>(3) is approximately 50m from other woody vegetation."),
