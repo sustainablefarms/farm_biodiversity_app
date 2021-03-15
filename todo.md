@@ -31,8 +31,6 @@
 + get the IsPlanting tick in there!
 + Colors:
   + change color schemes to make titles easier to read?
-+ make tooltips appear reliably (as of march 10, 2021, shinyBS::tipify did not reliably appear, and tippy::with_tippy did not work inside modals).
-  + this page seems to be on the same topic https://stackoverflow.com/questions/12758872/how-do-i-use-tooltip-plugin-in-twitter-bootstraps-modal-dialog and suggests upgrade to bootstrap 3
 + Mobile compatibility
   + test on tablet, touch screen only
   + convert to a mobile app - perahps using "shinyMobile" - but it might work well on a mobile naturally
