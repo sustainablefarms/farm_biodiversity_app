@@ -82,7 +82,9 @@ predictionsServer <- function(id,
       # modal more detail stuff
       observeEvent(input$moredetail, {
         showModal(
-          modalDialog(predictionsdetailUI("detail"),
+          modalDialog(
+            predictionsdetailUI(ns("detail")),
+            # plotly::plotlyOutput(ns("detail-species_InModal"), height = "800px")
                       title = "More Detail on Predictions",
                       size = "l",
                       footer = tagList(
@@ -96,7 +98,6 @@ predictionsServer <- function(id,
                    removeModal()
       )
       
-      ## PREDICTIONS DETAILED ##
       predictionsdetailServer("detail", data)
       
       output$downloaddata <- downloadHandler(

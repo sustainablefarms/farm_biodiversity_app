@@ -5,16 +5,14 @@ predictionsdetailUI <- function(id){
   )
 }
 
-predictionsdetailServer <- function(id, 
-                              current_values,
-                              model_data,
-                              new_data_mean,
-                              report_path){
+ 
+predictionsdetailServer <- function(id,
+                              data){
   moduleServer(
     id,
     function(input, output, session){
-      output$species_InModal <- plotly::renderPlotly({
-        species_plotly_modal(data$species_prob_current, data$spec_different)
+        output$species_InModal <- plotly::renderPlotly({
+          species_plotly_modal(data$species_prob_current, data$spec_different)
       })
     })
   }
