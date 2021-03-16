@@ -81,24 +81,24 @@ predictionsServer <- function(id,
       
       # modal more detail stuff
       observeEvent(input$moredetail, {
-        reporthtml <- paste0(report_path, ".html")
-        rmarkdown::render(input = report_path,
-                          output_file = reporthtml,
-                          envir = new.env(parent = environment()))
-        # knitr::knit(input = report_path,
-        #                   output = paste0(report_path, ".md"),
+        # reporthtml <- paste0(report_path, ".html")
+        # rmarkdown::render(input = report_path,
+        #                   output_file = reporthtml,
         #                   envir = new.env(parent = environment()))
+        knitr::knit(input = report_path,
+                          output = "report.md",
+                          envir = new.env(parent = environment()))
         showModal(modalDialog(
-          # includeMarkdown(paste0(report_path, ".md")),
+          includeMarkdown("report.md"),  #if I put formulae in use 'shiny::withMaxJax()' too
             # HTML(markdown::markdownToHTML(
-            #   knitr::knit(report_path, 
-            #               quiet = TRUE, 
+            #   knitr::knit(report_path,
+            #               quiet = TRUE,
             #               new.env(parent = environment())
             #               )
             #   )),
-          tags$iframe(src =  reporthtml,
-                      title = "Details"),
-          plotly::plotlyOutput(ns("species_InModal"), height = "800px"),
+          # tags$iframe(src =  reporthtml,
+          #             title = "Details"),
+          # plotly::plotlyOutput(ns("species_InModal"), height = "800px"),
           title = "More Detail on Predictions",
           size = "l",
           footer = tagList(
