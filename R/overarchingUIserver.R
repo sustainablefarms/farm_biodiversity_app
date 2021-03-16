@@ -1,16 +1,19 @@
 # overarching UI and Server
 myapp <- function(){
+  main_app_prep() # loads things into global environment, prepares report file
+  shinyApp(ui, server)
+}
+
+main_app_prep <- function(){  # loads things into global environment, prepares report file
   # Data Preparations
   model_data <<- load_model_data()
   new_data_mean <<- get_new_data_mean(model_data)
   
   # preptraits(model_data)
   loadtraits2global()
-  tempdir <- tempdir()
-  report_path <<- paste0(tempdir, "/", "report.Rmd") #file location assumes host is a unix machine
+  apptempdir <<- tempdir()
+  report_path <<- paste0(apptempdir, "/", "report.Rmd") #file location assumes host is a unix machine
   stopifnot(file.copy("report.Rmd", report_path, overwrite = TRUE)) 
-  
-  shinyApp(ui, server)
 }
   
 # UI

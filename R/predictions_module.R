@@ -42,7 +42,8 @@ predictionsServer <- function(id,
             new_data_mean)
           data$spec_different <- todifferent(data$species_prob_current, data$species_prob_ref)
           data$species_richness <- compute_richness(model_data, data$Xocc)
-        }else{
+          # saveRDS(isolate(reactiveValuesToList(data)), file = "data.rds"); stop("Saving data - app will end now")
+        } else {
           # data <- lapply(data, function(x) NULL)
           data$Xocc <- NULL
           data$species_prob_current <- NULL
