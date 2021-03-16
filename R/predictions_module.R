@@ -81,10 +81,23 @@ predictionsServer <- function(id,
       
       # modal more detail stuff
       observeEvent(input$moredetail, {
-        rmarkdown::render(input = report_path, 
-                          output_file = paste(report_path, ".html"),
+        reporthtml <- paste0(report_path, ".html")
+        rmarkdown::render(input = report_path,
+                          output_file = reporthtml,
                           envir = new.env(parent = environment()))
+        # knitr::knit(input = report_path,
+        #                   output = paste0(report_path, ".md"),
+        #                   envir = new.env(parent = environment()))
         showModal(modalDialog(
+          # includeMarkdown(paste0(report_path, ".md")),
+            # HTML(markdown::markdownToHTML(
+            #   knitr::knit(report_path, 
+            #               quiet = TRUE, 
+            #               new.env(parent = environment())
+            #               )
+            #   )),
+          tags$iframe(src =  reporthtml,
+                      title = "Details"),
           plotly::plotlyOutput(ns("species_InModal"), height = "800px"),
           title = "More Detail on Predictions",
           size = "l",

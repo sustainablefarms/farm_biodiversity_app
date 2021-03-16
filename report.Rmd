@@ -1,6 +1,5 @@
 ---
 title: "Species Predictions"
-output: pdf_document
 ---
 
 ```{r species}
