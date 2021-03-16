@@ -1,6 +1,17 @@
 ---
 title: "Species Predictions"
+params:
+  loadexampledata: TRUE
 ---
+
+```{r load, echo = FALSE, include = FALSE}
+if (params$loadexampledata){
+  pkgload::load_all(".")
+  main_app_prep()
+  current_values <- do.call(reactiveValues, readRDS("tests/testthat/current_values_2patches.rds"))
+  data <- do.call(reactiveValues, readRDS("tests/testthat/predictions_data_2patches.rds"))
+}
+```
 
 ```{r species}
 species_plotly_modal(isolate(data$species_prob_current),
