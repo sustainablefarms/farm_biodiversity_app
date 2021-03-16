@@ -21,6 +21,7 @@
 + title for prediction plots
 
 # Outputs: More Detail
++ make the modal a rendering of the Rmd document
 + Weebill should be smallest by weight and length --> error it isn't in the plot
 + include relatively less likely to occur species in the more details section
 + include species of conservation concern
