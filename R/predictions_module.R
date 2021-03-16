@@ -34,7 +34,7 @@ predictionsServer <- function(id,
           length(current_values$woody_veg) == current_values$patches &
           !any(is.na(current_values$woody_veg))
         ){
-          # saveRDS(current_values, file = "current_values.rds"); stop("Saving current values - app is in debug mode and will end")
+          # saveRDS(isolate(reactiveValuesToList(current_values)), file = "current_values.rds"); stop("Saving current values - app is in debug mode and will end")
           data$Xocc <- newXocc_fromselected(current_values) 
           data$species_prob_current <- msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
                                                                                     data$Xocc)
@@ -81,6 +81,9 @@ predictionsServer <- function(id,
       
       # modal more detail stuff
       observeEvent(input$moredetail, {
+        rmarkdown::render(input = report_path, 
+                          output_file = paste(report_path, ".html"),
+                          envir = new.env(parent = environment()))
         showModal(modalDialog(
           plotly::plotlyOutput(ns("species_InModal"), height = "800px"),
           title = "More Detail on Predictions",
