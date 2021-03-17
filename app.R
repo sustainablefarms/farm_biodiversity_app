@@ -21,6 +21,6 @@
 # load requisite packages
 # devtools::install_github("https://github.com/sustainablefarms/msod", ref = "modelclasses")
 pkgload::load_all(".")
-# myapp()
+myapp()
 # app_predictionsonly()
-app_predictiondetailsonly()
+# app_predictiondetailsonly()

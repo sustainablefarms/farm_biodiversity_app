@@ -122,6 +122,7 @@ predictionsServer <- function(id,
           on.exit(removeNotification(id), add = TRUE)
           
           rmarkdown::render(input = report_path, 
+                            params = list(loadexampledata = FALSE),
                             output_file = file,
                             envir = new.env(parent = environment())
           )
