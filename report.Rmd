@@ -1,19 +1,118 @@
 ---
 title: "Species Predictions"
 params:
-  loadexampledata: TRUE
+  loadexampledata: yes
+output: pdf_document
 ---
+
+```{r setup, echo = FALSE, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
 ```{r load, echo = FALSE, include = FALSE}
 if (params$loadexampledata){
   pkgload::load_all(".")
   main_app_prep()
-  current_values <- do.call(reactiveValues, readRDS("tests/testthat/current_values_2patches.rds"))
-  data <- do.call(reactiveValues, readRDS("tests/testthat/predictions_data_2patches.rds"))
+  current_values <- readRDS("tests/testthat/current_values_2patches.rds")
+  data <- readRDS("tests/testthat/predictions_data_2patches.rds")
+} else {
+  data <- isolate(reactiveValuesToList(data))
+  current_values <- isolate(reactiveValuesToList(current_values))
 }
 ```
 
-```{r species}
-species_plotly_modal(isolate(data$species_prob_current),
-                     isolate(data$spec_different))
+# Species Occupancy
+In general each species has a different favourite patch.
+It is the patch with the highest estimated probability of occupancy.
+Below shows the probability of each species occupying their most favoured patch.
+The favoured patch of each species is given beside the species names.
+We are 95% confident that the occupancy probability of this favoured patch is within the error bars shown.
+
+```{r species_on_farm, fig.height = 8, fig.width = 7}
+## fun args
+species_prob_current <- data$species_prob_current
+##
+
+species_prob_current <- data.frame(species = rownames(species_prob_current), species_prob_current)
+traits <- get("traits", envir = globalenv())
+species_prob_current <- dplyr::left_join(species_prob_current, traits, by = c(species = "Common Name")) %>%
+  dplyr::rename(`Common Name` = species)
+
+species_prob_current %>%
+  dplyr::mutate(`Common Name` = paste(`Common Name`, bestsite)) %>%
+  ordfactby(`Common Name`, `Body Length`) %>%
+  ggplot(aes(x = `Common Name`, y = median, fill = median)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.5) +
+  coord_flip(clip = "off") +
+  scale_x_discrete(name = "Increasing Body Length ---->") +
+  scale_y_continuous(name = "Probability of Occupying Best Patch", limits = c(0, 1), expand = expansion()) +
+  ggtitle("Occupancy Probability Across Patches") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid = element_blank())
 ```
+
+The 10 least likely species are below.
+
+```{r leastlikelyspecies_on_farm, fig.width = 7, fig.height = 3}
+## fun args
+species_prob_current <- data$species_prob_current
+##
+
+species_prob_current <- data.frame(species = rownames(species_prob_current), species_prob_current)
+
+species_prob_current %>%
+  dplyr::arrange(median) %>%
+  dplyr::slice_head(n = 10) %>%
+  dplyr::mutate(species = paste(species, bestsite)) %>%
+  ggplot(aes(x = species, y = median, fill = median)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.5) +
+  coord_flip(clip = "off") +
+  scale_y_continuous(name = "Probability of Occupying Best Patch", expand = expansion()) +
+  ggtitle("10 Least Likely Species") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid = element_blank())
+```
+
+\newpage
+# Species Occupancy Relative to the Average Site in our Data
+Below shows the ratio of species occupancy probability at their favoured patch to the occupancy probability at the average patch in our data.
+
+```{r relativetomeansite, fig.height = 8, fig.width = 7}
+## fun inputs
+spec_different <- data$spec_different
+##
+traits <- get("traits", envir = globalenv())
+df_both <- dplyr::left_join(spec_different, traits, by = c(species = "Common Name"))
+
+df_both %>%
+  dplyr::rename(`Common Name` = species) %>%
+  ordfactby(`Common Name`, `Body Length`) %>%
+  ggplot(aes(x = `Common Name`, y = value, fill = value)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  coord_flip(clip = "off") +
+  scale_x_discrete(name = "Increasing Body Length ---->") +
+  scale_y_continuous(name = "Ratio", expand = expansion()) +
+  ggtitle("Relative Occupancy Probability") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid = element_blank())
+```
+
+Note that the average patch in our data had the following attributes
+```{r showavpatch}
+format(new_data_mean, trim = TRUE, digits = 2)
+as.data.frame(t(new_data_mean))
+```
+
+
+
+
+
+
+
+
+
