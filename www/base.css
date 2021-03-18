@@ -126,3 +126,10 @@ h3 {
 .tooltip-inner {
     text-align: left;
 }
+
+.popover-title {
+  background-color: #006666;
+  color: white;
+  font-size: 28px;
+  text-align:center;
+}
