@@ -2,7 +2,9 @@
 title: "Species Predictions"
 params:
   loadexampledata: TRUE
-output: pdf_document
+output: 
+  pdf_document: 
+    keep_tex: yes
 ---
 
 ```{r setup, echo = FALSE, include = FALSE}
@@ -20,6 +22,20 @@ if (params$loadexampledata){
   current_values <- isolate(reactiveValuesToList(current_values))
 }
 ```
+
+\begin{minipage}{0.3\textwidth}
+```{r image, out.width = "100%"}
+# url <- "https://images.ala.org.au/image/proxyImageThumbnailLarge?imageId=37e23d13-9cd2-465f-ab87-9a79b641752a"
+# download.file(url, destfile = "img.jpg")
+knitr::include_graphics("img.jpg")
+```
+\end{minipage}
+\begin{minipage}{0.7\textwidth}
+"Noisy Miners are particularly pugnacious honeyeaters. They noisily defend their ‘patch’ of trees from other birds, especially other species of honeyeaters which may be seen as competitors for the food resources, and these are vigorously chased away. Many other small birds are also driven from the area, and sometimes miners will even chase after cormorants or herons that may fly past, or harass them mercilessly if they perch somewhere in the miners’ territory. Because of this aggressive behaviour, areas inhabited by Noisy Miners often support few other birds."
+ \end{minipage}
+<div style= "float:right;position: relative; top: -80px;">
+<img src="https://images.ala.org.au/image/proxyImageThumbnailLarge?imageId=37e23d13-9cd2-465f-ab87-9a79b641752a" alt="Noisy Miner Photo" width=100 height=100>
+</div>
 
 # Species Occupancy
 In general each species has a different favourite patch.
