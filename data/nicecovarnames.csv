@@ -1,0 +1,10 @@
+TechName,NiceName
+AnnPrec,Mean Annual Precipitation (mm)
+MaxTWarmMonth,Max. Temp. of the Warmest Month (C)
+MinTColdMonth,Min. Temp. of the Coldest Month (C)
+PrecSeasonality,Precipitation Seasonality (%)
+latitude,Latitude
+woody500m,Woody Vegetation Cover within 500m (%)
+ms,Midstorey Cover (%)
+NMdetected,Noisy Miners Present
+SurveyYear,Year
