@@ -13,6 +13,13 @@ birdlife_getimages <- function(commonnames){
       rvest::html_nodes("img") %>%
       `[[`(1) %>%
       rvest::html_attr("src")
+    if (grepl("Tree.Martin")){ # the second image is better for Tree Martins
+      imgpath <- xmlofpage %>%
+        rvest::html_nodes(".page-title") %>%
+        rvest::html_nodes("img") %>%
+        `[[`(2) %>%
+        rvest::html_attr("src")
+    }
     imgurl <- paste0("https://birdlife.org.au", imgpath)
     return(imgurl)
   })
