@@ -35,9 +35,9 @@ techcovar2nicename <- function(techcovarnames){
 ```
 
 
-# Patch Properites Used in Model
+# The Patch Properites Used for Estimation
 The estimates of bird occupancy in this report are based on the following properties of patches.
-The climate information and latitude has been extracted for the region you selected from the \url{https://www.worldclim.org/data/bioclim.html}{WorldClim} (version 1.4) climate database.
+The climate information and latitude has been extracted for the region you selected from the \href{https://www.worldclim.org/data/bioclim.html}{WorldClim} (version 1.4) climate database.
 The year, midstorey cover, woody vegetation cover within 500m and presence of Noisy Miners were provided by you directly.
 
 \begin{center}
