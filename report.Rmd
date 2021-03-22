@@ -11,7 +11,7 @@ output:
 ---
 
 ```{r setup, echo = FALSE, include = FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center')
 ```
 
 ```{r load, echo = FALSE, include = FALSE}
@@ -91,6 +91,7 @@ for (specname in row.names(data$species_prob_current)[bottomten]){
 cat(" \\end{center} ")
 ```
 
+\newpage
 
 # Occupancy Probability of Every Species in the Model
 ## Occupancy Probabilty in the Favourite Patch
@@ -100,7 +101,7 @@ Below shows the probability of each species occupying their most favoured patch.
 The favoured patch of each species is given beside the species names.
 We are 95% confident that the occupancy probability of this favoured patch is within the error bars shown.
 
-```{r species_on_farm, fig.height = 8, fig.width = 7}
+```{r species_on_farm, fig.height = 8, fig.width = 7, out.width = "100%"}
 ## fun args
 species_prob_current <- data$species_prob_current
 ##
