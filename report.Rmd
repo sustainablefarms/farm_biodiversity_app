@@ -23,6 +23,27 @@ if (params$loadexampledata){
 }
 ```
 
+# What BirdLife says about the 10 species most likely to be on your farm
+```{r makelatexincludes_10mostlikely, results='asis'}
+urls <- get_birdlife_url(row.names(data$species_prob_current))
+stories <- readRDS("./data/birdstories.rds")
+imgfilenames <- readRDS("./data/imgfilenames.rds")
+topten <- order(data$species_prob_current[, "median"])[1:10]
+thisspec <- row.names(data$species_prob_current)[topten[[1]]]
+out <- c(
+  "\\begin{minipage}{0.3\\textwidth}",
+  paste0("\\includegraphics[width=1\\linewidth]{", gsub("\\.[^.]*$", "", imgfilenames[[thisspec]]), "}"),
+  "\\end{minipage}",
+  "\\begin{minipage}{0.7\\textwidth}",
+  paste0("\"", stories[[thisspec]], "\""),
+  paste0("Image and words from \\url{", urls[[thisspec]], "}"),
+  "\\end{minipage}"
+  )
+cat(out)
+```
+
+
+
 \begin{minipage}{0.3\textwidth}
 ```{r image, out.width = "100%"}
 # url <- "https://images.ala.org.au/image/proxyImageThumbnailLarge?imageId=37e23d13-9cd2-465f-ab87-9a79b641752a"

@@ -21,8 +21,7 @@ birdlife_extractintropara <- function(url){
 }
 
 birdlife_getdescription <- function(commonnames){
-  urls <- paste0("https://birdlife.org.au/bird-profile/", gsub(" ", "-", commonnames))
-  names(urls) <- commonnames
+  urls <- get_birdlife_url(commonnames)
   introparas <- lapply(urls, birdlife_extractintropara)
 }
 
