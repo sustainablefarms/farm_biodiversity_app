@@ -17,10 +17,6 @@ if (params$loadexampledata){
   main_app_prep()
   current_values <- readRDS("tests/testthat/current_values_2patches.rds")
   data <- readRDS("tests/testthat/predictions_data_2patches.rds")
-  urls <- get_birdlife_url(row.names(data$species_prob_current))
-  stories <- readRDS("data/birdstories.rds")
-  imgfilenames <- normalizePath(readRDS("data/imgfilenames.rds"))
-  names(imgfilenames) <- names(stories)
 } else {
   data <- isolate(reactiveValuesToList(data))
   current_values <- isolate(reactiveValuesToList(current_values))
@@ -35,14 +31,15 @@ if (params$loadexampledata){
 # imgfilenames <- readRDS("data/imgfilenames.rds")
 topten <- order(data$species_prob_current[, "median"])[1:10]
 buildspeclatex <- function(specname){
+  specinforow <- which(speciesinfo$species == specname)
   out <- c(
     paste0("\\subsection{", specname, "}"),
     "\\begin{minipage}{0.3\\textwidth}",
-    paste0("\\includegraphics[width=1\\linewidth]{", gsub("\\.[^.]*$", "", imgfilenames[[specname]]), "}"),
+    paste0("\\includegraphics[width=1\\linewidth]{", gsub("\\.[^.]*$", "", speciesinfo[specinforow, "imgfilename"]), "}"),
     "\\end{minipage}",
     "\\begin{minipage}{0.7\\textwidth}",
-    paste0("\"", stories[[specname]], "\""),
-    paste0("Image and words from \\url{", urls[[specname]], "}"),
+    paste0("\"", speciesinfo[specinforow, "story"], "\""),
+    paste0("Image and words from \\url{", speciesinfo[specinforow, "url"], "}"),
     "\\end{minipage}"
     )
   return(out)

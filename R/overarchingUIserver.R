@@ -11,6 +11,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   
   # preptraits(model_data)
   loadtraits2global()
+  load_birdinfotable()
   apptempdir <<- tempdir()
   report_path <<- paste0(apptempdir, "/", "report.Rmd") #file location assumes host is a unix machine
   stopifnot(file.copy("report.Rmd", report_path, overwrite = TRUE)) 

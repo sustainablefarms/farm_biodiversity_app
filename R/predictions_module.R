@@ -120,10 +120,6 @@ predictionsServer <- function(id,
             closeButton = FALSE
           )
           on.exit(removeNotification(id), add = TRUE)
-          urls <<- get_birdlife_url(row.names(data$species_prob_current))
-          stories <<- readRDS("data/birdstories.rds")
-          imgfilenames <<- normalizePath(readRDS("data/imgfilenames.rds"))
-          names(imgfilenames) <<- names(stories)
           rmarkdown::render(input = report_path, 
                             params = list(loadexampledata = FALSE),
                             output_file = file,
