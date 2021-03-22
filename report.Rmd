@@ -5,6 +5,9 @@ params:
 output: 
   pdf_document: 
     keep_tex: yes
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
 ---
 
 ```{r setup, echo = FALSE, include = FALSE}
@@ -23,23 +26,29 @@ if (params$loadexampledata){
 }
 ```
 
-# What BirdLife says about the 10 species most likely to be on your farm
+# The 10 Most Likely Species on Your Farm
 ```{r storyprep}
 # the following already loaded inside the app - so its local directory is known
 # urls <- get_birdlife_url(row.names(data$species_prob_current))
 # stories <- readRDS("data/birdstories.rds")
 # imgfilenames <- readRDS("data/imgfilenames.rds")
-topten <- order(data$species_prob_current[, "median"])[1:10]
+topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
 buildspeclatex <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
+  if (specname == "Western Gerygone"){
+    credits <- paste("Words from \\url{http://birdswa.com.au/CEC/Handouts/Western%20Australian%20Gerygones.pdf}.",
+      paste0("Image from \\url{", speciesinfo[specinforow, "url"], "}"))
+  } else {
+    credits <- paste0("Image and words from \\url{", speciesinfo[specinforow, "url"], "}")
+  }
   out <- c(
-    paste0("\\subsection{", specname, "}"),
+    paste0("\\subsection*{", specname, "}"),
     "\\begin{minipage}{0.3\\textwidth}",
     paste0("\\includegraphics[width=1\\linewidth]{", gsub("\\.[^.]*$", "", speciesinfo[specinforow, "imgfilename"]), "}"),
     "\\end{minipage}",
     "\\begin{minipage}{0.7\\textwidth}",
     paste0("\"", speciesinfo[specinforow, "story"], "\""),
-    paste0("Image and words from \\url{", speciesinfo[specinforow, "url"], "}"),
+    credits,
     "\\end{minipage}"
     )
   return(out)
@@ -52,8 +61,59 @@ for (specname in row.names(data$species_prob_current)[topten]){
 }
 ```
 
+# The 10 Least Likely Species on Your Farm
+Of the birds in the model, the 10 least likely species to reside in your farm are shown below.
+```{r bottomten, results='asis'}
+bottomten <- order(data$species_prob_current[, "median"], decreasing = FALSE)[1:10]
+buildspeclatex <- function(specname){
+  specinforow <- which(speciesinfo$species == specname)
+  credits <- paste0("\\url{", speciesinfo[specinforow, "url"], "}")
+  out <- c(
+    "\\begin{minipage}[b][0.3\\textwidth][t]{0.25\\textwidth}",
+    "\\begin{center}",
+    # "\\\\ \\vspace*{1ex} ",
+    paste0("\\includegraphics[width=1\\linewidth]{", gsub("\\.[^.]*$", "", speciesinfo[specinforow, "imgfilename"]), "}"),
+    specname,
+    " \\scriptsize ",
+    credits,
+    "\\end{center}",
+    "\\end{minipage}",
+    " "
+    )
+  return(out)
+}
+cat(" \\begin{center} ")
+for (specname in row.names(data$species_prob_current)[bottomten]){
+  cat(buildspeclatex(specname))
+}
+cat(" \\end{center} ")
+```
 
-# Species Occupancy
+
+```{r leastlikelyspecies_on_farm, fig.width = 7, fig.height = 3}
+## fun args
+species_prob_current <- data$species_prob_current
+##
+
+species_prob_current <- data.frame(species = rownames(species_prob_current), species_prob_current)
+
+species_prob_current %>%
+  dplyr::arrange(median) %>%
+  dplyr::slice_head(n = 10) %>%
+  dplyr::mutate(species = paste(species, bestsite)) %>%
+  ggplot(aes(x = species, y = median, fill = median)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.5) +
+  coord_flip(clip = "off") +
+  scale_y_continuous(name = "Probability of Occupying Best Patch", expand = expansion()) +
+  ggtitle("10 Least Likely Species") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid = element_blank())
+```
+
+# Occupancy Probability of Every Species in the Model
+## Occupancy Probabilty in the Favourite Patch
 In general each species has a different favourite patch.
 It is the patch with the highest estimated probability of occupancy.
 Below shows the probability of each species occupying their most favoured patch.
@@ -85,32 +145,10 @@ species_prob_current %>%
         panel.grid = element_blank())
 ```
 
-The 10 least likely species are below.
 
-```{r leastlikelyspecies_on_farm, fig.width = 7, fig.height = 3}
-## fun args
-species_prob_current <- data$species_prob_current
-##
-
-species_prob_current <- data.frame(species = rownames(species_prob_current), species_prob_current)
-
-species_prob_current %>%
-  dplyr::arrange(median) %>%
-  dplyr::slice_head(n = 10) %>%
-  dplyr::mutate(species = paste(species, bestsite)) %>%
-  ggplot(aes(x = species, y = median, fill = median)) +
-  geom_bar(stat = "identity", show.legend = FALSE) +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.5) +
-  coord_flip(clip = "off") +
-  scale_y_continuous(name = "Probability of Occupying Best Patch", expand = expansion()) +
-  ggtitle("10 Least Likely Species") +
-  theme_minimal() +
-  theme(legend.position = "none",
-        panel.grid = element_blank())
-```
 
 \newpage
-# Species Occupancy Relative to the Average Site in our Data
+## Occupancy Probability Relative to the Average Patch
 Below shows the ratio of species occupancy probability at their favoured patch to the occupancy probability at the average patch in our data.
 
 ```{r relativetomeansite, fig.height = 8, fig.width = 7}
