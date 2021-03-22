@@ -8,6 +8,7 @@ output:
     number_sections: yes
     toc: yes
     toc_depth: 2
+    extra_dependencies: "booktabs"
 ---
 
 ```{r setup, echo = FALSE, include = FALSE}
@@ -24,7 +25,43 @@ if (params$loadexampledata){
   data <- isolate(reactiveValuesToList(data))
   current_values <- isolate(reactiveValuesToList(current_values))
 }
+covarnicenames_tbl <- read.csv("./data/nicecovarnames.csv", header = TRUE)
+covarnicenames <- covarnicenames_tbl$NiceName
+names(covarnicenames) <- covarnicenames_tbl$TechName
+techcovar2nicename <- function(techcovarnames){
+  nicenames <- covarnicenames[techcovarnames]
+  return(nicenames)
+}
 ```
+
+
+# Patch Properites Used in Model
+The estimates of bird occupancy in this report are based on the following properties of patches.
+The climate information and latitude has been extracted for the region you selected from the \url{https://www.worldclim.org/data/bioclim.html}{WorldClim} (version 1.4) climate database.
+The year, midstorey cover, woody vegetation cover within 500m and presence of Noisy Miners were provided by you directly.
+
+\begin{center}
+```{r displaypatchprops}
+patchprops <- t(newXocc_fromselected(current_values))
+patchprops[row.names(patchprops) %in% c("MaxTWarmMonth", "MinTColdMonth"), ] <-   # convert temperatures back to celcius
+  patchprops[row.names(patchprops) %in% c("MaxTWarmMonth", "MinTColdMonth"), ] / 10
+patchprops[row.names(patchprops) == "NMdetected", ] <- as.logical(patchprops[row.names(patchprops) == "NMdetected", ])
+
+row.names(patchprops) <- techcovar2nicename(row.names(patchprops))
+
+patchprops_char <- format(patchprops, drop0trailing = TRUE, trim = TRUE)
+patchprops_char[row.names(patchprops) == techcovar2nicename("NMdetected"), ] <- 
+  as.character(as.logical(as.numeric(patchprops_char[row.names(patchprops) == techcovar2nicename("NMdetected"), ])))
+# Precipitation seasonality is a percentage. The R package dismo computes biovars, it imports 'cv' from package Raster (same authors). The code for 'cv' in raster has 100 * sd(z) / mean(z).
+knitr::kable(patchprops_char,
+      format = "latex",
+      booktabs = TRUE,
+      row.names = TRUE,
+      col.names = paste("Patch", 1:ncol(patchprops)))
+```
+\end{center}
+
+\emph{Precipitation seasonality} is the ratio of the standard deviation of monthly precipitation over the mean monthly precipitation, expressed as a percentage.
 
 # The 10 Most Likely Species on Your Farm
 ```{r storyprep}
@@ -37,9 +74,9 @@ buildspeclatex <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
   if (specname == "Western Gerygone"){
     credits <- paste("Words from \\url{http://birdswa.com.au/CEC/Handouts/Western%20Australian%20Gerygones.pdf}.",
-      paste0("Image from \\url{", speciesinfo[specinforow, "url"], "}"))
+      paste0("Image from \\url{", speciesinfo[specinforow, "url"], "}. Both accessed 22/03/2021."))
   } else {
-    credits <- paste0("Image and words from \\url{", speciesinfo[specinforow, "url"], "}")
+    credits <- paste0("Image and words from \\url{", speciesinfo[specinforow, "url"], "}. Accessed 22/03/2021.")
   }
   out <- c(
     paste0("\\subsection*{", specname, "}"),
