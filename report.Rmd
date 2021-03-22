@@ -17,6 +17,10 @@ if (params$loadexampledata){
   main_app_prep()
   current_values <- readRDS("tests/testthat/current_values_2patches.rds")
   data <- readRDS("tests/testthat/predictions_data_2patches.rds")
+  urls <- get_birdlife_url(row.names(data$species_prob_current))
+  stories <- readRDS("data/birdstories.rds")
+  imgfilenames <- normalizePath(readRDS("data/imgfilenames.rds"))
+  names(imgfilenames) <- names(stories)
 } else {
   data <- isolate(reactiveValuesToList(data))
   current_values <- isolate(reactiveValuesToList(current_values))
@@ -24,12 +28,12 @@ if (params$loadexampledata){
 ```
 
 # What BirdLife says about the 10 species most likely to be on your farm
-```{r makelatexincludes_10mostlikely, results='asis'}
-urls <- get_birdlife_url(row.names(data$species_prob_current))
-stories <- readRDS("./data/birdstories.rds")
-imgfilenames <- readRDS("./data/imgfilenames.rds")
+```{r storyprep}
+# the following already loaded inside the app - so its local directory is known
+# urls <- get_birdlife_url(row.names(data$species_prob_current))
+# stories <- readRDS("data/birdstories.rds")
+# imgfilenames <- readRDS("data/imgfilenames.rds")
 topten <- order(data$species_prob_current[, "median"])[1:10]
-thisspec <- row.names(data$species_prob_current)[topten[[1]]]
 buildspeclatex <- function(specname){
   out <- c(
     paste0("\\subsection{", specname, "}"),
@@ -43,7 +47,9 @@ buildspeclatex <- function(specname){
     )
   return(out)
 }
+```
 
+```{r makelatexincludes_10mostlikely, results='asis'}
 for (specname in row.names(data$species_prob_current)[topten]){
   cat(buildspeclatex(specname))
 }
