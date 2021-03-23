@@ -70,7 +70,7 @@ knitr::kable(patchprops_char,
 # stories <- readRDS("data/birdstories.rds")
 # imgfilenames <- readRDS("data/imgfilenames.rds")
 topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
-buildspeclatex <- function(specname){
+buildspeclatex_imagestory <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
   if (specname == "Western Gerygone"){
     credits <- paste("Words from \\url{http://birdswa.com.au/CEC/Handouts/Western%20Australian%20Gerygones.pdf}.",
@@ -94,7 +94,7 @@ buildspeclatex <- function(specname){
 
 ```{r makelatexincludes_10mostlikely, results='asis'}
 for (specname in row.names(data$species_prob_current)[topten]){
-  cat(buildspeclatex(specname))
+  cat(buildspeclatex_imagestory(specname))
 }
 ```
 
@@ -104,7 +104,7 @@ for (specname in row.names(data$species_prob_current)[topten]){
 Of the birds in the model, the 10 least likely species to reside in your farm are shown below.
 ```{r bottomten, results='asis'}
 bottomten <- order(data$species_prob_current[, "median"], decreasing = FALSE)[1:10]
-buildspeclatex <- function(specname){
+buildspeclatex_justimage <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
   credits <- paste0("\\url{", speciesinfo[specinforow, "url"], "}")
   out <- c(
@@ -123,12 +123,35 @@ buildspeclatex <- function(specname){
 }
 cat(" \\begin{center} ")
 for (specname in row.names(data$species_prob_current)[bottomten]){
-  cat(buildspeclatex(specname))
+  cat(buildspeclatex_justimage(specname))
 }
 cat(" \\end{center} ")
 ```
 
 \newpage
+
+# A Vulnerable Species: Superb Parrot
+The Superb Parrot is listed as vulnerable by the \href{https://www.environment.gov.au/cgi-bin/sprat/public/publicthreatenedlist.pl}{Commonwealth Governement}.
+According to our model, there is a `r format(data$species_prob_current["Superb Parrot", "median"] * 100, digits = 2)`% 
+(lower bound = `r format(data$species_prob_current["Superb Parrot", "lower"] * 100, digits = 2)`%, upper bound = `r format(data$species_prob_current["Superb Parrot", "upper"] * 100, digits = 2)`%)
+chance of the Superb Parrot occupying patch `r data$species_prob_current["Superb Parrot", "bestsite"]`, which was the best patch for the Superb Parrot.
+
+```{r superbparrotinfo, results='asis'}
+cat(buildspeclatex_imagestory("Superb Parrot"))
+```
+
+
+```{r consconcern, eval = FALSE}
+constatuses %>%
+  dplyr::filter(`Fauna Type` == "Birds")
+rowintbl <- lapply(model_data$species, function(spec) {
+  return(grep(spec, constatuses$`Common Name`))
+})
+names(rowintbl) <- model_data$species
+unlist(rowintbl)
+constatuses[unlist(rowintbl), ]
+format(data$species_prob_current["Superb Parrot", "median"] * 100, digits = 2)
+```
 
 # Occupancy Probability of Every Species in the Model
 ## Occupancy Probabilty in the Favourite Patch
