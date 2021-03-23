@@ -43,17 +43,20 @@ The year, midstorey cover, woody vegetation cover within 500m and presence of No
 \begin{center}
 ```{r displaypatchprops}
 patchprops <- t(newXocc_fromselected(current_values))
-patchprops[row.names(patchprops) %in% c("MaxTWarmMonth", "MinTColdMonth"), ] <-   # convert temperatures back to celcius
-  patchprops[row.names(patchprops) %in% c("MaxTWarmMonth", "MinTColdMonth"), ] / 10
-patchprops[row.names(patchprops) == "NMdetected", ] <- as.logical(patchprops[row.names(patchprops) == "NMdetected", ])
-
-row.names(patchprops) <- techcovar2nicename(row.names(patchprops))
-
-patchprops_char <- format(patchprops, drop0trailing = TRUE, trim = TRUE)
-patchprops_char[row.names(patchprops) == techcovar2nicename("NMdetected"), ] <- 
-  as.character(as.logical(as.numeric(patchprops_char[row.names(patchprops) == techcovar2nicename("NMdetected"), ])))
+makeniceprops <- function(patchprops, ...){
+  patchprops[row.names(patchprops) %in% c("MaxTWarmMonth", "MinTColdMonth"), ] <-   # convert temperatures back to celcius
+    patchprops[row.names(patchprops) %in% c("MaxTWarmMonth", "MinTColdMonth"), ] / 10
+  patchprops[row.names(patchprops) == "NMdetected", ] <- as.logical(patchprops[row.names(patchprops) == "NMdetected", ])
+  
+  row.names(patchprops) <- techcovar2nicename(row.names(patchprops))
+  
+  patchprops_char <- format(patchprops, drop0trailing = TRUE, trim = TRUE, ...)
+  patchprops_char[row.names(patchprops) == techcovar2nicename("NMdetected"), ] <- 
+    as.character(as.logical(as.numeric(patchprops_char[row.names(patchprops) == techcovar2nicename("NMdetected"), ])))
 # Precipitation seasonality is a percentage. The R package dismo computes biovars, it imports 'cv' from package Raster (same authors). The code for 'cv' in raster has 100 * sd(z) / mean(z).
-knitr::kable(patchprops_char,
+  return(patchprops_char)
+}
+knitr::kable(makeniceprops(patchprops),
       format = "latex",
       booktabs = TRUE,
       row.names = TRUE,
@@ -213,11 +216,18 @@ df_both %>%
         panel.grid = element_blank())
 ```
 
+\newpage
+
 Note that the average patch in our data had the following attributes
+\begin{center}
 ```{r showavpatch}
-format(new_data_mean, trim = TRUE, digits = 2)
-as.data.frame(t(new_data_mean))
+knitr::kable(makeniceprops(t(new_data_mean), digits = 3),
+      format = "latex",
+      booktabs = TRUE,
+      row.names = TRUE,
+      col.names = "Average Patch")
 ```
+\end{center}
 
 
 
