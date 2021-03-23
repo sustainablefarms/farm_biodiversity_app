@@ -9,6 +9,8 @@ output:
     toc: yes
     toc_depth: 2
     extra_dependencies: "booktabs"
+header-includes:
+  \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
 ---
 
 ```{r setup, echo = FALSE, include = FALSE}
@@ -25,7 +27,7 @@ if (params$loadexampledata){
   data <- isolate(reactiveValuesToList(data))
   current_values <- isolate(reactiveValuesToList(current_values))
 }
-covarnicenames_tbl <- read.csv("./data/nicecovarnames.csv", header = TRUE)
+# covarnicenames_tbl <- read.csv("./data/nicecovarnames.csv", header = TRUE)
 covarnicenames <- covarnicenames_tbl$NiceName
 names(covarnicenames) <- covarnicenames_tbl$TechName
 techcovar2nicename <- function(techcovarnames){
@@ -34,9 +36,19 @@ techcovar2nicename <- function(techcovarnames){
 }
 ```
 
+Welcome to a detailed report of species occupancy estimates for the woody vegetation patches on your farm.
+We hope you enjoy it.
+In the next section you'll find the information we used to estimate the occupancy probabilities.
+Then you'll find short descriptions of the 10 most likely species across your patches, courtesy of BirdLife Australia (TBC).
+Later in this report you'll find
+the 10 least likely species across your patches, 
+a paragraph on the vulnerable Superb Parrot,
+and figures showing the occupancy probability of every species in our model.
+
+This report was generated at `r Sys.time()` from version `r packageVersion("sfbiodiversityapp")` of the `r appname`.
 
 # The Patch Properites Used for Estimation
-The estimates of bird occupancy in this report are based on the following properties of patches.
+The estimates of bird occupancy in this report are based on the below properties of woody vegetation patches.
 The climate information and latitude has been extracted for the region you selected from the \href{https://www.worldclim.org/data/bioclim.html}{WorldClim} (version 1.4) climate database.
 The year, midstorey cover, woody vegetation cover within 500m and presence of Noisy Miners were provided by you directly.
 

@@ -12,6 +12,8 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   # preptraits(model_data)
   loadtraits2global()
   load_birdinfotable()
+  appname <<- "Draft Woodland Remnant Bird Biodiversity Estimator"
+  covarnicenames_tbl <<- read.csv("./data/nicecovarnames.csv", header = TRUE)
   apptempdir <<- tempdir()
   report_path <<- paste0(apptempdir, "/", "report.Rmd") #file location assumes host is a unix machine
   stopifnot(file.copy("report.Rmd", report_path, overwrite = TRUE)) 
@@ -30,13 +32,6 @@ ui <- function(){
     tags$script("$(function () {
       $('[data-toggle=popover]').popover()
     })"),
-    # fluidRow(HTML("
-    #   <div class='header'>
-    #     <img class='logo' src='SF Logo Vertical - Transparent Background.png' alt='SF logo'>
-    #     <span class='main'>DRAFT Woodland Remnant Bird Biodiversity Estimator</span>
-    #     <span class='subtitle'><br>Version 0.1. By Martin Westgate & Kassel Hingee</span>
-    #   </div>
-    # ")),
     HTML("<div class='header'>"),
     fluidRow(
       column(width = 2,
@@ -44,7 +39,9 @@ ui <- function(){
         <img class='logo' src='SF Logo Vertical - Transparent Background.png' alt='SF logo'>
     ")),
     column(width = 10, offset = 0, 
-    HTML("<span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>",
+    HTML("<span class='main'>",
+         appname,
+         "</span>",
       '<p>This <a href="#" role="button" title="" data-toggle="popover" data-content="And heres some amazing content. Its very engaging. right?" data-original-title="A Title">button</a> should trigger a popover on click.</p>'),
       tags$span(class='subtitle',
                 `data-toggle`='tooltip',
