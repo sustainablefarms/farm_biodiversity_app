@@ -1,7 +1,9 @@
 predictionsdetailUI <- function(id){
   ns <- NS(id)
-  tagList(
-    plotly::plotlyOutput(ns("species_InModal"), height = "800px")
+  fluidPage(
+    fluidRow(
+      plotOutput(ns("allspecies"), height = "800px")
+    )
   )
 }
 
@@ -11,8 +13,9 @@ predictionsdetailServer <- function(id,
   moduleServer(
     id,
     function(input, output, session){
-        output$species_InModal <- plotly::renderPlotly({
-          species_plotly_modal(data$species_prob_current, data$spec_different)
+      ns <- session$ns
+      output$allspecies <- renderPlot({
+        plot_allspeciesprob(data$species_prob_current)
       })
     })
   }
