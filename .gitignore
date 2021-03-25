@@ -36,3 +36,14 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Report Byproducts
+report.*
+report_files/
+
+#rscpnnect
+rsconnect/
+
+trash/
+farm_biodiversity_app.Rproj
+
