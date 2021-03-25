@@ -2,6 +2,11 @@ predictionsdetailUI <- function(id){
   ns <- NS(id)
   fluidPage(
     fluidRow(
+      tags$img(src = speciesinfo[1, "imgfilename"],
+               width=100,
+               height=100)
+    ),
+    fluidRow(
       plotOutput(ns("allspecies"), height = "800px")
     )
   )
