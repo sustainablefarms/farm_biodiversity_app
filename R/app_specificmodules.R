@@ -13,8 +13,13 @@ app_predictionsonly <- function(){
 app_predictiondetailsonly <- function(){
   main_app_prep()
   data <- do.call(reactiveValues, readRDS("tests/testthat/predictions_data_2patches.rds"))
+  # observe({
+  #   topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
+  #   data$toptennames <- row.names(data$species_prob_current)[topten]
+  #   data$speciesinfo_topten <- speciesinfo[row.names(data$species_prob_current)[topten], ]
+  # })
   
-  shinyApp(predictionsdetailUI("detail"),
+  shinyApp(predictionsdetailUI("detail", isolate(data$speciesinfo_topten)),
            function(input, output, session){
              predictionsdetailServer("detail", data)
            })
