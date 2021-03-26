@@ -10,12 +10,15 @@ predictionsdetailUI <- function(id, speciesinfo_topten){
       id = ns("topten5"),
       style="text-align: center",
       lapply(1:5, function(idx){
+        column(2, 
         tags$span(
+          style="text-align: center",
           imageOutput(ns(paste0("top", idx)), height = "100px", inline = TRUE),
           `data-toggle` = "tooltip",
           `data-placement` = 'auto top',
           `data-viewport` = "{'selector': '#topten5'}",
           title = speciesinfo_topten[idx, "story"])
+        )
         }
       )),
     fluidRow(
@@ -23,6 +26,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten){
       lapply(6:10, function(idx){
         column(2, 
                tags$div(
+                 style="text-align: center",
                  imageOutput(ns(paste0("top", idx)), height = "100px", inline = FALSE),
                  `data-toggle` = "tooltip",
                  `data-placement` = 'auto bottom',
