@@ -6,22 +6,30 @@ predictionsdetailUI <- function(id, speciesinfo_topten){
       })"
     ),
     # the following enables bootstrap 3's inbuilt popovers
-    do.call(fluidRow, 
+    fluidRow(
+      id = ns("topten5"),
+      style="text-align: center",
       lapply(1:5, function(idx){
-        tags$div(
-          imageOutput(ns(paste0("top", idx))),
+        tags$span(
+          imageOutput(ns(paste0("top", idx)), height = "100px", inline = TRUE),
           `data-toggle` = "tooltip",
           `data-placement` = 'auto top',
+          `data-viewport` = "{'selector': '#topten5'}",
           title = speciesinfo_topten[idx, "story"])
         }
       )),
     fluidRow(
-      tags$div(
-        imageOutput(ns("top6")),
-        `data-toggle` = "tooltip",
-        `data-placement` = 'auto bottom',
-        title = speciesinfo_topten[6, "story"]
-      )
+      style="text-align: center",
+      lapply(6:10, function(idx){
+        column(2, 
+               tags$div(
+                 imageOutput(ns(paste0("top", idx)), height = "100px", inline = FALSE),
+                 `data-toggle` = "tooltip",
+                 `data-placement` = 'auto bottom',
+                 `data-viewport` = "{'selector': ':root'}",
+                 title = speciesinfo_topten[idx, "story"])
+        )
+      })
     ),
     fluidRow(
       plotOutput(ns("allspecies"), height = "800px")
@@ -39,7 +47,8 @@ predictionsdetailServer <- function(id,
       lapply(1:10, function(idx){
         output[[paste0("top", idx)]] <- renderImage({
             list(src = data$speciesinfo_topten[idx, "imgfilename"],
-                 alt = data$speciesinfo_topten[idx, "species"])
+                 alt = data$speciesinfo_topten[idx, "species"],
+                 height = "100px")
           }, deleteFile = FALSE, quoted = FALSE)
       })
       output$allspecies <- renderPlot({
