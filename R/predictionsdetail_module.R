@@ -26,7 +26,8 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
       style="text-align: center",
       lapply(6:10, function(idx){
         # column(2, )
-       tags$span(
+       tags$a(
+         href = speciesinfo_topten[idx, "url"],
          style="text-align: center",
          imageOutput(ns(paste0("top", idx)), height = "200px", inline = TRUE),
          `data-toggle` = "tooltip",
@@ -41,7 +42,8 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
       style="text-align: center",
       lapply(1:10, function(idx){
         # column(2, )
-        tags$span(
+        tags$a(
+          href = speciesinfo_botten[idx, "url"],
           style="text-align: center",
           imageOutput(ns(paste0("bot", idx)), height = "100px", inline = TRUE),
           `data-toggle` = "tooltip",
