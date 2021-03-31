@@ -11,7 +11,8 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
       style="text-align: center",
       lapply(1:5, function(idx){
         # column(2, 
-        tags$span(
+        tags$a(
+          href = speciesinfo_topten[idx, "url"],
           style="text-align: center",
           imageOutput(ns(paste0("top", idx)), height = "200px", inline = TRUE),
           `data-toggle` = "tooltip",
@@ -50,6 +51,13 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
         # )
       })
     ),
+    
+    HTML("<div class='subheader'><h2>A Vulnerable Species: Superb Parrot</h2></div>"),
+    tags$div(
+    "The Superb Parrot is listed as vulnerable by the ",
+    tags$a(href = "https://www.environment.gov.au/cgi-bin/sprat/public/publicthreatenedlist.pl", "Commonwealth Government."),
+    textOutput(ns("superbparrotprobdesc"), inline = TRUE)
+    ),
     HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY OF ALL SPECIES</h2></div>"),
     fluidRow(
       plotOutput(ns("allspecies"), height = "800px")
@@ -79,6 +87,20 @@ predictionsdetailServer <- function(id,
                  height = "100px")
           }, deleteFile = FALSE, quoted = FALSE)
       })
+      
+      output$superbparrotprobdesc <- renderText({
+        c(
+          "According to our model, there is a ",
+          format(data$species_prob_current["Superb Parrot", "median"] * 100, digits = 2),
+          "% (lower bound = ",
+          format(data$species_prob_current["Superb Parrot", "lower"] * 100, digits = 2),
+          "%), upper bound = ",
+          format(data$species_prob_current["Superb Parrot", "upper"] * 100, digits = 2),
+          "%) chance of the Superb Parrot occupying patch ",
+          data$species_prob_current["Superb Parrot", "bestsite"],
+          ", which was the best patch for the Superb Parrot."
+        )
+      }, sep = "")
       
       output$allspecies <- renderPlot({
         plot_allspeciesprob(data$species_prob_current)

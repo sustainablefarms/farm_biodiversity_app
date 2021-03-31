@@ -18,10 +18,10 @@ birdlife_extractintropara <- function(url){
       rvest::html_text(trim = TRUE)
   }
   if (grepl("Western-Gerygone", url)){
-    credits <- paste("Words from \\url{http://birdswa.com.au/CEC/Handouts/Western%20Australian%20Gerygones.pdf}.",
-                     paste0("Image from \\url{", url, "}. Both accessed 22/03/2021."))
+    credits <- paste("Words from http://birdswa.com.au/CEC/Handouts/Western%20Australian%20Gerygones.pdf (accessed 22/03/2021).",
+                     paste0("Image from ", url, " (accessed ", format(Sys.time(), "%b %d, %Y"), ")."))
   } else {
-    credits <- paste0("Image and words from \\url{", url, "}. Accessed 22/03/2021.")
+    credits <- paste0("Image and words from ", url, " (accessed ", format(Sys.time(), "%b %d, %Y"), ").")
   }
   intropara <- paste(intropara, credits)
   return(intropara)
