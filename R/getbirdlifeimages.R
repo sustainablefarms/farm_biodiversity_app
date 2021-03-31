@@ -13,7 +13,7 @@ birdlife_getimages <- function(commonnames){
       rvest::html_nodes("img") %>%
       `[[`(1) %>%
       rvest::html_attr("src")
-    if (grepl("Tree.Martin")){ # the second image is better for Tree Martins
+    if (grepl("Tree.Martin", url)){ # the second image is better for Tree Martins
       imgpath <- xmlofpage %>%
         rvest::html_nodes(".page-title") %>%
         rvest::html_nodes("img") %>%

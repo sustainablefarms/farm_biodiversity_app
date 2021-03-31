@@ -17,6 +17,13 @@ birdlife_extractintropara <- function(url){
       rvest::html_nodes(".clearfix:not(.inner)") %>%
       rvest::html_text(trim = TRUE)
   }
+  if (grepl("Western-Gerygone", url)){
+    credits <- paste("Words from \\url{http://birdswa.com.au/CEC/Handouts/Western%20Australian%20Gerygones.pdf}.",
+                     paste0("Image from \\url{", url, "}. Both accessed 22/03/2021."))
+  } else {
+    credits <- paste0("Image and words from \\url{", url, "}. Accessed 22/03/2021.")
+  }
+  intropara <- paste(intropara, credits)
   return(intropara)
 }
 
@@ -50,7 +57,7 @@ prep_birdinfotable <- function(){
   model_data <- load_model_data()
   urls <- get_birdlife_url(model_data$species)
   stories <- prep_birdstories() #readRDS("./data/birdstories.rds")
-  imgfilenames <- prep_birdimages() #readRDS("./data/imgfilenames.rds")
+  imgfilenames <- prep_birdimages() #readRDS("./data/birdinfotable.rds")$imgfilename
   specinfoframe <- data.frame(species = model_data$species,
              url = urls[model_data$species],
              story = unlist(stories[model_data$species], recursive = FALSE),

@@ -19,7 +19,7 @@ app_predictiondetailsonly <- function(){
   #   data$speciesinfo_topten <- speciesinfo[row.names(data$species_prob_current)[topten], ]
   # })
   
-  shinyApp(predictionsdetailUI("detail", isolate(data$speciesinfo_topten)),
+  shinyApp(predictionsdetailUI("detail", isolate(data$speciesinfo_topten), isolate(data$speciesinfo_botten)),
            function(input, output, session){
              predictionsdetailServer("detail", data)
            })

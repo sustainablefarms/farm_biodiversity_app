@@ -27,7 +27,8 @@ predictionsServer <- function(id,
         species_prob_ref = NULL,
         species_richness = NULL,
         toptennames = NULL,
-        speciesinfo_topten = NULL)
+        speciesinfo_topten = NULL,
+        speciesinfo_botten = NULL)
       ns <- session$ns
       
       observe({
@@ -45,8 +46,10 @@ predictionsServer <- function(id,
           data$spec_different <- todifferent(data$species_prob_current, data$species_prob_ref)
           data$species_richness <- compute_richness(model_data, data$Xocc)
           topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
+          botten <- order(data$species_prob_current[, "median"], decreasing = FALSE)[1:10]
           data$toptennames <- row.names(data$species_prob_current)[topten]
           data$speciesinfo_topten <- speciesinfo[row.names(data$species_prob_current)[topten], ]
+          data$speciesinfo_botten <- speciesinfo[row.names(data$species_prob_current)[botten], ]
           # saveRDS(isolate(reactiveValuesToList(data)), file = "data.rds"); stop("Saving data - app will end now")
         } else {
           # data <- lapply(data, function(x) NULL)
@@ -89,7 +92,7 @@ predictionsServer <- function(id,
       observeEvent(input$moredetail, {
         showModal(
           modalDialog(
-            predictionsdetailUI(ns("detail"), isolate(data$speciesinfo_topten)),
+            predictionsdetailUI(ns("detail"), isolate(data$speciesinfo_topten), isolate(data$speciesinfo_botten)),
             title = "More Detail on Predictions",
             size = "l",
             footer = tagList(

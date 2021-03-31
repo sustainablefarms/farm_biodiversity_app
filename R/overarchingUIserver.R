@@ -65,7 +65,7 @@ ui <- function(){
         predictionsUI("pred")
       )
     ),
-    title = "SF Model Visualiser",
+    title = appname,
     theme = bslib::bs_theme(version = 3, "lumen")
     # theme = shinytheme("lumen")
   )
