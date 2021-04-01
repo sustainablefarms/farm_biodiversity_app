@@ -32,15 +32,26 @@ patch_modal <- function(
                                       "Click to toggle popover")),
         min = 0, max = 10, step = 1,
         value = midstorey),
-      checkboxInput(
-        inputId = ns(paste0("noisy_miner_", value)),
-        label = tags$html(tags$span("Noisy Miners present?",
-                                    `data-toggle` = "popover",
-                                    title = "Noisy Miners",
-                                    `data-html` = TRUE,
-                                    `data-content` =  HTML('<img src="https://images.ala.org.au/image/proxyImageThumbnailLarge?imageId=37e23d13-9cd2-465f-ab87-9a79b641752a" alt="Noisy Miner Photo" width=100 height=100>',
-                                    'Noisy miners are territorial, loud, and easily detected. <a href="https://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:afd.taxon:88df188e-fbc8-4220-82c1-d2fc03f2f83a#">Photos</a>. They are less likely to be present in patches with high midstorey.'))),
-        value = noisy_miner),
+      tags$div(
+        class = "form-group shiny-input-container",
+        tags$span(
+          class = "checkbox",  #for some reason this creates an object that ends with a new line
+          style = 'display:inline',
+          tags$label(style='display:inline',tags$input(
+            id = ns(paste0("noisy_miner_", value)),
+            type = "checkbox",
+            checked = if (noisy_miner){TRUE} else {NULL},
+            tags$span("Noisy Miners present?")
+          ))
+        ),
+        tags$span(class = "glyphicon glyphicon-info-sign",
+                  `data-toggle` = "popover",
+                  title = "Noisy Miners",
+                  `data-html` = TRUE,
+                  `data-content` =  HTML('<img src="https://images.ala.org.au/image/proxyImageThumbnailLarge?imageId=37e23d13-9cd2-465f-ab87-9a79b641752a" alt="Noisy Miner Photo" width=100 height=100>',
+                  'Noisy miners are territorial, loud, and easily detected. <a href="https://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:afd.taxon:88df188e-fbc8-4220-82c1-d2fc03f2f83a#">Photos</a>. They are less likely to be present in patches with high midstorey.')
+                  )
+        ),
       actionButton(inputId = ns("choose_patch_attributes_execute"), label = "Save"),
       modalButton("Cancel"),
     title = paste0("Select attributes for patch #", value),
