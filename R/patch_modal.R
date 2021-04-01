@@ -16,20 +16,21 @@ patch_modal <- function(
     })"),
       sliderInput(
         inputId = ns(paste0("pc_woody_veg_", value)),
-        label = tags$html(tags$span("Woody vegetation canopy within 500m of patch centre (% area)",
-                                    `data-toggle` = "tooltip",
-                                    title = "The amount of woody vegetation canopy within 500m of the patch centre, as a percentage of the area within 500m.")),
+        label = tags$html(tags$span("Woody vegetation canopy within 500m of patch centre (% area)"),
+                          infopopover(title = "Woody Vegetation Cover",
+                                      trigger = "click",
+                                      content = "The amount of woody vegetation canopy within 500m of the patch centre, as a percentage of the area within 500m.")),
         min = 2, max = 20, step = 2,
         value = woody_veg),
       sliderInput(
         inputId = ns(paste0("pc_midstorey_", value)),
         label = tags$html(tags$span('Midstorey vegetation (2m - 10m tall) within patch (% area of patch)'),
-                          tags$button(type="button",
-                                      class="btn btn-lg btn-danger",
-                                      `data-toggle`="popover",
-                                      title="Midstorey Definition Detail",
-                                      `data-content`="Midstorey vegetation (2m - 10m tall) within patch (% area of patch)",
-                                      "Click to toggle popover")),
+                          infopopover(title = "Midstorey Vegetation",
+                                      trigger = "click",
+                                      content = paste("[OBSOLETE] The percent area of a patch covered by midstorey vegetation (2m - 10m tall).",
+                                                      "Use the below example images of to choose the midstorey cover of this patch.")
+                          )
+                         ),
         min = 0, max = 10, step = 1,
         value = midstorey),
       tags$div(
@@ -44,12 +45,9 @@ patch_modal <- function(
             tags$span("Noisy Miners present?")
           ))
         ),
-        tags$span(class = "glyphicon glyphicon-info-sign",
-                  `data-toggle` = "popover",
-                  title = "Noisy Miners",
-                  `data-trigger` = "click", #focus creates errors here
-                  `data-html` = TRUE,
-                  `data-content` =  
+        infopopover(title = "Noisy Miners",
+                    trigger = "click", #focus creates errors here
+                    content = 
             tags$html(tags$div(
               style="text-align: center",
                 tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
