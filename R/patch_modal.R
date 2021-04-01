@@ -47,11 +47,25 @@ patch_modal <- function(
         tags$span(class = "glyphicon glyphicon-info-sign",
                   `data-toggle` = "popover",
                   title = "Noisy Miners",
+                  `data-trigger` = "click", #focus creates errors here
                   `data-html` = TRUE,
-                  `data-content` =  HTML('<img src="https://images.ala.org.au/image/proxyImageThumbnailLarge?imageId=37e23d13-9cd2-465f-ab87-9a79b641752a" alt="Noisy Miner Photo" width=100 height=100>',
-                  'Noisy miners are territorial, loud, and easily detected. <a href="https://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:afd.taxon:88df188e-fbc8-4220-82c1-d2fc03f2f83a#">Photos</a>. They are less likely to be present in patches with high midstorey.')
-                  )
-        ),
+                  `data-content` =  
+            tags$html(tags$div(
+              style="text-align: center",
+                tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
+                   tags$img(src="https://images.ala.org.au/image/proxyImageThumbnailLarge?imageId=37e23d13-9cd2-465f-ab87-9a79b641752a",
+                            alt="Noisy Miner Photo",
+                            width=200,
+                            height=200))),
+                 tags$div(
+                 "Noisy Miners noisily defend their ‘patch’ of trees from other birds. ...",
+                 #, especially other species of honeyeaters which may be seen as competitors for the food resources, and these are vigorously chased away.",
+                 # "Many other small birds are also driven from the area, and sometimes miners will even chase after cormorants or herons that may fly past, or harass them mercilessly if they perch somewhere in the miners’ territory.",
+                 "Because of this aggressive behaviour, areas inhabited by Noisy Miners often support few other birds.",
+                 "Image and text from",
+                 tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
+                        "BirdLife Australia"))
+                    ))),
       actionButton(inputId = ns("choose_patch_attributes_execute"), label = "Save"),
       modalButton("Cancel"),
     title = paste0("Select attributes for patch #", value),
