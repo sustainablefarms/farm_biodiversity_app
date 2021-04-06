@@ -50,7 +50,7 @@ patch_modal <- function(
                     content = 
             tags$html(tags$div(
               style="text-align: center",
-                tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
+                linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
                    tags$img(src="https://images.ala.org.au/image/proxyImageThumbnailLarge?imageId=37e23d13-9cd2-465f-ab87-9a79b641752a",
                             alt="Noisy Miner Photo",
                             width=200,
@@ -61,7 +61,7 @@ patch_modal <- function(
                  # "Many other small birds are also driven from the area, and sometimes miners will even chase after cormorants or herons that may fly past, or harass them mercilessly if they perch somewhere in the miners’ territory.",
                  "Because of this aggressive behaviour, areas inhabited by Noisy Miners often support few other birds.",
                  "Image and text from",
-                 tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
+                 linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
                         "BirdLife Australia"))
                     ))),
       actionButton(inputId = ns("choose_patch_attributes_execute"), label = "Save"),

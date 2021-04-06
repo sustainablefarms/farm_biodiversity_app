@@ -11,7 +11,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
       style="text-align: center",
       lapply(1:5, function(idx){
         # column(2, 
-        tags$a(
+        linknewtab(
           href = speciesinfo_topten[idx, "url"],
           style="text-align: center",
           imageOutput(ns(paste0("top", idx)), height = "200px", inline = TRUE),
@@ -26,7 +26,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
       style="text-align: center",
       lapply(6:10, function(idx){
         # column(2, )
-       tags$a(
+        linknewtab(
          href = speciesinfo_topten[idx, "url"],
          style="text-align: center",
          imageOutput(ns(paste0("top", idx)), height = "200px", inline = TRUE),
@@ -42,7 +42,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
       style="text-align: center",
       lapply(1:10, function(idx){
         # column(2, )
-        tags$a(
+        linknewtab(
           href = speciesinfo_botten[idx, "url"],
           style="text-align: center",
           imageOutput(ns(paste0("bot", idx)), height = "100px", inline = TRUE),
@@ -57,7 +57,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
     HTML("<div class='subheader'><h2>A Vulnerable Species: Superb Parrot</h2></div>"),
     tags$div(
     "The Superb Parrot is listed as vulnerable by the ",
-    tags$a(href = "https://www.environment.gov.au/cgi-bin/sprat/public/publicthreatenedlist.pl", "Commonwealth Government."),
+    linknewtab(href = "https://www.environment.gov.au/cgi-bin/sprat/public/publicthreatenedlist.pl", "Commonwealth Government."),
     textOutput(ns("superbparrotprobdesc"), inline = TRUE)
     ),
     HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY OF ALL SPECIES</h2></div>"),
