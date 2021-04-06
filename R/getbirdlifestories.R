@@ -30,6 +30,7 @@ birdlife_extractintropara <- function(url){
 birdlife_getdescription <- function(commonnames){
   urls <- get_birdlife_url(commonnames)
   introparas <- lapply(urls, birdlife_extractintropara)
+  return(introparas)
 }
 
 prep_birdstories <- function(){

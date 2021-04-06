@@ -87,20 +87,13 @@ knitr::kable(makeniceprops(patchprops),
 topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
 buildspeclatex_imagestory <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
-  if (specname == "Western Gerygone"){
-    credits <- paste("Words from \\url{http://birdswa.com.au/CEC/Handouts/Western%20Australian%20Gerygones.pdf}.",
-      paste0("Image from \\url{", speciesinfo[specinforow, "url"], "}. Both accessed 22/03/2021."))
-  } else {
-    credits <- paste0("Image and words from \\url{", speciesinfo[specinforow, "url"], "}. Accessed 22/03/2021.")
-  }
   out <- c(
     paste0("\\subsection*{", specname, "}"),
     "\\begin{minipage}{0.3\\textwidth}",
     paste0("\\includegraphics[width=1\\linewidth]{", gsub("\\.[^.]*$", "", speciesinfo[specinforow, "imgfilename"]), "}"),
     "\\end{minipage}",
     "\\begin{minipage}{0.7\\textwidth}",
-    speciesinfo[specinforow, "story"],
-    paste0("\\emph{", credits, "}"),
+    gsub("http([^[:space:]]*)", "\\\\url{http\\1}", speciesinfo[specinforow, "story"]),
     "\\end{minipage}"
     )
   return(out)
