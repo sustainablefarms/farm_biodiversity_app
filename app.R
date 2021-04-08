@@ -20,9 +20,13 @@
 
 # load requisite packages
 # devtools::install_github("https://github.com/sustainablefarms/msod", ref = "modelclasses")
+options(
+  shiny.autoreload = TRUE,
+  shiny.launch.browser = FALSE
+)
 pkgload::load_all(".")
-# myapp()
-app_selectpatchonly()
-app_predictionsonly()
+myapp()
+# app_selectpatchonly()
+# app_predictionsonly()
 # app_predictiondetailsonly()
 

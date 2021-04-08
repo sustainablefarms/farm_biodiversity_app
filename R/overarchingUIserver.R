@@ -38,18 +38,10 @@ ui <- function(){
       HTML("
         <img class='logo' src='SF Logo Vertical - Transparent Background.png' alt='SF logo'>
     ")),
-    column(width = 10, offset = 0, 
-    HTML("<span class='main'>",
-         appname,
-         "</span>",
-      '<p>This <a href="#" role="button" title="" data-toggle="popover" data-content="And heres some amazing content. Its very engaging. right?" data-original-title="A Title">button</a> should trigger a popover on click.</p>'),
-      tags$span(class='subtitle',
-                `data-toggle`='tooltip',
-                title='<div> Some <br> tooltip text! </div>',
-                `data-html`='TRUE',
-                "Version 0.2 (DRAFT). By Martin Westgate & Kassel Hingee"),
-      HTML('<button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And heres some amazing content. Its very engaging. Right?">Click to toggle popover</button>'
-    ))),
+    column(width = 10, offset = 0, HTML("
+      <span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>
+      <span class='subtitle'><br>Version 0.2 (DRAFT). By Martin Westgate & Kassel Hingee</span>
+    "))),
     HTML("</div>"),
     column(width = 1),
     column(width = 3,

@@ -6,10 +6,11 @@ predictionsUI <- function(id){
       uiOutput(ns("species_richness_title")),
       plotOutput(ns("species_richness"), height = "200px"),
       fluidRow(
-        column(width = 12, # first biodiversity plot
-          plotly::plotlyOutput(ns("common_dif_species"), height = "300px")
-        )
-      )
+        column(width = 6, uiOutput(ns("species_prob_top10_title"))),
+        column(width = 6, uiOutput(ns("species_prob_top10relative_title")))
+        ),
+      plotly::plotlyOutput(ns("common_dif_species"), height = "300px"),
+      uiOutput(ns("footer"))
   )
 }
 
@@ -63,13 +64,38 @@ predictionsServer <- function(id,
       
       output$species_richness_title <- renderUI({
         validate(need(data$species_prob_current, ""))
-        list(
-          actionButton(ns("moredetail"), "View More Detail"),
-          downloadButton(ns("downloaddata"), "Download to .csv"),
-          downloadButton(ns("downloadreport"), "Download to Report")
+        tags$span(HTML("<plottitle>Expected Number of Common Spring Bird Species</plottitle>"),
+                    infopopover("Expected Number of Species in our Model",
+                                paste("This is the expected number of birds species in our model that we predict will be living in at least one patch on your farm.",
+                                "The occupancy probability of each species was considered the highest occupancy probability of all provided patches.",
+                                "The estimate uses the median of latent variable values, so interactions between species are incorporated.",
+                                "Patch occupancy is considered to be highly correlated between patches, hence the use of the maximum across all patches"),
+                                trigger = "click")
         )
       })
       
+      output$species_prob_top10_title <- renderUI({
+        validate(need(data$species_prob_current, ""))
+        tags$span(HTML("<plottitle>Most Likely Species</plottitle>"),
+                  infopopover("Most Likely Species", "<incomplete - more info to go here>"))
+      })
+      
+      output$species_prob_top10relative_title <- renderUI({
+        validate(need(data$species_prob_current, ""))
+        tags$span(HTML("<plottitle>Relative to an Average Patch</plottitle>"),
+                  infopopover("Ratio of probabilities", "<incomplete - more info to go here>")
+        )
+      }) 
+      
+      output$footer <- renderUI({
+        validate(need(data$species_prob_current, ""))
+        tags$div(
+          style = "text-align: right",
+          actionButton(ns("moredetail"), "View More Detail", class = "download_badge"),
+          downloadButton(ns("downloaddata"), "Download Predictions", class = "download_badge"),
+          downloadButton(ns("downloadreport"), "Download Report", class = "download_badge")
+        )
+      })
       # draw species plots
       observe({
         # req(data$species_prob_current)
