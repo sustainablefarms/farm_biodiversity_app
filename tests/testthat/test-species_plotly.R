@@ -3,7 +3,7 @@ devtools::load_all()
 test_that("prediction plots for Gundagai and a single patch using plotly", {
   model_data <- load_model_data()
   new_data_mean <- get_new_data_mean(model_data)
-  current_values <- isolate(reactiveValuesToList(readRDS("./current_values_one_patch.rds")))
+  current_values <- readRDS("./tests/testthat/current_values_2patches.rds")
   Xocc <- newXocc_fromselected(current_values)
   species_prob_current <- msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
                                                                        Xocc)
