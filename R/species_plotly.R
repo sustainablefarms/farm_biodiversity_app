@@ -1,9 +1,16 @@
 plot_ly_specroot <- function(df){
   pal <- scales::col_numeric(c("#d0e7f4", "#178BCA"),
                       domain = df$value)
-  palopp <- scales::col_numeric(c("#000000", "#ffffff"),
-                      domain = df$value,
-                      reverse = FALSE)
+  palopp <- function(values){
+    cols <- pal(values)
+    rgbs <- col2rgb(cols)/255
+    Luvs <- convertColor(t(rgbs), from = "sRGB", to = "Luv")
+    lvls <- Luvs[, "L"]
+    lvls[Luvs[, "L"] < 70] <- 100 - lvls[Luvs[, "L"] < 70] / 8
+    lvls[Luvs[, "L"] >= 70] <- (100 - lvls[Luvs[, "L"] >= 70]) / 4
+    greys <- grey(lvls/100)
+    return(greys)
+  }
   plt <- plot_ly(data = df) %>% #initiate plot
     add_trace(type = "bar",  #make a bar plot
               y = ~species,
