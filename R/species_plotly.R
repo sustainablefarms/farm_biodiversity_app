@@ -3,8 +3,8 @@ plot_ly_specroot <- function(df){
     add_trace(type = "bar",  #make a bar plot
               y = ~species,
               x = ~value,
-              color = ~value,
-              marker = list(colorscale = "Blues", #"[[0, '#006666ff'], [1, '#178BCAff']]", 
+              marker = list(color = ~value,
+                            colorscale = "Blues", #"[[0, '#006666ff'], [1, '#178BCAff']]", 
                             reversescale = TRUE, cmax = 1.2, cmin = 0.3), #cmin = 0, cmax = 1)
               showlegend = FALSE
     ) %>%
@@ -12,8 +12,8 @@ plot_ly_specroot <- function(df){
     style(text = df$tooltip,
           hovertemplate = paste('<b>%{text}</b><extra></extra>')) %>% #the <extra></extra> removes the 'trace 0' extra information
     # add the species names
-    add_annotations(x  = 0, 
-                    y = ~species, 
+    add_annotations(x  = 0,
+                    y = ~species,
                     text = ~species,
                     xanchor = "left",
                     xshift = 3,
@@ -45,6 +45,7 @@ species_plotly_common <- function(df){
                     text = df$label,
                     xanchor = "right",
                     xshift = -3,
+                    font = list(color = "rgba(0,0,0,1)"),
                     bgcolor = "rgba(255,255,255,1)",
                     showarrow = FALSE,
                     showlegend = FALSE) %>%
