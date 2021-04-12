@@ -54,7 +54,8 @@ ui <- function(){
         selectpatchUI("patch")
       ),
       fluidRow(
-        predictionsUI("pred")
+        HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
+        uiOutput("pred")
       )
     ),
     title = appname,
@@ -112,6 +113,14 @@ server <- function(input, output, session) {
   })
   
   ## PREDICTIONS
+  output$pred <- renderUI({
+    validate(need(length(current_values$AnnPrec) > 0 &
+                  length(current_values$woody_veg) == current_values$patches &
+                  !any(is.na(current_values$woody_veg)),
+                  ""))
+    tagList(
+      predictionsUI("pred"))
+    })
   predictionsServer("pred", current_values,
                     model_data, new_data_mean,
                     report_path)
