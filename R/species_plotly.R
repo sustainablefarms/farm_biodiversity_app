@@ -19,8 +19,12 @@ plot_ly_specroot <- function(df){
               showlegend = FALSE
     ) %>%
     # tooltips
-    style(text = df$tooltip,
-          hovertemplate = paste('<b>%{text}</b><extra></extra>')) %>% #the <extra></extra> removes the 'trace 0' extra information
+    style(hoverinfo = TRUE,
+          hovertext = df$tooltip,
+          hoverlabel = list(bgcolor = "white",
+                            font = list(color = "black",
+                                        size = 12)),
+          hovertemplate = paste('%{hovertext}<extra></extra>')) %>% #the <extra></extra> removes the 'trace 0' extra information
   # alter layout
   plotly::layout(xaxis = list(visible = FALSE),
          yaxis = list(visible = FALSE),
