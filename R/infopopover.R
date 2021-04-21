@@ -11,5 +11,6 @@ infopopover <- function(title,
             `data-trigger` = trigger,
             `data-html` = html,
             `data-content` = content,
+            style = "cursor: pointer;",
             ...)
 }
