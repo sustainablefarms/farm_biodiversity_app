@@ -16,7 +16,11 @@ plot_ly_specroot <- function(df){
               y = ~species,
               x = ~value,
               marker = list(color = ~pal(value)),
-              showlegend = FALSE
+              showlegend = FALSE,
+              text = ~species,
+              textposition = "inside",
+              insidetextanchor = "start",
+              insidetextfont = list(color = ~palopp(value))
     ) %>%
     # tooltips
     style(hoverinfo = TRUE,
@@ -39,16 +43,6 @@ plot_ly_specroot <- function(df){
     #                 bgcolor = ~palopp(value),
     #                 textfont = list(color = ~palopp(value)),
     #                 showarrow = FALSE) %>%
-  for (i in 1:nrow(df)){
-    plt <- plt %>%
-    add_annotations(x  = 0,
-                    y = df[i, "species"],
-                    text = df[i, "species"],
-                    xanchor = "left",
-                    xshift = 3,
-                    font = list(color = palopp(df[i, "value"])),
-                    showarrow = FALSE)
-  } 
   return(plt)
 }
 
