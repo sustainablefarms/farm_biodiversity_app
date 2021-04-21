@@ -70,6 +70,8 @@ prep_birdinfotable <- function(){
 load_birdinfotable <- function(){
   infotable <- readRDS("./data/birdinfotable.rds")
   infotable$imgfilename <- normalizePath(infotable$imgfilename)
+  infotable$shortstory <- "To Fill"
+  infotable["Galah", "shortstory"] <- "Galahs are more likely to occupy patches with Noisy Miners"
   speciesinfo <<- infotable
   return(speciesinfo)
 }

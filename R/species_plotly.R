@@ -50,7 +50,7 @@ species_plotly_common <- function(df){
   set.seed(1)
   df <- topnrows(df, 10, "value")
   df$label <- paste0("", round(df$value * 100, 0), "%")
-  df$tooltip <- paste0(df$species, " has some interest features.")
+  df$tooltip <- speciesinfo[df$species, "shortstory"]
   plot_ly_specroot(df) %>%
     # add error bars
     style(error_x = list(visible = TRUE,
