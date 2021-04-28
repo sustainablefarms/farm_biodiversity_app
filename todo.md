@@ -14,6 +14,7 @@
 + Investigate and comment on difference between quadrat method and point-intersect method
 + patch definition: make clear that it is for our model, not a general definition of patch
 + __spring birds__, not winter birds
++ most likely species __in the woodland patches__ of your farm
 
 # Outputs
 + add description of error bars as popup
@@ -21,6 +22,12 @@
 + print out results (csv for quick version)
   + get the screen that says generating xyz working
 + title for prediction plots
++ delete Australasian Pipit: DBL says "it is a pasture bird, so very common on farms but not often observed in woodland patches"
++ get permission from BirdLife: try James Oconnor
+   + e.g. use of birdlife:
+     + in more details report
+     + in more details modal
+     + in Noisy Miner check box
 
 # Outputs: More Detail
 + make the modal a rendering of the Rmd document
