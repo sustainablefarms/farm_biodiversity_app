@@ -35,13 +35,14 @@ ui <- function(){
     HTML("<div class='header'>"),
     fluidRow(
       column(width = 2,
-      HTML("
-        <img class='logo' src='Sustainable Farms logo RGB.png' alt='SF logo'>
-    ")),
+      imageOutput("sflogo", inline = TRUE)),    
     column(width = 10, offset = 0, HTML("
       <span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>
-      <span class='subtitle'><br>Version 0.2 (DRAFT). By Martin Westgate & Kassel Hingee</span>
-    "))),
+      <span class='subtitle'>By Martin Westgate & Kassel Hingee. Version 0.2</span>
+      <span><em><br>Set your region. Set your woodland patches. See your birds.</em></span>
+    "),
+    actionButton("overallhelp", "More Help", class = "download_badge"),
+           )),
     HTML("</div>"),
     column(width = 1),
     column(width = 3,
@@ -80,7 +81,15 @@ server <- function(input, output, session) {
   )
   exportTestValues(selected_region = data$selected_region,
                    patches = current_values$patches) 
-
+  ## SF logo
+  output$sflogo <- renderImage(
+    list(src = "Sustainable Farms logo RGB.png",
+         alt = "SF logo",
+         height = "100px"),
+       deleteFile = FALSE
+  )
+  
+  
   ## PATCH (and year)
   frompatch <- selectpatchServer("patch")
 
@@ -107,6 +116,17 @@ server <- function(input, output, session) {
   predictionsServer("pred", cval,
                     model_data, new_data_mean,
                     report_path)
+  
+  ## Help
+  observeEvent(input$overallhelp, {
+    showModal(modalDialog(
+      "More detailed help. For queries email ...",
+      modalButton("Close"),
+      title = "More Help",
+      easyClose = TRUE,
+      fade = TRUE
+      ))
+    })
 
 } # end server
 
