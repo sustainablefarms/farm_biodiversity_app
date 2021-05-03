@@ -23,8 +23,8 @@ selectlocationUI <- function(id){
               uiOutput(ns("show_mintemp"))
             ),
             column(width = 6,
-              uiOutput(ns("show_precip")),
-              uiOutput(ns("show_precseason"))
+              uiOutput(ns("show_precip_warm")),
+              uiOutput(ns("show_precip_cold"))
             )
          )
 }
@@ -41,11 +41,18 @@ selectlocationServer <- function(id){
       outOfModule <- reactiveValues(
         points = NULL,
         selected_region = c(),
-        AnnPrec = NULL,
-        MaxTWarmMonth = NULL,
-        MinTColdMonth = NULL,
-        PrecSeasonality = NULL,
-        latitude = NULL
+        MaxTWarmMonth.lt = NULL,
+        PrecWarmQ.lt = NULL,
+        MinTColdMonth.lt = NULL,
+        PrecColdQ.lt = NULL,
+        PrecSeasonality.lt = NULL,
+        AnnMeanTemp.YfA = NULL, 
+        AnnPrec.YfA = NULL,
+        MaxTWarmMonth.YfA = NULL,
+        PrecWarmQ.YfA = NULL,
+        MinTColdMonth.YfA = NULL, 
+        PrecColdQ.YfA = NULL,
+        PrecSeasonality.YfA = NULL 
       )
       click_values <- reactiveValues(
         climate = NULL,
@@ -93,11 +100,19 @@ selectlocationServer <- function(id){
           outOfModule$selected_region <- outOfModule$points$label[input$fake_region_number]
           # add climate data
           climate_row <- which(outOfModule$points$label == outOfModule$selected_region)
-          outOfModule$AnnPrec <- outOfModule$points$AnnPrec[climate_row]
-          outOfModule$MaxTWarmMonth = outOfModule$points$MaxTWarmMonth[climate_row]
-          outOfModule$MinTColdMonth = outOfModule$points$MinTColdMonth[climate_row]
-          outOfModule$PrecSeasonality = outOfModule$points$PrecSeasonality[climate_row]
-          outOfModule$latitude = outOfModule$points$latitude[climate_row]
+          outOfModule$MaxTWarmMonth.lt <- outOfModule$points$MaxTWarmMonth[climate_row]
+          outOfModule$PrecWarmQ.lt <- outOfModule$points$PrecWarmQ[climate_row]
+          outOfModule$MinTColdMonth.lt <- outOfModule$points$MinTColdMonth[climate_row]
+          outOfModule$PrecColdQ.lt <- outOfModule$points$PrecColdQ[climate_row]
+          outOfModule$PrecSeasonality.lt <- outOfModule$points$PrecSeasonality[climate_row]
+          
+          outOfModule$AnnMeanTemp.YfA <- outOfModule$points$AnnMeanTemp[climate_row]
+          outOfModule$AnnPrec.YfA <- outOfModule$points$AnnPrec[climate_row]
+          outOfModule$MaxTWarmMonth.YfA <- outOfModule$points$MaxTWarmMonth[climate_row]
+          outOfModule$PrecWarmQ.YfA <- outOfModule$points$PrecWarmQ[climate_row]
+          outOfModule$MinTColdMonth.YfA <- outOfModule$points$MinTColdMonth[climate_row]
+          outOfModule$PrecColdQ.YfA <- outOfModule$points$PrecColdQ[climate_row]
+          outOfModule$PrecSeasonality.YfA <- outOfModule$points$PrecSeasonality[climate_row]
         })
       } else {
         observe({
@@ -109,11 +124,19 @@ selectlocationServer <- function(id){
             outOfModule$selected_region <- outOfModule$points$label[click_region]
             # add climate data
             climate_row <- which(outOfModule$points$label == outOfModule$selected_region)
-            outOfModule$AnnPrec <- outOfModule$points$AnnPrec[climate_row]
-            outOfModule$MaxTWarmMonth = outOfModule$points$MaxTWarmMonth[climate_row]
-            outOfModule$MinTColdMonth = outOfModule$points$MinTColdMonth[climate_row]
-            outOfModule$PrecSeasonality = outOfModule$points$PrecSeasonality[climate_row]
-            outOfModule$latitude = outOfModule$points$latitude[climate_row]
+            outOfModule$MaxTWarmMonth.lt <- outOfModule$points$MaxTWarmMonth[climate_row]
+            outOfModule$PrecWarmQ.lt <- outOfModule$points$PrecWarmQ[climate_row]
+            outOfModule$MinTColdMonth.lt <- outOfModule$points$MinTColdMonth[climate_row]
+            outOfModule$PrecColdQ.lt <- outOfModule$points$PrecColdQ[climate_row]
+            outOfModule$PrecSeasonality.lt <- outOfModule$points$PrecSeasonality[climate_row]
+            
+            outOfModule$AnnMeanTemp.YfA <- outOfModule$points$AnnMeanTemp[climate_row]
+            outOfModule$AnnPrec.YfA <- outOfModule$points$AnnPrec[climate_row]
+            outOfModule$MaxTWarmMonth.YfA <- outOfModule$points$MaxTWarmMonth[climate_row]
+            outOfModule$PrecWarmQ.YfA <- outOfModule$points$PrecWarmQ[climate_row]
+            outOfModule$MinTColdMonth.YfA <- outOfModule$points$MinTColdMonth[climate_row]
+            outOfModule$PrecColdQ.YfA <- outOfModule$points$PrecColdQ[climate_row]
+            outOfModule$PrecSeasonality.YfA <- outOfModule$points$PrecSeasonality[climate_row]
           }
         })
       }
@@ -144,7 +167,7 @@ selectlocationServer <- function(id){
         inputId = ns("show_maxtemp_modal"),
         label = HTML(paste0(
           "Maximum<br>Temperature<h3>",
-          round(outOfModule$MaxTWarmMonth * 0.1, 1),
+          round(outOfModule$MaxTWarmMonth.lt * 0.1, 1),
           "&deg;C</h3>")),
         class = "badge",
         width = "100%"
@@ -158,7 +181,7 @@ selectlocationServer <- function(id){
         inputId = ns("show_mintemp_modal"),
         label = HTML(paste0(
           "Minimum<br>Temperature<h3>",
-          format(outOfModule$MinTColdMonth * 0.1, digits = 3, trim = TRUE),
+          format(outOfModule$MinTColdMonth.lt * 0.1, digits = 3, trim = TRUE),
           "&deg;C</h3>")),
         class = "badge",
         width = "100%"
@@ -166,13 +189,13 @@ selectlocationServer <- function(id){
     }
   })
 
-  output$show_precip <- renderUI({
+  output$show_precip_warm <- renderUI({
     if(length(outOfModule$selected_region) > 0){
       actionButton2(
-        inputId = ns("show_precip_modal"),
+        inputId = ns("show_precip_warm_modal"),
         label = HTML(paste0(
-          "Annual<br>Preciptiation<h3>",
-          outOfModule$AnnPrec,
+          "Summer<br>Preciptiation<h3>",
+          outOfModule$PrecWarmQ.lt,
           "mm</h3>")),
         class = "badge",
         width = "100%"
@@ -180,14 +203,14 @@ selectlocationServer <- function(id){
     }
   })
 
-  output$show_precseason <- renderUI({
+  output$show_precip_cold <- renderUI({
     if(length(outOfModule$selected_region) > 0){
       actionButton2(
-        inputId = ns("show_precseason_modal"),
+        inputId = ns("show_precip_cold_modal"),
         label = HTML(paste0(
-          "Precipitation<br>Seasonality<h3>",
-          outOfModule$PrecSeasonality,
-          "</h3>")),
+          "Winter<br>Preciptiation<h3>",
+          outOfModule$PrecColdQ.lt,
+          "mm</h3>")),
         class = "badge",
         width = "100%"
       )
@@ -216,16 +239,16 @@ selectlocationServer <- function(id){
     click_values$climate_title <- "Minimum temperature (Celsius)"
     climate_modal(ns)
   })
-  observeEvent(input$show_precip_modal, {
+  observeEvent(input$show_precip_warm_modal, {
     validate(need(outOfModule$selected_region, ""))
-    click_values$climate <- "AnnPrec"
-    click_values$climate_title <- "Annual precipitation (mm)"
+    click_values$climate <- "PrecWarmQ"
+    click_values$climate_title <- "Summer precipitation (mm)"
     climate_modal(ns)
   })
-  observeEvent(input$show_precseason_modal, {
+  observeEvent(input$show_precip_cold_modal, {
     validate(need(outOfModule$selected_region, ""))
-    click_values$climate <- "PrecSeasonality"
-    click_values$climate_title <- "Precipitation seasonality"
+    click_values$climate <- "PrecColdQ"
+    click_values$climate_title <- "Winter precipitation (mm)"
     climate_modal(ns)
   })
       
