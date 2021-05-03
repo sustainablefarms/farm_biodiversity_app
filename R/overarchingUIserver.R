@@ -36,7 +36,7 @@ ui <- function(){
     fluidRow(
       column(width = 2,
       HTML("
-        <img class='logo' src='SF Logo Vertical - Transparent Background.png' alt='SF logo'>
+        <img class='logo' src='Sustainable Farms logo RGB.png' alt='SF logo'>
     ")),
     column(width = 10, offset = 0, HTML("
       <span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>
