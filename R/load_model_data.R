@@ -10,7 +10,16 @@ get_new_data_mean <- function(model_data){
   colnames(new_data_mean) <- names(model_data$XoccProcess$center)
   # new_data_mean <- new_data_mean[, c(2:10)]
   new_data_mean$NMdetected[1] <- 1
-  new_data_mean$woody500m <- exp(new_data_mean$log.woody500m.)
-  new_data_mean$log.woody500m. <- NULL
+  new_data_mean$WCF_500 <- exp(new_data_mean$log.WCF_500.)
+  new_data_mean$WCF_3000 <- exp(new_data_mean$log.WCF_3000.)
+  new_data_mean$log.WCF_500. <- NULL
+  new_data_mean$log.WCF_3000. <- NULL
   return(new_data_mean)
 }
+
+### Code used to build saved fitted object ###
+# fit <- readRDS("../Experiments/10_withAlbertData/fittedmodels/10_7_0_best1065_timewind_2lv.rds")
+# fit2 <- msod::minimise_fit.jsodm_lv(fit)
+# fit2$XoccProcess <- fit$toXocc$params$mainparams
+# fit2$XoccColNames <- colnames(fit$data$Xocc)
+# saveRDS(fit2, file = "data/model_data.rds")

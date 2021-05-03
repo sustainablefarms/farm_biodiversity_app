@@ -42,12 +42,16 @@ compute_richness <- function(model_data, Xocc){
   # get richness
   richness_data <- list(low = Xocc, current = Xocc, high = Xocc)
   # richness_data[[1]]$NMdetected <- 0; richness_data[[3]]$NMdetected <- 1
-  richness_data[[1]]$ms <- 0; richness_data[[3]]$ms <- 10
-  richness_data[[1]]$woody500m <- 2; richness_data[[3]]$woody500m <- 20
+  richness_data[[1]]$WCF_500 <- 2; richness_data[[3]]$WCF_500 <- 20
+  richness_data[[1]]$WCF_3000 <- 2; richness_data[[3]]$WCF_3000 <- 20
   pbapply::pboptions(type = "none")
   richness_predictions <- lapply(richness_data, function(a){
+    mod <- msod::supplant_new_data(model_data, a, 
+                                            toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
+                                                                            model_data$XoccProcess$scale,
+                                                                            model_data$XoccColNames)})
     set.seed(4444)
-    msod:::occspecrichness_avsite.jsodm_lv(model_data, a)
+    msod:::occspecrichness_avsite.jsodm_lv(mod)
   })
   richness_df <- as.data.frame(do.call(rbind, richness_predictions))
   richness_df$category <- factor(seq_len(3), levels = seq_len(3),

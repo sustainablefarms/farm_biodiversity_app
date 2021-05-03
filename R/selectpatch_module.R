@@ -42,6 +42,7 @@ selectpatchServer <- function(id){
         woody500m = NA,
         woody3000m = NA,
         noisy_miner = NA,
+        IsRemnant = NA,
         year = 2018)
       previous_values <- reactiveValues(
         patches = 1,
@@ -139,6 +140,7 @@ selectpatchServer <- function(id){
       current_values$woody500m[update$add_values] <- NA
       current_values$woody3000m[update$add_values] <- NA
       current_values$noisy_miner[update$add_values] <- NA
+      current_values$IsRemnant[update$add_values] <- NA
     }
   })
 
@@ -155,6 +157,7 @@ selectpatchServer <- function(id){
       current_values$woody500m <- current_values$woody500m[-update$remove_values]
       current_values$woody3000m <- current_values$woody3000m[-update$remove_values]
       current_values$noisy_miner <- current_values$noisy_miner[-update$remove_values]
+      current_values$IsRemnant <- current_values$IsRemnant[-update$remove_values]
     }
   })
 
@@ -215,6 +218,7 @@ selectpatchServer <- function(id){
           woody500m = current_values$woody500m[previous_values$selected_patch],
           woody3000m = current_values$woody3000m[previous_values$selected_patch],
           noisy_miner = current_values$noisy_miner[previous_values$selected_patch],
+          IsRemnant = current_values$IsRemnant[previous_values$selected_patch],
           ns
         )
       }
@@ -230,6 +234,8 @@ selectpatchServer <- function(id){
       paste0("pc_woody3000m_", previous_values$selected_patch)]]
     current_values$noisy_miner[previous_values$selected_patch] <- input[[
       paste0("noisy_miner_", previous_values$selected_patch)]]
+    current_values$IsRemnant[previous_values$selected_patch] <- input[[
+      paste0("IsRemnant_", previous_values$selected_patch)]]
     removeModal()
     
     if (length(current_values$woody500m) == current_values$patches &

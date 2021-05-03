@@ -89,7 +89,6 @@ server <- function(input, output, session) {
   ## Combine!
   observe({
     cval(c(reactiveValuesToList(outOfModule), reactiveValuesToList(frompatch)))
-    print(isolate(cval()))
   })
   
   ## PREDICTIONS
@@ -99,7 +98,7 @@ server <- function(input, output, session) {
     tagList(
       predictionsUI("pred"))
     })
-  predictionsServer("pred", current_values,
+  predictionsServer("pred", cval,
                     model_data, new_data_mean,
                     report_path)
 

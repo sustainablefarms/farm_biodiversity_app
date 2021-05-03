@@ -60,16 +60,18 @@ predictionsServer <- function(id,
       
       observe({
         if(
-          length(current_values$AnnPrec) > 0 & #this is here because for some reason selected_region doesn't work
-          length(current_values$woody_veg) == current_values$patches &
-          !any(is.na(current_values$woody_veg))
+          current_values()$locationcomplete & current_values()$allpatchcomplete
         ){
-          # saveRDS(isolate(reactiveValuesToList(current_values)), file = "current_values.rds"); stop("Saving current values - app is in debug mode and will end")
-          data$Xocc <- newXocc_fromselected(current_values) 
-          data$species_prob_current <- msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
-                                                                                    data$Xocc)
-          data$species_prob_ref <- msod::poccupancy_mostfavourablesite.jsodm_lv(model_data,
-            new_data_mean)
+          # saveRDS(isolate(current_values()), file = "current_values.rds"); stop("Saving current values - app is in debug mode and will end")
+          data$Xocc <- newXocc_fromselected(current_values())
+          modwXocc <- msod::supplant_new_data(model_data, data$Xocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
+                                                                               model_data$XoccProcess$scale,
+                                                                               model_data$XoccColNames)})
+          modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
+                                                                               model_data$XoccProcess$scale,
+                                                                               model_data$XoccColNames)})
+          data$species_prob_current <- msod::poccupancy_mostfavourablesite.jsodm_lv(modwXocc)
+          data$species_prob_ref <- msod::poccupancy_mostfavourablesite.jsodm_lv(modwmeanXocc)
           data$spec_different <- todifferent(data$species_prob_current, data$species_prob_ref)
           data$species_richness <- compute_richness(model_data, data$Xocc)
           topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
