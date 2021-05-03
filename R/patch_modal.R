@@ -1,12 +1,12 @@
 patch_modal <- function(
   value = 1,
-  woody_veg = NULL,
-  midstorey = NULL,
+  woody500m = NULL,
+  woody3000m = NULL,
   noisy_miner = NULL,
   ns #the namespace function
 ){
-  if(is.null(woody_veg) | is.na(woody_veg)){woody_veg <- 8}
-  if(is.null(midstorey) | is.na(midstorey)){midstorey <- 6}
+  if(is.null(woody500m) | is.na(woody500m)){woody500m <- 7}
+  if(is.null(woody3000m) | is.na(woody3000m)){woody3000m <- 7}
   if(is.null(noisy_miner) | is.na(noisy_miner)){noisy_miner <- TRUE}
   showModal(
     modalDialog(
@@ -15,24 +15,22 @@ patch_modal <- function(
       $('[data-toggle=popover]').popover()
     })"),
       sliderInput(
-        inputId = ns(paste0("pc_woody_veg_", value)),
+        inputId = ns(paste0("pc_woody500m_", value)),
         label = tags$html(tags$span("Woody vegetation canopy within 500m of patch centre (% area)"),
                           infopopover(title = "Woody Vegetation Cover",
                                       trigger = "click",
-                                      content = "The amount of woody vegetation canopy within 500m of the patch centre, as a percentage of the area within 500m.")),
+                                      content = paste("The amount of woody vegetation canopy within 500m of the patch centre,",
+                                                      "as a percentage of the area within 500m.", "The available values cover 90% of our training data."))),
         min = 2, max = 20, step = 2,
-        value = woody_veg),
+        value = woody500m),
       sliderInput(
-        inputId = ns(paste0("pc_midstorey_", value)),
-        label = tags$html(tags$span('Midstorey vegetation (2m - 10m tall) within patch (% area of patch)'),
-                          infopopover(title = "Midstorey Vegetation",
+        inputId = ns(paste0("pc_woody3000m_", value)),
+        label = tags$html(tags$span("Woody vegetation canopy within 3km of patch centre (% area)"),
+                          infopopover(title = "Woody Vegetation Cover",
                                       trigger = "click",
-                                      content = paste("[OBSOLETE] The percent area of a patch covered by midstorey vegetation (2m - 10m tall).",
-                                                      "Use the below example images of to choose the midstorey cover of this patch.")
-                          )
-                         ),
-        min = 0, max = 10, step = 1,
-        value = midstorey),
+                                      content = "The amount of woody vegetation canopy within 3km of the patch centre, as a percentage of the area within 500m.")),
+        min = 2, max = 20, step = 2,
+        value = woody3000m),
       tags$div(
         class = "form-group shiny-input-container",
         tags$span(

@@ -38,19 +38,10 @@ selectpatchServer <- function(id){
         species_predictions = NULL)
       current_values <- reactiveValues(
         patches = 1,
-        woody_veg = NA,
-        midstorey = NA,
+        woody500m = NA,
+        woody3000m = NA,
         noisy_miner = NA,
-        year = 2018,
-        AnnPrec = NULL,
-        MaxTWarmMonth = NULL,
-        MinTColdMonth = NULL,
-        PrecSeasonality = NULL,
-        latitude = NULL,
-        AnnPrec = NULL,
-        AnnTempRange = NULL,
-        PrecSeasonality = NULL,
-        PrecWarmQ = NULL)
+        year = 2018)
       previous_values <- reactiveValues(
         patches = 1,
         patch_buttons = c(0),
@@ -144,8 +135,8 @@ selectpatchServer <- function(id){
       })
       update$add_logical <- FALSE
       previous_values$patches <- current_values$patches
-      current_values$woody_veg[update$add_values] <- NA
-      current_values$midstorey[update$add_values] <- NA
+      current_values$woody500m[update$add_values] <- NA
+      current_values$woody3000m[update$add_values] <- NA
       current_values$noisy_miner[update$add_values] <- NA
     }
   })
@@ -160,8 +151,8 @@ selectpatchServer <- function(id){
       })
       update$remove_logical <- FALSE
       previous_values$patches <- current_values$patches
-      current_values$woody_veg <- current_values$woody_veg[-update$remove_values]
-      current_values$midstorey <- current_values$midstorey[-update$remove_values]
+      current_values$woody500m <- current_values$woody500m[-update$remove_values]
+      current_values$woody3000m <- current_values$woody3000m[-update$remove_values]
       current_values$noisy_miner <- current_values$noisy_miner[-update$remove_values]
     }
   })
@@ -200,12 +191,12 @@ selectpatchServer <- function(id){
   # output$text <- renderPrint({
   #   # paste(
   #   #   paste(current_values$mistorey, collapse = "; "),
-  #      paste(current_values$woody_veg, collapse = "; ")
+  #      paste(current_values$woody500m, collapse = "; ")
   #   #   paste(current_values$noisy_miner, collapse = "; "),
   #   # collapse = "  |   ")
   # })
   # output$text <- renderPrint({previous_values$selected_patch})
-  # output$text <- renderPrint({paste(current_values$woody_veg, collapse = "; ")})
+  # output$text <- renderPrint({paste(current_values$woody500m, collapse = "; ")})
   # output$text <- renderPrint({str(click_values$patches)})
 
   # for each patch, launch a modal to set new values
@@ -220,8 +211,8 @@ selectpatchServer <- function(id){
         previous_values$selected_patch <- click_values$patches$id[which(update_check)]
         patch_modal(
           value = previous_values$selected_patch,
-          woody_veg = current_values$woody_veg[previous_values$selected_patch],
-          midstorey = current_values$midstorey[previous_values$selected_patch],
+          woody500m = current_values$woody500m[previous_values$selected_patch],
+          woody3000m = current_values$woody3000m[previous_values$selected_patch],
           noisy_miner = current_values$noisy_miner[previous_values$selected_patch],
           ns
         )
@@ -232,10 +223,10 @@ selectpatchServer <- function(id){
 
   # collect input values from modal
   observeEvent(input$choose_patch_attributes_execute, {
-    current_values$woody_veg[previous_values$selected_patch] <- input[[
-      paste0("pc_woody_veg_", previous_values$selected_patch)]]
-    current_values$midstorey[previous_values$selected_patch] <- input[[
-      paste0("pc_midstorey_", previous_values$selected_patch)]]
+    current_values$woody500m[previous_values$selected_patch] <- input[[
+      paste0("pc_woody500m_", previous_values$selected_patch)]]
+    current_values$woody3000m[previous_values$selected_patch] <- input[[
+      paste0("pc_woody3000m_", previous_values$selected_patch)]]
     current_values$noisy_miner[previous_values$selected_patch] <- input[[
       paste0("noisy_miner_", previous_values$selected_patch)]]
     removeModal()
