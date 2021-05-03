@@ -37,6 +37,7 @@ selectpatchServer <- function(id){
       data <- reactiveValues(
         species_predictions = NULL)
       current_values <- reactiveValues(
+        allpatchcomplete = FALSE,
         patches = 1,
         woody500m = NA,
         woody3000m = NA,
@@ -230,6 +231,15 @@ selectpatchServer <- function(id){
     current_values$noisy_miner[previous_values$selected_patch] <- input[[
       paste0("noisy_miner_", previous_values$selected_patch)]]
     removeModal()
+    
+    if (length(current_values$woody500m) == current_values$patches &
+      !any(is.na(current_values$woody500m)) &
+      length(current_values$woody3000m) == current_values$patches &
+      !any(is.na(current_values$woody3000m)) ){
+      current_values$allpatchcomplete <- TRUE
+    } else {
+      current_values$allpatchcomplete <- FALSE
+    }
   })
   
   current_values

@@ -36,10 +36,11 @@ selectlocationServer <- function(id){
       # set up reactive values
       data <- reactiveValues(
         climate = NULL,
-        polygons = NULL
+        polygons = NULL,
+        points = NULL
         )
       outOfModule <- reactiveValues(
-        points = NULL,
+        locationcomplete = FALSE,
         selected_region = c(),
         MaxTWarmMonth.lt = NULL,
         PrecWarmQ.lt = NULL,
@@ -60,16 +61,16 @@ selectlocationServer <- function(id){
 
       # observeEvent(input$spatial_type, {
         # if(input$spatial_type != "none"){
-          outOfModule$points <- readRDS("data/sa2_points_climate.rds")
+          data$points <- readRDS("data/sa2_points_climate.rds")
         # }
 
         # draw a scatterplot of the centroids of selected zones
         output$plot_points <- plotly::renderPlotly({
           validate(
-            need(outOfModule$points, "")
+            need(data$points, "")
           )
           plotly::plot_ly(
-            outOfModule$points,
+            data$points,
             x = ~longitude,
             y = ~latitude,
             type = "scatter",
@@ -97,46 +98,50 @@ selectlocationServer <- function(id){
       if (isTRUE(getOption("shiny.testmode"))){
         observe({
           input$fake_region_number
-          outOfModule$selected_region <- outOfModule$points$label[input$fake_region_number]
+          outOfModule$selected_region <- data$points$label[input$fake_region_number]
           # add climate data
-          climate_row <- which(outOfModule$points$label == outOfModule$selected_region)
-          outOfModule$MaxTWarmMonth.lt <- outOfModule$points$MaxTWarmMonth[climate_row]
-          outOfModule$PrecWarmQ.lt <- outOfModule$points$PrecWarmQ[climate_row]
-          outOfModule$MinTColdMonth.lt <- outOfModule$points$MinTColdMonth[climate_row]
-          outOfModule$PrecColdQ.lt <- outOfModule$points$PrecColdQ[climate_row]
-          outOfModule$PrecSeasonality.lt <- outOfModule$points$PrecSeasonality[climate_row]
+          climate_row <- which(data$points$label == outOfModule$selected_region)
+          outOfModule$MaxTWarmMonth.lt <- data$points$MaxTWarmMonth[climate_row]
+          outOfModule$PrecWarmQ.lt <- data$points$PrecWarmQ[climate_row]
+          outOfModule$MinTColdMonth.lt <- data$points$MinTColdMonth[climate_row]
+          outOfModule$PrecColdQ.lt <- data$points$PrecColdQ[climate_row]
+          outOfModule$PrecSeasonality.lt <- data$points$PrecSeasonality[climate_row]
           
-          outOfModule$AnnMeanTemp.YfA <- outOfModule$points$AnnMeanTemp[climate_row]
-          outOfModule$AnnPrec.YfA <- outOfModule$points$AnnPrec[climate_row]
-          outOfModule$MaxTWarmMonth.YfA <- outOfModule$points$MaxTWarmMonth[climate_row]
-          outOfModule$PrecWarmQ.YfA <- outOfModule$points$PrecWarmQ[climate_row]
-          outOfModule$MinTColdMonth.YfA <- outOfModule$points$MinTColdMonth[climate_row]
-          outOfModule$PrecColdQ.YfA <- outOfModule$points$PrecColdQ[climate_row]
-          outOfModule$PrecSeasonality.YfA <- outOfModule$points$PrecSeasonality[climate_row]
+          outOfModule$AnnMeanTemp.YfA <- data$points$AnnMeanTemp[climate_row]
+          outOfModule$AnnPrec.YfA <- data$points$AnnPrec[climate_row]
+          outOfModule$MaxTWarmMonth.YfA <- data$points$MaxTWarmMonth[climate_row]
+          outOfModule$PrecWarmQ.YfA <- data$points$PrecWarmQ[climate_row]
+          outOfModule$MinTColdMonth.YfA <- data$points$MinTColdMonth[climate_row]
+          outOfModule$PrecColdQ.YfA <- data$points$PrecColdQ[climate_row]
+          outOfModule$PrecSeasonality.YfA <- data$points$PrecSeasonality[climate_row]
+          
+          outOfModule$locationcomplete <- TRUE
         })
       } else {
         observe({
-          if(!is.null(outOfModule$points)){
+          if(!is.null(data$points)){
             click_region <- plotly::event_data(
               event = "plotly_click",
               source = "region_map"
             )$pointNumber + 1 # Note: plotly uses Python-style indexing, hence +1
-            outOfModule$selected_region <- outOfModule$points$label[click_region]
+            outOfModule$selected_region <- data$points$label[click_region]
             # add climate data
-            climate_row <- which(outOfModule$points$label == outOfModule$selected_region)
-            outOfModule$MaxTWarmMonth.lt <- outOfModule$points$MaxTWarmMonth[climate_row]
-            outOfModule$PrecWarmQ.lt <- outOfModule$points$PrecWarmQ[climate_row]
-            outOfModule$MinTColdMonth.lt <- outOfModule$points$MinTColdMonth[climate_row]
-            outOfModule$PrecColdQ.lt <- outOfModule$points$PrecColdQ[climate_row]
-            outOfModule$PrecSeasonality.lt <- outOfModule$points$PrecSeasonality[climate_row]
+            climate_row <- which(data$points$label == outOfModule$selected_region)
+            outOfModule$MaxTWarmMonth.lt <- data$points$MaxTWarmMonth[climate_row]
+            outOfModule$PrecWarmQ.lt <- data$points$PrecWarmQ[climate_row]
+            outOfModule$MinTColdMonth.lt <- data$points$MinTColdMonth[climate_row]
+            outOfModule$PrecColdQ.lt <- data$points$PrecColdQ[climate_row]
+            outOfModule$PrecSeasonality.lt <- data$points$PrecSeasonality[climate_row]
             
-            outOfModule$AnnMeanTemp.YfA <- outOfModule$points$AnnMeanTemp[climate_row]
-            outOfModule$AnnPrec.YfA <- outOfModule$points$AnnPrec[climate_row]
-            outOfModule$MaxTWarmMonth.YfA <- outOfModule$points$MaxTWarmMonth[climate_row]
-            outOfModule$PrecWarmQ.YfA <- outOfModule$points$PrecWarmQ[climate_row]
-            outOfModule$MinTColdMonth.YfA <- outOfModule$points$MinTColdMonth[climate_row]
-            outOfModule$PrecColdQ.YfA <- outOfModule$points$PrecColdQ[climate_row]
-            outOfModule$PrecSeasonality.YfA <- outOfModule$points$PrecSeasonality[climate_row]
+            outOfModule$AnnMeanTemp.YfA <- data$points$AnnMeanTemp[climate_row]
+            outOfModule$AnnPrec.YfA <- data$points$AnnPrec[climate_row]
+            outOfModule$MaxTWarmMonth.YfA <- data$points$MaxTWarmMonth[climate_row]
+            outOfModule$PrecWarmQ.YfA <- data$points$PrecWarmQ[climate_row]
+            outOfModule$MinTColdMonth.YfA <- data$points$MinTColdMonth[climate_row]
+            outOfModule$PrecColdQ.YfA <- data$points$PrecColdQ[climate_row]
+            outOfModule$PrecSeasonality.YfA <- data$points$PrecSeasonality[climate_row]
+            
+            outOfModule$locationcomplete <- TRUE
           }
         })
       }
@@ -145,7 +150,7 @@ selectlocationServer <- function(id){
         output$map <- renderPlot({
           validate(need(outOfModule$selected_region, ""))
           data$polygons <- readRDS("data/sa2_polygons.rds")
-          map_text <- outOfModule$points[outOfModule$points$label == outOfModule$selected_region, ]
+          map_text <- data$points[data$points$label == outOfModule$selected_region, ]
           map_text$label <- paste(strsplit(map_text$label, " ")[[1]], collapse = "\n")
           ggplot(data$polygons[data$polygons$SA2_NAME16 == outOfModule$selected_region, ]) +
             geom_sf(fill = "grey90", color = "grey30") +
@@ -220,7 +225,7 @@ selectlocationServer <- function(id){
   output$climate_plot <- renderPlot({
     if(!is.null(click_values$climate)){
       climate_plot(
-        data = outOfModule$points,
+        data = data$points,
         variable = click_values$climate,
         region = outOfModule$selected_region,
         title = click_values$climate_title)

@@ -73,51 +73,29 @@ server <- function(input, output, session) {
   data <- reactiveValues(
     selected_region = NULL,
     species_predictions = NULL)
-  current_values <- reactiveValues(
-    patches = 1,
-    woody_veg = NA,
-    midstorey = NA,
-    noisy_miner = NA,
-    year = 2018,
-    AnnPrec = NULL,
-    MaxTWarmMonth = NULL,
-    MinTColdMonth = NULL,
-    PrecSeasonality = NULL,
-    latitude = NULL,
-    AnnPrec = NULL,
-    AnnTempRange = NULL,
-    PrecSeasonality = NULL,
-    PrecWarmQ = NULL)
+  cval <- reactiveVal(
+    value = NULL,
+    label = "Current Predictor Values"
+  )
   exportTestValues(selected_region = data$selected_region,
                    patches = current_values$patches) 
 
   ## PATCH (and year)
   frompatch <- selectpatchServer("patch")
-  observe({
-    current_values$patches <- frompatch$patches
-    current_values$woody_veg <- frompatch$woody_veg
-    current_values$midstorey <- frompatch$midstorey
-    current_values$noisy_miner <- frompatch$noisy_miner
-    current_values$year <- frompatch$year
-  })
 
   ## REGION
   outOfModule <- selectlocationServer("location")
+  
+  ## Combine!
   observe({
-    data$selected_region <- outOfModule$selected_region
-    current_values$AnnPrec <- outOfModule$AnnPrec
-    current_values$MaxTWarmMonth                   <- outOfModule$MaxTWarmMonth
-    current_values$MinTColdMonth                   <- outOfModule$MinTColdMonth
-    current_values$PrecSeasonality                   <- outOfModule$PrecSeasonality
-    current_values$latitude  <- outOfModule$latitude
+    cval(c(reactiveValuesToList(outOfModule), reactiveValuesToList(frompatch)))
+    print(isolate(cval()))
   })
   
   ## PREDICTIONS
   output$pred <- renderUI({
-    validate(need(length(current_values$AnnPrec) > 0 &
-                  length(current_values$woody_veg) == current_values$patches &
-                  !any(is.na(current_values$woody_veg)),
-                  ""))
+    validate(need(cval()$locationcomplete & cval()$allpatchcomplete,
+             ""))
     tagList(
       predictionsUI("pred"))
     })
