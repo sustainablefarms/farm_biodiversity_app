@@ -47,6 +47,7 @@ ui <- function(){
     column(width = 3,
       selectlocationUI("location"),
       # plotOutput("climate", height = "300px")
+      selectYfAUI("yfa")
     ),
     column(width = 1),
     column(width = 6,
@@ -84,11 +85,16 @@ server <- function(input, output, session) {
   frompatch <- selectpatchServer("patch")
 
   ## REGION
-  outOfModule <- selectlocationServer("location")
+  fromlocation <- selectlocationServer("location")
+  
+  ## YfA
+  yfavals <- selectYfAServer("yfa")
   
   ## Combine!
   observe({
-    cval(c(reactiveValuesToList(outOfModule), reactiveValuesToList(frompatch)))
+    cval(c(reactiveValuesToList(fromlocation), 
+           reactiveValuesToList(yfavals),
+           reactiveValuesToList(frompatch)))
   })
   
   ## PREDICTIONS

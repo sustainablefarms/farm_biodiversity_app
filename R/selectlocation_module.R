@@ -46,14 +46,7 @@ selectlocationServer <- function(id){
         PrecWarmQ.lt = NULL,
         MinTColdMonth.lt = NULL,
         PrecColdQ.lt = NULL,
-        PrecSeasonality.lt = NULL,
-        AnnMeanTemp.YfA = NULL, 
-        AnnPrec.YfA = NULL,
-        MaxTWarmMonth.YfA = NULL,
-        PrecWarmQ.YfA = NULL,
-        MinTColdMonth.YfA = NULL, 
-        PrecColdQ.YfA = NULL,
-        PrecSeasonality.YfA = NULL 
+        PrecSeasonality.lt = NULL
       )
       click_values <- reactiveValues(
         climate = NULL,
@@ -107,14 +100,6 @@ selectlocationServer <- function(id){
           outOfModule$PrecColdQ.lt <- data$points$PrecColdQ[climate_row]
           outOfModule$PrecSeasonality.lt <- data$points$PrecSeasonality[climate_row]
           
-          outOfModule$AnnMeanTemp.YfA <- data$points$AnnMeanTemp[climate_row]
-          outOfModule$AnnPrec.YfA <- data$points$AnnPrec[climate_row]
-          outOfModule$MaxTWarmMonth.YfA <- data$points$MaxTWarmMonth[climate_row]
-          outOfModule$PrecWarmQ.YfA <- data$points$PrecWarmQ[climate_row]
-          outOfModule$MinTColdMonth.YfA <- data$points$MinTColdMonth[climate_row]
-          outOfModule$PrecColdQ.YfA <- data$points$PrecColdQ[climate_row]
-          outOfModule$PrecSeasonality.YfA <- data$points$PrecSeasonality[climate_row]
-          
           outOfModule$locationcomplete <- TRUE
         })
       } else {
@@ -132,21 +117,6 @@ selectlocationServer <- function(id){
             outOfModule$MinTColdMonth.lt <- data$points$MinTColdMonth[climate_row]
             outOfModule$PrecColdQ.lt <- data$points$PrecColdQ[climate_row]
             outOfModule$PrecSeasonality.lt <- data$points$PrecSeasonality[climate_row]
-            
-            # outOfModule$AnnMeanTemp.YfA <- data$points$AnnMeanTemp[climate_row]
-            # outOfModule$AnnPrec.YfA <- data$points$AnnPrec[climate_row]
-            # outOfModule$MaxTWarmMonth.YfA <- data$points$MaxTWarmMonth[climate_row]
-            # outOfModule$PrecWarmQ.YfA <- data$points$PrecWarmQ[climate_row]
-            # outOfModule$MinTColdMonth.YfA <- data$points$MinTColdMonth[climate_row]
-            # outOfModule$PrecColdQ.YfA <- data$points$PrecColdQ[climate_row]
-            # outOfModule$PrecSeasonality.YfA <- data$points$PrecSeasonality[climate_row]
-            outOfModule$AnnMeanTemp.YfA <- new_data_mean$AnnMeanTemp.YfA
-            outOfModule$AnnPrec.YfA <- new_data_mean$AnnPrec.YfA
-            outOfModule$MaxTWarmMonth.YfA <- new_data_mean$MaxTWarmMonth.YfA
-            outOfModule$PrecWarmQ.YfA <- new_data_mean$PrecWarmQ.YfA
-            outOfModule$MinTColdMonth.YfA <- new_data_mean$MinTColdMonth.YfA
-            outOfModule$PrecColdQ.YfA <- new_data_mean$PrecColdQ.YfA
-            outOfModule$PrecSeasonality.YfA <- new_data_mean$PrecSeasonality.YfA
             
             outOfModule$locationcomplete <- TRUE
           }
