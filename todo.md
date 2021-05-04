@@ -3,6 +3,9 @@ output:
   pdf_document: default
   html_document: default
 ---
+
+
+
 # Inputs
 + __woody veg__
   + tree canopy within 500m of the 'centre' of a patch?
@@ -10,6 +13,9 @@ output:
   + Include link to woody veg data in the woody veg tool tip
   + Easy way to get amount with 500m or 3000m of a latitude and longitude
 + __Tumut climate information is extreme: improve it__
++ good reference map behind the sa2 region points
++ where to get average temperature since august, or an explanation
++ turn off ticks between each patch number
 
 # Caveats
 + __get max patch size for model__ (Ask Dan for patch areas, to look for maximum in our data)
@@ -34,6 +40,8 @@ output:
      + in more details modal
      + in Noisy Miner check box
 + brief bird info for tool tips
++ disable clicking on the plotly figures
++ make 'relative to average' --> relative to saved
 
 # Outputs: More Detail
 + include relatively less likely to occur species in the more details section
@@ -42,10 +50,11 @@ output:
    + use ALA, BirdLife or eBird
    + try Patrick Kavanagh and Craig Greer (might cost money)
    + send list to Tabitha
++ bird names above photos
 
 # Overall
++ make it faster
 + __Overall instructions for first users opening the app__
-+ __get the IsPlanting tick in there!__
 + __lots more help for users__
   + where model came from
   + year prediction?
@@ -55,6 +64,7 @@ output:
   + 'Which Birds in Your Woodland'
   + 'Expected Birds: Woodland birds you can expect to see on your farm in spring'
   + 'Bird Anticipator: Woodland birds you can expect to see on your farm in spring'
+  + 'Bird Checker'
 + Mobile compatibility
   + test on tablet, touch screen only
   + convert to a mobile app - perahps using "shinyMobile" - but it might work well on a mobile naturally
@@ -64,6 +74,10 @@ output:
 + Get the SF logo back on the page
 + Include contact details for bugs etc
 + context on managing Noisy Miners, and other farm-scale decisions?
++ check that 'points' really needs to be passed out by selectlocation module
++ make sure app work when patches selected first
++ make sure app works when changing the number of patches
++ __Get onto SF website__
 
 --- 
 
