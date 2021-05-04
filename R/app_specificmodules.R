@@ -1,6 +1,7 @@
 app_predictionsonly <- function(){
   main_app_prep()
-  current_values <- do.call(reactiveValues, readRDS("tests/testthat/current_values_2patches.rds"))
+  current_values <- reactiveVal(value = readRDS("./current_values.rds")) #isolate(current_values())
+  # current_values <- do.call(reactiveValues, readRDS("tests/testthat/current_values_2patches.rds"))
   
   shinyApp(
     {fluidPage(
@@ -47,4 +48,18 @@ app_predictiondetailsonly <- function(){
            function(input, output, session){
              predictionsdetailServer("detail", data)
            })
+}
+
+app_selectlocationonly <- function(){
+  main_app_prep()
+  
+  shinyApp(
+    {fluidPage(
+      includeCSS("./www/base.css"),
+      fluidRow(selectlocationUI("location")),
+      theme = bslib::bs_theme(version = 3, "lumen"))
+    },
+    function(input, output, session){
+      selectlocationServer("location")
+    })
 }
