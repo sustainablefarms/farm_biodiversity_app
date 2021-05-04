@@ -12,7 +12,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   # preptraits(model_data)
   loadtraits2global()
   load_birdinfotable()
-  appname <<- "Draft Woodland Remnant Bird Biodiversity Estimator"
+  appname <<- "Bird Anticipator"
   covarnicenames_tbl <<- read.csv("./data/nicecovarnames.csv", header = TRUE)
   apptempdir <<- tempdir()
   report_path <<- paste0(apptempdir, "/", "report.Rmd") #file location assumes host is a unix machine
@@ -36,12 +36,12 @@ ui <- function(){
     fluidRow(
       column(width = 2,
       imageOutput("sflogo", inline = TRUE)),    
-    column(width = 10, offset = 0, HTML("
-      <span class='main'>Woodland Remnant Bird Biodiversity Estimator</span>
-      <span class='subtitle'>By Martin Westgate & Kassel Hingee. Version 0.2</span>
-      <span><em><br>Set your region. Set your woodland patches. See your birds.</em></span>
-    "),
+    column(width = 10, offset = 0, 
+      tags$span(class = 'main', appname),
+      tags$span(tags$em(HTML("1. Set your region. 2. Set your woodland patches. 3. See your birds."))),
     actionButton("overallhelp", "More Help", class = "download_badge"),
+      tags$span(class = 'subtitle', HTML("<br>Woodland birds you can expect to see in your farm in spring.")),
+      tags$span(class = 'subtitle', "By Martin Westgate & Kassel Hingee. Version 0.2"),
            )),
     HTML("</div>"),
     column(width = 1),
