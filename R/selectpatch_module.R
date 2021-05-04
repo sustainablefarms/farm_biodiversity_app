@@ -141,6 +141,7 @@ selectpatchServer <- function(id){
       current_values$woody3000m[update$add_values] <- NA
       current_values$noisy_miner[update$add_values] <- NA
       current_values$IsRemnant[update$add_values] <- NA
+      current_values$allpatchcomplete <- FALSE
     }
   })
 
