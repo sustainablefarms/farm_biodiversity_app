@@ -75,7 +75,17 @@ selectlocationServer <- function(id){
             ),
             hoverinfo = "text",
             text = ~label
-          ) %>% plotly::layout(
+          ) %>%
+            add_sf(data = readRDS("./data/state_borders.rds"), 
+                   type = "scatter", 
+                   mode = "lines",
+                   inherit = FALSE,
+                   showlegend = FALSE,
+                   hoverinfo = 'none',
+                   line = list(color = "gray"),
+                   color = "gray"
+          ) %>% 
+            plotly::layout(
             xaxis = list(title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE),
             yaxis = list(scaleanchor = "x",
                          title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE),
