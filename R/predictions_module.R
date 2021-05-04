@@ -115,6 +115,7 @@ predictionsServer <- function(id,
             predictionsdetailUI(ns("detail"), isolate(data$speciesinfo_topten), isolate(data$speciesinfo_botten)),
             title = "More Detail on Predictions",
             size = "l",
+      easyClose = TRUE,
             footer = tagList(
               actionButton(ns("hide"), "Hide"),
             )
