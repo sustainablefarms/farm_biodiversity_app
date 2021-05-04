@@ -85,6 +85,13 @@ selectlocationServer <- function(id){
                    line = list(color = "gray"),
                    color = "gray"
           ) %>% 
+  add_text(x = c(min(data$points$longitude), 148.5), 
+           y = c(max(data$points$latitude)-1, min(data$points$latitude) - 0.5),
+           text = c("NSW", "VIC"), 
+           textfont = list(size = 20),
+           showlegend = FALSE,
+           inherit = FALSE
+           ) %>%
             plotly::layout(
             xaxis = list(title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE),
             yaxis = list(scaleanchor = "x",
