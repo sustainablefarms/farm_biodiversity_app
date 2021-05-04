@@ -2,17 +2,17 @@
 selectYfAUI <- function(id){
   ns <- NS(id)
   tagList(
-         HTML("<div class='subheader'><h2>Last 12 Months</h2></div>"),
+         HTML("<div class='subheader'><h2>Since Last August</h2></div>"),
          column(width = 6,
                 sliderInput(
                   inputId = ns("AnnMeanTemp.YfA"),
-                  label = tags$html(tags$span("Average temperature since last spring (&deg;C)")),
+                  label = tags$html(tags$span(HTML("Average temperature (&deg;C)"))),
                   min = 13, max = 17, step = 0.5,
                   value = new_data_mean$AnnMeanTemp.YfA)),
          column(width = 6,
                 sliderInput(
                   inputId = ns("AnnPrec.YfA"),
-                  label = tags$html(tags$span("Rainfall since last spring (mm)")),
+                  label = tags$html(tags$span("Rainfall (mm)")),
                   min = 450, max = 1050, step = 10,
                   value = new_data_mean$AnnPrec.YfA))
         )
