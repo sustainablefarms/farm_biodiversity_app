@@ -12,16 +12,27 @@ patch_modal <- function(
   if(is.null(IsRemnant) | is.na(IsRemnant)){IsRemnant <- TRUE}
   showModal(
     modalDialog(
-      # enables popovers in this modal!! (this doesn't work in the module UI)
+      # the following enables bootstrap 3's inbuilt tooltips
       tags$script("$(function () {
-      $('[data-toggle=popover]').popover()
-    })"),
+          $('[data-toggle=tooltip]').tooltip()
+        })"
+      ),
+      # the following enables bootstrap 3's inbuilt popovers
+      tags$script("$(function () {
+        $('[data-toggle=popover]').popover()
+      })"),
         # 500m WCF
         tags$div(
           tags$html(tags$span("Woody vegetation canopy within 500m of patch centre (% area)"),
-                          infopopover(title = "Woody Vegetation Cover",
-                                      content = paste("The amount of woody vegetation canopy within 500m of the patch centre,",
-                                                      "as a percentage of the area within 500m.", "The available values cover 90% of our training data."))),
+                    infotooltip(title = paste("The amount of woody vegetation canopy within 500m of the patch centre,",
+                                                "as a percentage of the area within 500m.",
+                                              "Maps of woody vegetation canopy amounts can be explored at ",
+                                              linknewtab(href = 'http://anuwald.science/tree',
+                                                         "http://anuwald.science/tree"),
+                                              ".",
+                                              "The available values cover 90% of our training data."),
+                                placement = "auto bottom")
+                    ),
           sliderInput(label = NULL,
             inputId = ns(paste0("pc_woody500m_", value)),
             min = 2, max = 20, step = 2,

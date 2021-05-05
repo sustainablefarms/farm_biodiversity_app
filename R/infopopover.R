@@ -4,6 +4,7 @@ infopopover <- function(title,
                         content,
                         trigger = "focus",
                         html = FALSE,
+                        placement = "auto",
                         ...){
   tags$span(class = "glyphicon glyphicon-info-sign",
             tabindex = "0",
@@ -13,5 +14,23 @@ infopopover <- function(title,
             `data-html` = html,
             `data-content` = content,
             style = "cursor: pointer;",
+            placement = placement,
+            ...)
+}
+
+infotooltip <- function(title,
+                        content = NULL,
+                        trigger = "focus",
+                        html = FALSE,
+                        placement = "auto",
+                        ...){
+  tags$span(class = "glyphicon glyphicon-info-sign",
+            tabindex = "0",
+            `data-toggle` = "tooltip",
+            title = title,
+            `data-trigger` = trigger,
+            `data-html` = html,
+            style = "cursor: pointer;",
+            placement = placement,
             ...)
 }
