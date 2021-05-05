@@ -50,9 +50,10 @@ compute_richness <- function(model_data, Xocc){
                                             toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
                                                                             model_data$XoccProcess$scale,
                                                                             model_data$XoccColNames)})
-    set.seed(4444)
-    msod:::occspecrichness_avsite.jsodm_lv(mod)
+    class(mod) <- "jsodm"
+    msod:::occspecrichness_avsite.jsodm(mod)
   })
+  warning("Only expected values can be trusted as using jsodm without LV calculations")
   richness_df <- as.data.frame(do.call(rbind, richness_predictions))
   richness_df$category <- factor(seq_len(3), levels = seq_len(3),
                                  labels = c("Less vegetation", "Your estimate", "More vegetation"))

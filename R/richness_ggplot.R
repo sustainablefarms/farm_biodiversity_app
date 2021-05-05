@@ -8,7 +8,7 @@ richness_plot <- function(species_richness){
     y = c(0, max(species_richness$E + 2 * sqrt(species_richness$V)) + 3)) +
   scale_x_discrete(position = "top") +
   scale_discrete_manual(aesthetics = "fill", values = c("#81a2b3", "#4e839c", "#81a2b3")) +
-  geom_errorbar(aes(ymin = E - 2 * sqrt(V), ymax = E + 2 * sqrt(V)), width = 0.2) +
+  # geom_errorbar(aes(ymin = E - 2 * sqrt(V), ymax = E + 2 * sqrt(V)), width = 0.2) +
   coord_flip() +
   ggtitle(NULL) +
   theme(legend.position = "none",
