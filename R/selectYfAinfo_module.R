@@ -4,9 +4,11 @@ selectYfAUI <- function(id){
   tagList(
          HTML("<div class='subheader'><h2>Since Last August</h2></div>"),
          column(width = 6,
+                tags$span(HTML("Avg. temperature (&deg;C)"),
+                          infopopover("Average Temperature", "Test")),
                 sliderInput(
+                  label = NULL,
                   inputId = ns("AnnMeanTemp.YfA"),
-                  label = tags$html(tags$span(HTML("Average temperature (&deg;C)"))),
                   min = 13, max = 17, step = 0.5,
                   value = new_data_mean$AnnMeanTemp.YfA)),
          column(width = 6,
