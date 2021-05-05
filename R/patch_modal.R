@@ -16,21 +16,27 @@ patch_modal <- function(
       tags$script("$(function () {
       $('[data-toggle=popover]').popover()
     })"),
-      sliderInput(
-        inputId = ns(paste0("pc_woody500m_", value)),
-        label = tags$html(tags$span("Woody vegetation canopy within 500m of patch centre (% area)"),
+        # 500m WCF
+        tags$div(
+          tags$html(tags$span("Woody vegetation canopy within 500m of patch centre (% area)"),
                           infopopover(title = "Woody Vegetation Cover",
                                       content = paste("The amount of woody vegetation canopy within 500m of the patch centre,",
                                                       "as a percentage of the area within 500m.", "The available values cover 90% of our training data."))),
-        min = 2, max = 20, step = 2,
-        value = woody500m),
-      sliderInput(
-        inputId = ns(paste0("pc_woody3000m_", value)),
-        label = tags$html(tags$span("Woody vegetation canopy within 3km of patch centre (% area)"),
+          sliderInput(label = NULL,
+            inputId = ns(paste0("pc_woody500m_", value)),
+            min = 2, max = 20, step = 2,
+            value = woody500m)
+          ),
+        tags$div(
+          tags$html(tags$span("Woody vegetation canopy within 3km of patch centre (% area)"),
                           infopopover(title = "Woody Vegetation Cover",
-                                      content = "The amount of woody vegetation canopy within 3km of the patch centre, as a percentage of the area within 500m.")),
-        min = 2, max = 20, step = 2,
-        value = woody3000m),
+                                      content = paste("The amount of woody vegetation canopy within 500m of the patch centre,",
+                                                      "as a percentage of the area within 500m.", "The available values cover 90% of our training data."))),
+          sliderInput(label = NULL,
+            inputId = ns(paste0("pc_woody3000m_", value)),
+            min = 2, max = 20, step = 2,
+            value = woody3000m)
+          ),
       tags$div(
         class = "form-group shiny-input-container",
         tags$span(
