@@ -20,7 +20,6 @@ patch_modal <- function(
         inputId = ns(paste0("pc_woody500m_", value)),
         label = tags$html(tags$span("Woody vegetation canopy within 500m of patch centre (% area)"),
                           infopopover(title = "Woody Vegetation Cover",
-                                      trigger = "click",
                                       content = paste("The amount of woody vegetation canopy within 500m of the patch centre,",
                                                       "as a percentage of the area within 500m.", "The available values cover 90% of our training data."))),
         min = 2, max = 20, step = 2,
@@ -29,7 +28,6 @@ patch_modal <- function(
         inputId = ns(paste0("pc_woody3000m_", value)),
         label = tags$html(tags$span("Woody vegetation canopy within 3km of patch centre (% area)"),
                           infopopover(title = "Woody Vegetation Cover",
-                                      trigger = "click",
                                       content = "The amount of woody vegetation canopy within 3km of the patch centre, as a percentage of the area within 500m.")),
         min = 2, max = 20, step = 2,
         value = woody3000m),
@@ -46,7 +44,6 @@ patch_modal <- function(
           ))
         ),
         infopopover(title = "Remnant Woodland",
-                    trigger = "click", #focus creates errors here
                     content = 
             tags$html(tags$div(
               style="text-align: center",
@@ -77,7 +74,6 @@ patch_modal <- function(
           ))
         ),
         infopopover(title = "Noisy Miners",
-                    trigger = "click", #focus creates errors here
                     content = 
             tags$html(tags$div(
               style="text-align: center",

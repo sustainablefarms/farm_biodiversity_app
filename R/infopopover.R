@@ -6,6 +6,7 @@ infopopover <- function(title,
                         html = FALSE,
                         ...){
   tags$span(class = "glyphicon glyphicon-info-sign",
+            tabindex = "0",
             `data-toggle` = "popover",
             title = title,
             `data-trigger` = trigger,

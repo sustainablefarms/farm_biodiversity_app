@@ -16,8 +16,7 @@ predictionsUI <- function(id){
                               paste("This is the expected number of birds species in our model that we predict will be living in at least one patch on your farm.",
                               "The occupancy probability of each species was considered the highest occupancy probability of all provided patches.",
                               "The estimate uses the median of latent variable values, so interactions between species are incorporated.",
-                              "Patch occupancy is considered to be highly correlated between patches, hence the use of the maximum across all patches"),
-                              trigger = "click")
+                              "Patch occupancy is considered to be highly correlated between patches, hence the use of the maximum across all patches"))
       ),
       plotOutput(ns("species_richness"), height = "200px"),
       fluidRow(
