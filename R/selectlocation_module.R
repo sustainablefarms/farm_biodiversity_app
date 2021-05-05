@@ -10,15 +10,27 @@ selectlocationUI <- function(id){
          #     "ABS SA2 regions" = "abs_sa2",
          #     "Federal Electorates" = "electorates_federal"),
          #   width = "100%"),
-         if (isTRUE(getOption("shiny.testmode"))){
-           actionButton(ns("fake_region_number"), label = "Next Region")
-         } else {
-           plotly::plotlyOutput(ns("plot_points"), height = "200px")
-         },
-         plotOutput(ns("map"), height = "200px"),
+         fluidRow(
+           column(width = 8,
+             if (isTRUE(getOption("shiny.testmode"))){
+               actionButton(ns("fake_region_number"), label = "Next Region")
+             } else {
+               plotly::plotlyOutput(ns("plot_points"), height = "350px")
+             }
+             ),
+           column(width = 4, 
+             # style = "
+             # position: absolute;
+             # top: 50%;
+             # -ms-transform: translateY(-50%);
+             # transform: translateY(-50%);",
+             tags$div(style = "align: center;", textOutput(ns("regionname"), inline = TRUE)),
+             plotOutput(ns("map"), height = "200px")
+             )
+         ),
          # HTML("<div class='subheader'><h2>CLIMATE</h2></div>"),
-         HTML("<br>"),
-         column(width = 6,
+         fluidRow(
+           column(width = 6,
               uiOutput(ns("show_maxtemp")),
               uiOutput(ns("show_mintemp"))
             ),
@@ -26,6 +38,7 @@ selectlocationUI <- function(id){
               uiOutput(ns("show_precip_warm")),
               uiOutput(ns("show_precip_cold"))
             )
+         )
          )
 }
 
@@ -82,10 +95,9 @@ selectlocationServer <- function(id){
                    inherit = FALSE,
                    showlegend = FALSE,
                    hoverinfo = 'none',
-                   line = list(color = "gray"),
-                   color = "gray"
+                   line = list(color = "gray")
           ) %>% 
-  add_text(x = c(min(data$points$longitude), 148.5), 
+  add_text(x = min(data$points$longitude), 
            y = c(max(data$points$latitude)-1, min(data$points$latitude) - 0.5),
            text = c("NSW", "VIC"), 
            textfont = list(size = 20),
@@ -140,20 +152,25 @@ selectlocationServer <- function(id){
         })
       }
         
+        # insert region name
+        output$regionname <- renderText({
+          validate(need(outOfModule$selected_region, ""))
+          outOfModule$selected_region
+        })
         # draw a map
         output$map <- renderPlot({
-          validate(need(outOfModule$selected_region, ""))
+          validate(need(outOfModule$selected_region, "Please select region"))
           data$polygons <- readRDS("data/sa2_polygons.rds")
-          map_text <- data$points[data$points$label == outOfModule$selected_region, ]
-          map_text$label <- paste(strsplit(map_text$label, " ")[[1]], collapse = "\n")
+          # map_text <- data$points[data$points$label == outOfModule$selected_region, ]
+          # map_text$label <- paste(strsplit(map_text$label, " ")[[1]], collapse = "\n")
           ggplot(data$polygons[data$polygons$SA2_NAME16 == outOfModule$selected_region, ]) +
-            geom_sf(fill = "grey90", color = "grey30") +
-            geom_text(data = map_text,
-                      mapping = aes(x = longitude, y = latitude, label = label),
-                      color = "grey30",
-                      alpha = 0.5,
-                      size = 5
-            ) +
+            geom_sf(fill = "grey90", color = "grey10") +
+            # geom_text(data = map_text,
+            #           mapping = aes(x = longitude, y = latitude, label = label),
+            #           color = "grey30",
+            #           alpha = 0.5,
+            #           size = 5
+            # ) +
             theme_void()
         })
       # })
