@@ -12,7 +12,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   # preptraits(model_data)
   loadtraits2global()
   load_birdinfotable()
-  appname <<- "Bird Anticipator"
+  appname <<- "Bird Checker"
   covarnicenames_tbl <<- read.csv("./data/nicecovarnames.csv", header = TRUE)
   apptempdir <<- tempdir()
   report_path <<- paste0(apptempdir, "/", "report.Rmd") #file location assumes host is a unix machine
@@ -46,9 +46,9 @@ ui <- function(){
     HTML("</div>"),
     column(width = 1),
     column(width = 3,
-      selectlocationUI("location"),
+      fluidRow(selectlocationUI("location")),
       # plotOutput("climate", height = "300px")
-      selectYfAUI("yfa")
+      fluidRow(selectYfAUI("yfa"))
     ),
     column(width = 1),
     column(width = 6,
