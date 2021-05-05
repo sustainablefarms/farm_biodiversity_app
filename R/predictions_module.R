@@ -35,7 +35,7 @@ predictionsUI <- function(id){
           actionButton(ns("moredetail"), "View More Detail", class = "download_badge"),
           downloadButton(ns("downloaddata"), "Download Predictions", class = "download_badge"),
           downloadButton(ns("downloadreport"), "Download Report", class = "download_badge")
-        )
+      )
   )
 }
 
@@ -154,6 +154,7 @@ predictionsServer <- function(id,
           )
         }
       )
+      
     })
 }
 

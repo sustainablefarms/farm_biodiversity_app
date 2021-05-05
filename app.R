@@ -22,11 +22,13 @@
 # devtools::install_github("https://github.com/sustainablefarms/msod", ref = "modelclasses")
 options(
   shiny.autoreload = TRUE,
-  shiny.launch.browser = FALSE
+  shiny.launch.browser = FALSE,
+  shiny.testmode = TRUE
 )
 pkgload::load_all(".")
 myapp()
 # app_selectpatchonly()
+# app_selectlocationonly()
 # app_predictionsonly()
 # app_predictiondetailsonly()
 

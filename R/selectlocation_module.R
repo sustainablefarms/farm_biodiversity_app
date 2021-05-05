@@ -12,11 +12,11 @@ selectlocationUI <- function(id){
          #   width = "100%"),
          fluidRow(
            column(width = 8,
-             if (isTRUE(getOption("shiny.testmode"))){
-               actionButton(ns("fake_region_number"), label = "Next Region")
-             } else {
+             # if (isTRUE(getOption("shiny.testmode"))){
+               # actionButton(ns("fake_region_number"), label = "Next Region")
+             # } else {
                plotly::plotlyOutput(ns("plot_points"), height = "350px")
-             }
+             # }
              ),
            column(width = 4, 
              # style = "
@@ -117,21 +117,6 @@ selectlocationServer <- function(id){
         })
         
         # observe clicks on the region plot
-      if (isTRUE(getOption("shiny.testmode"))){
-        observe({
-          input$fake_region_number
-          outOfModule$selected_region <- data$points$label[input$fake_region_number]
-          # add climate data
-          climate_row <- which(data$points$label == outOfModule$selected_region)
-          outOfModule$MaxTWarmMonth.lt <- data$points$MaxTWarmMonth[climate_row]
-          outOfModule$PrecWarmQ.lt <- data$points$PrecWarmQ[climate_row]
-          outOfModule$MinTColdMonth.lt <- data$points$MinTColdMonth[climate_row]
-          outOfModule$PrecColdQ.lt <- data$points$PrecColdQ[climate_row]
-          outOfModule$PrecSeasonality.lt <- data$points$PrecSeasonality[climate_row]
-          
-          outOfModule$locationcomplete <- TRUE
-        })
-      } else {
         observe({
           if(!is.null(data$points)){
             click_region <- plotly::event_data(
@@ -150,7 +135,6 @@ selectlocationServer <- function(id){
             outOfModule$locationcomplete <- TRUE
           }
         })
-      }
         
         # insert region name
         output$regionname <- renderText({

@@ -48,7 +48,13 @@ ui <- function(){
     column(width = 3,
       fluidRow(selectlocationUI("location")),
       # plotOutput("climate", height = "300px")
-      fluidRow(selectYfAUI("yfa"))
+      fluidRow(selectYfAUI("yfa")),
+      if (isTRUE(getOption("shiny.testmode"))){
+        downloadButton("downloadcvals", "Download Current Values", class = "download_badge")
+      },
+      if (isTRUE(getOption("shiny.testmode"))){
+        actionButton("viewcvals", "View Current Values", class = "download_badge")
+      }
     ),
     column(width = 1),
     column(width = 6,
@@ -127,6 +133,29 @@ server <- function(input, output, session) {
       fade = TRUE
       ))
     })
+  if (isTRUE(getOption("shiny.testmode"))){
+    output$downloadcvals <- downloadHandler(
+      filename = "current_values.rds",
+      content = function(file) {
+        outdata <- cval()
+        saveRDS(outdata, file)
+      }
+    )
+    # modal more detail stuff
+    observeEvent(input$viewcvals, {
+      showModal(
+        modalDialog(
+          verbatimTextOutput("cvals"),
+          title = "Current Values for Prediction",
+          size = "l",
+          easyClose = TRUE,
+        )
+      )
+    })
+    output$cvals <- renderPrint({
+      cval()
+    })
+  }
 
 } # end server
 
