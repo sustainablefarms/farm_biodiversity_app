@@ -1,6 +1,6 @@
 app_predictionsonly <- function(){
   main_app_prep()
-  current_values <- reactiveVal(value = readRDS("./current_values.rds")) #isolate(current_values())
+  current_values <- reactiveVal(value = readRDS("./tests/testthat/current_values_1patch.rds")) #isolate(current_values())
   # current_values <- do.call(reactiveValues, readRDS("tests/testthat/current_values_2patches.rds"))
   
   shinyApp(

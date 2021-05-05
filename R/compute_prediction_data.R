@@ -43,7 +43,6 @@ compute_richness <- function(model_data, Xocc){
   richness_data <- list(low = Xocc, current = Xocc, high = Xocc)
   # richness_data[[1]]$NMdetected <- 0; richness_data[[3]]$NMdetected <- 1
   richness_data[[1]]$WCF_500 <- 2; richness_data[[3]]$WCF_500 <- 20
-  richness_data[[1]]$WCF_3000 <- 2; richness_data[[3]]$WCF_3000 <- 20
   pbapply::pboptions(type = "none")
   richness_predictions <- lapply(richness_data, function(a){
     mod <- msod::supplant_new_data(model_data, a, 
@@ -56,7 +55,7 @@ compute_richness <- function(model_data, Xocc){
   warning("Only expected values can be trusted as using jsodm without LV calculations")
   richness_df <- as.data.frame(do.call(rbind, richness_predictions))
   richness_df$category <- factor(seq_len(3), levels = seq_len(3),
-                                 labels = c("Less vegetation", "Your estimate", "More vegetation"))
+                                 labels = c("Less woodland nearby", "Your estimate", "More woodland nearby"))
   
   species_richness <- richness_df
   

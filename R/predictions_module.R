@@ -11,12 +11,14 @@ predictionsUI <- function(id){
     tags$script("$(function () {
       $('[data-toggle=popover]').popover()
     })"),
-      tags$span(HTML("<plottitle>Expected Number of Common Spring Bird Species</plottitle>"),
-                  infopopover("Expected Number of Species in our Model",
-                              paste("This is the expected number of birds species in our model that we predict will be living in at least one patch on your farm.",
-                              "The occupancy probability of each species was considered the highest occupancy probability of all provided patches.",
-                              "The estimate uses the median of latent variable values, so interactions between species are incorporated.",
-                              "Patch occupancy is considered to be highly correlated between patches, hence the use of the maximum across all patches"))
+      tags$span(HTML("<plottitle>Expected Number of Species</plottitle>"),
+                  infotooltip(paste("The middle bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
+                                    "<br><br>The top bar is the number of species we expect if there is 15 hectares of woody vegetation canopy within 500m of every patch centre.",
+                                    "The lower bar is the number of species we expect if there is only 1.5 hectares of woody vegetation canopy within 500m of every patch centre.",
+                              "<br><br>Each species was assigned an occupancy probability equal to the maximum of all patches (we use the maximum as we expect occupancy between patches to be highly correlated)."
+                              ),
+                              `data-container`="body",
+                              placement = "bottom")
       ),
       plotOutput(ns("species_richness"), height = "200px"),
       fluidRow(
