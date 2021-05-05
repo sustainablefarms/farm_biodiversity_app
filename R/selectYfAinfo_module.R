@@ -2,7 +2,7 @@
 selectYfAUI <- function(id){
   ns <- NS(id)
   tagList(
-         HTML("<div class='subheader'><h2>Since Last August</h2></div>"),
+         HTML("<div class='subheader'><h2>SINCE LAST AUGUST</h2></div>"),
          column(width = 6,
                 tags$span(HTML("Avg. temperature (&deg;C)"),
                           infopopover("Average Temperature", "Test")),
