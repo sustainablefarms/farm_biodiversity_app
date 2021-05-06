@@ -7,7 +7,7 @@ richness_plot <- function(species_richness){
   expand_limits(
     y = c(0, max(25, species_richness$E * 1.1))) +
   scale_x_discrete(position = "top") +
-  scale_discrete_manual(aesthetics = "fill", values = c("#81a2b3", "#4e839c", "#81a2b3")) +
+  scale_discrete_manual(aesthetics = "fill", values = c("#81a2b3", "#4e839c", "#81a2b3", "#4e839c")) +
   # geom_errorbar(aes(ymin = E - 2 * sqrt(V), ymax = E + 2 * sqrt(V)), width = 0.2) +
   coord_flip() +
   ggtitle(NULL) +

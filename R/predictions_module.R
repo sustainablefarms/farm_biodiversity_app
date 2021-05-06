@@ -20,7 +20,7 @@ predictionsUI <- function(id, usf){
                               `data-container`="body",
                               placement = "bottom")
       ),
-      plotOutput(ns("species_richness"), height = "200px"),
+      plotOutput(ns("species_richness"), height = "250px"),
       fluidRow(
         column(width = 6, 
            tags$span(HTML("<plottitle>Most Likely Species</plottitle>"),
@@ -93,7 +93,19 @@ predictionsServer <- function(id,
           }
           data$species_prob_current <- msod::poccupancy_mostfavourablesite.jsodm_lv(modwXocc)
           data$spec_different <- todifferent(data$species_prob_current, data$species_prob_ref)
-          data$species_richness <- compute_richness(model_data, data$Xocc)
+          species_richness_raw <- rbind(compute_richness(model_data, data$Xocc),
+                                         reference = sum(data$species_prob_ref[, "median"]))           # add in reference
+          species_richness_raw$category <- factor(1:4, levels = 4:1,
+                 labels = c(
+                            "Reference estimate",
+                            "More woodland nearby",
+                            "Your estimate",
+                   "Less woodland nearby"
+                   ),
+                 ordered = TRUE
+          )
+          data$species_richness <- species_richness_raw
+
           topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
           botten <- order(data$species_prob_current[, "median"], decreasing = FALSE)[1:10]
           data$toptennames <- row.names(data$species_prob_current)[topten]

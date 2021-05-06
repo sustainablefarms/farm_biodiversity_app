@@ -54,8 +54,6 @@ compute_richness <- function(model_data, Xocc){
   })
   warning("Computations ignore interactions between species - faster and expectations may ignore these anyway")
   richness_df <- as.data.frame(do.call(rbind, richness_predictions))
-  richness_df$category <- factor(seq_len(3), levels = seq_len(3),
-                                 labels = c("Less woodland nearby", "Your estimate", "More woodland nearby"))
   names(richness_df)[[1]] <- "E"
   
   species_richness <- richness_df
