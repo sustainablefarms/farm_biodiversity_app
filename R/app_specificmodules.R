@@ -11,7 +11,7 @@ app_predictionsonly <- function(){
       },
            function(input, output, session){
              predictionsServer("pred", current_values,
-                               model_data, new_data_mean,
+                               model_data, 
                                report_path)
            })
 }

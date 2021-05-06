@@ -27,8 +27,11 @@ predictionsUI <- function(id){
                   infopopover("Most Likely Species", "<incomplete - more info to go here>"))
         ),
         column(width = 6,
-          tags$span(HTML("<plottitle>Relative to an Average Patch</plottitle>"),
-                  infopopover("Ratio of probabilities", "<incomplete - more info to go here>")
+          tags$span(HTML("<plottitle>Relative to Reference</plottitle>"),
+                  infopopover("Ratio of probabilities", "<incomplete - more info to go here>"),
+                  checkboxInput(ns("usesavedreference"), label = "Use saved reference.", value = FALSE, width = "20px"),
+                  actionButton(ns("savetoreference"), label = "Save as reference.")
+                  
         ))
         ),
       plotly::plotlyOutput(ns("common_dif_species"), height = "300px"),
@@ -44,7 +47,6 @@ predictionsUI <- function(id){
 predictionsServer <- function(id, 
                               current_values,
                               model_data,
-                              new_data_mean,
                               report_path){
   moduleServer(
     id,
@@ -58,6 +60,7 @@ predictionsServer <- function(id,
         speciesinfo_topten = NULL,
         speciesinfo_botten = NULL)
       ns <- session$ns
+      referencevals <- reactiveVal(value = new_data_mean, label = "Reference Values")
       
       observe({
         if(
@@ -69,7 +72,12 @@ predictionsServer <- function(id,
                                                                                model_data$XoccProcess$scale,
                                                                                model_data$XoccColNames)})
           print(modwXocc$data$Xocc)
-          modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
+          if (input$usesavedreference){
+            refXocc <- referencevals()
+          } else {
+            refXocc <- new_data_mean
+          }
+          modwmeanXocc <- msod::supplant_new_data(model_data, refXocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
                                                                                model_data$XoccProcess$scale,
                                                                                model_data$XoccColNames)})
           data$species_prob_current <- msod::poccupancy_mostfavourablesite.jsodm_lv(modwXocc)
@@ -91,6 +99,10 @@ predictionsServer <- function(id,
         }
       })
       
+      # reference prediction saving
+      observeEvent(input$savetoreference, {
+        referencevals(data$Xocc)
+      })
       
       # draw species plots
       observe({
