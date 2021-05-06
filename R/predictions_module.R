@@ -68,6 +68,7 @@ predictionsServer <- function(id,
         speciesinfo_topten = NULL,
         speciesinfo_botten = NULL)
       ns <- session$ns
+      referencevals <- reactiveVal(value = new_data_mean, label = "Reference Attributes")
       
       observe({
         if(
