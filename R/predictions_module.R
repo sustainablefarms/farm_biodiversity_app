@@ -40,6 +40,9 @@ predictionsUI <- function(id, usf){
                ),
         column(width = 6, offset = 2,
           style = "text-align: right",
+          if (isTRUE(getOption("shiny.testmode"))){
+            downloadButton(ns("downloaddataverbose"), "Verbose Prediction Data", class = "download_badge")
+          },
           actionButton(ns("moredetail"), "View More Detail", class = "download_badge"),
           downloadButton(ns("downloaddata"), "Table", class = "download_badge"),
           downloadButton(ns("downloadreport"), "Report", class = "download_badge")
@@ -76,7 +79,7 @@ predictionsServer <- function(id,
                                                                                model_data$XoccProcess$scale,
                                                                                model_data$XoccColNames)})
           print(modwXocc$data$Xocc)
-          if ((length(input$usesavedreference) > 0) && input$usesavedreference){
+          if (isTRUE(input$usesavedreference)){
             refXocc <- referencevals()
           } else {
             refXocc <- new_data_mean
@@ -173,6 +176,14 @@ predictionsServer <- function(id,
           )
         }
       )
+      
+      if (isTRUE(getOption("shiny.testmode"))){
+        output$downloaddataverbose <- downloadHandler(
+          filename = "predictions.rds",
+          content = function(file) {
+            saveRDS(reactiveValuesToList(data), file)
+          })
+      }
       
       reactive(input$usesavedreference)
     })

@@ -110,9 +110,10 @@ server <- function(input, output, session) {
     cval(c(reactiveValuesToList(fromlocation), 
            reactiveValuesToList(yfavals),
            reactiveValuesToList(frompatch)))
-    # if (isTRUE(getOption("shiny.testmode"))){
+    if (isTRUE(getOption("shiny.testmode"))){
+      print(list2DF(cval()))
     # cval(readRDS("./tests/testthat/current_values_1patch.rds"))
-    # }
+    }
   })
   
   
