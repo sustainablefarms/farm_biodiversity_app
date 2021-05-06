@@ -180,24 +180,7 @@ plot_allspeciesprob(data$species_prob_current)
 Below shows the ratio of species occupancy probability at their favoured patch to the occupancy probability at the average patch in our data.
 
 ```{r relativetomeansite, fig.height = 8, fig.width = 7}
-## fun inputs
-spec_different <- data$spec_different
-##
-traits <- get("traits", envir = globalenv())
-df_both <- dplyr::left_join(spec_different, traits, by = c(species = "Common Name"))
-
-df_both %>%
-  dplyr::rename(`Common Name` = species) %>%
-  ordfactby(`Common Name`, `Body Length`) %>%
-  ggplot(aes(x = `Common Name`, y = value, fill = value)) +
-  geom_bar(stat = "identity", show.legend = FALSE) +
-  coord_flip(clip = "off") +
-  scale_x_discrete(name = "Increasing Body Length ---->") +
-  scale_y_continuous(name = "Ratio", expand = expansion()) +
-  ggtitle("Relative Occupancy Probability") +
-  theme_minimal() +
-  theme(legend.position = "none",
-        panel.grid = element_blank())
+plot_allspeciesrel(data$spec_different)
 ```
 
 \newpage

@@ -63,7 +63,12 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
     HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY OF ALL SPECIES</h2></div>"),
     fluidRow(
       plotOutput(ns("allspecies"), height = "800px")
+    ),
+    HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY RELATIVE TO AVERAGE SITE</h2></div>"),
+    fluidRow(
+      plotOutput(ns("allspeciesrel"), height = "800px")
     )
+    
   )
 }
 
@@ -106,6 +111,10 @@ predictionsdetailServer <- function(id,
       
       output$allspecies <- renderPlot({
         plot_allspeciesprob(data$species_prob_current)
+      })
+      
+      output$allspeciesrel <- renderPlot({
+        plot_allspeciesrel(data$spec_different)
       })
     })
   }
