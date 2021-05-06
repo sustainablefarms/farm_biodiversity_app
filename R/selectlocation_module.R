@@ -148,6 +148,8 @@ selectlocationServer <- function(id){
             outOfModule$PrecSeasonality.YfA <- new_data_mean$PrecSeasonality.YfA
             if (length(outOfModule$selected_region) > 0){
               outOfModule$locationcomplete <- TRUE
+            } else {
+              outOfModule$locationcomplete <- FALSE
             }
           }
         })
