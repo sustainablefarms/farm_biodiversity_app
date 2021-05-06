@@ -28,18 +28,22 @@ predictionsUI <- function(id, usf){
         ),
         column(width = 6,
           tags$span(HTML("<plottitle>Relative to Reference</plottitle>"),
-                  infopopover("Ratio of probabilities", "<incomplete - more info to go here>"),
-                  inlinecheckBoxInput(ns("usesavedreference"), label = "U", value = usf, width = "20px"),
-                  actionButton(ns("savetoreference"), label = "Save as reference.")
-                  
+                  infopopover("Ratio of probabilities", "<incomplete - more info to go here>")
         ))
         ),
       plotly::plotlyOutput(ns("common_dif_species"), height = "300px"),
-      tags$div(
+      fluidRow(
+        column(width = 4,
+            "Reference:",
+            actionButton2(ns("savetoreference"), label = "Update", class = "badge_tiny", width = "80px"),
+            inlinecheckBoxInput(ns("usesavedreference"), label = "Use saved", value = usf)
+               ),
+        column(width = 6, offset = 2,
           style = "text-align: right",
           actionButton(ns("moredetail"), "View More Detail", class = "download_badge"),
-          downloadButton(ns("downloaddata"), "Download Predictions", class = "download_badge"),
-          downloadButton(ns("downloadreport"), "Download Report", class = "download_badge")
+          downloadButton(ns("downloaddata"), "Table", class = "download_badge"),
+          downloadButton(ns("downloadreport"), "Report", class = "download_badge")
+               )
       )
   )
 }

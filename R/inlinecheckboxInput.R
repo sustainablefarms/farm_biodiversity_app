@@ -8,6 +8,6 @@ inlinecheckBoxInput <- function(inputId, label, value = FALSE, width = NULL){
     inputTag$attribs$checked <- "checked"
   tags$span(class = "form-group shiny-input-container", style = htmltools::css(width = validateCssUnit(width)), 
       tags$span(class = "checkbox",
-           style = htmltools::css(display = "inline"),
+           style = htmltools::css(display = "inline"), 
            tags$label(inputTag, tags$span(label))))
 }
