@@ -103,13 +103,14 @@ server <- function(input, output, session) {
   fromlocation <- selectlocationServer("location")
   
   ## YfA
-  yfavals <- selectYfAServer("yfa")
+  yfavals <- selectYfAServer("yfa", locationinfo = fromlocation)
   
   ## Combine!
   observe({
     cval(c(reactiveValuesToList(fromlocation), 
            reactiveValuesToList(yfavals),
            reactiveValuesToList(frompatch)))
+    # if (isTRUE(getOption("shiny.testmode"))){print(cval())}
   })
   
   ## PREDICTIONS

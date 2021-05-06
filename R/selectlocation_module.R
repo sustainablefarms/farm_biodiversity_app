@@ -59,7 +59,14 @@ selectlocationServer <- function(id){
         PrecWarmQ.lt = NULL,
         MinTColdMonth.lt = NULL,
         PrecColdQ.lt = NULL,
-        PrecSeasonality.lt = NULL
+        AnnPrec.lt = NULL,
+        PrecSeasonality.lt = NULL,
+        AnnMeanTemp.YfA     = NULL,
+        MaxTWarmMonth.YfA   = NULL,
+        PrecWarmQ.YfA       = NULL,
+        MinTColdMonth.YfA   = NULL,
+        PrecColdQ.YfA       = NULL,
+        PrecSeasonality.YfA = NULL
       )
       click_values <- reactiveValues(
         climate = NULL,
@@ -132,6 +139,13 @@ selectlocationServer <- function(id){
             outOfModule$PrecColdQ.lt <- data$points$PrecColdQ[climate_row]
             outOfModule$PrecSeasonality.lt <- data$points$PrecSeasonality[climate_row]
             
+            outOfModule$AnnPrec.lt <- data$points$AnnPrec[climate_row]
+            outOfModule$AnnMeanTemp.YfA <- data$points$AnnMeanTemp[climate_row]/10
+            outOfModule$MaxTWarmMonth.YfA <- data$points$MaxTWarmMonth[climate_row]/10
+            outOfModule$PrecWarmQ.YfA <- data$points$PrecWarmQ[climate_row]
+            outOfModule$MinTColdMonth.YfA <- data$points$MinTColdMonth[climate_row]/10
+            outOfModule$PrecColdQ.YfA <- data$points$PrecColdQ[climate_row]
+            outOfModule$PrecSeasonality.YfA <- data$points$PrecSeasonality[climate_row] 
             outOfModule$locationcomplete <- TRUE
           }
         })
