@@ -69,6 +69,12 @@ predictionsServer <- function(id,
         speciesinfo_botten = NULL)
       ns <- session$ns
       referencevals <- reactiveVal(value = new_data_mean, label = "Reference Attributes")
+      modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
+                                                                                                     model_data$XoccProcess$scale,
+                                                                                                     model_data$XoccColNames)})
+      species_prob_mean <- msod::poccupancy_mostfavourablesite.jsodm_lv(modwmeanXocc)
+      referencepred <- reactiveVal(value = species_prob_mean,
+                                   label = "Reference Predictions")
       
       observe({
         if(
@@ -81,15 +87,11 @@ predictionsServer <- function(id,
                                                                                model_data$XoccColNames)})
           print(modwXocc$data$Xocc)
           if (isTRUE(input$usesavedreference)){
-            data$refXocc <- referencevals()
+            data$species_prob_ref <- referencepred()
           } else {
-            data$refXocc <- new_data_mean
+            data$species_prob_ref <- species_prob_mean
           }
-          modwmeanXocc <- msod::supplant_new_data(model_data, data$refXocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
-                                                                               model_data$XoccProcess$scale,
-                                                                               model_data$XoccColNames)})
           data$species_prob_current <- msod::poccupancy_mostfavourablesite.jsodm_lv(modwXocc)
-          data$species_prob_ref <- msod::poccupancy_mostfavourablesite.jsodm_lv(modwmeanXocc)
           data$spec_different <- todifferent(data$species_prob_current, data$species_prob_ref)
           data$species_richness <- compute_richness(model_data, data$Xocc)
           topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
@@ -110,6 +112,7 @@ predictionsServer <- function(id,
       # reference prediction saving
       observeEvent(input$savetoreference, {
         referencevals(data$Xocc)
+        referencepred(data$species_prob_current)
       })
       
       # draw species plots
