@@ -29,7 +29,7 @@ predictionsUI <- function(id, usf){
         column(width = 6,
           tags$span(HTML("<plottitle>Relative to Reference</plottitle>"),
                   infopopover("Ratio of probabilities", "<incomplete - more info to go here>"),
-                  checkboxInput(ns("usesavedreference"), label = "Use saved reference.", value = usf, width = "20px"),
+                  inlinecheckBoxInput(ns("usesavedreference"), label = "U", value = usf, width = "20px"),
                   actionButton(ns("savetoreference"), label = "Save as reference.")
                   
         ))

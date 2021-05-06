@@ -6,7 +6,7 @@ app_predictionsonly <- function(){
   shinyApp(
     {fluidPage(
       includeCSS("./www/base.css"),
-      fluidRow(predictionsUI("pred")),
+      fluidRow(predictionsUI("pred", FALSE)),
       theme = bslib::bs_theme(version = 3, "lumen"))
       },
            function(input, output, session){
