@@ -25,7 +25,7 @@ if (params$loadexampledata){
   data <- readRDS("tests/testthat/predictions_data_2patches.rds")
 } else {
   data <- isolate(reactiveValuesToList(data))
-  current_values <- isolate(reactiveValuesToList(current_values))
+  current_values <- isolate(current_values())
 }
 # covarnicenames_tbl <- read.csv("./data/nicecovarnames.csv", header = TRUE)
 covarnicenames <- covarnicenames_tbl$NiceName
@@ -49,8 +49,11 @@ This report was generated at `r Sys.time()` from version `r packageVersion("sfbi
 
 # The Patch Properites Used for Estimation
 The estimates of bird occupancy in this report are based on the below properties of woody vegetation patches.
-The climate information and latitude has been extracted for the region you selected from the \href{https://www.worldclim.org/data/bioclim.html}{WorldClim} (version 1.4) climate database.
-The year, midstorey cover, woody vegetation cover within 500m and presence of Noisy Miners were provided by you directly.
+The long term climate information has been extracted for the region you selected from the \href{https://www.worldclim.org/data/bioclim.html}{WorldClim} (version 1.4) climate database.
+For convenience in the climate-like summaries of the last 12 months (since August) have been taken to be the corresponding long-term averages from WorldClim (version 1.4),
+except for precipitation in the last 12 months, which you have provided. 
+Woody vegetation cover within 500m and 3km, whether the patch is a planting or remnan, and the presence of Noisy Miners were also provided by you directly.
+The year has been set to 2018 as year does not have much impact on the results (we suspect due to other time-varying predictors like woody vegetation amounts and rainfall).
 
 \begin{center}
 ```{r displaypatchprops}
@@ -66,6 +69,8 @@ makeniceprops <- function(patchprops, ...){
   patchprops_char <- format(patchprops, drop0trailing = TRUE, trim = TRUE, ...)
   patchprops_char[row.names(patchprops) == techcovar2nicename("NMdetected"), ] <- 
     as.character(as.logical(as.numeric(patchprops_char[row.names(patchprops) == techcovar2nicename("NMdetected"), ])))
+    as.character(as.logical(as.numeric(patchprops_char[row.names(patchprops) == techcovar2nicename("IsPlanting"), ])))
+
 # Precipitation seasonality is a percentage. The R package dismo computes biovars, it imports 'cv' from package Raster (same authors). The code for 'cv' in raster has 100 * sd(z) / mean(z).
   return(patchprops_char)
 }
@@ -178,23 +183,24 @@ plot_allspeciesprob(data$species_prob_current)
 
 
 \newpage
-## Occupancy Probability Relative to the Average Patch
-Below shows the ratio of species occupancy probability at their favoured patch to the occupancy probability at the average patch in our data.
+## Occupancy Probability Relative to the Reference
+Below shows the ratio of species occupancy probability at their favoured patch to the reference occupancy probability. Beneath is the reference information.
 
 ```{r relativetomeansite, fig.height = 8, fig.width = 7}
 plot_allspeciesrel(data$spec_different)
 ```
 
-\newpage
 
-Note that the average patch in our data had the following attributes
+### Reference Attributes and Species Probabilities
+The reference probabilities and the patch attributes that created them are below.
 \begin{center}
 ```{r showavpatch}
-knitr::kable(makeniceprops(t(new_data_mean), digits = 3),
+knitr::kable(makeniceprops(t(data$refXocc)), digits = 3,
       format = "latex",
       booktabs = TRUE,
       row.names = TRUE,
-      col.names = "Average Patch")
+      col.names = paste("Patch", 1:ncol(patchprops)))
+plot_allspeciesprob(data$species_prob_ref)
 ```
 \end{center}
 

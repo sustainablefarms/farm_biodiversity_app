@@ -60,6 +60,7 @@ predictionsServer <- function(id,
     function(input, output, session){
       data <- reactiveValues(
         Xocc = NULL,
+        refXocc = NULL,
         species_prob_current = NULL,
         species_prob_ref = NULL,
         species_richness = NULL,
@@ -67,7 +68,6 @@ predictionsServer <- function(id,
         speciesinfo_topten = NULL,
         speciesinfo_botten = NULL)
       ns <- session$ns
-      referencevals <- reactiveVal(value = new_data_mean, label = "Reference Values")
       
       observe({
         if(
@@ -80,11 +80,11 @@ predictionsServer <- function(id,
                                                                                model_data$XoccColNames)})
           print(modwXocc$data$Xocc)
           if (isTRUE(input$usesavedreference)){
-            refXocc <- referencevals()
+            data$refXocc <- referencevals()
           } else {
-            refXocc <- new_data_mean
+            data$refXocc <- new_data_mean
           }
-          modwmeanXocc <- msod::supplant_new_data(model_data, refXocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
+          modwmeanXocc <- msod::supplant_new_data(model_data, data$refXocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
                                                                                model_data$XoccProcess$scale,
                                                                                model_data$XoccColNames)})
           data$species_prob_current <- msod::poccupancy_mostfavourablesite.jsodm_lv(modwXocc)
