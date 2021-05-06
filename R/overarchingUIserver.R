@@ -110,18 +110,21 @@ server <- function(input, output, session) {
     cval(c(reactiveValuesToList(fromlocation), 
            reactiveValuesToList(yfavals),
            reactiveValuesToList(frompatch)))
-    # if (isTRUE(getOption("shiny.testmode"))){print(cval())}
+    # if (isTRUE(getOption("shiny.testmode"))){
+    # cval(readRDS("./tests/testthat/current_values_1patch.rds"))
+    # }
   })
+  
   
   ## PREDICTIONS
   output$pred <- renderUI({
     validate(need(cval()$locationcomplete & cval()$allpatchcomplete,
              ""))
     tagList(
-      predictionsUI("pred"))
+      predictionsUI("pred", usf()))
     })
-  predictionsServer("pred", cval,
-                    model_data, new_data_mean,
+  usf <- predictionsServer("pred", cval,
+                    model_data,
                     report_path)
   
   ## Help

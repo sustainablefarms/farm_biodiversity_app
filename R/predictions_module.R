@@ -1,5 +1,5 @@
 # predictions module
-predictionsUI <- function(id){
+predictionsUI <- function(id, usf){
   ns <- NS(id)
   tagList(
     # the following enables bootstrap 3's inbuilt tooltips
@@ -29,7 +29,7 @@ predictionsUI <- function(id){
         column(width = 6,
           tags$span(HTML("<plottitle>Relative to Reference</plottitle>"),
                   infopopover("Ratio of probabilities", "<incomplete - more info to go here>"),
-                  checkboxInput(ns("usesavedreference"), label = "Use saved reference.", value = FALSE, width = "20px"),
+                  checkboxInput(ns("usesavedreference"), label = "Use saved reference.", value = usf, width = "20px"),
                   actionButton(ns("savetoreference"), label = "Save as reference.")
                   
         ))
@@ -72,7 +72,7 @@ predictionsServer <- function(id,
                                                                                model_data$XoccProcess$scale,
                                                                                model_data$XoccColNames)})
           print(modwXocc$data$Xocc)
-          if (input$usesavedreference){
+          if ((length(input$usesavedreference) > 0) && input$usesavedreference){
             refXocc <- referencevals()
           } else {
             refXocc <- new_data_mean
@@ -170,6 +170,7 @@ predictionsServer <- function(id,
         }
       )
       
+      reactive(input$usesavedreference)
     })
 }
 
