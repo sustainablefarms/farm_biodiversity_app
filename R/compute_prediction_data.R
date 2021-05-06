@@ -49,13 +49,14 @@ compute_richness <- function(model_data, Xocc){
                                             toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
                                                                             model_data$XoccProcess$scale,
                                                                             model_data$XoccColNames)})
-    class(mod) <- "jsodm"
-    msod:::occspecrichness_avsite.jsodm(mod)
+    specpred <- msod:::poccupancy_mostfavourablesite.jsodm_lv(mod)
+    return(E = sum(specpred[ , "median"]))
   })
-  warning("Only expected values can be trusted as using jsodm without LV calculations")
+  warning("Computations ignore interactions between species - faster and expectations may ignore these anyway")
   richness_df <- as.data.frame(do.call(rbind, richness_predictions))
   richness_df$category <- factor(seq_len(3), levels = seq_len(3),
                                  labels = c("Less woodland nearby", "Your estimate", "More woodland nearby"))
+  names(richness_df)[[1]] <- "E"
   
   species_richness <- richness_df
   
