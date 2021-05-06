@@ -145,7 +145,7 @@ selectlocationServer <- function(id){
             outOfModule$PrecWarmQ.YfA <- data$points$PrecWarmQ[climate_row]
             outOfModule$MinTColdMonth.YfA <- data$points$MinTColdMonth[climate_row]/10
             outOfModule$PrecColdQ.YfA <- data$points$PrecColdQ[climate_row]
-            outOfModule$PrecSeasonality.YfA <- data$points$PrecSeasonality[climate_row] 
+            outOfModule$PrecSeasonality.YfA <- new_data_mean$PrecSeasonality.YfA
             outOfModule$locationcomplete <- TRUE
           }
         })
