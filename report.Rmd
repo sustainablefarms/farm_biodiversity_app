@@ -56,9 +56,10 @@ The year, midstorey cover, woody vegetation cover within 500m and presence of No
 ```{r displaypatchprops}
 patchprops <- t(newXocc_fromselected(current_values))
 makeniceprops <- function(patchprops, ...){
-  patchprops[row.names(patchprops) %in% c("MaxTWarmMonth", "MinTColdMonth"), ] <-   # convert temperatures back to celcius
-    patchprops[row.names(patchprops) %in% c("MaxTWarmMonth", "MinTColdMonth"), ] / 10
+  patchprops[row.names(patchprops) %in% c("MaxTWarmMonth.lt", "MinTColdMonth.lt"), ] <-   # convert temperatures back to celcius
+    patchprops[row.names(patchprops) %in% c("MaxTWarmMonth.lt", "MinTColdMonth.lt"), ] / 10
   patchprops[row.names(patchprops) == "NMdetected", ] <- as.logical(patchprops[row.names(patchprops) == "NMdetected", ])
+  patchprops[row.names(patchprops) == "IsPlanting", ] <- as.logical(patchprops[row.names(patchprops) == "IsPlanting", ])
   
   row.names(patchprops) <- techcovar2nicename(row.names(patchprops))
   
@@ -150,6 +151,7 @@ cat(buildspeclatex_imagestory("Superb Parrot"))
 
 
 ```{r consconcern, eval = FALSE}
+epbc <- read.table("../sflddata/private/data/raw/EPBClist_2021-03-23.tsv")
 constatuses %>%
   dplyr::filter(`Fauna Type` == "Birds")
 rowintbl <- lapply(model_data$species, function(spec) {

@@ -1,10 +1,27 @@
 TechName,NiceName
+AnnMeanTemp.YfA,Average Temperature since last August (C)
 AnnPrec,Mean Annual Precipitation (mm)
+AnnPrec.lt,Mean Annual Precipitation (mm)
+AnnPrec.YfA,Precipitation since last August (mm)
 MaxTWarmMonth,Max. Temp. of the Warmest Month (C)
-MinTColdMonth,Min. Temp. of the Coldest Month (C)
+MaxTWarmMonth.lt,Max. Temp. of the Warmest Month (C)
+MaxTWarmMonth.YfA,Max. Temp. since last August (C)
+MinTColdMonth.lt,Min. Temp. of the Coldest Month (C)
+MinTColdMonth.YfA,Min. Temp. since last August (C)
+PrecColdQ.lt,Winter Precipitation (mm)
+PrecColdQ.YfA,Last Winter's Precipitation (mm)
+PrecWarmQ.lt,Summer Precipitation (mm)
+PrecWarmQ.YfA,Last Summer's Precipitation (mm)
 PrecSeasonality,Precipitation Seasonality (%)
+PrecSeasonality.lt,Precipitation Seasonality (%)
+PrecSeasonality.YfA,Precipitation Seasonality since last August (%)
 latitude,Latitude
 woody500m,Woody Vegetation Cover within 500m (%)
+WCF_500,Woody Vegetation Cover within 500m (%)
+WCF_3000,Woody Vegetation Cover within 3km (%)
 ms,Midstorey Cover (%)
 NMdetected,Noisy Miners Present
 SurveyYear,Year
+IsPlanting,Not a Remnant
+
+
