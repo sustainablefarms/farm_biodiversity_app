@@ -5,7 +5,6 @@ selectpatchUI <- function(id){
       verbatimTextOutput("text"),
       column(width = 3,
         uiOutput(ns("patch_selector")),
-        uiOutput(ns("year_selector"))
       ),
       column(width = 1),
       column(width = 8,
@@ -160,37 +159,6 @@ selectpatchServer <- function(id){
       current_values$noisy_miner <- current_values$noisy_miner[-update$remove_values]
       current_values$IsRemnant <- current_values$IsRemnant[-update$remove_values]
     }
-  })
-
-  # prediction year
-  output$year_selector <- renderUI({
-    actionButton2(
-      inputId = ns("choose_prediction_year"),
-      label = current_values$year, #HTML(paste0("<h3>", current_values$year, "</h3>")),
-      class = "badge_small"
-    )
-  })
-  observeEvent(input$choose_prediction_year, {
-    showModal(
-      modalDialog(
-        selectInput(
-          inputId = ns("choose_year"),
-          label = "Prediction Year",
-          choices = seq(2001, 2018, 1),
-          selected = current_values$year,
-          width = "100%"
-        ),
-        actionButton(ns("choose_prediction_year_execute"), "Save"),
-        modalButton("Cancel"),
-        title = "Select prediction year",
-        footer = NULL,
-        easyClose = FALSE
-      )
-    )
-  })
-  observeEvent(input$choose_prediction_year_execute, {
-    current_values$year <- as.numeric(input$choose_year)
-    removeModal()
   })
 
   # output$text <- renderPrint({
