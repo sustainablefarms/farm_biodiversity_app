@@ -68,6 +68,7 @@ predictionsServer <- function(id,
           modwXocc <- msod::supplant_new_data(model_data, data$Xocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
                                                                                model_data$XoccProcess$scale,
                                                                                model_data$XoccColNames)})
+          print(modwXocc$data$Xocc)
           modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
                                                                                model_data$XoccProcess$scale,
                                                                                model_data$XoccColNames)})
