@@ -146,7 +146,9 @@ selectlocationServer <- function(id){
             outOfModule$MinTColdMonth.YfA <- data$points$MinTColdMonth[climate_row]/10
             outOfModule$PrecColdQ.YfA <- data$points$PrecColdQ[climate_row]
             outOfModule$PrecSeasonality.YfA <- new_data_mean$PrecSeasonality.YfA
-            outOfModule$locationcomplete <- TRUE
+            if (length(outOfModule$selected_region) > 0){
+              outOfModule$locationcomplete <- TRUE
+            }
           }
         })
         
