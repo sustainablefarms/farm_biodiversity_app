@@ -16,6 +16,8 @@ output:
 + good reference map behind the sa2 region points
 + where to get average temperature since august, or an explanation
 + turn off ticks between each patch number
++ remove region 'young' - keep only 'young region'
++ Noisy miner tooltip make fully opaque
 
 # Caveats
 + __get max patch size for model__ (Ask Dan for patch areas, to look for maximum in our data)
@@ -40,7 +42,7 @@ output:
      + in more details modal
      + in Noisy Miner check box
 + brief bird info for tool tips
-+ disable clicking on the plotly figures
++ disable clicking on the plotly figures (try highlight() options)
 + make 'relative to average' --> relative to saved
 
 # Outputs: More Detail
