@@ -72,7 +72,7 @@ predictionsServer <- function(id,
       modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
                                                                                                      model_data$XoccProcess$scale,
                                                                                                      model_data$XoccColNames)})
-      species_prob_mean <- msod::poccupancy_mostfavourablesite.jsodm_lv(modwmeanXocc)
+      species_prob_mean <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwmeanXocc)
       referencepred <- reactiveVal(value = species_prob_mean,
                                    label = "Reference Predictions")
       
@@ -91,7 +91,7 @@ predictionsServer <- function(id,
           } else {
             data$species_prob_ref <- species_prob_mean
           }
-          data$species_prob_current <- msod::poccupancy_mostfavourablesite.jsodm_lv(modwXocc)
+          data$species_prob_current <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwXocc)
           data$spec_different <- todifferent(data$species_prob_current, data$species_prob_ref)
           species_richness_raw <- rbind(compute_richness(model_data, data$Xocc),
                                          reference = sum(data$species_prob_ref[, "median"]))           # add in reference
