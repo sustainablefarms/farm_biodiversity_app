@@ -24,7 +24,13 @@ predictionsUI <- function(id, usf){
       fluidRow(
         column(width = 6, 
            tags$span(HTML("<plottitle>Most Likely Species</plottitle>"),
-                  infopopover("Most Likely Species", "<incomplete - more info to go here>"))
+                  infotooltip(title = HTML("The 10 most likely species to live on your farm according to our model.",
+"Bar length and printed percentage indicate the estimated probability of occupancy for each of the species, ignoring interactions between species.",
+"When there are multiple patches, the occupancy probability is the maximum of the occupancy probability of the individual patches.",
+"<br><br>The error bars summarise uncertainty due to the uncertainty of the model parameters.",
+"These error bars are 95&#37; credible intervals (highest posterior density intervals to be precise):",
+"if the modelling assumptions are correct and apply to this situation then there is a 95% probability that the actual on-ground occupancy probability is within the credible interval."))
+          )
         ),
         column(width = 6,
           tags$span(HTML("<plottitle>Relative to Reference</plottitle>"),
