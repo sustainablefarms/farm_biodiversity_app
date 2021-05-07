@@ -65,7 +65,7 @@ patch_modal <- function(
                             value = if (noisy_miner){TRUE} else {NULL},
                             tags$span("Noisy Miners present?")
         ),
-        infotooltip(title = 
+        infopopover(title = "Noisy Miners", content = 
             tags$html(tags$div(
               style="text-align: center",
                 linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
@@ -84,6 +84,7 @@ patch_modal <- function(
                     )),
           `data-style` = "width = 100px;"
         ),
+      tags$br(),
       actionButton(inputId = ns("choose_patch_attributes_execute"), label = "Save"),
       modalButton("Cancel"),
     title = paste0("Select attributes for patch #", value),
