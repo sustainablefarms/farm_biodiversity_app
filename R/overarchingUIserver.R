@@ -41,7 +41,7 @@ ui <- function(){
       tags$span(tags$em(HTML("Set your region. Set your woodland patches. See your birds."))),
     actionButton2("overallhelp", "More Help", class = "badge_tiny"),
       tags$span(class = 'subtitle', HTML("<br>Woodland birds you can expect to see in your farm in spring.")),
-      tags$span(class = 'subtitle', "By Martin Westgate & Kassel Hingee. Version 0.2"),
+      tags$span(class = 'subtitle', "By Martin Westgate & Kassel Hingee. Version 0.3"),
            )),
     HTML("</div>"),
     column(width = 1),
