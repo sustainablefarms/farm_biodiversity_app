@@ -77,7 +77,7 @@ predictionsServer <- function(id,
     function(input, output, session){
       data <- reactiveValues(
         Xocc = NULL,
-        refXocc = NULL,
+        refXocc = new_data_mean,
         species_prob_current = NULL,
         species_prob_ref = NULL,
         species_richness = NULL,
@@ -85,7 +85,6 @@ predictionsServer <- function(id,
         speciesinfo_topten = NULL,
         speciesinfo_botten = NULL)
       ns <- session$ns
-      referencevals <- reactiveVal(value = new_data_mean, label = "Reference Attributes")
       modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
                                                                                                      model_data$XoccProcess$scale,
                                                                                                      model_data$XoccColNames)})
@@ -140,7 +139,7 @@ predictionsServer <- function(id,
       
       # reference prediction saving
       observeEvent(input$savetoreference, {
-        referencevals(data$Xocc)
+        data$refXocc <- data$Xocc
         referencepred(data$species_prob_current)
       })
       
