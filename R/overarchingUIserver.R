@@ -122,9 +122,9 @@ server <- function(input, output, session) {
     validate(need(cval()$locationcomplete & cval()$allpatchcomplete,
              ""))
     tagList(
-      predictionsUI("pred", usf()))
+      predictionsUI("pred", usedflt()))
     })
-  usf <- predictionsServer("pred", cval,
+  usedflt <- predictionsServer("pred", cval,
                     model_data,
                     report_path)
   

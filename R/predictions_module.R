@@ -1,5 +1,5 @@
 # predictions module
-predictionsUI <- function(id, usf){
+predictionsUI <- function(id, usedflt){
   ns <- NS(id)
   tagList(
     # the following enables bootstrap 3's inbuilt tooltips
@@ -50,11 +50,19 @@ predictionsUI <- function(id, usf){
           downloadButton(ns("downloaddata"), "Table", class = "download_badge"),
           downloadButton(ns("downloadreport"), "Report", class = "download_badge")
                ),
-        column(width = 4, offset = 2,
+        column(width = 5, offset = 1,
           style = "text-align: right",
             "Reference:",
+          infotooltip(title = HTML("Use this section to modify the reference estimates.",
+                                   "The default reference estimates are estimates for the average patch in our training data.",
+                                   "<br><br><em>Update</em> sets the reference estimates to the current estimates.",
+                                   "After setting the reference estimates for the first time, uncheck <em>Use Default</em> to use them.",
+                                   "Initially the ratio of occupancy probabilities to reference probabilities will be all 1.",
+                                   "This will be the case until you alter attributes of the farm's woodland.",
+                                   "<br><br><em>Use Default</em>, when checked, overides the saved estimates with the default estimates.",
+                                   "Uncheck <em>Use Default</em> to use the saved reference.")),
             actionButton2(ns("savetoreference"), label = "Update", class = "badge_tiny", width = "80px"),
-            inlinecheckBoxInput(ns("usesavedreference"), label = "Use saved", value = usf)
+            inlinecheckBoxInput(ns("usedefaultreference"), label = "Use Default", value = is.null(usedflt) | isTRUE(usedflt))
                )
       )
   )
@@ -95,7 +103,7 @@ predictionsServer <- function(id,
                                                                                model_data$XoccProcess$scale,
                                                                                model_data$XoccColNames)})
           print(modwXocc$data$Xocc)
-          if (isTRUE(input$usesavedreference)){
+          if (!isTRUE(input$usedefaultreference)){
             data$species_prob_ref <- referencepred()
           } else {
             data$species_prob_ref <- species_prob_mean
@@ -210,7 +218,7 @@ predictionsServer <- function(id,
           })
       }
       
-      reactive(input$usesavedreference)
+      reactive(input$usedefaultreference)
     })
 }
 
