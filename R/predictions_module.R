@@ -33,25 +33,28 @@ predictionsUI <- function(id, usf){
           )
         ),
         column(width = 6,
-          tags$span(HTML("<plottitle>Relative to Reference</plottitle>"),
-                  infopopover("Ratio of probabilities", "<incomplete - more info to go here>")
+          tags$span(HTML("<plottitle>Ratio to Reference</plottitle>"),
+                  infotooltip(HTML("The ratio of the estimate probability occupancy to the reference probability occupancy.",
+                                   "The species with the 10 biggest ratios are shown.",
+                                   "<br><br>The reference can be set using the 'Update' button and 'Use default' checkbox below this figure.",
+                                   "<br><br>The ratios of all species can be seen by clicking 'View More Detail' or downloading a report."))
         ))
         ),
       plotly::plotlyOutput(ns("common_dif_species"), height = "300px"),
       fluidRow(
-        column(width = 4,
-            "Reference:",
-            actionButton2(ns("savetoreference"), label = "Update", class = "badge_tiny", width = "80px"),
-            inlinecheckBoxInput(ns("usesavedreference"), label = "Use saved", value = usf)
-               ),
-        column(width = 6, offset = 2,
-          style = "text-align: right",
+        column(width = 6,
           if (isTRUE(getOption("shiny.testmode"))){
             downloadButton(ns("downloaddataverbose"), "Verbose Prediction Data", class = "download_badge")
           },
           actionButton(ns("moredetail"), "View More Detail", class = "download_badge"),
           downloadButton(ns("downloaddata"), "Table", class = "download_badge"),
           downloadButton(ns("downloadreport"), "Report", class = "download_badge")
+               ),
+        column(width = 4, offset = 2,
+          style = "text-align: right",
+            "Reference:",
+            actionButton2(ns("savetoreference"), label = "Update", class = "badge_tiny", width = "80px"),
+            inlinecheckBoxInput(ns("usesavedreference"), label = "Use saved", value = usf)
                )
       )
   )
