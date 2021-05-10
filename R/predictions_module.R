@@ -11,7 +11,8 @@ predictionsUI <- function(id, usedflt){
     tags$script("$(function () {
       $('[data-toggle=popover]').popover()
     })"),
-      tags$span(HTML("<plottitle>Expected Number of Species</plottitle>"),
+      tags$p(class = "alignleft",
+        HTML("<plottitle>Expected Number of Species</plottitle>"),
                   infotooltip(paste("The middle bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
                                     "<br><br>The top bar is the number of species we expect if there is 15 hectares of woody vegetation canopy within 500m of every patch centre.",
                                     "The lower bar is the number of species we expect if there is only 1.5 hectares of woody vegetation canopy within 500m of every patch centre.",
@@ -20,6 +21,9 @@ predictionsUI <- function(id, usedflt){
                               `data-container`="body",
                               placement = "bottom")
       ),
+      tags$p(class =  "alignright",
+             tags$em(uiOutput(ns("warn"), inline = TRUE))),
+      tags$div(style="clear: both;"),
       plotOutput(ns("species_richness"), height = "250px"),
       fluidRow(
         column(width = 6, 
@@ -208,6 +212,20 @@ predictionsServer <- function(id,
           )
         }
       )
+      
+      output$warn <- renderUI({
+        validate(need(current_values()$locationcomplete & current_values()$allpatchcomplete, ""))
+        warn <- warn_oot(current_values())
+        validate(need(warn[["warn"]], ""))
+        tagList(
+          tags$script("$(function () {
+                        $('[data-toggle=tooltip]').tooltip()
+                      })"
+          ),
+          tags$span(style = "color:red;", "Warning",
+                   infotooltip(warn[["reason"]]))
+        )
+      })
       
       if (isTRUE(getOption("shiny.testmode"))){
         output$downloaddataverbose <- downloadHandler(

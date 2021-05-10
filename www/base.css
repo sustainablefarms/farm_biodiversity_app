@@ -172,3 +172,10 @@ plottitle {
   font-size: 28px;
   text-align:center;
 }
+
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
+}
