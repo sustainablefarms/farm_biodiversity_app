@@ -12,11 +12,14 @@ output:
   + Example pictures
 + turn off ticks between each patch number
 + remove region 'young' - keep only 'young region'
++ correct prec seasonality to come from the data mean again
 
 # Help
 ## More Help
 + grammar fix
 + species list? describe species
++ add references to Tobler, WVC, Noisy Miners and Shiny
++ correct prec seasonality YfA
 
 # Caveats
 + __get max patch size for model__ (Ask Dan for patch areas, to look for maximum in our data)
@@ -30,8 +33,11 @@ output:
 # Outputs
 + print out results (csv for quick version)
   + get the screen that says generating xyz working
-+ delete Australasian Pipit: DBL says "it is a pasture bird, so very common on farms but not often observed in woodland patches"
-+ delete the Australian Wood Duck
++ delete species
+  + delete species not in the 7_4 model
+  + delete Australasian Pipit: DBL says "it is a pasture bird, so very common on farms but not often observed in woodland patches"
+  + delete the Australian Wood Duck
+
 + __get permission from BirdLife:__ try James Oconnor
    + e.g. use of birdlife:
      + in more details report
@@ -60,6 +66,7 @@ output:
   + where model came from
   + year prediction?
   + types of birds
++ Martin second author
 + title
   + 'Expected Spring Birds in Your Woodland'
   + 'Which Birds in Your Woodland'
