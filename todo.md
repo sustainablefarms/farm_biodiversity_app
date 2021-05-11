@@ -13,6 +13,11 @@ output:
 + turn off ticks between each patch number
 + remove region 'young' - keep only 'young region'
 
+# Help
+## More Help
++ grammar fix
++ species list? describe species
+
 # Caveats
 + __get max patch size for model__ (Ask Dan for patch areas, to look for maximum in our data)
 + patch definition: make clear that it is for our model, not a general definition of patch
@@ -20,19 +25,24 @@ output:
 + __sedentary birds?__
 + box gum grassy woodlands and plantings
   + __test on other woodlands__
-+ types of farms
++ types of farms in More Information
 
 # Outputs
 + print out results (csv for quick version)
   + get the screen that says generating xyz working
 + delete Australasian Pipit: DBL says "it is a pasture bird, so very common on farms but not often observed in woodland patches"
++ delete the Australian Wood Duck
 + __get permission from BirdLife:__ try James Oconnor
    + e.g. use of birdlife:
      + in more details report
      + in more details modal
      + in Noisy Miner check box
-+ brief bird info for tool tips
++ __brief bird info for tool tips__
 + disable clicking on the plotly figures (try highlight() options)
++ make ratio a log scale
++ less woodland --> less *canopy* nearby
++ tool tip update
++ make the ratio plot and title appear separately on small screens
 
 # Outputs: More Detail
 + include species of conservation concern - check for new plantings model
@@ -41,8 +51,8 @@ output:
    + try Patrick Kavanagh and Craig Greer (might cost money)
    + send list to Tabitha
 + bird names above photos
-+ get report building again
 + update descriptions now that best site isn't used per-se
++ report figures and words need polishing
 
 # Overall
 + __Overall instructions for first users opening the app__

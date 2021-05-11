@@ -130,17 +130,7 @@ server <- function(input, output, session) {
   
   ## Help
   observeEvent(input$overallhelp, {
-    showModal(modalDialog(
-      "More detailed help. For queries email ...",
-      "Birds: spring, woodland, residents (not migratory, not water birds)",
-      "Model fitting method: jsodm like Tobler et al.",
-      "Training data: farms of this sort, SWS up to Queensland",
-      "References",
-      "contact email for bugs",
-      title = "More Help",
-      easyClose = TRUE,
-      fade = TRUE
-      ))
+    showModal(moreinfomodal())
     })
   if (isTRUE(getOption("shiny.testmode"))){
     output$downloadcvals <- downloadHandler(
