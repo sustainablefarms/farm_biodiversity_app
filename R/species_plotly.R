@@ -30,10 +30,14 @@ plot_ly_specroot <- function(df){
                                         size = 12)),
           hovertemplate = paste('%{hovertext}<extra></extra>')) %>% #the <extra></extra> removes the 'trace 0' extra information
   # alter layout
-  plotly::layout(xaxis = list(visible = FALSE),
-         yaxis = list(visible = FALSE),
+  plotly::layout(xaxis = list(visible = FALSE, fixedrange = FALSE),
+         yaxis = list(visible = FALSE, fixedrange = FALSE),
          margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
-  hide_colorbar()
+  hide_colorbar() %>%
+    htmlwidgets::onRender("
+function(el, x) {
+  Plotly.d3.select('.cursor-pointer').style('cursor', 'default')
+}")
   # add the species names
     # add_annotations(x  = 0,
     #                 y = ~species,
@@ -131,5 +135,5 @@ species_plotly_modal <- function(species_prob_current, spec_different){
     layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = TRUE))
   
   subplot(probsplt, ratioplt, shareY = TRUE) %>%
-    plotly::config(displayModeBar = FALSE)
+    plotly::config(displayModeBar = FALSE) 
 }
