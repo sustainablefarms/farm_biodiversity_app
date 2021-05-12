@@ -1,4 +1,4 @@
-sa2_points <- readRDS("../../farm_biodiversity_app/data/sa2_points.rds")
+sa2_points <- readRDS("./data/sa2_points.rds")
 sa2_points <- sa2_points[, c("longitude", "latitude", "label", "state", "color")]
 
 # Get worldclim data at locations
@@ -20,4 +20,4 @@ result_df <- result_df[, c(
 "PrecSeasonality")]
 result_df <- cbind(sa2_points, result_df)
 
-saveRDS(result_df, "../../farm_biodiversity_app/data/sa2_points_climate.rds")
+saveRDS(result_df, "./data/sa2_points_climate.rds")
