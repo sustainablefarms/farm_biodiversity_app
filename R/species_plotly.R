@@ -33,11 +33,7 @@ plot_ly_specroot <- function(df){
   plotly::layout(xaxis = list(visible = FALSE, fixedrange = FALSE),
          yaxis = list(visible = FALSE, fixedrange = FALSE),
          margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
-  hide_colorbar() %>%
-    htmlwidgets::onRender("
-function(el, x) {
-  Plotly.d3.select('.cursor-pointer').style('cursor', 'default')
-}")
+  hide_colorbar() 
   # add the species names
     # add_annotations(x  = 0,
     #                 y = ~species,
