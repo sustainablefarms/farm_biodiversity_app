@@ -16,13 +16,8 @@ selectpatchUI <- function(id){
         `data-toggle`="tooltip",
         `data-html` = TRUE,
         `data-placement` = "bottom",
-        title =
-          tags$div(HTML("A patch is a region of woodland vegetation that<br>"),
-                   HTML("(1) is 1ha - 10ha (TBC) in area<br>"),
-                   HTML("(2) has similar vegetation structure throughout, and <br>(3) is approximately 50m from other woody vegetation."),
-                   HTML("<br><br>"),
-                   HTML("Currently the patch must be remnant box gum grassy woodlands.")
-          )),
+        title = patchdefn
+        ),
         div(id = "placeholder")
       ))
 }
@@ -74,26 +69,22 @@ selectpatchServer <- function(id){
     `data-placement` = "auto bottom",
     `data-container` = "body", #this made the width of the tooltip better
     `data-vieport` = '#viewport',
-    title =
-      tags$div(
-                HTML("A patch is a region of woodland vegetation that<br>"),
-                HTML("(1) is 1ha - 10ha (TBC) in area<br>"),
-                HTML("(2) has similar vegetation structure throughout, and <br>(3) is approximately 50m from other woody vegetation."),
-                HTML("<br><br>"),
-                HTML("Currently the patch must be remnant box gum grassy woodlands.")
-                )
+    title = patchdefn,
     )
   })
   observeEvent(input$choose_n_patches, {
     showModal(
       modalDialog(
         radioButtons(ns("n_patches"),
-                     label = "Number of vegetation patches",
+                     label = "Number of woodland patches",
                      choiceNames = as.character(1:6),
                      choiceValues = 1:6,
                      inline = TRUE,
                      width = "100%",
                      selected = current_values$patches),
+        tags$br(),
+	patchdefn,
+	tags$br(),
         actionButton(ns("choose_n_patches_execute"), "Save"),
         modalButton("Cancel"),
         title = "Select number of patches",

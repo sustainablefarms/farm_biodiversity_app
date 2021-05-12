@@ -5,7 +5,6 @@ output:
 ---
 
 # Inputs
-+ change noisy miner image and words
 + check that noisy miners like woodland that has few low trees or shrubs.
 
 # Help
@@ -16,11 +15,12 @@ output:
 + add references to Tobler, WVC, Noisy Miners and Shiny
 + correct prec seasonality YfA
 + types of farms in More Information
++ include patch definition
++ links to box gum grassy woodlands
 
 ## Caveats
-+ __get max patch size for model__ (Ask Dan for patch areas, to look for maximum in our data)
-+ patch definition: make clear that it is for our model, not a general definition of patch
-+ __box gum grassy woodlands and plantings__
++ get max patch size for model (Ask Dan for patch areas, to look for maximum in our data)
++ __box gum grassy woodlands__ and plantings
   + __test on other woodlands__
 
 # Outputs

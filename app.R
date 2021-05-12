@@ -26,8 +26,8 @@ options(
   shiny.port = 7214,
   shiny.testmode = FALSE
 )
-pkgload::load_all("."); myapp()
-# app_selectpatchonly()
+# pkgload::load_all("."); myapp()
+pkgload::load_all("."); app_selectpatchonly()
 # app_selectlocationonly()
 pkgload::load_all("."); app_predictionsonly()
 # app_predictiondetailsonly()
