@@ -60,30 +60,43 @@ patch_modal <- function(
           )
         ),
       tags$br(),
-      tags$div(
-        inlinecheckBoxInput(ns(paste0("noisy_miner_", value)),
-                            value = if (noisy_miner){TRUE} else {NULL},
-                            tags$span("Noisy Miners present?")
-        ),
-        infopopover(title = "Noisy Miners", content = 
-            tags$html(tags$div(
-              style="text-align: center",
-                linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
-                   tags$img(src="https://images.ala.org.au/image/proxyImageThumbnailLarge?imageId=37e23d13-9cd2-465f-ab87-9a79b641752a",
-                            alt="Noisy Miner Photo",
-                            width=200,
-                            height=200))),
-                 tags$div(
-                 "Noisy Miners noisily defend their ‘patch’ of trees from other birds. ...",
-                 #, especially other species of honeyeaters which may be seen as competitors for the food resources, and these are vigorously chased away.",
-                 # "Many other small birds are also driven from the area, and sometimes miners will even chase after cormorants or herons that may fly past, or harass them mercilessly if they perch somewhere in the miners’ territory.",
-                 "Because of this aggressive behaviour, areas inhabited by Noisy Miners often support few other birds.",
-                 "Image and text from",
-                 linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
-                        "BirdLife Australia"))
-                    )),
-          `data-style` = "width = 100px;"
-        ),
+      fluidRow(
+        column(5,
+          inlinecheckBoxInput(ns(paste0("noisy_miner_", value)),
+                              value = if (noisy_miner){TRUE} else {NULL},
+                              tags$span("Noisy Miners present?")
+          ),
+          infotooltip(
+            html = TRUE,
+            title = tags$html(
+                "Noisy miners are easy to notice.",
+                "They are loud and are aggresive towards other birds.",
+                "They prefer woodland that has few low trees or shrubs.",
+                tags$br(),
+                "Often other small birds do not live in the same patch as noisy miners.",
+                tags$br(),
+                "Visit",
+               linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
+                      "BirdLife Australia"),
+               "for a profile of Noisy Miners." 
+              )
+            )
+          ),
+        column(7, 
+          linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
+                    style = "float: left",
+                    imageOutput(ns("nmimage"), height = "100px", inline = TRUE)),
+          style = "font-size: 70%",
+          linknewtab(href = "https://images.ala.org.au/image/details?imageId=c4c37912-34ea-420b-9c77-65b59a8c9391", "Creator: Joe"),
+          tags$br(),
+          linknewtab(href="https://creativecommons.org/licenses/by-nc-sa/3.0/",
+                     tags$img(src = "https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png",
+                              alt = "CC BY-NC-SA 3.0",
+                              height = "20px")
+          )
+        )
+      ),
+               
       tags$br(),
       actionButton(inputId = ns("choose_patch_attributes_execute"), label = "Save"),
       modalButton("Cancel"),

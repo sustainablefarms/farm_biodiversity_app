@@ -5,9 +5,8 @@ output:
 ---
 
 # Inputs
-+ turn off ticks between each patch number
-+ remove region 'young' - keep only 'young region'
 + change noisy miner image and words
++ check that noisy miners like woodland that has few low trees or shrubs.
 
 # Help
 ## More Help
