@@ -10,7 +10,7 @@ predictionsUI <- function(id, usedflt){
       tags$p(class = "alignleft",
         HTML("<plottitle>Expected Number of Species</plottitle>"),
                   infotooltip(paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
-                                    "<br><br>"
+                                    "<br><br>",
                                     "The top bar is the number of species we expect if there is only 1.5 hectares of woody vegetation canopy within 500m of every patch centre.",
 				    "The third bar is the number of species we expect if there is 15 hectares of woody vegetation canopy within 500m of every patch centre.",
 				    "The final bar is the number of species we expect from your reference estimates.",
@@ -25,14 +25,15 @@ predictionsUI <- function(id, usedflt){
       plotOutput(ns("species_richness"), height = "250px"),
       fluidRow(
         column(width = 6, 
-           tags$span(HTML("<plottitle>Most Likely Species</plottitle>"),
+           tags$div(HTML("<plottitle>Most Likely Species</plottitle>"),
                   infotooltip(title = HTML("The 10 most likely species to live on your farm according to our model.",
 "Bar length and printed percentage indicate the estimated probability of occupancy for each of the species, ignoring interactions between species.",
 "When there are multiple patches, the occupancy probability is the maximum of the occupancy probability of the individual patches.",
 "<br><br>The error bars summarise uncertainty due to the uncertainty of the model parameters.",
 "These error bars are 95&#37; credible intervals (highest posterior density intervals to be precise):",
 "if the modelling assumptions are correct and apply to this situation then there is a 95% probability that the actual on-ground occupancy probability is within the credible interval."))
-          )
+          ),
+          plotly::plotlyOutput(ns("common_species"), height = "300px")
         ),
         column(width = 6,
           tags$span(HTML("<plottitle>Ratio to Reference</plottitle>"),
@@ -40,9 +41,10 @@ predictionsUI <- function(id, usedflt){
                                    "The species with the 10 biggest ratios are shown.",
                                    "<br><br>The reference can be set using the 'Update' button and 'Use default' checkbox below this figure.",
                                    "<br><br>The ratios of all species can be seen by clicking 'View More Detail' or downloading a report."))
-        ))
+          ),
+          plotly::plotlyOutput(ns("diff_species"), height = "300px")
+        )
         ),
-      plotly::plotlyOutput(ns("common_dif_species"), height = "300px"),
       fluidRow(
         column(width = 6,
           if (isTRUE(getOption("shiny.testmode"))){
@@ -149,10 +151,11 @@ predictionsServer <- function(id,
       observe({
         # req(data$species_prob_current)
         validate(need(data$species_prob_current, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-        output$common_dif_species <- plotly::renderPlotly({
-          species_plotly_both(
-            tocommon(data$species_prob_current),
-            data$spec_different)
+        output$common_species <- plotly::renderPlotly({
+          species_plotly_common(tocommon(data$species_prob_current))
+        })
+        output$diff_species <- plotly::renderPlotly({
+          species_plotly_different(data$spec_different)
         })
       })
 
