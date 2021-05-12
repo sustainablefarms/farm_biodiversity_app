@@ -17,10 +17,6 @@ patch_modal <- function(
           $('[data-toggle=tooltip]').tooltip()
         })"
       ),
-      # the following enables bootstrap 3's inbuilt popovers
-      tags$script("$(function () {
-        $('[data-toggle=popover]').popover()
-      })"),
         # 500m WCF
         tags$div(
           tags$html(tags$span("Woody vegetation canopy within 500m of patch centre (% area)"),

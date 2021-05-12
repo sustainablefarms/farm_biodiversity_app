@@ -28,10 +28,6 @@ ui <- function(){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
-    # the following enables bootstrap 3's inbuilt popovers
-    tags$script("$(function () {
-      $('[data-toggle=popover]').popover()
-    })"),
     HTML("<div class='header'>"),
     fluidRow(
       column(width = 2,

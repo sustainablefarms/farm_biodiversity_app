@@ -7,10 +7,6 @@ predictionsUI <- function(id, usedflt){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
-    # the following enables bootstrap 3's inbuilt popovers
-    tags$script("$(function () {
-      $('[data-toggle=popover]').popover()
-    })"),
       tags$p(class = "alignleft",
         HTML("<plottitle>Expected Number of Species</plottitle>"),
                   infotooltip(paste("The middle bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
