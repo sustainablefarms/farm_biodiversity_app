@@ -8,6 +8,7 @@ selectYfAUI <- function(id){
           inputId = ns("AnnPrec.YfA"),
           label = NULL,
           min = 450, max = 1050, step = 10,
+	  width = "100%",
           value = new_data_mean$AnnPrec.YfA),
        tags$div(textOutput(ns("annprec.lt.region"), inline = TRUE))
   )
