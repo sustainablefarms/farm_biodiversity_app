@@ -12,9 +12,10 @@ plot_allspeciesrel <- function(spec_different){
     geom_bar(stat = "identity", show.legend = FALSE) +
     coord_flip(clip = "off") +
     scale_x_discrete(name = "Increasing Body Length ---->") +
-    scale_y_continuous(name = "Ratio", expand = expansion()) +
+    scale_y_continuous(name = "Ratio", expand = expansion(), trans = "log10") +
+    scale_fill_continuous(trans = "log10") +
+    # scale_fill_distiller(palette = "BrBG", trans = "log10", direction = 1) +
     ggtitle("Relative Occupancy Probability") +
     theme_minimal() +
-    theme(legend.position = "none",
-          panel.grid = element_blank())
+    theme(legend.position = "none")
 }
