@@ -24,7 +24,7 @@ patch_modal <- function(
         # 500m WCF
         tags$div(
           tags$html(tags$span("Woody vegetation canopy within 500m of patch centre (% area)"),
-                    infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area with 500m.",
+                    infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area within 500m.",
                                               "It changes each year as the trees react to the prevailing weather.",
                                               "The percentage area of woody vegetation canopy can be obtained from",
                                               linknewtab(href = 'http://anuwald.science/tree',
@@ -39,7 +39,7 @@ patch_modal <- function(
           ),
         tags$div(
           tags$html(tags$span("Woody vegetation canopy within 3km of patch centre (% area)"),
-                    infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area with 500m.",
+                    infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area within 500m.",
                                               "It changes each year as the trees react to the prevailing weather.",
                                               "The percentage area of woody vegetation canopy can be obtained from",
                                               linknewtab(href = 'http://anuwald.science/tree',
