@@ -24,20 +24,10 @@ output:
   + __test on other woodlands__
 
 # Outputs
-+ delete species
-  + delete species not in the 7_4 model
-  + delete Australasian Pipit: DBL says "it is a pasture bird, so very common on farms but not often observed in woodland patches"
-  + delete the Australian Wood Duck
-
 + __brief bird info for tool tips__
-+ disable clicking on the plotly figures (try highlight() options)
-+ make ratio a log scale
-+ less woodland --> less *canopy* nearby
-+ tool tip update
-+ make the ratio plot and title appear separately on small screens
++ convert plotly to have the default cursor style
 
 # Outputs: More Detail
-+ include species of conservation concern - check on new plantings model
 + ALA photos
 + bird names above photos
 + update descriptions now that best site isn't used per-se
