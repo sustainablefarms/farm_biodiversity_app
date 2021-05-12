@@ -87,10 +87,13 @@ selectpatchServer <- function(id){
   observeEvent(input$choose_n_patches, {
     showModal(
       modalDialog(
-        sliderInput(
-          inputId = ns("n_patches"),
-          label = "Number of vegetation patches",
-          min = 1, max = 6, step = 1, value = current_values$patches),
+        radioButtons(ns("n_patches"),
+                     label = "Number of vegetation patches",
+                     choiceNames = as.character(1:6),
+                     choiceValues = 1:6,
+                     inline = TRUE,
+                     width = "100%",
+                     selected = current_values$patches),
         actionButton(ns("choose_n_patches_execute"), "Save"),
         modalButton("Cancel"),
         title = "Select number of patches",
@@ -102,7 +105,7 @@ selectpatchServer <- function(id){
 
   # once number of patches is chosen, decide whether to add or subtract 'patch' buttons
   observeEvent(input$choose_n_patches_execute, {
-    current_values$patches <- input$n_patches
+    current_values$patches <- as.integer(input$n_patches)
     if(previous_values$patches > current_values$patches){
       update$add_logical <- FALSE
       update$add_values <- NULL
