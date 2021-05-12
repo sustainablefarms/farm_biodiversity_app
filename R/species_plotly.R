@@ -30,8 +30,8 @@ plot_ly_specroot <- function(df){
                                         size = 12)),
           hovertemplate = paste('%{hovertext}<extra></extra>')) %>% #the <extra></extra> removes the 'trace 0' extra information
   # alter layout
-  plotly::layout(xaxis = list(visible = FALSE, fixedrange = FALSE),
-         yaxis = list(visible = FALSE, fixedrange = FALSE),
+  plotly::layout(xaxis = list(visible = FALSE, fixedrange = TRUE),
+         yaxis = list(visible = FALSE, fixedrange = TRUE),
          margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
   hide_colorbar() 
   # add the species names
@@ -81,7 +81,7 @@ species_plotly_different <- function(df){
   df$tooltip <- paste0(df$species, " has some interest features.")
   plot_ly_specroot(df) %>%
   # add the values onto the bars
-  add_annotations(x  = ~value, 
+  add_annotations(x  = ~log10(value), 
                   y = ~species, 
                   text = df$label,
                   xanchor = "right",
@@ -90,7 +90,8 @@ species_plotly_different <- function(df){
                   showarrow = FALSE,
                   showlegend = FALSE) %>%
   # alter order
-  plotly::layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed")) 
+  plotly::layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed"),
+                 xaxis = list(type = "log")) 
 }
 
 species_plotly_both <- function(species_prob_current, spec_different){
