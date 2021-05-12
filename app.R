@@ -23,12 +23,12 @@
 options(
   shiny.autoreload = TRUE,
   shiny.launch.browser = FALSE,
-  shiny.testmode = TRUE
+  shiny.port = 7214,
+  shiny.testmode = FALSE
 )
-pkgload::load_all(".")
-myapp()
+pkgload::load_all("."); myapp()
 # app_selectpatchonly()
 # app_selectlocationonly()
-# app_predictionsonly()
+pkgload::load_all("."); app_predictionsonly()
 # app_predictiondetailsonly()
 
