@@ -5,8 +5,6 @@ output:
 ---
 
 # Inputs
-+ woody veg
-  + 'with' -> 'within'
 + turn off ticks between each patch number
 + remove region 'young' - keep only 'young region'
 + change noisy miner image and words
