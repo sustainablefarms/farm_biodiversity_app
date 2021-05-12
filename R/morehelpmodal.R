@@ -63,4 +63,4 @@ out <- modalDialog(
 )
 return(out)
 }
-print(moreinfomodal(), browse = TRUE)
+# print(moreinfomodal(), browse = TRUE)
