@@ -4,10 +4,13 @@ prep_birdinfotable <- function(){
   urls <- "" #get_birdlife_url(model_data$species)
   stories <- "" #prep_birdstories() #readRDS("./data/birdstories.rds")
   imgfilenames <- "" #prep_birdimages() #readRDS("./data/birdinfotable.rds")$imgfilename
+  shortstories <- read.csv("./data/species_shortstory.csv", check.names = FALSE, row.names = 1)
   specinfoframe <- data.frame(species = model_data$species,
              url = urls[model_data$species],
              story = unlist(stories[model_data$species], recursive = FALSE),
-             imgfilename = imgfilenames[model_data$species])
+             imgfilename = imgfilenames[model_data$species],
+             shortstory = shortstories[model_data$species, 1])
+  rownames(specinfoframe) <- specinfoframe$species
   saveRDS(specinfoframe, "./data/birdinfotable.rds")
   return(specinfoframe)
 }
@@ -15,8 +18,6 @@ prep_birdinfotable <- function(){
 load_birdinfotable <- function(){
   infotable <- readRDS("./data/birdinfotable.rds")
   infotable$imgfilename <- normalizePath(infotable$imgfilename)
-  infotable$shortstory <- "To Fill"
-  infotable["Galah", "shortstory"] <- "Galahs are more likely to occupy patches with Noisy Miners"
   speciesinfo <<- infotable
   return(speciesinfo)
 }

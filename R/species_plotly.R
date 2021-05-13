@@ -79,7 +79,7 @@ species_plotly_different <- function(df){
   set.seed(1)
   df <- topnrows(df, 10, "value")
   df$label <- paste0("x ", round(df$value, 2))
-  df$tooltip <- paste0(df$species, " has some interest features.")
+  df$tooltip <- speciesinfo[df$species, "shortstory"]
   plot_ly_specroot(df) %>%
   # add the values onto the bars
   add_annotations(x  = ~log10(value), 
