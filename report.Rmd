@@ -1,5 +1,5 @@
 ---
-title: "Species Predictions"
+title: "Species Estimates"
 params:
   loadexampledata: TRUE
 output: 
@@ -21,8 +21,8 @@ knitr::opts_chunk$set(echo = FALSE, fig.align = 'center')
 if (params$loadexampledata){
   pkgload::load_all(".")
   main_app_prep()
-  current_values <- readRDS("tests/testthat/current_values_2patches.rds")
-  data <- readRDS("tests/testthat/predictions_data_2patches.rds")
+  current_values <- readRDS("tests/testthat/current_values_2patchesb.rds")
+  data <- readRDS("tests/testthat/predictions_data_2patchesb.rds")
 } else {
   data <- isolate(reactiveValuesToList(data))
   current_values <- isolate(current_values())
@@ -93,10 +93,16 @@ knitr::kable(makeniceprops(patchprops),
 topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
 buildspeclatex_imagestory <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
+  imgfilename <- gsub("\\.[^.]*$", "", speciesinfo[specinforow, "imgfilename"])
+  imagetex <- if (file.exists(imgfilename)){
+        paste0("\\includegraphics[width=1\\linewidth]{", imgfilename, "}")
+  } else {
+    paste0("\\fbox{", speciesinfo[specinforow, "species"], "}")
+  }
   out <- c(
     paste0("\\subsection*{", specname, "}"),
     "\\begin{minipage}{0.3\\textwidth}",
-    paste0("\\includegraphics[width=1\\linewidth]{", gsub("\\.[^.]*$", "", speciesinfo[specinforow, "imgfilename"]), "}"),
+    imagetex,
     "\\end{minipage}",
     "\\begin{minipage}{0.7\\textwidth}",
     gsub("http([^[:space:]]*)", "\\\\url{http\\1}", speciesinfo[specinforow, "story"]),
@@ -121,11 +127,17 @@ bottomten <- order(data$species_prob_current[, "median"], decreasing = FALSE)[1:
 buildspeclatex_justimage <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
   credits <- paste0("\\url{", speciesinfo[specinforow, "url"], "}")
+  imgfilename <- gsub("\\.[^.]*$", "", speciesinfo[specinforow, "imgfilename"])
+  imagetex <- if (file.exists(imgfilename)){
+        paste0("\\includegraphics[width=1\\linewidth]{", imgfilename, "}")
+  } else {
+    paste0("\\fbox{", speciesinfo[specinforow, "species"], "}")
+  }
   out <- c(
     "\\begin{minipage}[b][0.3\\textwidth][t]{0.25\\textwidth}",
     "\\begin{center}",
     # "\\\\ \\vspace*{1ex} ",
-    paste0("\\includegraphics[width=1\\linewidth]{", gsub("\\.[^.]*$", "", speciesinfo[specinforow, "imgfilename"]), "}"),
+    imagetex,
     specname,
     " \\scriptsize ",
     credits,
@@ -154,20 +166,6 @@ chance of the Superb Parrot occupying patch `r data$species_prob_current["Superb
 cat(buildspeclatex_imagestory("Superb Parrot"))
 ```
 
-
-```{r consconcern, eval = FALSE}
-epbc <- read.table("../sflddata/private/data/raw/EPBClist_2021-03-23.tsv")
-constatuses %>%
-  dplyr::filter(`Fauna Type` == "Birds")
-rowintbl <- lapply(model_data$species, function(spec) {
-  return(grep(spec, constatuses$`Common Name`))
-})
-names(rowintbl) <- model_data$species
-unlist(rowintbl)
-constatuses[unlist(rowintbl), ]
-format(data$species_prob_current["Superb Parrot", "median"] * 100, digits = 2)
-```
-
 # Occupancy Probability of Every Species in the Model
 ## Occupancy Probabilty in the Favourite Patch
 In general each species has a different favourite patch.
@@ -194,13 +192,15 @@ plot_allspeciesrel(data$spec_different)
 ### Reference Attributes and Species Probabilities
 The reference probabilities and the patch attributes that created them are below.
 \begin{center}
-```{r showavpatch}
-knitr::kable(makeniceprops(t(data$refXocc)), digits = 3,
+```{r showavpatch, fig.height = 7, fig.width = 6, out.width = "70%"}
+refpatchprops <- makeniceprops(t(data$refXocc))
+knitr::kable(refpatchprops, digits = 3,
       format = "latex",
       booktabs = TRUE,
       row.names = TRUE,
-      col.names = paste("Patch", 1:ncol(patchprops)))
-plot_allspeciesprob(data$species_prob_ref)
+      col.names = paste("Patch", 1:ncol(refpatchprops)))
+plot_allspeciesprob(data$species_prob_ref) +
+  ggtitle("Reference Occupancy Probability")
 ```
 \end{center}
 
