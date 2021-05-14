@@ -8,12 +8,12 @@ MaxTWarmMonth.lt,Max. Temp. of the Warmest Month (C)
 MaxTWarmMonth.YfA,Max. Temp. since last August (C)
 MinTColdMonth.lt,Min. Temp. of the Coldest Month (C)
 MinTColdMonth.YfA,Min. Temp. since last August (C)
-PrecColdQ.lt,Winter Precipitation (mm)
+PrecColdQ.lt,Average Winter Precipitation (mm)
 PrecColdQ.YfA,Last Winter's Precipitation (mm)
-PrecWarmQ.lt,Summer Precipitation (mm)
+PrecWarmQ.lt,Average Summer Precipitation (mm)
 PrecWarmQ.YfA,Last Summer's Precipitation (mm)
 PrecSeasonality,Precipitation Seasonality (%)
-PrecSeasonality.lt,Precipitation Seasonality (%)
+PrecSeasonality.lt,Precipitation Seasonality Long Term (%)
 PrecSeasonality.YfA,Precipitation Seasonality since last August (%)
 latitude,Latitude
 woody500m,Woody Vegetation Cover within 500m (%)
@@ -23,5 +23,3 @@ ms,Midstorey Cover (%)
 NMdetected,Noisy Miners Present
 SurveyYear,Year
 IsPlanting,Not a Remnant
-
-

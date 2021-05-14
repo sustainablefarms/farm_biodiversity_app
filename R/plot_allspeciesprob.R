@@ -20,6 +20,6 @@ plot_allspeciesprob <- function(species_prob_current){
     ggtitle("Probability of Occupying at Least One Patch") +
     theme_minimal() +
     theme(legend.position = "none",
-          panel.border = element_rect(fill = NA),
+          panel.border = element_rect(fill = NA, color = "grey"),
           panel.grid.major.y = element_blank())
 }

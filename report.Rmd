@@ -47,7 +47,7 @@ techcovar2nicename <- function(techcovarnames){
 }
 ```
 
-Welcome to a detailed report of species occupancy estimates for the box gum grassy woodland (BGGW) patches on your farm.
+Welcome to a detailed report of species occupancy estimates for the box gum grassy woodland patches on your farm.
 We hope you enjoy it.
 In the next section you'll find the information we used to estimate the occupancy probabilities.
 Then you'll find pictures of the 10 most likely species across your patches.
@@ -59,12 +59,18 @@ and figures showing the occupancy probability of every species in our model.
 This report was generated at `r Sys.time()` from version `r appversion` of the Sustainable Farm's `r appname`.
 
 # The Patch Properites Used for Estimation
-The estimates of bird occupancy in this report are based on the below properties of woody vegetation patches.
-The long term climate information has been extracted for the region you selected from the \href{https://www.worldclim.org/data/bioclim.html}{WorldClim} (version 1.4) climate database.
-For convenience in the climate-like summaries of the last 12 months (since August) have been taken to be the corresponding long-term averages from WorldClim (version 1.4),
-except for precipitation in the last 12 months, which you have provided. 
-Woody vegetation cover within 500m and 3km, whether the patch is a planting or remnan, and the presence of Noisy Miners were also provided by you directly.
-The year has been set to 2018 as year does not have much impact on the results (we suspect due to other time-varying predictors like woody vegetation amounts and rainfall).
+The estimates of bird occupancy in this report were based on the below properties of box gum grassy woodland patches.
+The long term climate information was extracted for the region you selected from the \href{https://www.worldclim.org/data/bioclim.html}{WorldClim} (version 1.4) climate database.
+We used the centre of your region for this.
+
+The maximum and minimum temperature, summer and winter precipitation, and precipitation seasonality of the prior 12 months had little affect on species occupancy in our fitted model, and were set to the average of our data.
+The average temperature of the prior 12 months was set to the long term average to make `r appname` easier to use.
+The precipitation in the prior 12 months was supplied by you.
+
+You also provided the 
+woody vegetation cover within 500m and 3km, whether the patch is a remnant, and the presence of Noisy Miners.
+
+For ease of use, the year was set to 2018 as year does not have much impact on the species occupancy according to our model (we suspect this is due to other time-varying predictors like woody vegetation canopy and rainfall).
 
 \begin{center}
 ```{r displaypatchprops}
@@ -72,14 +78,16 @@ patchprops <- t(newXocc_fromselected(current_values))
 makeniceprops <- function(patchprops, ...){
   patchprops[row.names(patchprops) %in% c("MaxTWarmMonth.lt", "MinTColdMonth.lt"), ] <-   # convert temperatures back to celcius
     patchprops[row.names(patchprops) %in% c("MaxTWarmMonth.lt", "MinTColdMonth.lt"), ] / 10
-  patchprops[row.names(patchprops) == "NMdetected", ] <- as.logical(patchprops[row.names(patchprops) == "NMdetected", ])
-  patchprops[row.names(patchprops) == "IsPlanting", ] <- as.logical(patchprops[row.names(patchprops) == "IsPlanting", ])
+  # patchprops[row.names(patchprops) == "NMdetected", ] <- as.logical(patchprops[row.names(patchprops) == "NMdetected", ])
+  # patchprops[row.names(patchprops) == "IsPlanting", ] <- as.logical(patchprops[row.names(patchprops) == "IsPlanting", ])
+  patchprops <- patchprops[c(1:5, 9, 6:8, 10:nrow(patchprops)), , drop = FALSE] #make all long-term climate at the top
   
   row.names(patchprops) <- techcovar2nicename(row.names(patchprops))
   
   patchprops_char <- format(patchprops, drop0trailing = TRUE, trim = TRUE, ...)
   patchprops_char[row.names(patchprops) == techcovar2nicename("NMdetected"), ] <- 
     as.character(as.logical(as.numeric(patchprops_char[row.names(patchprops) == techcovar2nicename("NMdetected"), ])))
+  patchprops_char[row.names(patchprops) == techcovar2nicename("IsPlanting"), ] <- 
     as.character(as.logical(as.numeric(patchprops_char[row.names(patchprops) == techcovar2nicename("IsPlanting"), ])))
 
 # Precipitation seasonality is a percentage. The R package dismo computes biovars, it imports 'cv' from package Raster (same authors). The code for 'cv' in raster has 100 * sd(z) / mean(z).
@@ -132,7 +140,7 @@ for (specname in row.names(data$species_prob_current)[topten]){
 \newpage
 
 # The 10 Least Likely Species on Your Farm
-Of the birds in the model, the 10 least likely species to reside in your farm are shown below.
+Of the birds in the model, the 10 least likely species to reside in your box gum grassy woodland patches are below.
 ```{r bottomten, results='asis'}
 bottomten <- order(data$species_prob_current[, "median"], decreasing = FALSE)[1:10]
 buildspeclatex_justimage <- function(specname){
@@ -165,25 +173,23 @@ for (specname in row.names(data$species_prob_current)[bottomten]){
 cat(" \\end{center} ")
 ```
 
-\newpage
-
 # A Vulnerable Species: Superb Parrot
 The Superb Parrot is listed as vulnerable by the \href{https://www.environment.gov.au/cgi-bin/sprat/public/publicthreatenedlist.pl}{Commonwealth Governement}.
 According to our model, there is a `r format(data$species_prob_current["Superb Parrot", "median"] * 100, digits = 2)`% 
 (lower bound = `r format(data$species_prob_current["Superb Parrot", "lower"] * 100, digits = 2)`%, upper bound = `r format(data$species_prob_current["Superb Parrot", "upper"] * 100, digits = 2)`%)
-chance of the Superb Parrot occupying patch `r data$species_prob_current["Superb Parrot", "bestsite"]`, which was the best patch for the Superb Parrot.
+chance of the Superb Parrot occupying a box gum grassy woodland patch on your farm.
 
 ```{r superbparrotinfo, results='asis'}
 cat(buildspeclatex_imagestory("Superb Parrot"))
 ```
 
+\clearpage
 # Occupancy Probability of Every Species in the Model
 ## Occupancy Probability
-In general each species has a different favourite patch.
-It is the patch with the highest estimated probability of occupancy.
-Below shows the probability of each species occupying their most favoured patch.
-The favoured patch of each species is given beside the species names.
-We are 95% confident that the occupancy probability of this favoured patch is within the error bars shown.
+Below is the estimated probability of each species in the model occupying at least on box gum grassy woodland patch on your farm.
+There is a 95% change that the \em{true} occupancy probability is within the error bars, assuming our model is correct (the uncertainty is due to uncertainty of model parameter values).
+
+We computed both estimate and error bars by taking the maximum of the occupancy probability of all patches.
 
 ```{r species_on_farm, fig.height = 8, fig.width = 7, out.width = "100%"}
 plot_allspeciesprob(data$species_prob_current)
@@ -191,7 +197,7 @@ plot_allspeciesprob(data$species_prob_current)
 
 
 
-\newpage
+\clearpage
 ## Occupancy Probability Relative to the Reference
 Below shows the ratio of species occupancy probability at their favoured patch to the reference occupancy probability. Beneath is the reference information.
 
@@ -199,7 +205,7 @@ Below shows the ratio of species occupancy probability at their favoured patch t
 plot_allspeciesrel(data$spec_different)
 ```
 
-
+\clearpage
 ### Reference Attributes and Species Probabilities
 The reference probabilities and the patch attributes that created them are below.
 \begin{center}
