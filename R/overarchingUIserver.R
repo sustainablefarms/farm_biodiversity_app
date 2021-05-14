@@ -13,10 +13,12 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   loadtraits2global()
   load_birdinfotable()
   appname <<- "Bird Checker"
+  appversion <<- "0.3"
   covarnicenames_tbl <<- read.csv("./data/nicecovarnames.csv", header = TRUE)
   apptempdir <<- tempdir()
   report_path <<- paste0(apptempdir, "/", "report.Rmd") #file location assumes host is a unix machine
   stopifnot(file.copy("report.Rmd", report_path, overwrite = TRUE)) 
+  stopifnot(file.copy("Sustainable Farms logo RGB.png", apptempdir, overwrite = TRUE)) 
 }
   
 # UI
