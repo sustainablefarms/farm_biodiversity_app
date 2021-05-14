@@ -19,7 +19,7 @@ patch_modal <- function(
       ),
         # 500m WCF
         tags$div(
-          tags$html(tags$span("Woody vegetation canopy within 500m of patch centre (% area)"),
+          tags$html(tags$span("Nearby Woody Canopy: Woody vegetation canopy within 500m of patch centre (% area)"),
                     infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area within 500m of the patch centre.",
 "Tree canopy inside the patch is included.",
                                               "It changes each year as the trees react to the prevailing weather.",
@@ -32,10 +32,11 @@ patch_modal <- function(
           sliderInput(label = NULL,
             inputId = ns(paste0("pc_woody500m_", value)),
             min = 2, max = 20, step = 2,
+	    width = "100%",
             value = woody500m)
           ),
         tags$div(
-          tags$html(tags$span("Woody vegetation canopy within 3km of patch centre (% area)"),
+          tags$html(tags$span("Regional Woody Canopy: Woody vegetation canopy within 3km of patch centre (% area)"),
                     infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area within 3km of the patch centre.",
 "Tree canopy inside the patch is included (but would have little effect due to the 3km scale).",
                                               "It changes each year as the trees react to the prevailing weather.",
@@ -49,6 +50,7 @@ patch_modal <- function(
           sliderInput(label = NULL,
             inputId = ns(paste0("pc_woody3000m_", value)),
             min = 2, max = 20, step = 2,
+	    width = "100%",
             value = woody3000m)
           ),
       tags$div(
