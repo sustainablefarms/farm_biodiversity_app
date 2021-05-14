@@ -14,6 +14,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   load_birdinfotable()
   appname <<- "Bird Checker"
   appversion <<- "0.3"
+  appurl <<- "https://sustfarm.shinyapps.io/bird_checker/"
   covarnicenames_tbl <<- read.csv("./data/nicecovarnames.csv", header = TRUE)
   apptempdir <<- tempdir()
   report_path <<- paste0(apptempdir, "/", "report.Rmd") #file location assumes host is a unix machine
