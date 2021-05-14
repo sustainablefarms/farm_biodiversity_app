@@ -16,19 +16,19 @@
 # rsconnect::deployApp(appName = "birdbio_dev4")
 # rsconnect::terminateApp("birdbio_dev2")
 # rsconnect::purgeApp("birdbio_dev2")
-
+# rsconnect::deployApp(appName = "bird_checker")
 
 # load requisite packages
 # devtools::install_github("https://github.com/sustainablefarms/msod", ref = "modelclasses")
 options(
   shiny.autoreload = TRUE,
   shiny.launch.browser = FALSE,
-  shiny.port = 7214,
+  # shiny.port = 7214,
   shiny.testmode = FALSE
 )
-# pkgload::load_all("."); myapp()
-pkgload::load_all("."); app_selectpatchonly()
+pkgload::load_all("."); myapp()
+# pkgload::load_all("."); app_selectpatchonly()
 # app_selectlocationonly()
-pkgload::load_all("."); app_predictionsonly()
+# pkgload::load_all("."); app_predictionsonly()
 # app_predictiondetailsonly()
 
