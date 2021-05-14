@@ -9,48 +9,23 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
     fluidRow(
       id = ns("topten5"),
       style="text-align: center",
-      lapply(1:5, function(idx){
-        # column(2, 
-        tags$div(speciesinfo_topten[idx, "species"],
-                  style = "float: left",
-                   tags$br(),
-        linknewtab(
-          href = speciesinfo_topten[idx, "url"],
-          style="text-align: center",
-          imageOutput(ns(paste0("top", idx)), height = "200px", inline = TRUE),
-          `data-toggle` = "tooltip",
-          `data-placement` = 'auto top',
-          `data-viewport` = "{'selector': '#topten5'}",
-          title = speciesinfo_topten[idx, "story"]),
-        "Creator: = ???",
-        linknewtab(href="https://creativecommons.org/licenses/by-nc-sa/3.0/",
-                   tags$img(src = "https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png",
-                            alt = "CC BY-NC-SA 3.0",
-                            height = "20px")
-          )
-        )
-        # )
-        }
-      )),
+      lapply(1:5, function(idx) specimageOut(speciesinfo_topten[idx, ],
+					     ns(paste0("top", idx))))
+      ),
     fluidRow(
       style="text-align: center",
-      lapply(6:10, function(idx){
-        # column(2, )
-        linknewtab(
-         href = speciesinfo_topten[idx, "url"],
-         style="text-align: center",
-         imageOutput(ns(paste0("top", idx)), height = "200px", inline = TRUE),
-         `data-toggle` = "tooltip",
-         `data-placement` = 'auto bottom',
-         `data-viewport` = "{'selector': ':root'}",
-         title = speciesinfo_topten[idx, "story"])
-        # )
-      })
+      lapply(6:10, function(idx) specimageOut(speciesinfo_topten[idx, ],
+					     ns(paste0("top", idx))))
     ),
     HTML("<div class='subheader'><h2>10 LEAST LIKELY BIRDS</h2></div>"),
     fluidRow(
       style="text-align: center",
-      lapply(1:10, function(idx){
+      lapply(1:10, function(idx) specimageOut(speciesinfo_botten[idx, ],
+					     ns(paste0("bot", idx)),
+                                             height = "100px"))
+      
+      
+      function(idx){
         # column(2, )
         linknewtab(
           href = speciesinfo_botten[idx, "url"],
