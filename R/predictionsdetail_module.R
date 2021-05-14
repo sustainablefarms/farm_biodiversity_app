@@ -11,6 +11,9 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
       style="text-align: center",
       lapply(1:5, function(idx){
         # column(2, 
+        tags$div(speciesinfo_topten[idx, "species"],
+                  style = "float: left",
+                   tags$br(),
         linknewtab(
           href = speciesinfo_topten[idx, "url"],
           style="text-align: center",
@@ -18,7 +21,14 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
           `data-toggle` = "tooltip",
           `data-placement` = 'auto top',
           `data-viewport` = "{'selector': '#topten5'}",
-          title = speciesinfo_topten[idx, "story"])
+          title = speciesinfo_topten[idx, "story"]),
+        "Creator: = ???",
+        linknewtab(href="https://creativecommons.org/licenses/by-nc-sa/3.0/",
+                   tags$img(src = "https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png",
+                            alt = "CC BY-NC-SA 3.0",
+                            height = "20px")
+          )
+        )
         # )
         }
       )),
