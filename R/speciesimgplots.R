@@ -3,8 +3,9 @@
 specimageOut <- function(specinfo, id, height = "200px", includestory = TRUE){
         # column(2, 
         tags$div(specinfo$species,
+		 infotooltip(title = specinfo$species),
                   style = "float: left",
-                   tags$br(),
+                  tags$br(),
         linknewtab(
           href = specinfo$url,
           style="text-align: center",

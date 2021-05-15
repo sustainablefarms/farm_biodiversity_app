@@ -72,7 +72,7 @@ predictionsdetailServer <- function(id,
           format(data$species_prob_current["Superb Parrot", "median"] * 100, digits = 2),
           "% (lower bound = ",
           format(data$species_prob_current["Superb Parrot", "lower"] * 100, digits = 2),
-          "%), upper bound = ",
+          "%, upper bound = ",
           format(data$species_prob_current["Superb Parrot", "upper"] * 100, digits = 2),
           "%) chance of the Superb Parrot occupying at least one of your woodland patches."
         )
