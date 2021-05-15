@@ -13,12 +13,12 @@ specimageOut <- function(specinfo, id, height = "200px", includestory = TRUE){
           `data-placement` = 'auto top',
           `data-viewport` = "{'selector': ':root'}",
           title = specinfo$story),
-        "Creator: = ???",
-        linknewtab(href="https://creativecommons.org/licenses/by-nc-sa/3.0/",
+        tags$div("Creator: = ???"),
+	tags$div(linknewtab(href="https://creativecommons.org/licenses/by-nc-sa/3.0/",
                    tags$img(src = "https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png",
                             alt = "CC BY-NC-SA 3.0",
                             height = "20px")
-          )
+          ))
         )
         # )
         }

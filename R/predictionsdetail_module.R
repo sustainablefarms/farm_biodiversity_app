@@ -23,20 +23,6 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
       lapply(1:10, function(idx) specimageOut(speciesinfo_botten[idx, ],
 					     ns(paste0("bot", idx)),
                                              height = "100px"))
-      
-      
-      function(idx){
-        # column(2, )
-        linknewtab(
-          href = speciesinfo_botten[idx, "url"],
-          style="text-align: center",
-          imageOutput(ns(paste0("bot", idx)), height = "100px", inline = TRUE),
-          `data-toggle` = "tooltip",
-          `data-placement` = 'auto bottom',
-          `data-viewport` = "{'selector': ':root'}",
-          title = speciesinfo_botten[idx, "story"])
-        # )
-      })
     ),
     
     HTML("<div class='subheader'><h2>A VULNERABLE SPECIES: SUPERB PARROT</h2></div>"),
