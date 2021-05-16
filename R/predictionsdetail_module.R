@@ -53,7 +53,7 @@ predictionsdetailServer <- function(id,
       lapply(1:10, function(idx){
         output[[paste0("top", idx)]] <- renderImage({
             list(src = data$speciesinfo_topten[idx, "imgfilename"],
-                 alt = data$speciesinfo_topten[idx, "species"],
+                 alt = data$speciesinfo_topten[idx, "imgfilename"],
                  height = "200px")
           }, deleteFile = FALSE, quoted = FALSE)
       })
@@ -61,7 +61,7 @@ predictionsdetailServer <- function(id,
       lapply(1:10, function(idx){
         output[[paste0("bot", idx)]] <- renderImage({
             list(src = data$speciesinfo_botten[idx, "imgfilename"],
-                 alt = data$speciesinfo_botten[idx, "species"],
+                 alt = data$speciesinfo_botten[idx, "imgfilename"],
                  height = "100px")
           }, deleteFile = FALSE, quoted = FALSE)
       })

@@ -18,10 +18,9 @@ birdlife_extractintropara <- function(url){
       rvest::html_text(trim = TRUE)
   }
   if (grepl("Western-Gerygone", url)){
-    credits <- paste("Words from http://birdswa.com.au/CEC/Handouts/Western%20Australian%20Gerygones.pdf (accessed 22/03/2021).",
-                     paste0("Image from ", url, " (accessed ", format(Sys.time(), "%b %d, %Y"), ")."))
+    credits <- "Words from http://birdswa.com.au/CEC/Handouts/Western%20Australian%20Gerygones.pdf (accessed 22/03/2021)."
   } else {
-    credits <- paste0("Image and words from ", url, " (accessed ", format(Sys.time(), "%b %d, %Y"), ").")
+    credits <- paste0("Words from ", url, " (accessed ", format(Sys.time(), "%b %d, %Y"), ").")
   }
   intropara <- paste(intropara, credits)
   return(intropara)
@@ -30,6 +29,7 @@ birdlife_extractintropara <- function(url){
 birdlife_getdescription <- function(commonnames){
   urls <- get_birdlife_url(commonnames)
   introparas <- lapply(urls, birdlife_extractintropara)
+  names(introparas) <- commonnames
   return(introparas)
 }
 
