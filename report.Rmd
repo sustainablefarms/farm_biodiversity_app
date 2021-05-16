@@ -56,7 +56,7 @@ the 10 least likely species across your patches,
 a paragraph on the vulnerable Superb Parrot,
 and figures showing the occupancy probability of every species in our model.
 
-This report was generated at `r Sys.time()` from version `r appversion` of the Sustainable Farm's `r appname`.
+This report was generated at `r Sys.time()` from version `r appversion` of the Sustainable Farm's `r appname` (`r appurl`).
 
 # The Patch Properites Used for Estimation
 The estimates of bird occupancy in this report were based on the below properties of box gum grassy woodland patches.
@@ -110,14 +110,21 @@ knitr::kable(makeniceprops(patchprops),
 # stories <- readRDS("data/birdstories.rds")
 # imgfilenames <- readRDS("data/imgfilenames.rds")
 topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
+imagetexfun <- function(specinfo){
+  imagetex <- if (file.exists(specinfo$imgfilename)){
+        paste0("\\includegraphics[width=1\\linewidth, height = 1\\linewidth, keepaspectratio]{",
+               gsub("\\.[^.]*$", "", specinfo$imgfilename),
+               "}",
+               "\\\\ ",
+               "\\textcopyright ",
+               specinfo$copyrightholder)
+  } else {
+    paste0("\\fbox{", specinfo$species, "}")
+  }
+}
 buildspeclatex_imagestory <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
-  imgfilename <- gsub("\\.[^.]*$", "", speciesinfo[specinforow, "imgfilename"])
-  imagetex <- if (file.exists(imgfilename)){
-        paste0("\\includegraphics[width=1\\linewidth]{", imgfilename, "}")
-  } else {
-    paste0("\\fbox{", speciesinfo[specinforow, "species"], "}")
-  }
+  imagetex <- imagetexfun(speciesinfo[specinforow,])
   out <- c(
     paste0("\\subsection*{", specname, "}"),
     "\\begin{minipage}{0.3\\textwidth}",
@@ -145,21 +152,15 @@ Of the birds in the model, the 10 least likely species to reside in your box gum
 bottomten <- order(data$species_prob_current[, "median"], decreasing = FALSE)[1:10]
 buildspeclatex_justimage <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
-  credits <- paste0("\\url{", speciesinfo[specinforow, "url"], "}")
-  imgfilename <- gsub("\\.[^.]*$", "", speciesinfo[specinforow, "imgfilename"])
-  imagetex <- if (file.exists(imgfilename)){
-        paste0("\\includegraphics[width=1\\linewidth]{", imgfilename, "}")
-  } else {
-    paste0("\\fbox{", speciesinfo[specinforow, "species"], "}")
-  }
+  imagetex <- imagetexfun(speciesinfo[specinforow,])
   out <- c(
-    "\\begin{minipage}[b][0.3\\textwidth][t]{0.25\\textwidth}",
+    "\\begin{minipage}[b][0.35\\textwidth][t]{0.25\\textwidth}",
     "\\begin{center}",
     # "\\\\ \\vspace*{1ex} ",
-    imagetex,
     specname,
-    " \\scriptsize ",
-    credits,
+    "\\\\ ",
+    "\\scriptsize ",
+    imagetex,
     "\\end{center}",
     "\\end{minipage}",
     " "
@@ -173,6 +174,7 @@ for (specname in row.names(data$species_prob_current)[bottomten]){
 cat(" \\end{center} ")
 ```
 
+\clearpage
 # A Vulnerable Species: Superb Parrot
 The Superb Parrot is listed as vulnerable by the \href{https://www.environment.gov.au/cgi-bin/sprat/public/publicthreatenedlist.pl}{Commonwealth Governement}.
 According to our model, there is a `r format(data$species_prob_current["Superb Parrot", "median"] * 100, digits = 2)`% 
