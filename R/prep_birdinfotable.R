@@ -2,7 +2,7 @@
 prep_birdinfotable <- function(){
   model_data <- load_model_data()
   urls <- get_birdlife_url(model_data$species)
-  stories <- prep_birdstories() #readRDS("./data/birdstories.rds")
+  stories <- lapply(urls, birdlife_extractintropara)
   imgs <- read.csv("./data/species_birdlifeimgs.csv", row.names = 1)
   imgs$filename <- paste0("./data/birdlifeimgs/", imgs$filename, ".jpg")
   shortstories <- read.csv("./data/species_shortstory.csv", check.names = FALSE, row.names = 1)
