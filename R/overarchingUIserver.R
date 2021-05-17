@@ -44,8 +44,8 @@ ui <- function(){
 	       "Version", appversion),
            )),
     HTML("</div>"),
-  tabsetPanel(
-    tabPanel(title = "Location",
+    column(width = 1),
+    column(width = 3,
       fluidRow(selectlocationUI("location")),
       # plotOutput("climate", height = "300px")
       fluidRow(selectYfAUI("yfa")),
@@ -56,16 +56,15 @@ ui <- function(){
         actionButton("viewcvals", "View Current Values", class = "download_badge")
       }
     ),
-    tabPanel(title = "Patch",
+    column(width = 1),
+    column(width = 6,
       fluidRow(
         selectpatchUI("patch")
-      )),
-    tabPanel(title = "Bird Biodiveristy",
+      ),
       fluidRow(
         HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
         uiOutput("pred")
       )
-    )
     ),
     title = appname,
     theme = bslib::bs_theme(version = 3, "lumen")
