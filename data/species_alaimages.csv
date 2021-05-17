@@ -1,63 +1,63 @@
-"Scientific Name","media_id"
-"Chenonetta jubata","05fdef14-2f29-4656-a7da-89dcd01fcd55"
-"Phaps chalcoptera","30e8178d-ca7a-4c2e-9c1b-0a432f88071a"
-"Ocyphaps lophotes","828a2c5b-2384-47d7-bca0-33a79e276575"
-"Geopelia striata","18d9c1fb-064b-4a6f-86fd-a1bcb10cb735"
-"Merops ornatus","10863711-0369-4771-b8c6-a82057fbcab0"
-"Todiramphus sanctus","4be169f0-f0dd-4fff-81e1-30fa40fe7251"
-"Dacelo novaeguineae","10402be3-1e46-4a5b-827f-9c859265172a"
-"Eolophus roseicapillus","71e28b3f-abc9-4dae-8299-73915b6479eb"
-"Cacatua galerita","302ae414-2185-4fab-8af4-3a971400d0dd"
-"Polytelis swainsonii","8e63a12f-0860-43ba-8bdb-38b65466b5d9"
-"Psephotus haematonotus","eb822401-a8eb-44d7-9462-59525c78204e"
-"Platycercus elegans","2380ad5c-9fa4-48e2-a401-c434c58f49eb"
-"Platycercus eximius","406e10c5-5c30-4d60-9783-9ece93e81f03"
-"Cormobates leucophaea","a32cdaa6-ac78-4f70-82de-ecbc04ed0c63"
-"Climacteris picumnus","34b69f31-2c40-46f4-a755-2a9a887ca42d"
-"Malurus cyaneus","03a0d5cb-873d-403b-838a-ddc0c3075ed6"
-"Philemon corniculatus","03073698-f335-4bc5-b430-b619ede2c2ef"
-"Philemon citreogularis",NA
-"Melithreptus brevirostris","72bd1b1d-07e4-4190-bdac-cb338c366942"
-"Anthochaera carunculata","48e0e6e5-2c1d-4a22-b219-dd7f581d0af3"
-"Lichenostomus penicillatus",NA
-"Lichenostomus chrysops",NA
-"Pardalotus punctatus",NA
-"Pardalotus striatus",NA
-"Gerygone olivacea",NA
-"Gerygone fusca",NA
-"Smicrornis brevirostris",NA
-"Sericornis frontalis",NA
-"Acanthiza chrysorrhoa",NA
-"Acanthiza nana",NA
-"Acanthiza lineata",NA
-"Acanthiza pusilla",NA
-"Acanthiza reguloides",NA
-"Pomatostomus temporalis",NA
-"Coracina novaehollandiae",NA
-"Lalage tricolor",NA
-"Pachycephala rufiventris",NA
-"Colluricincla harmonica",NA
-"Falcunculus frontatus",NA
-"Strepera graculina",NA
-"Cracticus tibicen",NA
-"Cracticus nigrogularis",NA
-"Cracticus torquatus",NA
-"Artamus superciliosus",NA
-"Artamus cyanopterus",NA
-"Rhipidura leucophrys",NA
-"Rhipidura fuliginosa",NA
-"Corvus coronoides",NA
-"Myiagra rubecula",NA
-"Myiagra inquieta",NA
-"Grallina cyanoleuca",NA
-"Corcorax melanorhamphos",NA
-"Microeca fascinans",NA
-"Dicaeum hirundinaceum",NA
-"Stagonopleura guttata",NA
-"Anthus novaeseelandiae",NA
-"Cincloramphus cruralis",NA
-"Cincloramphus mathewsi",NA
-"Petrochelidon nigricans",NA
-"Hirundo neoxena",NA
-"Zosterops lateralis",NA
-"Sturnus vulgaris",NA
+"Common Name","Scientific Name","media_id"
+"Australian Wood Duck","Chenonetta jubata","05fdef14-2f29-4656-a7da-89dcd01fcd55"
+"Common Bronzewing","Phaps chalcoptera","30e8178d-ca7a-4c2e-9c1b-0a432f88071a"
+"Crested Pigeon","Ocyphaps lophotes","828a2c5b-2384-47d7-bca0-33a79e276575"
+"Peaceful Dove","Geopelia striata","18d9c1fb-064b-4a6f-86fd-a1bcb10cb735"
+"Rainbow Bee-eater","Merops ornatus","10863711-0369-4771-b8c6-a82057fbcab0"
+"Sacred Kingfisher","Todiramphus sanctus","4be169f0-f0dd-4fff-81e1-30fa40fe7251"
+"Laughing Kookaburra","Dacelo novaeguineae","10402be3-1e46-4a5b-827f-9c859265172a"
+"Galah","Eolophus roseicapillus","71e28b3f-abc9-4dae-8299-73915b6479eb"
+"Sulphur-crested Cockatoo","Cacatua galerita","302ae414-2185-4fab-8af4-3a971400d0dd"
+"Superb Parrot","Polytelis swainsonii","8e63a12f-0860-43ba-8bdb-38b65466b5d9"
+"Red-rumped Parrot","Psephotus haematonotus","eb822401-a8eb-44d7-9462-59525c78204e"
+"Crimson Rosella","Platycercus elegans","2380ad5c-9fa4-48e2-a401-c434c58f49eb"
+"Eastern Rosella","Platycercus eximius","406e10c5-5c30-4d60-9783-9ece93e81f03"
+"White-throated Treecreeper","Cormobates leucophaea","a32cdaa6-ac78-4f70-82de-ecbc04ed0c63"
+"Brown Treecreeper","Climacteris picumnus","34b69f31-2c40-46f4-a755-2a9a887ca42d"
+"Superb Fairy-wren","Malurus cyaneus","03a0d5cb-873d-403b-838a-ddc0c3075ed6"
+"Noisy Friarbird","Philemon corniculatus","03073698-f335-4bc5-b430-b619ede2c2ef"
+"Little Friarbird","Philemon citreogularis",NA
+"Brown-headed Honeyeater","Melithreptus brevirostris","72bd1b1d-07e4-4190-bdac-cb338c366942"
+"Red Wattlebird","Anthochaera carunculata","48e0e6e5-2c1d-4a22-b219-dd7f581d0af3"
+"White-plumed Honeyeater","Lichenostomus penicillatus","9d93c4cf-536b-422b-8c9e-debafc97ef59"
+"Yellow-faced Honeyeater","Lichenostomus chrysops","5637defb-737a-4d9b-8460-fedb823a5015"
+"Spotted Pardalote","Pardalotus punctatus","87e87933-464f-4512-9977-da006b99be5a"
+"Striated Pardalote","Pardalotus striatus","9a2f0075-a234-4b51-89cb-e699ed54b14d"
+"White-throated Gerygone","Gerygone olivacea","1466634a-fea2-422c-8188-c3dd0ea34fad"
+"Western Gerygone","Gerygone fusca",NA
+"Weebill","Smicrornis brevirostris",NA
+"White-browed Scrubwren","Sericornis frontalis","5bbf772a-c8e3-47e4-a21c-b6d9a5e642a0"
+"Yellow-rumped Thornbill","Acanthiza chrysorrhoa","289ffa97-cda2-4015-9db6-bc780579bbc8"
+"Yellow Thornbill","Acanthiza nana",NA
+"Striated Thornbill","Acanthiza lineata",NA
+"Brown Thornbill","Acanthiza pusilla",NA
+"Buff-rumped Thornbill","Acanthiza reguloides",NA
+"Grey-crowned Babbler","Pomatostomus temporalis",NA
+"Black-faced Cuckoo-shrike","Coracina novaehollandiae",NA
+"White-winged Triller","Lalage tricolor",NA
+"Rufous Whistler","Pachycephala rufiventris",NA
+"Grey Shrike-thrush","Colluricincla harmonica",NA
+"Crested Shrike-tit","Falcunculus frontatus",NA
+"Pied Currawong","Strepera graculina",NA
+"Australian Magpie","Cracticus tibicen",NA
+"Pied Butcherbird","Cracticus nigrogularis",NA
+"Grey Butcherbird","Cracticus torquatus",NA
+"White-browed Woodswallow","Artamus superciliosus",NA
+"Dusky Woodswallow","Artamus cyanopterus",NA
+"Willie Wagtail","Rhipidura leucophrys",NA
+"Grey Fantail","Rhipidura fuliginosa",NA
+"Australian Raven","Corvus coronoides",NA
+"Leaden Flycatcher","Myiagra rubecula",NA
+"Restless Flycatcher","Myiagra inquieta",NA
+"Magpie-lark","Grallina cyanoleuca",NA
+"White-winged Chough","Corcorax melanorhamphos",NA
+"Jacky Winter","Microeca fascinans",NA
+"Mistletoebird","Dicaeum hirundinaceum",NA
+"Diamond Firetail","Stagonopleura guttata",NA
+"Australasian Pipit","Anthus novaeseelandiae",NA
+"Brown Songlark","Cincloramphus cruralis",NA
+"Rufous Songlark","Cincloramphus mathewsi",NA
+"Tree Martin","Petrochelidon nigricans",NA
+"Welcome Swallow","Hirundo neoxena",NA
+"Silvereye","Zosterops lateralis",NA
+"Common Starling","Sturnus vulgaris",NA

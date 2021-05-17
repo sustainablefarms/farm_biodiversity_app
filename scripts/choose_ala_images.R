@@ -9,9 +9,10 @@ plot_jpeg = function(path, add=FALSE)
 }
 
 #### Search through image files ####
-mediaidmap <- read.csv("./data/species_alaimages.csv", check.names = FALSE)[, -1]
-specidx <- 21
-media <- galah::ala_media("Manorina melanocephala", #mediaidmap$`Scientific Name`[[specidx]],
+mediaidmap <- read.csv("./data/species_alaimages.csv", check.names = FALSE)
+specidx <- 30
+mediaidmap[specidx, ]
+media <- galah::ala_media(mediaidmap[specidx, "Scientific Name"],
                    filters =  galah::select_filters(basisOfRecord = "Image",
                                                     profile = "ALA"),
                    columns = galah::select_columns("creator", "imageId", "image_url", "all_image_url", "scientificName", group = "basic"),
@@ -22,9 +23,9 @@ idtokeep <- media$media_id[grepl("Attribution", media$license) & vapply(nchar(me
 file.remove(paste0("./data/alaimgs/", media$media_id[!(media$media_id %in% idtokeep)], ".jpg"))
 
 #view images in R
-imageidx <- 6
+imageidx <- 1
 plot_jpeg(paste0("./data/alaimgs/", idtokeep, ".jpg")[[imageidx]])
-# mediaidmap[specidx, "media_id"] <- idtokeep[[imageidx]]
+mediaidmap[specidx, "media_id"] <- idtokeep[[imageidx]]
 
 write.csv(mediaidmap, file = "./data/species_alaimages.csv", row.names = FALSE)
 
