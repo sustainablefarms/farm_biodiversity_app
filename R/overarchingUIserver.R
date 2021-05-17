@@ -13,7 +13,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   loadtraits2global()
   load_birdinfotable()
   appname <<- "Bird Checker"
-  appversion <<- "0.3"
+  appversion <<- "0.4"
   appurl <<- "https://sustfarm.shinyapps.io/bird_checker/"
   covarnicenames_tbl <<- read.csv("./data/nicecovarnames.csv", header = TRUE)
   apptempdir <<- tempdir()
@@ -37,10 +37,11 @@ ui <- function(){
       imageOutput("sflogo", inline = TRUE)),    
     column(width = 10, offset = 0, 
       tags$span(class = 'main', appname),
-      tags$span(tags$em(HTML("Set your region. Set your woodland patches. See your birds."))),
+      tags$span(style = "white-space:nowrap;", tags$em(HTML("Set your region. Set your woodland patches. See your birds."))),
     actionButton2("overallhelp", "More Help", class = "badge_tiny"),
       tags$span(class = 'subtitle', HTML("<br>Birds you can expect to see in your farm's box gum grassy woodland in spring.")),
-      tags$span(class = 'subtitle', "By Martin Westgate & Kassel Hingee. Version 0.3"),
+      tags$span(style = "white-space:nowrap;", class = 'subtitle', "By Kassel Hingee & Martin Westgate.",
+	       "Version", appversion),
            )),
     HTML("</div>"),
     column(width = 1),

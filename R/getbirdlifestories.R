@@ -34,7 +34,7 @@ intropara2 <- paste(
   "...",
   "Western Gerygones forage mostly in trees and shrubs, pecking at insects and other invertebrates from the outer foliage, or fluttering in the air to snap at insects.")
 
-    intropara <- gsub("\\n", "", intropara)
+    intropara <- gsub("\\n", "", intropara2)
     credits <-  "Words from https://www.birdlife.org.au/bird-profile/western-gerygone (accessed 17/05/2021)."
     #"Words from http://birdswa.com.au/CEC/Handouts/Western%20Australian%20Gerygones.pdf (accessed 22/03/2021)."
   } else {

@@ -104,7 +104,7 @@ selectlocationServer <- function(id){
                    hoverinfo = 'none',
                    line = list(color = "gray")
           ) %>% 
-  add_text(x = min(data$points$longitude), 
+  add_text(x = min(data$points$longitude)+1, 
            y = c(max(data$points$latitude)-1, min(data$points$latitude) - 0.5),
            text = c("NSW", "VIC"), 
            textfont = list(size = 20),
