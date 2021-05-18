@@ -2,7 +2,7 @@ sa2_points <- readRDS("./data/sa2_points.rds")
 sa2_points <- sa2_points[, c("longitude", "latitude", "label", "state", "color")]
 
 # remove young and tumut region
-sa2_points[!(sa2_points$label %in% c("Young", "Tumut Region")), ]
+sa2_points <- sa2_points[!(sa2_points$label %in% c("Young", "Tumut Region")), ]
 
 # Get worldclim data at locations
 # NOTE: This script will drop a file called wc0.5 in your home directory
