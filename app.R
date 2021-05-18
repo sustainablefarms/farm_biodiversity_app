@@ -19,7 +19,7 @@
 # rsconnect::deployApp(appName = "bird_checker")
 
 # load requisite packages
-# devtools::install_github("https://github.com/sustainablefarms/msod", ref = "modelclasses")
+# devtools::install_github("https://github.com/sustainablefarms/msod", ref = "e22069c9cfd9e2c9e007396e97f0d2e22e088713")
 options(
   shiny.autoreload = TRUE,
   shiny.launch.browser = FALSE,
