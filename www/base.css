@@ -179,3 +179,7 @@ plottitle {
 .alignright {
 	float: right;
 }
+
+.modal-lg {
+  width: 80%
+}

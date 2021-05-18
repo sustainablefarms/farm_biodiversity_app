@@ -5,6 +5,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
+  column(6,
     HTML("<div class='subheader'><h2>10 MOST LIKELY BIRDS</h2></div>"),
     fluidRow(
       id = ns("topten5"),
@@ -25,13 +26,14 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
 					     ns(paste0("bot", idx)),
                                              height = "100px"))
     ),
-    
     HTML("<div class='subheader'><h2>A VULNERABLE SPECIES: SUPERB PARROT</h2></div>"),
     tags$div(
     "The Superb Parrot is listed as vulnerable by the ",
     linknewtab(href = "https://www.environment.gov.au/cgi-bin/sprat/public/publicthreatenedlist.pl", "Commonwealth Government."),
     textOutput(ns("superbparrotprobdesc"), inline = TRUE)
-    ),
+    )
+  ), 
+  column(6, 
     HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY OF ALL SPECIES</h2></div>"),
     fluidRow(
       plotOutput(ns("allspecies"), height = "800px")
@@ -40,7 +42,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
     fluidRow(
       plotOutput(ns("allspeciesrel"), height = "800px")
     )
-    
+  )
   )
 }
 
