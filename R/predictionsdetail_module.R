@@ -1,14 +1,10 @@
 predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
   ns <- NS(id)
-  w <- waiter::Waiter$new(id = ns(paste0("top", 1:10)))
-  w2 <- waiter::Waiter$new(id = ns(paste0("bot", 1:10)))
-  w$show()
   fluidPage(
     tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
-    waiter::use_waiter(),
     HTML("<div class='subheader'><h2>10 MOST LIKELY BIRDS</h2></div>"),
     fluidRow(
       id = ns("topten5"),
@@ -55,28 +51,6 @@ predictionsdetailServer <- function(id,
     id,
     function(input, output, session){
       ns <- session$ns
-      
-      # ws <- lapply(1:10, function(idx){
-      #   wtop <- waiter::Waiter$new(id = ns(paste0("top", idx)))
-      #   wbot <- waiter::Waiter$new(id = ns(paste0("bot", idx)))
-      #   return(list(wtop, wbot))
-      # })
-      
-      lapply(1:10, function(idx){
-        output[[paste0("top", idx)]] <- renderImage({
-            list(src = data$speciesinfo_topten[idx, "imgfilename"],
-                 alt = data$speciesinfo_topten[idx, "imgfilename"],
-                 height = "200px")
-          }, deleteFile = FALSE, quoted = FALSE)
-      })
-      
-      lapply(1:10, function(idx){
-        output[[paste0("bot", idx)]] <- renderImage({
-            list(src = data$speciesinfo_botten[idx, "imgfilename"],
-                 alt = data$speciesinfo_botten[idx, "imgfilename"],
-                 height = "100px")
-          }, deleteFile = FALSE, quoted = FALSE)
-      })
       
       output$superbparrotprobdesc <- renderText({
         c(

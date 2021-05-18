@@ -27,8 +27,11 @@ options(
   shiny.testmode = FALSE
 )
 pkgload::load_all("."); myapp()
-# pkgload::load_all("."); app_selectpatchonly()
-# app_selectlocationonly()
-# pkgload::load_all("."); app_predictionsonly()
-# app_predictiondetailsonly()
-
+# # pkgload::load_all("."); app_selectpatchonly()
+# # app_selectlocationonly()
+# # pkgload::load_all("."); app_predictionsonly()
+# # app_predictiondetailsonly()
+# 
+# main_app_prep() # loads things into global environment, prepares report file
+# shinyApp(ui, server)
+# shinyAppDir(".")

@@ -4,7 +4,7 @@ prep_birdinfotable <- function(){
   urls <- get_birdlife_url(model_data$species)
   stories <- lapply(urls, birdlife_extractintropara)
   imgs <- read.csv("./data/species_birdlifeimgs.csv", row.names = 1)
-  imgs$filename <- paste0("./data/birdlifeimgs/", imgs$filename, ".jpg")
+  imgs$filename <- paste0(imgs$filename, ".jpg")
   shortstories <- read.csv("./data/species_shortstory.csv", check.names = FALSE, row.names = 1)
   specinfoframe <- data.frame(species = model_data$species,
              url = urls[model_data$species],
