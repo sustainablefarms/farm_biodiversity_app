@@ -19,12 +19,14 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   apptempdir <<- tempdir()
   report_path <<- paste0(apptempdir, "/", "report.Rmd") #file location assumes host is a unix machine
   stopifnot(file.copy("report.Rmd", report_path, overwrite = TRUE)) 
-  stopifnot(file.copy("Sustainable Farms logo RGB.png", apptempdir, overwrite = TRUE)) 
+  stopifnot(file.copy("./www/Sustainable Farms logo RGB.png", apptempdir, overwrite = TRUE)) 
 }
   
 # UI
 ui <- function(){
   out <- fluidPage(
+    waiter::use_waiter(), 
+    waiter::waiter_preloader(),
     includeCSS("./www/base.css"),
     # the following enables bootstrap 3's inbuilt tooltips
     tags$script("$(function () {
@@ -34,7 +36,7 @@ ui <- function(){
     HTML("<div class='header'>"),
     fluidRow(
       column(width = 2,
-      imageOutput("sflogo", inline = TRUE)),    
+             tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px")),    
     column(width = 10, offset = 0, 
       tags$span(class = 'main', appname),
       tags$span(style = "white-space:nowrap;", tags$em(HTML("Set your region. Set your woodland patches. See your birds."))),
@@ -116,7 +118,6 @@ server <- function(input, output, session) {
     }
   })
   
-  
   ## PREDICTIONS
   output$pred <- renderUI({
     validate(need(cval()$locationcomplete & cval()$allpatchcomplete,
@@ -153,6 +154,15 @@ server <- function(input, output, session) {
     })
     output$cvals <- renderPrint({
       cval()
+    })
+    
+    #species images
+    lapply(model_data$species, function(spec){
+      output[[paste0("img_", gsub(" ", "-", spec))]] <- renderImage({
+        list(src = speciesinfo[spec, "imgfilename"],
+             alt = speciesinfo[spec, "imgfilename"],
+             height = "200px")
+      }, deleteFile = FALSE, quoted = FALSE)
     })
   }
 

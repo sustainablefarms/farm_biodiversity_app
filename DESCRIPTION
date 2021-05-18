@@ -18,7 +18,8 @@ Imports:
     shinythemes,
     ggbeeswarm,
     shinyBS,
-    tippy
+    tippy,
+    waiter
 Suggests:
     testthat
 Encoding: UTF-8

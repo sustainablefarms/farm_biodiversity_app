@@ -11,20 +11,23 @@ specimageOut <- function(specinfo, id, height = "200px", includestory = TRUE){
 				   )
 	}
 
-        tags$div(specinfo$species,
+     out <- tags$div(specinfo$species,
 		 infotooltip(title = specinfo$story),
                   style = "float: left",
                   tags$br(),
         linknewtab(
           href = specinfo$url,
           style="text-align: center",
-          imageOutput(id, height = "200px", inline = TRUE),
+          tags$img(src = gsub(".*/data/birdlifeimgs/", "", specinfo$imgfilename),
+                   alt = specinfo$species, height = height),
+          # imageOutput(id, height = height, inline = TRUE),
           `data-toggle` = "tooltip",
           `data-placement` = 'auto top',
           `data-viewport` = "{'selector': ':root'}",
           title = specinfo$story),
 	  cpyrht
         )
+    return(out)
         }
 
 

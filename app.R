@@ -23,7 +23,7 @@
 options(
   shiny.autoreload = TRUE,
   shiny.launch.browser = FALSE,
-  # shiny.port = 7214,
+  shiny.port = 7214,
   shiny.testmode = FALSE
 )
 pkgload::load_all("."); myapp()
