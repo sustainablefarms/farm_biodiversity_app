@@ -4,50 +4,26 @@ output:
   html_document: default
 ---
 
-+ mistakes in the app
-  + terms need more work
-  + why would someone want to use this app. Say it up front! Scenario planning estimates.
-  + graphs are too hard to understand
-  + More Help: species tooltips
-  + click on the different patches
-  + use icons or virtual tours
-  + occupancy probability relative to reference
-    + colors to reference. Same help as the other plot
-    + ratio value is show in the box. For example a 'x 2.56' means the species 2.5 times more likely to occur in the current set of patches than the reference.
-+ need ecology team to read through it
-  + Colleen to send detailed points through
-  + More Help section to "Comparison to References"
-+ where bird size from bird table
-+ report: include chosen region
-+ long-term climate averages aren't just for spring - say average annual maximum temperature 
-+ then get comms team to look at it again
-+ make 'i' buttons larger and maybe a different color
-+ small birds showing up?
-+ state-based threatened species
-+ Bird Predictor (ask Suzannah or David)
-+ Colleen some issues sent by Thursday
-+ Get DBL to look through it
-
-
-+ LLS sharable
-  + use link 
-
-+ Does the app need to change for the results workshops?
-+ used offline?!
-
 # Inputs
 + check that noisy miners like woodland that has few low trees or shrubs.
++ long-term climate averages aren't just for spring - say average annual maximum temperature 
 
 # Help
++ why would someone want to use this app. Say it up front! Scenario planning estimates. Estimates of what is there now (see if your farm does better!!)
++ use icons or virtual tours
+
 ## More Help
 + grammar fix
 + species list? describe species
   + species removed
-+ add references to Tobler, WVC, Noisy Miners and Shiny
++ __add references to Tobler, WVC, Noisy Miners and Shiny__
 + correct prec seasonality YfA
 + types of farms in More Information
 + include patch definition
 + links to box gum grassy woodlands
++ including that there are species tooltips
++ remind to click on the different patches
++ where bird size from in more details section
 
 ## Caveats
 + get max patch size for model (Ask Dan for patch areas, to look for maximum in our data)
@@ -56,16 +32,31 @@ output:
 
 # Outputs
 + convert plotly to have the default cursor style
++ graphs are too hard to understand
+  + ratio graph - explain boxes
+    + colors to reference. Same help as the other plot
+    + ratio value is show in the box. For example a 'x 2.56' means the species 2.5 times more likely to occur in the current set of patches than the reference.
 
 # Outputs: More Detail
 + ALA photos
 + include app url 'appurl'
 + birdlife images take a REALLY long time (30s) to be generated
++ sometimes the ratios printed in scientific notation
++ __state-based threatened species__
++ include help similar to the main outputs
++ report: include chosen region
 
 # Overall
 + Mobile compatibility
   + test on tablet, touch screen only
-+ __Use a special ref version of msod__
++ terms need more work
++ need ecology team to read through it
+  + Colleen to send detailed points through
+  + More Help section to "Comparison to References"
++ then get comms team to look at it again
++ Bird Predictor (ask Suzannah or David)
++ Colleen some issues sent by Thursday
++ Get DBL to look through it
 
 # Other
 + __Get onto SF website__
