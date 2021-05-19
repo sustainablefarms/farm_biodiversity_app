@@ -4,15 +4,16 @@ params:
   loadexampledata: TRUE
 output: 
   pdf_document: 
+    extra_dependencies: booktabs
     keep_tex: yes
     number_sections: yes
     toc: yes
     toc_depth: 2
-    extra_dependencies: "booktabs"
 header-includes:
   \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
   \usepackage{tikz}
   \usetikzlibrary{calc}
+  \graphicspath{{www/}}
 ---
 
 \begin{tikzpicture}[overlay, remember picture]
@@ -111,16 +112,12 @@ knitr::kable(makeniceprops(patchprops),
 # imgfilenames <- readRDS("data/imgfilenames.rds")
 topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
 imagetexfun <- function(specinfo){
-  imagetex <- if (file.exists(specinfo$imgfilename)){
-        paste0("\\includegraphics[width=1\\linewidth, height = 1\\linewidth, keepaspectratio]{",
+  imagetex <- paste0("\\includegraphics[width=1\\linewidth, height = 1\\linewidth, keepaspectratio]{",
                gsub("\\.[^.]*$", "", specinfo$imgfilename),
                "}",
                "\\\\ ",
                "\\textcopyright ",
                specinfo$copyrightholder)
-  } else {
-    paste0("\\fbox{", specinfo$species, "}")
-  }
 }
 buildspeclatex_imagestory <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
@@ -130,6 +127,7 @@ buildspeclatex_imagestory <- function(specname){
     "\\begin{minipage}{0.3\\textwidth}",
     imagetex,
     "\\end{minipage}",
+    "\\hspace{1ex}",
     "\\begin{minipage}{0.7\\textwidth}",
     gsub("http([^[:space:]]*)", "\\\\url{http\\1}", speciesinfo[specinforow, "story"]),
     "\\end{minipage}"
@@ -176,20 +174,15 @@ cat(" \\end{center} ")
 
 \clearpage
 # Vulnerable Species
-The Superb Parrot is listed as vulnerable by the \href{https://www.environment.gov.au/cgi-bin/sprat/public/publicthreatenedlist.pl}{Commonwealth Governement}.
-According to our model, there is a `r format(data$species_prob_current["Superb Parrot", "median"] * 100, digits = 2)`% 
-(lower bound = `r format(data$species_prob_current["Superb Parrot", "lower"] * 100, digits = 2)`%, upper bound = `r format(data$species_prob_current["Superb Parrot", "upper"] * 100, digits = 2)`%)
-chance of the Superb Parrot occupying a box gum grassy woodland patch on your farm.
 
 ```{r superbparrotinfo, results='asis'}
 texs <- lapply(consstatus$CommonName, function(specname){
-  heading <- paste0("\\subsection*{", specname, "}")
-  intro <- paste("The", specname, consstatus[specname, "statussummary"],
+  probs <- paste("The", specname, consstatus[specname, "statussummary"],
           onespecwords(specname, data$species_prob_current))
   imagewstory <- buildspeclatex_imagestory(specname)
-  return(c(heading, intro, imagewstory))
+  return(c(imagewstory, probs, "\n"))
 })
-lapply(texs, cat)
+a <- lapply(texs, cat)
 ```
 
 \clearpage
