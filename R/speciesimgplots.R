@@ -7,7 +7,7 @@ specimageOut <- function(specinfo, height = "200px"){
 
      out <- tags$div(specinfo$species,
 		 infotooltip(title = specinfo$story),
-                  style = "float: left",
+                  style = "float: left; text-align: center",
                   tags$br(),
         linknewtab(
           href = specinfo$url,
