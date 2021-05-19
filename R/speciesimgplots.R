@@ -1,13 +1,12 @@
 # functions used in predictionsdetails_module for plotting species images
 
-specimageOut <- function(specinfo, id, height = "200px", includestory = TRUE){
+specimageOut <- function(specinfo, height = "200px"){
 	if (grepl("birdlifephotography.org.au", specinfo$copyrightholder)){
 		cpyrht <- tags$div(linknewtab(href = "birdlifephotography.org.au",
-                                     HTML("&copy;"),
-				     gsub("birdlifephotography.org.au", "", specinfo$copyrightholder)))
+                                     HTML(paste0("&copy;",
+				     gsub("birdlifephotography.org.au", "", specinfo$copyrightholder)))))
 	} else {
-		cpyrht <- tags$div(HTML("&copy;"),
-				   specinfo$copyrightholder
+		cpyrht <- tags$div(HTML(paste0("&copy;", specinfo$copyrightholder))
 				   )
 	}
 
@@ -20,7 +19,6 @@ specimageOut <- function(specinfo, id, height = "200px", includestory = TRUE){
           style="text-align: center",
           tags$img(src = gsub(".*/data/birdlifeimgs/", "", specinfo$imgfilename),
                    alt = specinfo$species, height = height),
-          # imageOutput(id, height = height, inline = TRUE),
           `data-toggle` = "tooltip",
           `data-placement` = 'auto top',
           `data-viewport` = "{'selector': ':root'}",

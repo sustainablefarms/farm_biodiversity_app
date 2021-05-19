@@ -10,20 +10,14 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
     fluidRow(
       id = ns("topten5"),
       style="text-align: center",
-      lapply(1:5, function(idx) specimageOut(
+      lapply(1:10, function(idx) specimageOut(
         speciesinfo_topten[idx, ],
-        paste0("img_", gsub(" ", "-", speciesinfo_topten[idx, "species"]))))
+        height = "100px"))
       ),
-    fluidRow(
-      style="text-align: center",
-      lapply(6:10, function(idx) specimageOut(speciesinfo_topten[idx, ],
-					     ns(paste0("top", idx))))
-    ),
     HTML("<div class='subheader'><h2>10 LEAST LIKELY BIRDS</h2></div>"),
     fluidRow(
       style="text-align: center",
-      lapply(1:10, function(idx) specimageOut(speciesinfo_botten[idx, ],
-					     ns(paste0("bot", idx)),
+      lapply(10:1, function(idx) specimageOut(speciesinfo_botten[idx, ],
                                              height = "100px"))
     ),
     HTML("<div class='subheader'><h2>A VULNERABLE SPECIES: SUPERB PARROT</h2></div>"),

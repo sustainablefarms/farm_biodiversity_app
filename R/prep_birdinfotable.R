@@ -19,7 +19,6 @@ prep_birdinfotable <- function(){
 
 load_birdinfotable <- function(){
   infotable <- readRDS("./data/birdinfotable.rds")
-  infotable$imgfilename <- normalizePath(infotable$imgfilename)
   speciesinfo <<- infotable
   return(speciesinfo)
 }
