@@ -175,14 +175,21 @@ cat(" \\end{center} ")
 ```
 
 \clearpage
-# A Vulnerable Species: Superb Parrot
+# Vulnerable Species
 The Superb Parrot is listed as vulnerable by the \href{https://www.environment.gov.au/cgi-bin/sprat/public/publicthreatenedlist.pl}{Commonwealth Governement}.
 According to our model, there is a `r format(data$species_prob_current["Superb Parrot", "median"] * 100, digits = 2)`% 
 (lower bound = `r format(data$species_prob_current["Superb Parrot", "lower"] * 100, digits = 2)`%, upper bound = `r format(data$species_prob_current["Superb Parrot", "upper"] * 100, digits = 2)`%)
 chance of the Superb Parrot occupying a box gum grassy woodland patch on your farm.
 
 ```{r superbparrotinfo, results='asis'}
-cat(buildspeclatex_imagestory("Superb Parrot"))
+texs <- lapply(consstatus$CommonName, function(specname){
+  heading <- paste0("\\subsection*{", specname, "}")
+  intro <- paste("The", specname, consstatus[specname, "statussummary"],
+          onespecwords(specname, data$species_prob_current))
+  imagewstory <- buildspeclatex_imagestory(specname)
+  return(c(heading, intro, imagewstory))
+})
+lapply(texs, cat)
 ```
 
 \clearpage

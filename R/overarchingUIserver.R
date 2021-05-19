@@ -12,6 +12,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   # preptraits(model_data)
   loadtraits2global()
   load_birdinfotable()
+  consstatus <<- load_constatus()
   appname <<- "Bird Checker"
   appversion <<- "0.5"
   appurl <<- "https://sustfarm.shinyapps.io/bird_checker/"

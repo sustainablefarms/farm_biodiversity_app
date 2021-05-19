@@ -21,19 +21,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
                                              height = "100px"))
     ),
     HTML("<div class='subheader'><h2>VULNERABLE SPECIES</h2></div>"),
-    vulnerablespecUI(ns, "Superb Parrot",
-                     constatuswords = paste("is listed as vulnerable federally",
-                     "and in Victoria, and is listed as threatened in NSW.")
-                     ),
-    vulnerablespecUI(ns, "Dusky Woodswallow",
-                     constatuswords = paste("is listed as vulnerable in NSW.")
-                     ),
-    vulnerablespecUI(ns, "Brown Treecreeper",
-                     "is listed as vulnerable in NSW."),
-    vulnerablespecUI(ns, "Grey-crowned Babbler",
-                        "is listed as vulnerable in NSW and threatened in Victoria."),
-    vulnerablespecUI(ns, "Diamond Firetail",
-                     "is listed as vulnerable in NSW and threatened in Victoria."),
+    lapply(consstatus$CommonName, function(specname) vulnerablespecUI(ns, specname)),
   ), 
   column(6, 
     HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY OF ALL SPECIES</h2></div>"),
@@ -56,10 +44,10 @@ predictionsdetailServer <- function(id,
     function(input, output, session){
       ns <- session$ns
       
-      constatspecies <- readRDS("./data/consstatus.rds")
-      lapply(constatspecies$CommonName, function(specname){
+      lapply(consstatus$CommonName, function(specname){
         output[[gsub("(-| )", "", specname)]] <- renderText({
-          onespecwords(specname, data$species_prob_current)
+          c("The", specname, consstatus[specname, "statussummary"],
+          onespecwords(specname, data$species_prob_current))
         })
       })
       
