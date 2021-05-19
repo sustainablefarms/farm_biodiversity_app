@@ -13,7 +13,7 @@ infopopover <- function(title,
             `data-trigger` = trigger,
             `data-html` = html,
             `data-content` = content,
-            style = "cursor: pointer;",
+            style = "cursor: pointer; font-size: 150%;",
             `data-placement` = placement,
             ...)
 }
@@ -30,7 +30,7 @@ infotooltip <- function(title,
             title = title,
             `data-trigger` = trigger,
             `data-html` = html,
-            style = "cursor: pointer;",
+            style = "cursor: pointer; font-size: 120%; color: #CC9900",
             `data-placement` = placement,
             ...)
 }
