@@ -253,7 +253,6 @@ selectlocationServer <- function(id){
     climate_modal(ns, 
 		  "The average annual maximum temperature from 1960 - 1990 was estimated by",
                   linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
-    )
   })
   observeEvent(input$show_mintemp_modal, {
     validate(need(outOfModule$selected_region, ""))
