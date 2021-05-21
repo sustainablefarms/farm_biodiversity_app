@@ -1,0 +1,2 @@
+# ImageMagick bash command to make lowres bird photos. Executed in the www directory.
+for file in *.jpg; do convert $file -resize x200 lowres-$file; done
