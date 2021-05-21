@@ -249,26 +249,35 @@ selectlocationServer <- function(id){
   observeEvent(input$show_maxtemp_modal, {
     validate(need(outOfModule$selected_region, ""))
     click_values$climate <- "MaxTWarmMonth"
-    click_values$climate_title <- "Maximum temperature (Celsius)"
-    climate_modal(ns)
+    click_values$climate_title <- "Annual Maximum temperature (Celsius)"
+    climate_modal(ns, 
+		  "The average annual maximum temperature from 1960 - 1990 was estimated by",
+                  linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
+    )
   })
   observeEvent(input$show_mintemp_modal, {
     validate(need(outOfModule$selected_region, ""))
     click_values$climate <- "MinTColdMonth"
-    click_values$climate_title <- "Minimum temperature (Celsius)"
-    climate_modal(ns)
+    click_values$climate_title <- "Average Minimum Temperature (Celsius)"
+    climate_modal(ns,
+		  "The average annual minimum temperature from 1960 - 1990 was estimated by",
+                  linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
   })
   observeEvent(input$show_precip_warm_modal, {
     validate(need(outOfModule$selected_region, ""))
     click_values$climate <- "PrecWarmQ"
-    click_values$climate_title <- "Summer precipitation (mm)"
-    climate_modal(ns)
+    click_values$climate_title <- "Summer Precipitation (mm)"
+    climate_modal(ns,
+		  "The summer precipitation is the average precipitation of the warmest quarter from 1960 - 1990 estimated by",
+                  linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
   })
   observeEvent(input$show_precip_cold_modal, {
     validate(need(outOfModule$selected_region, ""))
     click_values$climate <- "PrecColdQ"
-    click_values$climate_title <- "Winter precipitation (mm)"
-    climate_modal(ns)
+    click_values$climate_title <- "Winter Precipitation (mm)"
+    climate_modal(ns,
+		  "The winter precipitation is the average precipitation of the coldest quarter from 1960 - 1990 estimated by",
+                  linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
   })
       
       outOfModule
