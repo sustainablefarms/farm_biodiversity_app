@@ -70,10 +70,7 @@ patch_modal <- function(
             html = TRUE,
             title = tags$html(
                 "Noisy miners are easy to notice.",
-                "They are loud and are aggresive towards other birds.",
-                "They prefer woodland that has few low trees or shrubs.",
-                tags$br(),
-                "Often other small birds do not live in the same patch as noisy miners.",
+		"Noisy miners are native birds that can aggressively exclude other bird species from areas. They prefer habitats where there is little midstorey layer (woody plants 2m-10m in height). Farms where noisy miner populations are present will have a very different suite of small native birds than farms where noisy miners are absent or in low numbers. Underplanting shelterbelts or remnant woodland with native shrubs (eg wattles, tea-trees, bottlebrushes etc) will help deter noisy miners."
                 tags$br(),
                 "Visit",
                linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
