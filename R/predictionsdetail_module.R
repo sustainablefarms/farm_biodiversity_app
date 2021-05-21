@@ -5,6 +5,16 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
+  column(6, 
+    HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY OF ALL SPECIES</h2></div>"),
+    fluidRow(
+      plotOutput(ns("allspecies"), height = "800px")
+    ),
+    HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY RELATIVE TO REFERENCE</h2></div>"),
+    fluidRow(
+      plotOutput(ns("allspeciesrel"), height = "800px")
+    )
+  ),
   column(6,
     HTML("<div class='subheader'><h2>10 MOST LIKELY BIRDS</h2></div>"),
     fluidRow(
@@ -22,17 +32,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
     ),
     HTML("<div class='subheader'><h2>VULNERABLE SPECIES</h2></div>"),
     lapply(consstatus$CommonName, function(specname) vulnerablespecUI(ns, specname)),
-  ), 
-  column(6, 
-    HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY OF ALL SPECIES</h2></div>"),
-    fluidRow(
-      plotOutput(ns("allspecies"), height = "800px")
-    ),
-    HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY RELATIVE TO REFERENCE</h2></div>"),
-    fluidRow(
-      plotOutput(ns("allspeciesrel"), height = "800px")
-    )
-  )
+  ) 
   )
 }
 

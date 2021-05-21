@@ -1,9 +1,9 @@
 # functions used in predictionsdetails_module for plotting species images
 
 specimageOut <- function(specinfo, height = "200px"){
-		cpyrht <- tags$div(style = "font-size: 70%", linknewtab(href = "birdlifephotography.org.au",
-                                     HTML(paste0("&copy;",
-				     gsub("birdlifephotography.org.au", "", specinfo$copyrightholder)))))
+	 cpyrht <- tags$div(style = "font-size: 70%",
+	                    linknewtab(href = paste0("https://birdlifephotography.org.au/index.php/show-image?return=search&single&id=", specinfo$birdlife_id),
+                                     HTML(paste0("&copy;", gsub("birdlifephotography.org.au", "", specinfo$copyrightholder)))))
 
      out <- tags$div(specinfo$species,
 		 infotooltip(title = specinfo$story),

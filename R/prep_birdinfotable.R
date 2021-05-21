@@ -10,6 +10,7 @@ prep_birdinfotable <- function(){
              url = urls[model_data$species],
              story = unlist(stories[model_data$species], recursive = FALSE),
              imgfilename = imgs[model_data$species, "filename"],
+             birdlife_id = imgs[model_data$species, "birdlife_id"],
              copyrightholder = imgs[model_data$species, "copyrightholder"],
              shortstory = shortstories[model_data$species, 1])
   rownames(specinfoframe) <- specinfoframe$species
@@ -19,6 +20,7 @@ prep_birdinfotable <- function(){
 
 load_birdinfotable <- function(){
   infotable <- readRDS("./data/birdinfotable.rds")
+  infotable$imgfilename <- paste0("lowres-", infotable$imgfilename)
   speciesinfo <<- infotable
   return(speciesinfo)
 }
