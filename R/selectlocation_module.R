@@ -28,7 +28,7 @@ selectlocationUI <- function(id){
              plotOutput(ns("map"), height = "200px")
              )
          ),
-         # HTML("<div class='subheader'><h2>CLIMATE</h2></div>"),
+         HTML("<div class='subheader'><h2>LONG-TERM AVERAGE</h2></div>"),
          fluidRow(
            column(width = 6,
               uiOutput(ns("show_maxtemp")),
@@ -179,12 +179,13 @@ selectlocationServer <- function(id){
       
   ## CLIMATE buttons and plots
       ns <- session$ns
+
   output$show_maxtemp <- renderUI({
     if(length(outOfModule$selected_region) > 0){
       actionButton2(
         inputId = ns("show_maxtemp_modal"),
         label = HTML(paste0(
-          "Maximum<br>Temperature<h3>",
+          "Annual<br>Maximum<br>Temperature<h3>",
           round(outOfModule$MaxTWarmMonth.lt * 0.1, 1),
           "&deg;C</h3>")),
         class = "badge",
@@ -198,7 +199,7 @@ selectlocationServer <- function(id){
       actionButton2(
         inputId = ns("show_mintemp_modal"),
         label = HTML(paste0(
-          "Minimum<br>Temperature<h3>",
+          "Annual<br>Minimum<br>Temperature<h3>",
           format(outOfModule$MinTColdMonth.lt * 0.1, digits = 3, trim = TRUE),
           "&deg;C</h3>")),
         class = "badge",
