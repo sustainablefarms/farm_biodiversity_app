@@ -30,10 +30,19 @@ selectYfAServer <- function(id, locationinfo){
         # PrecColdQ.YfA          = new_data_mean$PrecColdQ.YfA,
         # PrecSeasonality.YfA    = new_data_mean$PrecSeasonality.YfA
       )
+
+      stopifnot(is.reactivevalues(locationinfo))
       observe({
+	validate(need(locationinfo$AnnPrec.lt, ""))
+	updateSliderInput(inputId = "AnnPrec.YfA",
+			  value = locationinfo$AnnPrec.lt)
+      })
+
+      observeEvent(input$AnnPrec.YfA, {
         # outOfModule$AnnMeanTemp.YfA <- input$AnnMeanTemp.YfA
         outOfModule$AnnPrec.YfA <- input$AnnPrec.YfA
       })
+
       
       output$annprec.lt.region <- renderText({
         validate(need(locationinfo$selected_region, ""))
