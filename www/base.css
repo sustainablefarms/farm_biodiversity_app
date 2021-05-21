@@ -162,7 +162,7 @@ plottitle {
 
 .tooltip-inner {
     text-align: left;
-    min-width: 100px;
+    min-width: 300px;
     max-width: 300px; 
 }
 
