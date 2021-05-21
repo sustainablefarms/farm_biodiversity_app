@@ -2,12 +2,12 @@
 selectYfAUI <- function(id){
   ns <- NS(id)
   tagList(
-         HTML("<div class='subheader'><h2>SINCE LAST AUGUST</h2></div>"),
-        tags$div("Rainfall (mm)"),
+         HTML("<div class='subheader'><h2>RAINFALL SINCE LAST AUGUST</h2></div>"),
+        tags$div("Approximate Rainfall Since Last August (mm)"),
         sliderInput(
           inputId = ns("AnnPrec.YfA"),
           label = NULL,
-          min = 450, max = 1050, step = 10,
+          min = 450, max = 1050, step = 20,
 	  width = "100%",
           value = new_data_mean$AnnPrec.YfA),
        tags$div(textOutput(ns("annprec.lt.region"), inline = TRUE))
