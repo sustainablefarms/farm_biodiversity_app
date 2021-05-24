@@ -13,7 +13,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   loadtraits2global()
   load_birdinfotable()
   consstatus <<- load_constatus()
-  appname <<- "Bird Checker"
+  appname <<- "Bird Checker: A Bird Occupancy Estimator"
   appversion <<- "0.6"
   appurl <<- "https://sustfarm.shinyapps.io/bird_checker/"
   covarnicenames_tbl <<- read.csv("./data/nicecovarnames.csv", header = TRUE)
