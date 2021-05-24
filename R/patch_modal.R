@@ -6,8 +6,8 @@ patch_modal <- function(
   IsRemnant = NULL,
   ns #the namespace function
 ){
-  if(is.null(woody500m) | is.na(woody500m)){woody500m <- 7}
-  if(is.null(woody3000m) | is.na(woody3000m)){woody3000m <- 7}
+  if(is.null(woody500m) | is.na(woody500m)){woody500m <- round(new_data_mean$WCF_500/0.5) * 0.5}
+  if(is.null(woody3000m) | is.na(woody3000m)){woody3000m <- round(new_data_mean$WCF_3000/0.5) * 0.5}
   if(is.null(noisy_miner) | is.na(noisy_miner)){noisy_miner <- TRUE}
   if(is.null(IsRemnant) | is.na(IsRemnant)){IsRemnant <- TRUE}
   showModal(
@@ -31,7 +31,7 @@ patch_modal <- function(
                     ),
           sliderInput(label = NULL,
             inputId = ns(paste0("pc_woody500m_", value)),
-            min = 2, max = 20, step = 1,
+            min = 2, max = 20, step = 0.5,
 	    width = "100%",
             value = woody500m)
           ),
@@ -49,7 +49,7 @@ patch_modal <- function(
                     ),
           sliderInput(label = NULL,
             inputId = ns(paste0("pc_woody3000m_", value)),
-            min = 2, max = 20, step = 1,
+            min = 2, max = 20, step = 0.5,
 	    width = "100%",
             value = woody3000m)
           ),
