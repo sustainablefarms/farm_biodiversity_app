@@ -1,3 +1,10 @@
+.shiny-plot-output {
+  max-width: 300px;
+  padding-right: 100px;
+  background-color: #eeeeee;
+  onload: loadImage();
+}
+
 img.logo {
   width: 100px;
   padding-left: 20px;

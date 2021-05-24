@@ -1,6 +1,9 @@
 predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
   ns <- NS(id)
   fluidPage(
+    tags$script("function loadImage() {
+    alert('Image is loaded');
+}"),
     tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
       })"
@@ -8,6 +11,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
   column(6, 
     HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY OF ALL SPECIES</h2></div>"),
     fluidRow(
+      onload = "loadImage();",
       plotOutput(ns("allspecies"), height = "800px")
     ),
     tags$div(class='subheader',
