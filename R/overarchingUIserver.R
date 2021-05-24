@@ -39,7 +39,7 @@ ui <- function(){
     HTML("<div class='header'>"),
     fluidRow(
       column(width = 2,
-             tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "50px")),    
+             tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px")),    
     column(width = 10, offset = 0, 
       tags$span(class = 'main', appname),
       tags$span(style = "white-space:nowrap;", tags$em(HTML("Set your region. Set your woodland patches. See your birds."))),
