@@ -1,10 +1,22 @@
 predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
   ns <- NS(id)
   fluidPage(
+    waiter::use_waiter(),
     tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
       })"
-    ),
+     ),
+    tags$script("
+      Shiny.addCustomMessageHandler('plotfinished', function(state){
+	alert('Image is loaded');
+      });
+    "),
+#    tags$script("
+#      Shiny.addCustomMessageHandler('plotfinished', function(state){
+#	$('.img').each(function(index){this.attr('src', 'img/new-image.jpg')};
+#	alert('Image is loaded');
+#      });
+#    "),
   column(6, 
     HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY OF ALL SPECIES</h2></div>"),
     fluidRow(
@@ -58,11 +70,16 @@ predictionsdetailServer <- function(id,
       })
       
       output$allspecies <- renderPlot({
+	showNotification("Building plots.")
         plot_allspeciesprob(data$species_prob_current)
       })
       
       output$allspeciesrel <- renderPlot({
-        plot_allspeciesrel(data$spec_different)
+	Sys.sleep(3)
+        out <- plot_allspeciesrel(data$spec_different)
+	showNotification("Plots Finished.")
+	session$sendCustomMessage("plotfinished", TRUE)
+	out
       })
     })
   }
