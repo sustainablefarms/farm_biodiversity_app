@@ -36,9 +36,13 @@ predictionsUI <- function(id, usedflt){
           plotly::plotlyOutput(ns("common_species"), height = "300px")
         ),
         column(width = 6,
-          tags$span(HTML("<plottitle>Ratio to Reference</plottitle>"),
-                  infotooltip(HTML("The ratio of the estimate probability occupancy to the reference probability occupancy.",
+          tags$span(HTML("<plottitle>Relative Probability (Ratio to Reference)</plottitle>"),
+                  infotooltip(HTML("This is the ratio of each species' estimated occupancy probability to the reference occupancy probability.",
+				   "For example, if the Superb Parrot has a ratio of '2', then it is estimated that the Superb Parrot is twice as likely to live in your farm's woodland than in the reference farm.",
                                    "The species with the 10 biggest ratios are shown.",
+				   "<br><br>",
+				   "Each row is a species. The ratio is given in the white box. The length and colours of the bars also represent the ratio.",
+				   "Hover over a bar to get more information about that species.",
                                    "<br><br>The reference can be set using the 'Update' button and 'Use default' checkbox below this figure.",
                                    "<br><br>The ratios of all species can be seen by clicking 'View More Detail' or downloading a report."))
           ),
