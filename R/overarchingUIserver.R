@@ -14,7 +14,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   load_birdinfotable()
   consstatus <<- load_constatus()
   appname <<- "Bird Checker"
-  appversion <<- "0.5"
+  appversion <<- "0.6"
   appurl <<- "https://sustfarm.shinyapps.io/bird_checker/"
   covarnicenames_tbl <<- read.csv("./data/nicecovarnames.csv", header = TRUE)
   apptempdir <<- tempdir()
