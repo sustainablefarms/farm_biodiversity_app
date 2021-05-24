@@ -4,6 +4,12 @@ plot_allspeciesrel <- function(spec_different){
   traits <- get("traits", envir = globalenv())
   df_both <- dplyr::left_join(spec_different, traits, by = c(species = "Common Name"))
   
+  if (all(abs(df_both$value - 1) < 1E-3)){
+      trans <- "identity"
+  } else {
+      trans <- "log2"
+  }
+
   df_both %>%
     dplyr::rename(`Common Name` = species) %>%
     dplyr::mutate(`Common Name` = paste(`Common Name`, format(value, digits = 2))) %>%
@@ -14,8 +20,8 @@ plot_allspeciesrel <- function(spec_different){
     coord_flip(clip = "off") +
     scale_x_discrete(name = "Increasing Body Length ---->") +
     scale_y_continuous(name = "Ratio", 
-                       trans = "log2") +
-    scale_fill_continuous(trans = "log2") +
+                       trans = trans) +
+    scale_fill_continuous(trans = trans) +
     # scale_fill_distiller(palette = "BrBG", trans = "log10", direction = 1) +
     ggtitle("Relative Occupancy Probability") +
     theme_minimal() +
