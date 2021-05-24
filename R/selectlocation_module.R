@@ -161,7 +161,7 @@ selectlocationServer <- function(id){
         })
         # draw a map
         output$map <- renderPlot({
-          validate(need(outOfModule$selected_region, "Please select region"))
+          validate(need(outOfModule$selected_region, "Please select your region"))
           data$polygons <- readRDS("data/sa2_polygons.rds")
           # map_text <- data$points[data$points$label == outOfModule$selected_region, ]
           # map_text$label <- paste(strsplit(map_text$label, " ")[[1]], collapse = "\n")
