@@ -31,7 +31,7 @@ patch_modal <- function(
                     ),
           sliderInput(label = NULL,
             inputId = ns(paste0("pc_woody500m_", value)),
-            min = 2, max = 20, step = 2,
+            min = 2, max = 20, step = 1,
 	    width = "100%",
             value = woody500m)
           ),
@@ -49,7 +49,7 @@ patch_modal <- function(
                     ),
           sliderInput(label = NULL,
             inputId = ns(paste0("pc_woody3000m_", value)),
-            min = 2, max = 20, step = 2,
+            min = 2, max = 20, step = 1,
 	    width = "100%",
             value = woody3000m)
           ),
