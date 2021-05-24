@@ -135,7 +135,8 @@ server <- function(input, output, session) {
   ## Help
   observeEvent(input$overallhelp, {
     showModal(moreinfomodal())
-    })
+    },
+    ignoreNULL = FALSE)
   if (isTRUE(getOption("shiny.testmode"))){
     output$downloadcvals <- downloadHandler(
       filename = "current_values.rds",
