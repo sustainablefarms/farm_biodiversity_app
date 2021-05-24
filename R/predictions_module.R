@@ -26,7 +26,7 @@ predictionsUI <- function(id, usedflt){
       fluidRow(
         column(width = 6, 
            tags$div(HTML("<plottitle>Most Likely Species</plottitle>"),
-                  infotooltip(title = HTML("The 10 most likely species to live on your farm according to our model.",
+                  infotooltip(title = HTML("The 10 most likely species to live in your farm's box gum grassy woodland according to our model.",
 "Bar length and printed percentage indicate the estimated probability of occupancy for each of the species, ignoring interactions between species.",
 "When there are multiple patches, the occupancy probability is the maximum of the occupancy probability of the individual patches.",
 "<br><br>The error bars summarise uncertainty due to the uncertainty of the model parameters.",
