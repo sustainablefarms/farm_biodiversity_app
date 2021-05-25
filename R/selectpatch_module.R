@@ -11,7 +11,8 @@ selectpatchUI <- function(id){
        div(
         actionButton2(
           inputId = ns("patch_number_1"),
-          label = "Patch #1",
+          label = tags$span("Patch #1",
+	     htmlOutput(outputId = ns("patch_num_complete_1"), inline = TRUE)),
           class = "patch_badge"),
         `data-toggle`="tooltip",
         `data-html` = TRUE,
@@ -51,6 +52,17 @@ selectpatchServer <- function(id){
         patches = NULL)
       
   ## FARM
+
+  # orange tick for patch number 1
+  output[["patch_num_complete_1"]] <- renderUI({
+	tags$span(class="glyphicon glyphicon-warning-sign", 
+		  style = "color: #CC9900;",
+		  tabindex = "0",
+		  `data-toggle` = "tooltip",
+		  title = "Please set the attributes of this patch.",
+		  `data-trigger` = "focus hover",
+		  `data-placement` = "auto"
+		  )})
 
   # number of patches
   output$patch_selector <- renderUI({
@@ -128,10 +140,11 @@ selectpatchServer <- function(id){
           ns
         )
       })
+      # add orange tick
       lapply(update$add_values, function(a){
 	output[[paste0("patch_num_complete_", a)]] <- renderUI({
-			tags$span(class="glyphicon glyphicon-ok", 
-				  style = "color: #a9a9a9;"
+			tags$span(class="glyphicon glyphicon-warning-sign", 
+				  style = "color: #CC9900;"
 				  )})
       })
       update$add_logical <- FALSE
@@ -212,7 +225,7 @@ selectpatchServer <- function(id){
     # add a green tick
     output[[paste0("patch_num_complete_", previous_values$selected_patch)]] <- renderUI({
 			tags$span(class="glyphicon glyphicon-ok", 
-				  style = "color: #006666;"
+				  style = "color: white;"
 				  )})
 
     removeModal()
