@@ -21,7 +21,8 @@ prep_birdinfotable <- function(){
 load_birdinfotable <- function(){
   infotable <- readRDS("./data/birdinfotable.rds")
   infotable$imgfilename <- paste0("lowres-", infotable$imgfilename)
-  infotable$shortstory <- gsub('(.{1,30})(\\s)', '\\1<br>', infotable$shortstory)
+  tmp <- gsub('(.{1,20})(\\s|$)', '\\1<br>', infotable$shortstory) #20 characters long and leaves a <br> at the end
+  infotable$shortstory <- gsub('<br>$', '', tmp)
   speciesinfo <<- infotable
   return(speciesinfo)
 }
