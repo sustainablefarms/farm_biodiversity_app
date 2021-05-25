@@ -128,6 +128,12 @@ selectpatchServer <- function(id){
           ns
         )
       })
+      lapply(update$add_values, function(a){
+	output[[paste0("patch_num_complete_", a)]] <- renderUI({
+			tags$span(class="glyphicon glyphicon-ok", 
+				  style = "color: #a9a9a9;"
+				  )})
+      })
       update$add_logical <- FALSE
       previous_values$patches <- current_values$patches
       current_values$woody500m[update$add_values] <- NA
@@ -144,6 +150,9 @@ selectpatchServer <- function(id){
       lapply(update$remove_values, function(a){
         removeUI(
           selector = paste0("#patch_number_", a)  #the '#' here tells jQuery to find the UI element based on element id.
+	  )
+	removeUI(
+          selector = paste0("#patch_num_complete_", a)  #the '#' here tells jQuery to find the UI element based on element id.
         )
       })
       update$remove_logical <- FALSE
@@ -199,7 +208,15 @@ selectpatchServer <- function(id){
       paste0("noisy_miner_", previous_values$selected_patch)]]
     current_values$IsRemnant[previous_values$selected_patch] <- input[[
       paste0("IsRemnant_", previous_values$selected_patch)]]
+
+    # add a green tick
+    output[[paste0("patch_num_complete_", previous_values$selected_patch)]] <- renderUI({
+			tags$span(class="glyphicon glyphicon-ok", 
+				  style = "color: #006666;"
+				  )})
+
     removeModal()
+
     
     if (length(current_values$woody500m) == current_values$patches &
       !any(is.na(current_values$woody500m)) &

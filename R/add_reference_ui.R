@@ -12,7 +12,8 @@ add_reference_ui <- function(
         inputId = ns(paste0("patch_number_", entry_number)),
         label = paste0("Patch #", entry_number),
         class = "patch_badge"
-      )
+      ),
+	     htmlOutput(outputId = ns(paste0("patch_num_complete_", entry_number)), inline = TRUE)
     )
   )
 }
