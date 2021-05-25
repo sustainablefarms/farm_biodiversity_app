@@ -8,7 +8,6 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
      ),
     tags$script("
       Shiny.addCustomMessageHandler('plotfinished', function(state){
-	alert('Image is loaded');
 	$('.specimg').each(function(index){$( this ).attr('src', $( this ).attr('data-src'))});
       });
     "),
@@ -56,7 +55,8 @@ predictionsdetailServer <- function(id,
     id,
     function(input, output, session){
       ns <- session$ns
-      w <- waiter::Waiter$new(id = c(ns("allspeciesrel"), ns("allspecies")))
+      wprob <- waiter::Waiter$new(id = ns("allspecies"))
+      wrel <- waiter::Waiter$new(id = ns("allspeciesrel"))
       
       lapply(consstatus$CommonName, function(specname){
         output[[gsub("(-| )", "", specname)]] <- renderText({
@@ -66,19 +66,16 @@ predictionsdetailServer <- function(id,
       })
       
       output$allspecies <- renderPlot({
-	w$show()
-	showNotification("Building plots.")
+	wprob$show()
+	on.exit(wprob$hide())
         plot_allspeciesprob(data$species_prob_current)
       })
       
       output$allspeciesrel <- renderPlot({
-	w$show()
-	Sys.sleep(3)
-        out <- plot_allspeciesrel(data$spec_different)
-	showNotification("Plots Finished.")
-	session$sendCustomMessage("plotfinished", TRUE)
-	w$hide()
-	out
+	wrel$show()
+	on.exit(wrel$hide())
+	on.exit(session$sendCustomMessage("plotfinished", TRUE))
+        plot_allspeciesrel(data$spec_different)
       })
     })
   }

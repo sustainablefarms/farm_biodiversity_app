@@ -171,9 +171,7 @@ predictionsServer <- function(id,
       })
       
       # modal more detail stuff
-      w <<- NULL
       observeEvent(input$moredetail, {
-	showNotification("Modal Opening")
         showModal(
           modalDialog(
             predictionsdetailUI(ns("detail"), isolate(data$speciesinfo_topten), isolate(data$speciesinfo_botten)),
@@ -185,18 +183,13 @@ predictionsServer <- function(id,
             )
           )
         )
-	showNotification("Modal Opened")
-        w <- waiter::Waiter$new(id = "pred-detail-allspeciesrel")
-	w$show()
-	Sys.sleep(3)
-	w$hide()
       })
+      predictionsdetailServer("detail", data)
       
       observeEvent(input$hide, 
                    removeModal()
       )
       
-      predictionsdetailServer("detail", data)
       
       output$downloaddata <- downloadHandler(
         filename = "predictions.csv",
