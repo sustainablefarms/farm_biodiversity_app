@@ -13,6 +13,8 @@ specimageOut <- function(specinfo, height = "200px"){
           href = specinfo$url,
           style="text-align: center",
           tags$img(src = gsub(".*/data/birdlifeimgs/", "", specinfo$imgfilename),
+		   id = specinfo$species,
+		   class = "specimg",
                    alt = specinfo$species, height = height),
           `data-toggle` = "tooltip",
           `data-placement` = 'auto top',

@@ -9,11 +9,12 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
     tags$script("
       Shiny.addCustomMessageHandler('plotfinished', function(state){
 	alert('Image is loaded');
+	$('.specimg').each(function(index){$( this ).attr('src', 'img/new-image.jpg')});
       });
     "),
 #    tags$script("
 #      Shiny.addCustomMessageHandler('plotfinished', function(state){
-#	$('.img').each(function(index){this.attr('src', 'img/new-image.jpg')};
+#	$('img').each(function(index){this.attr('src', 'img/new-image.jpg')});
 #	alert('Image is loaded');
 #      });
 #    "),
@@ -61,6 +62,7 @@ predictionsdetailServer <- function(id,
     id,
     function(input, output, session){
       ns <- session$ns
+      w <- waiter::Waiter$new(id = c(ns("allspeciesrel"), ns("allspecies")))
       
       lapply(consstatus$CommonName, function(specname){
         output[[gsub("(-| )", "", specname)]] <- renderText({
@@ -70,15 +72,18 @@ predictionsdetailServer <- function(id,
       })
       
       output$allspecies <- renderPlot({
+	w$show()
 	showNotification("Building plots.")
         plot_allspeciesprob(data$species_prob_current)
       })
       
       output$allspeciesrel <- renderPlot({
+	w$show()
 	Sys.sleep(3)
         out <- plot_allspeciesrel(data$spec_different)
 	showNotification("Plots Finished.")
 	session$sendCustomMessage("plotfinished", TRUE)
+	w$hide()
 	out
       })
     })
