@@ -1,21 +1,5 @@
 moreinfomodal <- function(){
 out <- modalDialog(
-  tags$div(class='subheader', tags$h2("QUICK START")),
-  tags$p("This app is designed to estimate box gum grassy woodland bird species occupancy in a given spring for a single farm.",
-  "To use this app select the farm's region (this is used to approximate the farm's climate).",
-  "Then specify the rainfall that has occured in the 12 months up to the spring you are interested in.",
-  "Next describe the box gum grassy woodland patches on the farm:",
-  "first set the number of patches;",
-  "then click on each of buttons to specify the woody vegetation canopy within 500m and 3km of the patch centres,",
-  " whether the patch is a remnant, and whether noisy miners occupy the patch",
-  "(noisy miners are easy to detect - click on the 'i' icon when describing you patch to see more information)."
-  ),
-  
-  tags$p("Estimates of birds that occupy the farm, and the number of bird species will appear.",
-         "The attributes of the farm can be changed at any time, and the estimates will update automatically.",
-         "The birds estimates can be downloaded into a table, and more detail can be viewed or downloaded as a pdf report."
-  ),
-  
   tags$div(class='subheader', tags$h2("COMPARISONS TO A REFERENCE")),
   tags$p(referencesblurb),
   tags$p("The reference estimates can be set any time the app has produced a set of estimates."),
