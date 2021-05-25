@@ -6,7 +6,7 @@ out <- modalDialog(
   tags$p(
 	 tags$em("How to get estimates:"),
 	 "Enter your farm's region (left), the rainfall in the 12 months prior to spring you're interested in (lower left), and the number of woodland patches (top right). For each patch, click on the patch button to set the nearby and regional woody canopy amount for the year, whether the patch is a remnant, and whether Noisy Miners reside in the patch.",
-	 "These attributes can be changed at any time."
+	 "These attributes can be changed at any time.",
 	 "The app will then generate estimates of what bird species might reside in your patches."
         ),
   tags$p(tags$em("Use this app to:"), "Estimate birds that live on your farm, create a report, and see how it compares to the birds you've seen."),
