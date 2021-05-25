@@ -69,8 +69,13 @@ patch_modal <- function(
           infotooltip(
             html = TRUE,
             title = tags$html(
-                "Noisy Miners are easy to recognise.",
-		"They are native birds that can aggressively exclude other bird species from areas. They prefer habitats where there is little midstorey layer (woody plants 2m-10m in height). Farms where Noisy Miner populations are present will have a very different suite of small native birds than farms where Noisy Miners are absent or in low numbers. Underplanting shelterbelts or remnant woodland with native shrubs (eg wattles, tea-trees, bottlebrushes etc) will help deter Noisy Miners.",
+                "Noisy Miners are easy to recognise by their bright yellow eyes and beak.",
+		"Noisy Miners are native, but typically have a detrimental effect on other small bird species.",
+	        "This is because Noisy Miners are often aggressive towards other birds, preventing them from living in their patch.",
+
+		tags$br(), tags$br(),
+		"Noisy Miners dislike habitat with high amounts of midstorey (woody plants 2m-10m in height).",
+		"You can discourage Noisy Miners by increasing the amount of midstorey in your patch, such as through underplanting with wattles, tea-trees, bottlebrushes, and other native shrubs.",
                 tags$br(),
 	       	tags$br(),
                 "Visit",
