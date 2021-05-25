@@ -61,8 +61,9 @@ predictionsUI <- function(id, usedflt){
         column(width = 5, offset = 1,
           style = "text-align: right",
             "Reference:",
-          infotooltip(title = HTML("Use this section to modify the reference estimates.",
-                                   "The default reference estimates are estimates for the average patch in our training data.",
+          infotooltip(title = HTML(
+				   "<em>Comparing to Other Estimates</em>",
+				  referencesblurb,
                                    "<br><br><em>Update</em> sets the reference estimates to the current estimates.",
                                    "After setting the reference estimates for the first time, uncheck <em>Use Default</em> to use them.",
                                    "Initially the ratio of occupancy probabilities to reference probabilities will be all 1.",

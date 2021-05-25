@@ -16,12 +16,9 @@ out <- modalDialog(
          "The birds estimates can be downloaded into a table, and more detail can be viewed or downloaded as a pdf report."
   ),
   
-  tags$div(class='subheader', tags$h2("COMPARISONS")),
-  tags$p("The figures include estimates for a reference farm.",
-         "The default is a hypothetical farm with a single remnant patch that is occupied by noisy miners.",
-         "The climate, rainfall, and woody vegetation canopy of this patch is equal to the average of our training data."
-  ),
-  tags$p("The reference estimates can be updated at any time using the button and checkbox at the bottom right of the app."),
+  tags$div(class='subheader', tags$h2("COMPARISONS TO A REFERENCE")),
+  tags$p(referencesblurb),
+  tags$p("The reference estimates can be set any time the app has produced a set of estimates."),
          
 
   tags$div(class='subheader', tags$h2("HOW ARE THE ESTIMATES CALCULATED?")),
