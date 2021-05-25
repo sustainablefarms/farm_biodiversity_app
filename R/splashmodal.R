@@ -5,7 +5,7 @@ out <- modalDialog(
 	"Brown Treecreeper, Diamond Firetail, Dusky Woodswallow, Grey-crowned Babbler, and Superb Parrot."),
   tags$p(
 	 tags$em("How to get estimates:"),
-	 "Enter details about your farm's region (left), rainfall since last spring (lower left), and woodland patches (top right). The app will then generate estimates of what bird species might reside in your patches."
+	 "Enter your farm's region (left), rainfall since last spring (lower left), and details about your woodland patches (top right). The app will then generate estimates of what bird species might reside in your patches."
         ),
   tags$p(tags$em("Use this app to:"), "Estimate birds that live on your farm, create a report, and see how it compares to the birds you've seen."),
   tags$p(tags$em("Also use this app to:"), "Estimate, and compare, which birds might live on your farm under different scenarios:",
