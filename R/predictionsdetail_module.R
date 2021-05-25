@@ -12,7 +12,11 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
       });
     "),
   column(6, 
-    HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY OF ALL SPECIES</h2></div>"),
+    tags$div(class='subheader',
+	     tags$h2("OCCUPANCY PROBABILITY OF ALL SPECIES",
+                  infotooltip(title = tags$html(tags$p("Estimates of the occupancy probability for every species, arranged by body length."),
+					   proboccplotdescription))
+		     )),
     fluidRow(
       plotOutput(ns("allspecies"), height = "800px")
     ),

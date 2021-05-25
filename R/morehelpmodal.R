@@ -32,8 +32,11 @@ out <- modalDialog(
          "Long term climate is given by the centre of the selected region.",
          "The mean temperature of the previous 12 months was considered difficult for users to know, so was set to the long term average temperature.",
          "The total precipitation of the previous 12 months did influence some bird occupancy according to our model, and can be set by users of the app.",
-         "The remaining climate summaries of the previous 12 months had little influence on bird occupancy and were set to the equivalent long term climate averages.",
+         "The remaining climate-like summaries of the previous 12 months had little influence on bird occupancy and were set to mean of our data.",
          "For each set of occupancy estimates, the full set of environmental values used to make the estimates are given in the report that can be downloaded."),
+  tags$div(class='subheader', tags$h3("WHAT IS A PATCH?")),
+  patchdefn,
+  tags$p("This use of the term 'patch' comes from our focus on box gum grassy woodlands and the way bird survey locations were selected."),
   
   tags$div(class='subheader', tags$h3("FURTHER DETAILS")),
   tags$p("A manuscript for scientific publication is under development.",

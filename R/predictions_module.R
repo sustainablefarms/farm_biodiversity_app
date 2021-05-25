@@ -26,12 +26,8 @@ predictionsUI <- function(id, usedflt){
       fluidRow(
         column(width = 6, 
            tags$div(HTML("<plottitle>Most Likely Species</plottitle>"),
-                  infotooltip(title = HTML("The 10 most likely species to live in your farm's box gum grassy woodland according to our model.",
-"Bar length and printed percentage indicate the estimated probability of occupancy for each of the species, ignoring interactions between species.",
-"When there are multiple patches, the occupancy probability is the maximum of the occupancy probability of the individual patches.",
-"<br><br>The error bars summarise uncertainty due to the uncertainty of the model parameters.",
-"These error bars are 95&#37; credible intervals (highest posterior density intervals to be precise):",
-"if the modelling assumptions are correct and apply to this situation then there is a 95% probability that the actual on-ground occupancy probability is within the credible interval."))
+                  infotooltip(title = tags$html(tags$p("The 10 most likely species to live in your farm's box gum grassy woodland according to our model."),
+					   proboccplotdescription))
           ),
           plotly::plotlyOutput(ns("common_species"), height = "300px")
         ),
@@ -61,15 +57,15 @@ predictionsUI <- function(id, usedflt){
         column(width = 5, offset = 1,
           style = "text-align: right",
             "Reference:",
-          infotooltip(title = HTML(
-				   "<em>Comparing to Other Estimates</em>",
+          infotooltip(title = tags$html(tags$em("Comparing to Other Estimates"),
 				  referencesblurb,
-                                   "<br><br><em>Update</em> sets the reference estimates to the current estimates.",
-                                   "After setting the reference estimates for the first time, uncheck <em>Use Default</em> to use them.",
+                                   tags$p(tags$em("Update"), "sets the reference estimates to the current estimates.",
+                                   "After setting the reference estimates for the first time, uncheck", tags$em("Use Default"), "to use them.",
                                    "Initially the ratio of occupancy probabilities to reference probabilities will be all 1.",
-                                   "This will be the case until you alter attributes of the farm's woodland.",
-                                   "<br><br><em>Use Default</em>, when checked, overides the saved estimates with the default estimates.",
-                                   "Uncheck <em>Use Default</em> to use the saved reference.")),
+                                   "This will be the case until you alter attributes of the farm's woodland."),
+                                   tags$p(tags$em("Use Default,"), "when checked, overides the saved estimates with the default estimates.",
+                                   "Uncheck", tags$em("Use Default"), "to use the saved reference.")),
+		      HTML = TRUE),
             actionButton2(ns("savetoreference"), label = "Update", class = "badge_tiny", width = "80px"),
             inlinecheckBoxInput(ns("usedefaultreference"), label = "Use Default", value = is.null(usedflt) | isTRUE(usedflt))
                )

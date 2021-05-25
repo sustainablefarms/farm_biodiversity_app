@@ -22,7 +22,7 @@ patch_modal <- function(
           tags$html(tags$span("Nearby Woody Canopy: Woody vegetation canopy within 500m of patch centre (% area)"),
                     infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area within 500m of the patch centre.",
 "Tree canopy inside the patch is included.",
-                                              "It changes each year as the trees react to the prevailing weather.",
+                                              "It can change over time in response to rainfall, disturbances such as fire, and management (such as planting more trees).",
                                               "The percentage area of woody vegetation canopy can be obtained from",
                                               linknewtab(href = 'http://anuwald.science/tree',
                                                          "http://anuwald.science/tree"),

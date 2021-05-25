@@ -34,12 +34,13 @@ out <- modalDialog(
         ),
   tags$p(
          tags$em("More details on estimates:"),
-	 "See estimates for all 60 species and photos of your 10 most likely birds, and 10 least likely birds.",
-	 "Click on",
+	 "See estimates for all species and some photos by",
+	 "clicking",
           actionButton2("moredetail", "View More Detail", class = "download_badge"),
-	 "or download a",
+	 "or downloading a",
           actionButton2("downloadreport", "Report", class = "download_badge"),
-	 "These buttons appear at the bottom of the app after estimates have been created. You can also download a table of the estimates in '.csv' format."
+	 "You can also download a table of the estimates in '.csv' format.",
+	 "Hover over a species occupancy estimate to get insight into what model predictors influence that species."
         ),
 
 
