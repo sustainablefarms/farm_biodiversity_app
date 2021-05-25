@@ -12,7 +12,8 @@ specimageOut <- function(specinfo, height = "200px"){
         linknewtab(
           href = specinfo$url,
           style="text-align: center",
-          tags$img(src = gsub(".*/data/birdlifeimgs/", "", specinfo$imgfilename),
+          tags$img(`data-src` = gsub(".*/data/birdlifeimgs/", "", specinfo$imgfilename),
+		   src = "",
 		   id = specinfo$species,
 		   class = "specimg",
                    alt = specinfo$species, height = height),

@@ -9,15 +9,9 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
     tags$script("
       Shiny.addCustomMessageHandler('plotfinished', function(state){
 	alert('Image is loaded');
-	$('.specimg').each(function(index){$( this ).attr('src', 'img/new-image.jpg')});
+	$('.specimg').each(function(index){$( this ).attr('src', $( this ).attr('data-src'))});
       });
     "),
-#    tags$script("
-#      Shiny.addCustomMessageHandler('plotfinished', function(state){
-#	$('img').each(function(index){this.attr('src', 'img/new-image.jpg')});
-#	alert('Image is loaded');
-#      });
-#    "),
   column(6, 
     HTML("<div class='subheader'><h2>OCCUPANCY PROBABILITY OF ALL SPECIES</h2></div>"),
     fluidRow(
