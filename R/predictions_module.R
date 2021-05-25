@@ -184,12 +184,12 @@ predictionsServer <- function(id,
           )
         )
       })
-      predictionsdetailServer("detail", data)
       
       observeEvent(input$hide, 
                    removeModal()
       )
       
+      predictionsdetailServer("detail", data)
       
       output$downloaddata <- downloadHandler(
         filename = "predictions.csv",
