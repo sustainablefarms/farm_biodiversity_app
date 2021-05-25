@@ -43,6 +43,7 @@ ui <- function(){
     column(width = 10, offset = 0, 
       tags$span(class = 'main', appname),
       tags$span(style = "white-space:nowrap;", tags$em(HTML("Set your region. Set your woodland patches. See your birds."))),
+    actionButton2("intro", "Intro", class = "badge_tiny"),
     actionButton2("overallhelp", "More Help", class = "badge_tiny"),
       tags$span(class = 'subtitle', HTML("<br>Birds you can expect to see in your farm's box gum grassy woodland in spring.")),
       tags$span(style = "white-space:nowrap;", class = 'subtitle', "By Kassel Hingee & Martin Westgate.",
@@ -133,10 +134,14 @@ server <- function(input, output, session) {
                     report_path)
   
   ## Help
+  observeEvent(input$intro, {
+    showModal(splashmodal())
+    },
+    ignoreNULL = FALSE)
   observeEvent(input$overallhelp, {
     showModal(moreinfomodal())
     },
-    ignoreNULL = FALSE)
+    ignoreNULL = TRUE)
   if (isTRUE(getOption("shiny.testmode"))){
     output$downloadcvals <- downloadHandler(
       filename = "current_values.rds",
