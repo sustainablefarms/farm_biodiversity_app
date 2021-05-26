@@ -19,7 +19,7 @@ specimageOut <- function(specinfo, height = "200px"){
                    alt = specinfo$species, height = height),
           `data-toggle` = "tooltip",
           `data-placement` = 'auto top',
-          `data-viewport` = "{'selector': ':root'}",
+#          `data-viewport` = "{'selector': ':root'}",
           title = specinfo$story),
 	  cpyrht
         )
