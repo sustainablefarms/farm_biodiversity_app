@@ -77,14 +77,13 @@ predictionsdetailServer <- function(id,
         plot_allspeciesprob(data$species_prob_current)
       })
       
-      observeEvent(modalopens(), {
+
+      output$allspeciesrel <- renderPlot({
+	modalopens()
 	wrel$show()
 	on.exit(wrel$hide())
-      output$allspeciesrel <- renderPlot({
+        on.exit(session$sendCustomMessage("plotfinished", TRUE))
         plot_allspeciesrel(data$spec_different)
       })
-	on.exit(session$sendCustomMessage("plotfinished", TRUE))
-      })
-
     })
   }
