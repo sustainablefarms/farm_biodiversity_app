@@ -6,9 +6,10 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
         $('[data-toggle=tooltip]').tooltip()
       })"
      ),
+    # an update species after plots created
     tags$script("
       Shiny.addCustomMessageHandler('plotfinished', function(state){
-	$('.specimg').each(function(index){$( this ).attr('src', $( this ).attr('data-src'))});
+       $('.specimg').each(function(index){$( this ).attr('src', $( this ).attr('data-src'))});
       });
     "),
   column(6, 
@@ -54,7 +55,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
 
  
 predictionsdetailServer <- function(id,
-                              data){
+                              data, modalopens){
   moduleServer(
     id,
     function(input, output, session){
@@ -72,13 +73,16 @@ predictionsdetailServer <- function(id,
       output$allspecies <- renderPlot({
 	wprob$show()
 	on.exit(wprob$hide())
+        on.exit(session$sendCustomMessage("plotfinished", TRUE))
         plot_allspeciesprob(data$species_prob_current)
       })
       
+
       output$allspeciesrel <- renderPlot({
+	modalopens
 	wrel$show()
 	on.exit(wrel$hide())
-	on.exit(session$sendCustomMessage("plotfinished", TRUE))
+        on.exit(session$sendCustomMessage("plotfinished", TRUE))
         plot_allspeciesrel(data$spec_different)
       })
     })

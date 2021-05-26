@@ -186,7 +186,7 @@ predictionsServer <- function(id,
                    removeModal()
       )
       
-      predictionsdetailServer("detail", data)
+      predictionsdetailServer("detail", data, input$moredetail)
       
       output$downloaddata <- downloadHandler(
         filename = "predictions.csv",
