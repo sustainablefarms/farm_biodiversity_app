@@ -79,7 +79,7 @@ predictionsdetailServer <- function(id,
       
 
       output$allspeciesrel <- renderPlot({
-	modalopens
+	modalopens()
 	wrel$show()
 	on.exit(wrel$hide())
         on.exit(session$sendCustomMessage("plotfinished", TRUE))

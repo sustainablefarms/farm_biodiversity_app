@@ -89,6 +89,7 @@ predictionsServer <- function(id,
         toptennames = NULL,
         speciesinfo_topten = NULL,
         speciesinfo_botten = NULL)
+      moredetailopens <- reactiveVal(value = 0, label = "moredetailopens")
       ns <- session$ns
       modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
                                                                                                      model_data$XoccProcess$scale,
@@ -169,6 +170,7 @@ predictionsServer <- function(id,
       
       # modal more detail stuff
       observeEvent(input$moredetail, {
+        moredetailopens(moredetailopens() + 1)
         showModal(
           modalDialog(
             predictionsdetailUI(ns("detail"), isolate(data$speciesinfo_topten), isolate(data$speciesinfo_botten)),
@@ -186,7 +188,7 @@ predictionsServer <- function(id,
                    removeModal()
       )
       
-      predictionsdetailServer("detail", data, input$moredetail)
+      predictionsdetailServer("detail", data, moredetailopens)
       
       output$downloaddata <- downloadHandler(
         filename = "predictions.csv",
