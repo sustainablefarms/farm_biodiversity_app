@@ -2,6 +2,7 @@
 selectlocationUI <- function(id){
   ns <- NS(id)
   tagList(
+	 waiter::use_waiter(),
          HTML("<div class='subheader'><h2>REGION</h2></div>"),
          # selectInput(
          #   inputId = ns("spatial_type"),
@@ -71,17 +72,21 @@ selectlocationServer <- function(id){
       click_values <- reactiveValues(
         climate = NULL,
         climate_title = NULL)
+      ns <- session$ns
 
       # observeEvent(input$spatial_type, {
         # if(input$spatial_type != "none"){
           data$points <- readRDS("data/sa2_points_climate.rds")
         # }
+        wplotly <- waiter::Waiter$new(id = ns("plot_points"))
 
         # draw a scatterplot of the centroids of selected zones
         output$plot_points <- plotly::renderPlotly({
+	  wplotly$show()
           validate(
             need(data$points, "")
           )
+	  on.exit(wplotly$hide())
           plotly::plot_ly(
             data$points,
             x = ~longitude,
@@ -178,7 +183,6 @@ selectlocationServer <- function(id){
       # })
       
   ## CLIMATE buttons and plots
-      ns <- session$ns
 
   output$show_maxtemp <- renderUI({
     if(length(outOfModule$selected_region) > 0){
