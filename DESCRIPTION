@@ -15,10 +15,7 @@ Depends:
 Imports:
     msod,
     sf,
-    shinythemes,
     ggbeeswarm,
-    shinyBS,
-    tippy,
     waiter
 Suggests:
     testthat

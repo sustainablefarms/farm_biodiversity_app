@@ -21,16 +21,15 @@
 # load requisite packages
 # devtools::install_github("https://github.com/sustainablefarms/msod", ref = "e22069c9cfd9e2c9e007396e97f0d2e22e088713")
 options(
-  shiny.autoreload = TRUE,
   shiny.launch.browser = FALSE,
   shiny.port = 7214,
   shiny.testmode = FALSE
 )
 pkgload::load_all("."); myapp()
-# # pkgload::load_all("."); app_selectpatchonly()
-# # app_selectlocationonly()
-# # pkgload::load_all("."); app_predictionsonly()
-# # app_predictiondetailsonly()
+# pkgload::load_all("."); app_selectpatchonly()
+# app_selectlocationonly()
+# pkgload::load_all("."); app_predictionsonly()
+# pkgload::load_all("."); app_predictiondetailsonly()
 # 
 # main_app_prep() # loads things into global environment, prepares report file
 # shinyApp(ui, server)
