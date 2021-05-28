@@ -7,6 +7,10 @@ predictionsUI <- function(id, usedflt){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
+    tags$script("$(function () {
+        $('[data-toggle=popover]').popover()
+      })"
+    ),
       tags$p(class = "alignleft",
         HTML("<plottitle>Expected Number of Species</plottitle>"),
                   infotooltip(paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
@@ -57,14 +61,15 @@ predictionsUI <- function(id, usedflt){
         column(width = 5, offset = 1,
           style = "text-align: right",
             "Reference:",
-          infotooltip(title = tags$html(tags$em("Comparing to Other Estimates"),
+          infopopover(title = "", content = tags$html(tags$em("Comparing to Other Estimates"),
 				  referencesblurb,
                                    tags$p(tags$em("Update"), "sets the reference estimates to the current estimates.",
                                    "After setting the reference estimates for the first time, uncheck", tags$em("Use Default"), "to use them.",
                                    "Initially the ratio of occupancy probabilities to reference probabilities will be all 1.",
                                    "This will be the case until you alter attributes of the farm's woodland."),
                                    tags$p(tags$em("Use Default,"), "when checked, overides the saved estimates with the default estimates.",
-                                   "Uncheck", tags$em("Use Default"), "to use the saved reference.")),
+                                   "Uncheck", tags$em("Use Default"), "to use the saved reference."),
+					tableOutput(ns("reftable"))),
 		      HTML = TRUE),
             actionButton2(ns("savetoreference"), label = "Update", class = "badge_tiny", width = "80px"),
             inlinecheckBoxInput(ns("usedefaultreference"), label = "Use Default", value = is.null(usedflt) | isTRUE(usedflt))
@@ -232,6 +237,11 @@ predictionsServer <- function(id,
                    infotooltip(warn[["reason"]]))
         )
       })
+
+      output$reftable <- renderTable({
+	validate(need(data$refXocc, ""))
+        makeniceprops(t(data$refXocc))
+      }, rownames = TRUE, colnames = FALSE)
       
       if (isTRUE(getOption("shiny.testmode"))){
         output$downloaddataverbose <- downloadHandler(
