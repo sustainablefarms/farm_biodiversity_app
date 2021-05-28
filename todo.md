@@ -13,10 +13,8 @@ output:
 + splash page 
   + birds on farms imagery
 + use icons or virtual tours
-+ ask Albert what the WVC is sensitive to
 
 ## More Help
-+ grammar fix
 + species list? describe species
   + species removed
 + types of farms in More Information
@@ -33,7 +31,6 @@ output:
 
 
 # Outputs: More Detail
-+ sometimes the ratios printed in scientific notation
 
 # Overall
 + Mobile compatibility
@@ -42,7 +39,6 @@ output:
 + then get comms team to look at it again
 + Get DBL to look through it
 + Authorship: Martin, Albert, Dan?
-+ check errors and warning in browser: 'Inspect Element' console
 
 # Other
 + __Get onto SF website__
