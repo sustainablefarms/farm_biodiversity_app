@@ -188,7 +188,7 @@ a <- lapply(texs, cat)
 \clearpage
 # Occupancy Probability of Every Species in the Model
 ## Occupancy Probability
-Below is the estimated probability of each species in the model occupying at least on box gum grassy woodland patch on your farm.
+Below is the estimated probability of each species in the model occupying at least one box gum grassy woodland patch on your farm.
 There is a 95% change that the \em{true} occupancy probability is within the error bars, assuming our model is correct (the uncertainty is due to uncertainty of model parameter values).
 
 We computed both estimate and error bars by taking the maximum of the occupancy probability of all patches.
@@ -198,6 +198,9 @@ plot_allspeciesprob(data$species_prob_current)
 ```
 
 
+\begin{small}
+Body length data from \href{https://www.nature.com/articles/sdata201561}{Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015)}.
+\end{small}
 
 \clearpage
 ## Occupancy Probability Relative to the Reference
