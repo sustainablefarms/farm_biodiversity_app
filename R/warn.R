@@ -7,7 +7,7 @@ warn_oot <- function(cvals){
       cvals[["woody3000m"]] > 10){
     warn <- TRUE
     reason <- paste(reason,
-                     "In your geographic region our training data contained only one site",
+                     "In your geographic region the data used to fit our model contained only one site",
                      "with greater than 10% woody vegetation canopy within 3km.",
                      "Bird estimates here should be treated with additional caution."
                      )

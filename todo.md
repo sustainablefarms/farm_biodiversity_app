@@ -21,7 +21,6 @@ output:
   + species removed
 + types of farms in More Information
 + links to box gum grassy woodlands
-+ where bird size from in more details section
 
 ## Caveats
 + get max patch size for model (Ask Dan for patch areas, to look for maximum in our data)
@@ -35,10 +34,8 @@ output:
 
 # Outputs: More Detail
 + sometimes the ratios printed in scientific notation
-+ report: include chosen region
 
 # Overall
-+ 'training' data is unfamiliar. Let's just use 'data'
 + Mobile compatibility
   + test on tablet, touch screen only
 + need ecology team to read through it

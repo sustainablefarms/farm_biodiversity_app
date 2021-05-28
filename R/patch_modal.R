@@ -27,7 +27,7 @@ patch_modal <- function(
                                               linknewtab(href = 'http://anuwald.science/tree',
                                                          "http://anuwald.science/tree"),
                                               "for any Australian location and any year since 1990.",
-                                              HTML("<br><br>The values available for selection were chosen to cover 90% of our training data.")))
+                                              HTML("<br><br>The values available for selection were chosen to cover 90% of our data.")))
                     ),
           sliderInput(label = NULL,
             inputId = ns(paste0("pc_woody500m_", value)),
@@ -44,7 +44,7 @@ patch_modal <- function(
                                               linknewtab(href = 'http://anuwald.science/tree',
                                                          "http://anuwald.science/tree"),
                                               "for any Australian location and any year since 1990.",
-                                              HTML("<br><br>The values available for selection were chosen to cover 90% of our training data.")),
+                                              HTML("<br><br>The values available for selection were chosen to cover 90% of our data.")),
                                 placement = "auto bottom")
                     ),
           sliderInput(label = NULL,
