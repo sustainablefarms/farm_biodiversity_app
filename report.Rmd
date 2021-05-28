@@ -55,7 +55,7 @@ Then you'll find pictures of the 10 most likely species across your patches.
 Later you'll see 
 the 10 least likely species across your patches, 
 a paragraph on the vulnerable Superb Parrot,
-and figures showing the occupancy probability of every species in our model.
+and the occupancy probability of every species in our model arranged by body length \href{https://www.nature.com/articles/sdata201561}{(Garnett et al. Scientific Data 2, 2015)}.
 
 This report was generated at `r Sys.time()` from version `r appversion` of the Sustainable Farm's `r appname` (`r appurl`).
 
@@ -189,18 +189,13 @@ a <- lapply(texs, cat)
 # Occupancy Probability of Every Species in the Model
 ## Occupancy Probability
 Below is the estimated probability of each species in the model occupying at least one box gum grassy woodland patch on your farm.
-There is a 95% change that the \em{true} occupancy probability is within the error bars, assuming our model is correct (the uncertainty is due to uncertainty of model parameter values).
+There is a 95% chance that the \emph{true} occupancy probability is within the error bars, assuming our model is correct (the uncertainty is due to uncertainty of model parameter values).
 
 We computed both estimate and error bars by taking the maximum of the occupancy probability of all patches.
 
 ```{r species_on_farm, fig.height = 8, fig.width = 7, out.width = "100%"}
 plot_allspeciesprob(data$species_prob_current)
 ```
-
-
-\begin{small}
-Body length data from \href{https://www.nature.com/articles/sdata201561}{Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015)}.
-\end{small}
 
 \clearpage
 ## Occupancy Probability Relative to the Reference
