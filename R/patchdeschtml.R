@@ -6,3 +6,12 @@ tags$ol(
   tags$li("is approximately 50m from other woody vegetation."),
   )
 )
+
+plantedpatchdefn <- 
+  tags$span(
+    "that",
+    tags$ol(
+      tags$li("is 3+ years old,"),
+      tags$li("is dominated by local native overstorey trees,"),
+      tags$li("was established through tubestock or direct seeding, and"),
+      tags$li("was fenced at the time planting")))

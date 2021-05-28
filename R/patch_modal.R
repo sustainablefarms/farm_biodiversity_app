@@ -57,7 +57,13 @@ patch_modal <- function(
         inlinecheckBoxInput(ns(paste0("IsRemnant_", value)),
             value = if (IsRemnant){TRUE} else {NULL},
             label = tags$span("Is this patch remnant woodland?")
-          )
+          ),
+	infotooltip(
+          html = TRUE,
+	  title = tags$div("If the patch is", tags$em("not"), "a remnant, then",
+			   "this app assumes that it is a", tags$em("planted patch"), 
+	                  plantedpatchdefn))
+			    
         ),
       tags$br(),
       fluidRow(

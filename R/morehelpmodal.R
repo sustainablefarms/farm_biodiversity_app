@@ -17,7 +17,7 @@ out <- modalDialog(
     "The model accounts for the detection difficulty of each species in these surveys, the windiness at the time of the survey, and time of day of the survey."
   ),
   tags$p("Bird species detected less in 100 or fewer surveys were not included due to a risk of overfitting the model."),
-  
+
   tags$div(class='subheader', tags$h3("PREDICTORS OF OCCUPANCY")),
   tags$p("Many environmental factors were tested for predicting bird occupancy.",
          "The final model included the survey year,",
@@ -37,7 +37,11 @@ out <- modalDialog(
   tags$div(class='subheader', tags$h3("WHAT IS A PATCH?")),
   patchdefn,
   tags$p("This use of the term 'patch' comes from our focus on box gum grassy woodlands and the way bird survey locations were selected."),
-  
+
+  tags$p(
+  "In this app, a", tags$em("planted patch"), "is a patch",
+  plantedpatchdefn),
+
   tags$div(class='subheader', tags$h3("FURTHER DETAILS")),
   tags$p("A manuscript for scientific publication is under development.",
          "This work was partly funded by the Meat and Livestock Association, and in the future a public report will be available.",
