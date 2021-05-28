@@ -65,7 +65,7 @@ The long term climate information was extracted for the region you selected from
 We used the centre of your region for this.
 
 The maximum and minimum temperature, summer and winter precipitation, and precipitation seasonality of the prior 12 months had little affect on species occupancy in our fitted model, and were set to the average of our data.
-The average temperature of the prior 12 months was set to the long term average to make `r appname` easier to use.
+The average temperature of the prior 12 months was set to the long term average to make the app easier to use.
 The precipitation in the prior 12 months was supplied by you.
 
 You also provided the 
@@ -190,7 +190,6 @@ a <- lapply(texs, cat)
 
 \clearpage
 # Occupancy Probability of Every Species in the Model
-## Occupancy Probability
 Below is the estimated probability of each species in the model occupying at least one box gum grassy woodland patch on your farm.
 There is a 95% chance that the \emph{true} occupancy probability is within the error bars, assuming our model is correct (the uncertainty is due to uncertainty of model parameter values).
 
@@ -201,7 +200,7 @@ plot_allspeciesprob(data$species_prob_current)
 ```
 
 \clearpage
-## Occupancy Probability Relative to the Reference
+# Occupancy Probability Relative to the Reference
 Below shows the ratio of species occupancy probability at their favoured patch to the reference occupancy probability. Beneath is the reference information.
 
 ```{r relativetomeansite, fig.height = 8, fig.width = 7}
@@ -209,18 +208,18 @@ plot_allspeciesrel(data$spec_different)
 ```
 
 \clearpage
-### Reference Attributes and Species Probabilities
+## Reference Attributes and Species Probabilities
 \begin{center}
-\small
+\scriptsize
 ```{r refregion, results='asis'}
 refRegion <- data$refRegion
 if (!is.null(refRegion)){
-  cat("The references patch(es) were in the region:",
+  cat("The reference patch(es) were in the region:",
       refRegion,
       "\\\\")
 }
 ```
-```{r showavpatch, fig.height = 7, fig.width = 6, out.width = "70%"}
+```{r showrefpatch, fig.height = 7, fig.width = 6, out.height = "60%"}
 refpatchprops <- makeniceprops(t(data$refXocc))
 knitr::kable(refpatchprops, digits = 3,
       format = "latex",
