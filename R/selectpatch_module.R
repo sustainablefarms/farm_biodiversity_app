@@ -53,16 +53,8 @@ selectpatchServer <- function(id){
       
   ## FARM
 
-  # orange tick for patch number 1
-  output[["patch_num_complete_1"]] <- renderUI({
-	tags$span(class="glyphicon glyphicon-warning-sign", 
-		  style = "color: #CC9900;",
-		  tabindex = "0",
-		  `data-toggle` = "tooltip",
-		  title = "Please set the attributes of this patch.",
-		  `data-trigger` = "focus hover",
-		  `data-placement` = "auto"
-		  )})
+  # warning sign for patch number 1
+  output[["patch_num_complete_1"]] <- renderUI({patchincompletewarn})
 
   # number of patches
   output$patch_selector <- renderUI({
@@ -143,9 +135,7 @@ selectpatchServer <- function(id){
       # add orange tick
       lapply(update$add_values, function(a){
 	output[[paste0("patch_num_complete_", a)]] <- renderUI({
-			tags$span(class="glyphicon glyphicon-warning-sign", 
-				  style = "color: #CC9900;"
-				  )})
+		patchincompletewarn})
       })
       update$add_logical <- FALSE
       previous_values$patches <- current_values$patches
@@ -223,10 +213,7 @@ selectpatchServer <- function(id){
       paste0("IsRemnant_", previous_values$selected_patch)]]
 
     # add a green tick
-    output[[paste0("patch_num_complete_", previous_values$selected_patch)]] <- renderUI({
-			tags$span(class="glyphicon glyphicon-ok", 
-				  style = "color: white;"
-				  )})
+    output[[paste0("patch_num_complete_", previous_values$selected_patch)]] <- renderUI({patchcompletesymbol})
 
     removeModal()
 
