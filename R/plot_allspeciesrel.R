@@ -1,5 +1,8 @@
 
 plot_allspeciesrel <- function(spec_different){
+  scipen <- getOption("scipen")
+  options(scipen = 999)
+  on.exit(options(scipen = scipen))
   ## fun inputs
   traits <- get("traits", envir = globalenv())
   df_both <- dplyr::left_join(spec_different, traits, by = c(species = "Common Name"))
@@ -12,7 +15,7 @@ plot_allspeciesrel <- function(spec_different){
 
   df_both %>%
     dplyr::rename(`Common Name` = species) %>%
-    dplyr::mutate(`Common Name` = paste(`Common Name`, format(value, digits = 2))) %>%
+    dplyr::mutate(`Common Name` = paste(`Common Name`, format(round(value, 2), digits = 2, scientific = FALSE))) %>%
     ordfactby(`Common Name`, `Body Length`) %>%
     ggplot(aes(x = `Common Name`, y = value, fill = value)) +
     geom_hline(yintercept = 1) +
