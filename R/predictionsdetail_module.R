@@ -18,7 +18,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
                   infotooltip(title = tags$html(tags$p("Estimates of the occupancy probability for every species, arranged by body length."),
 					   proboccplotdescription,
 				tags$p("Body length data from",
-			             linknewtab(href = "https://www.nature.com/articles/sdata201561", "Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015)."))
+			             linknewtab(href = "https://www.nature.com/articles/sdata201561", "Garnett et al. (Scientific Data 2, 2015)."))
 		     )))),
     fluidRow(
       plotOutput(ns("allspecies"), height = "800px")
