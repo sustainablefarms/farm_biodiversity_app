@@ -100,7 +100,10 @@ knitr::kable(makeniceprops(patchprops),
       row.names = TRUE,
       col.names = paste("Patch", 1:ncol(patchprops)))
 ```
+
+The region of these patches was: `r current_values$selected_region`.
 \end{center}
+
 
 \emph{Precipitation seasonality} is the ratio of the standard deviation of monthly precipitation over the mean monthly precipitation, expressed as a percentage.
 
@@ -209,6 +212,14 @@ plot_allspeciesrel(data$spec_different)
 ### Reference Attributes and Species Probabilities
 \begin{center}
 \small
+```{r refregion, results='asis'}
+refRegion <- data$refRegion
+if (!is.null(refRegion)){
+  cat("The references patch(es) were in the region:",
+      refRegion,
+      "\\\\")
+}
+```
 ```{r showavpatch, fig.height = 7, fig.width = 6, out.width = "70%"}
 refpatchprops <- makeniceprops(t(data$refXocc))
 knitr::kable(refpatchprops, digits = 3,

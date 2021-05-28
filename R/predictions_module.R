@@ -83,6 +83,7 @@ predictionsServer <- function(id,
       data <- reactiveValues(
         Xocc = NULL,
         refXocc = new_data_mean,
+	refRegion = NULL,
         species_prob_current = NULL,
         species_prob_ref = NULL,
         species_richness = NULL,
@@ -146,6 +147,7 @@ predictionsServer <- function(id,
       # reference prediction saving
       observeEvent(input$savetoreference, {
         data$refXocc <- data$Xocc
+	data$refRegion <- current_values()$selected_region
         referencepred(data$species_prob_current)
       })
       
