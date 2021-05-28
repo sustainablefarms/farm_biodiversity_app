@@ -8,13 +8,11 @@ output:
 + DONE: Rainfall since August: might be challenging for people to calculate that accurately, maybe a generic “12 month total rainfall” (struggling for exact wording), so then they can either calculate for calendar year or since August as they prefer. I also wondered is the default 708mm rainfall the average for the entire region? When you click on a region it says the long term average for that region below (great feature), would it be possible to make it so when you click on a region that is the auto set amount?
   + I don't know what the 12 month total rainfall would mean for the model
 + woody canopy in raw areas, not percentages
-+ __what is a planting__
 
 # Help
 + splash page 
   + birds on farms imagery
 + use icons or virtual tours
-+ Vegetation canopy description (image below). Suggest editing third sentence in info text box to say “It can change over time in response to rainfall or disturbance such as fire.
 + ask Albert what the WVC is sensitive to
 
 ## More Help
@@ -46,7 +44,7 @@ output:
 + need ecology team to read through it
 + then get comms team to look at it again
 + Get DBL to look through it
-+ Authorship: Colleen, Martin, Albert, Dan?
++ Authorship: Martin, Albert, Dan?
 + check errors and warning in browser: 'Inspect Element' console
 
 # Other
