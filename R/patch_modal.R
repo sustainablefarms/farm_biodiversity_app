@@ -101,7 +101,9 @@ patch_modal <- function(
       tags$br(),
       actionButton(inputId = ns("choose_patch_attributes_execute"), label = "Save"),
       modalButton("Cancel"),
-    title = paste0("Select attributes for patch #", value),
+    title = tags$span(paste0("Select attributes for patch #", value),
+		      infotooltip(title = patchdefn,
+				  placement = "bottom")),
     footer = NULL,
     easyClose = FALSE
   )

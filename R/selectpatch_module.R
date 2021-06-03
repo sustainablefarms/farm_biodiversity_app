@@ -8,17 +8,11 @@ selectpatchUI <- function(id){
       ),
       column(width = 1),
       column(width = 8,
-       div(
         actionButton2(
           inputId = ns("patch_number_1"),
           label = tags$span("Patch #1",
 	     htmlOutput(outputId = ns("patch_num_complete_1"), inline = TRUE)),
           class = "patch_badge"),
-        `data-toggle`="tooltip",
-        `data-html` = TRUE,
-        `data-placement` = "bottom",
-        title = patchdefn
-        ),
         div(id = "placeholder")
       ))
 }
@@ -63,17 +57,11 @@ selectpatchServer <- function(id){
           $('[data-toggle=tooltip]').tooltip()
         })"
       ),
-    tags$div(actionButton2(
+    actionButton2(
       inputId = ns("choose_n_patches"),
       label = HTML(paste0("Number of<br>patches<br><h3>", current_values$patches, "</h3>")),
       class = "badge"
-    )), 
-    `data-toggle`="tooltip",
-    `data-html` = TRUE,
-    `data-placement` = "auto bottom",
-    `data-container` = "body", #this made the width of the tooltip better
-    `data-vieport` = '#viewport',
-    title = patchdefn,
+    ) 
     )
   })
   observeEvent(input$choose_n_patches, {
