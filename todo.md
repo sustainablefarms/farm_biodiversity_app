@@ -5,16 +5,13 @@ output:
 ---
 
 + Occassional error: see end of document
+  + seems to occur when app tries to build predictions many times - clicking lots of the reference plot. I think there is a way to kill this, and just use the final click
 
 # Inputs
 + woody canopy in raw areas, not percentages
-+ turn double clicks off for the region map - especially valuable for the phone users - otherwise can't scroll
-+ tooltips on buttons strange for phone users
-
 
 # Help
-+ splash page 
-  + birds on farms imagery
++ birds on farms imagery for splash page
 + use icons or virtual tours
 + details tool tip at top: make them auto bottom (on phone they miss page)
 + dismiss climate modal button - useful cos modal's fill whole of phone screen
