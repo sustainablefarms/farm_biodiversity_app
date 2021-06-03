@@ -117,10 +117,11 @@ selectlocationServer <- function(id){
            inherit = FALSE
            ) %>%
             plotly::layout(
-            xaxis = list(title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE),
+            xaxis = list(title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = TRUE),
             yaxis = list(scaleanchor = "x",
-                         title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE),
+                         title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = TRUE),
             margin = list(l = 0, r = 0, b = 0, t = 0, pad = 0),
+	    dragmode = FALSE,
             paper_bgcolor='transparent',
             plot_bgcolor = 'transparent'
           ) %>%
