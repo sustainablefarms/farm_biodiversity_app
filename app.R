@@ -23,7 +23,7 @@
 options(
   shiny.launch.browser = FALSE,
   shiny.port = 7214,
-  shiny.testmode = TRUE
+  shiny.testmode = FALSE
 )
 pkgload::load_all("."); myapp()
 # pkgload::load_all("."); app_selectpatchonly()
