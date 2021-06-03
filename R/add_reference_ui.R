@@ -11,6 +11,7 @@ add_reference_ui <- function(
       actionButton2(
         inputId = ns(paste0("patch_number_", entry_number)),
         label = tags$span(paste0("Patch #", entry_number),
+			    HTML("&ensp;"),
 	     htmlOutput(outputId = ns(paste0("patch_num_complete_", entry_number)), inline = TRUE)),
         class = "patch_badge"
       ),

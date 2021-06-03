@@ -11,6 +11,7 @@ selectpatchUI <- function(id){
         actionButton2(
           inputId = ns("patch_number_1"),
           label = tags$span("Patch #1",
+			    HTML("&ensp;"),
 	     htmlOutput(outputId = ns("patch_num_complete_1"), inline = TRUE)),
           class = "patch_badge"),
         div(id = "placeholder")
