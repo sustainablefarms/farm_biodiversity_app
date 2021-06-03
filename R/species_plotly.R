@@ -32,6 +32,7 @@ plot_ly_specroot <- function(df){
   # alter layout
   plotly::layout(xaxis = list(visible = FALSE, fixedrange = TRUE),
          yaxis = list(visible = FALSE, fixedrange = TRUE),
+	 dragmode = FALSE,
          margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
   hide_colorbar()  %>%
     plotly::config(displayModeBar = FALSE)
