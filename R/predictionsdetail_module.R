@@ -19,7 +19,7 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
 					   proboccplotdescription,
 				tags$p("Body length data from",
 			             linknewtab(href = "https://www.nature.com/articles/sdata201561", "Garnett et al. (Scientific Data 2, 2015)."))
-		     )))),
+		     ), placement = "bottom"))),
     fluidRow(
       plotOutput(ns("allspecies"), height = "800px")
     ),
