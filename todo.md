@@ -4,20 +4,26 @@ output:
   html_document: default
 ---
 
++ Occassional error: see end of document
+
 # Inputs
-+ DONE: Rainfall since August: might be challenging for people to calculate that accurately, maybe a generic “12 month total rainfall” (struggling for exact wording), so then they can either calculate for calendar year or since August as they prefer. I also wondered is the default 708mm rainfall the average for the entire region? When you click on a region it says the long term average for that region below (great feature), would it be possible to make it so when you click on a region that is the auto set amount?
-  + I don't know what the 12 month total rainfall would mean for the model
 + woody canopy in raw areas, not percentages
++ turn double clicks off for the region map - especially valuable for the phone users - otherwise can't scroll
++ tooltips on buttons strange for phone users
+
 
 # Help
 + splash page 
   + birds on farms imagery
 + use icons or virtual tours
++ details tool tip at top: make them auto bottom (on phone they miss page)
++ dismiss climate modal button - useful cos modal's fill whole of phone screen
++ make the website icon be sustainable farm's
 
 ## More Help
 + species list? describe species
   + species removed
-+ types of farms in More Information
++ types of farms in More Information. Could get from the 2010 Lindenmayer book? Talks about wheat sheep belt, and more
 + links to box gum grassy woodlands
 
 ## Caveats
@@ -63,4 +69,38 @@ output:
   + Bird Occupancy Model
   + Bird Occupancy Estimator
  
+
+
++ An occassional error:
+2021-06-03T01:36:57.071607+00:00 shinyapps[3718296]: [1,]           1        -3.654009     1.594666        -1.759277     1.094709
+2021-06-03T01:36:57.071608+00:00 shinyapps[3718296]:      PrecSeasonality.lt AnnMeanTemp.YfA AnnPrec.YfA MaxTWarmMonth.YfA
+2021-06-03T01:36:57.071661+00:00 shinyapps[3718296]: [1,]     0.358009     0.3279252          0          1   1.664714
+2021-06-03T01:36:57.071644+00:00 shinyapps[3718296]: [1,]          -1.580729       -3.728192   0.9857817                 0
+2021-06-03T01:36:57.071594+00:00 shinyapps[3718296]:      (Intercept) MaxTWarmMonth.lt PrecWarmQ.lt MinTColdMonth.lt PrecColdQ.lt
+2021-06-03T01:36:57.071655+00:00 shinyapps[3718296]: [1,]             0                 0             0                   0
+2021-06-03T01:36:57.071654+00:00 shinyapps[3718296]:      PrecWarmQ.YfA MinTColdMonth.YfA PrecColdQ.YfA PrecSeasonality.YfA
+2021-06-03T01:36:57.071655+00:00 shinyapps[3718296]:      log.WCF_500. log.WCF_3000. IsPlanting NMdetected SurveyYear
+2021-06-03T01:36:57.368174+00:00 shinyapps[3718296]: Warning in compute_richness(model_data, data$Xocc) :
+2021-06-03T01:36:57.368175+00:00 shinyapps[3718296]:   Computations ignore interactions between species - faster and expectations may ignore these anyway
+2021-06-03T01:36:58.184031+00:00 shinyapps[3718296]:      (Intercept) MaxTWarmMonth.lt PrecWarmQ.lt MinTColdMonth.lt PrecColdQ.lt
+2021-06-03T01:36:58.184045+00:00 shinyapps[3718296]:      PrecSeasonality.lt AnnMeanTemp.YfA AnnPrec.YfA MaxTWarmMonth.YfA
+2021-06-03T01:36:58.184045+00:00 shinyapps[3718296]: [1,]          -1.580729       -3.728192   0.9857817                 0
+2021-06-03T01:36:58.184045+00:00 shinyapps[3718296]:      PrecWarmQ.YfA MinTColdMonth.YfA PrecColdQ.YfA PrecSeasonality.YfA
+2021-06-03T01:36:58.184059+00:00 shinyapps[3718296]:      log.WCF_500. log.WCF_3000. IsPlanting NMdetected SurveyYear
+2021-06-03T01:36:58.184045+00:00 shinyapps[3718296]: [1,]             0                 0             0                   0
+2021-06-03T01:36:58.184067+00:00 shinyapps[3718296]: [1,]     0.358009     0.3279252          0          1   1.664714
+2021-06-03T01:36:58.184032+00:00 shinyapps[3718296]: [1,]           1        -3.654009     1.594666        -1.759277     1.094709
+2021-06-03T01:36:58.462558+00:00 shinyapps[3718296]: Warning in compute_richness(model_data, data$Xocc) :
+2021-06-03T01:36:58.462560+00:00 shinyapps[3718296]:   Computations ignore interactions between species - faster and expectations may ignore these anyway
+2021-06-03T01:37:57.995696+00:00 shinyapps[3718296]: Warning: Error in <Anonymous>: arguments imply differing number of rows: 0, 1
+2021-06-03T01:37:58.002287+00:00 shinyapps[3718296]:   62: stop
+2021-06-03T01:37:58.002289+00:00 shinyapps[3718296]:   61: <Anonymous>
+2021-06-03T01:37:58.002290+00:00 shinyapps[3718296]:   57: newXocc_fromselected [/srv/connect/apps/birdbio_dev4/R/createXocc_from_selected.R#4]
+2021-06-03T01:37:58.002289+00:00 shinyapps[3718296]:   59: as.data.frame.list
+2021-06-03T01:37:58.002292+00:00 shinyapps[3718296]:    7: connect$retry
+2021-06-03T01:37:58.002291+00:00 shinyapps[3718296]:   56: <observer> [/srv/connect/apps/birdbio_dev4/R/predictions_module.R#107]
+2021-06-03T01:37:58.002292+00:00 shinyapps[3718296]:   12: fn
+2021-06-03T01:37:58.002292+00:00 shinyapps[3718296]:    6: eval
+2021-06-03T01:37:58.002293+00:00 shinyapps[3718296]:    5: eval
+2021-06-03T01:37:58.002291+00:00 shinyapps[3718296]:   13: runApp
 
