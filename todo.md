@@ -6,6 +6,7 @@ output:
 
 + Occassional error: see end of document
   + seems to occur when app tries to build predictions many times - clicking lots of the reference plot. I think there is a way to kill this, and just use the final click
+  + solution could be debounce() or throttle()
 
 # Inputs
 + woody canopy in raw areas, not percentages
@@ -14,8 +15,7 @@ output:
 + birds on farms imagery for splash page
 + use icons or virtual tours
 + details tool tip at top: make them auto bottom (on phone they miss page)
-+ dismiss climate modal button - useful cos modal's fill whole of phone screen
-+ make the website icon be sustainable farm's
++ make the website icon be sustainable farm's (called a favicon, and not possible for shinyapps)
 
 ## More Help
 + species list? describe species
@@ -36,16 +36,12 @@ output:
 # Outputs: More Detail
 
 # Overall
-+ Mobile compatibility
-  + test on tablet, touch screen only
-+ need ecology team to read through it
-+ then get comms team to look at it again
-+ Get DBL to look through it
 + Authorship: Martin, Albert, Dan?
++ box gum grassy woodland to title case
++ for phone have a visible scroll bar or something that shows users there is more down the page, or smaller pages
 
 # Other
 + __Get onto SF website__
-+ check: my model says Superb Parrots are more likely with Noisy Miners!?
 
 --- 
 
@@ -55,16 +51,11 @@ output:
 + Easy way to get amount with 500m or 3000m of a latitude and longitude
   + a drop pin style interface would be great, but putting in lat lon would also be ok
   + they need to put year in
-+ context on managing Noisy Miners, and other farm-scale decisions?
-+ convert to a mobile app - perahps using "shinyMobile" - but it might work well on a mobile naturally
 
 + multiple named references
 
 + Example pictures of woody canopy
 
-+ improved title?
-  + Bird Occupancy Model
-  + Bird Occupancy Estimator
  
 
 
