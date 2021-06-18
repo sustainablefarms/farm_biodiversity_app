@@ -36,7 +36,7 @@ selectYfAServer <- function(id, locationinfo){
 	validate(need(locationinfo$AnnPrec.lt, ""))
 	updateSliderInput(inputId = "AnnPrec.YfA",
 			  value = locationinfo$AnnPrec.lt)
-      })
+      }, priority = 50)
 
       observeEvent(input$AnnPrec.YfA, {
         # outOfModule$AnnMeanTemp.YfA <- input$AnnMeanTemp.YfA
