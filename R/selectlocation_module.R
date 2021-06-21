@@ -53,22 +53,6 @@ selectlocationServer <- function(id){
         polygons = NULL,
         points = NULL
         )
-      outOfModule <- reactiveValues(
-        locationcomplete = FALSE,
-        selected_region = c(),
-        MaxTWarmMonth.lt = NULL,
-        PrecWarmQ.lt = NULL,
-        MinTColdMonth.lt = NULL,
-        PrecColdQ.lt = NULL,
-        AnnPrec.lt = NULL,
-        PrecSeasonality.lt = NULL,
-        AnnMeanTemp.YfA     = NULL,
-        MaxTWarmMonth.YfA   = NULL,
-        PrecWarmQ.YfA       = NULL,
-        MinTColdMonth.YfA   = NULL,
-        PrecColdQ.YfA       = NULL,
-        PrecSeasonality.YfA = NULL
-      )
       click_values <- reactiveValues(
         climate = NULL,
         climate_title = NULL)

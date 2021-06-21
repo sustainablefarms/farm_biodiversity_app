@@ -94,10 +94,6 @@ server <- function(input, output, session) {
   data <- reactiveValues(
     selected_region = NULL,
     species_predictions = NULL)
-  # cval <- reactiveVal(
-  #   value = NULL,
-  #   label = "Current Predictor Values"
-  # )
   exportTestValues(selected_region = data$selected_region,
                    patches = current_values$patches) 
   ## SF logo
