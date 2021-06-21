@@ -115,10 +115,10 @@ server <- function(input, output, session) {
   fromyfa <- selectYfAServer("yfa", locationinfo = fromlocation)
   
   ## Combine!
-  cval <- eventReactive({c(reactiveValuesToList(fromyfa),
+  cval <- eventReactive({c(fromyfa(),
     reactiveValuesToList(frompatch))}, {
     out <- c(fromlocation(),
-             reactiveValuesToList(fromyfa),
+             fromyfa(),
            reactiveValuesToList(frompatch))
     out
   })
