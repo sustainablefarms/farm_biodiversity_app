@@ -20,29 +20,18 @@ selectYfAServer <- function(id, locationinfo){
   moduleServer(
     id,
     function(input, output, session){
-      # set up reactive values
-      outOfModule <- reactiveValues(
-        # AnnMeanTemp.YfA        = new_data_mean$AnnMeanTemp.YfA,
-        AnnPrec.YfA            = new_data_mean$AnnPrec.YfA
-        # MaxTWarmMonth.YfA      = new_data_mean$MaxTWarmMonth.YfA,
-        # PrecWarmQ.YfA          = new_data_mean$PrecWarmQ.YfA,
-        # MinTColdMonth.YfA      = new_data_mean$MinTColdMonth.YfA,
-        # PrecColdQ.YfA          = new_data_mean$PrecColdQ.YfA,
-        # PrecSeasonality.YfA    = new_data_mean$PrecSeasonality.YfA
-      )
-
       stopifnot(is.reactive(locationinfo))
       observe({
 	validate(need(locationinfo()$AnnPrec.lt, ""))
 	updateSliderInput(inputId = "AnnPrec.YfA",
 			  value = locationinfo()$AnnPrec.lt)
       }, priority = 100)
-
-      observeEvent(input$AnnPrec.YfA, {
-        # outOfModule$AnnMeanTemp.YfA <- input$AnnMeanTemp.YfA
-        outOfModule$AnnPrec.YfA <- input$AnnPrec.YfA
-      }, priority = 100)
-
+      
+      outOfModule <- reactive({
+        out <- list()
+        out$AnnPrec.YfA <- input$AnnPrec.YfA
+        out
+      }) %>% throttle(3000)
       
       output$annprec.lt.region <- renderText({
         validate(need(locationinfo()$selected_region, ""))
