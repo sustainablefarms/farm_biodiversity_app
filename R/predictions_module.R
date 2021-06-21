@@ -81,23 +81,32 @@ predictionsServer <- function(id,
     function(input, output, session){
       data <- reactiveValues(
         Xocc = NULL,
-        refXocc = new_data_mean,
-	refRegion = NULL,
+        reference = NULL,
         species_prob_current = NULL,
-        species_prob_ref = NULL,
         species_richness = NULL,
         toptennames = NULL,
         speciesinfo_topten = NULL,
         speciesinfo_botten = NULL)
       moredetailopens <- reactiveVal(value = 0, label = "moredetailopens")
       ns <- session$ns
+      
+      # Set up reference situations
       modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
                                                                                                      model_data$XoccProcess$scale,
                                                                                                      model_data$XoccColNames)})
       species_prob_mean <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwmeanXocc)
-      referencepred <- reactiveVal(value = species_prob_mean,
-                                   label = "Reference Predictions")
+      reference_user <- reactiveValues(
+        Xocc = new_data_mean,
+        region = NULL,
+        predictions = species_prob_mean
+      )
+      reference_mean = list(
+        Xocc = new_data_mean,
+        region = NULL,
+        predictions = species_prob_mean
+      )
       
+      # compute predictions below
       datar <- reactive({
         if(
           isTRUE(current_values()$locationcomplete & current_values()$allpatchcomplete)
@@ -109,14 +118,14 @@ predictionsServer <- function(id,
                                                                                model_data$XoccColNames)})
           print(modwXocc$data$Xocc)
           if (!isTRUE(input$usedefaultreference)){
-            data$species_prob_ref <- referencepred()
+            data$reference <- reactiveValuesToList(reference_user)
           } else {
-            data$species_prob_ref <- species_prob_mean
+            data$reference <- reference_mean
           }
           data$species_prob_current <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwXocc)
-          data$spec_different <- todifferent(data$species_prob_current, data$species_prob_ref)
+          data$spec_different <- todifferent(data$species_prob_current, data$reference$predictions)
           species_richness_raw <- rbind(compute_richness(model_data, data$Xocc),
-                                         reference = sum(data$species_prob_ref[, "median"]))           # add in reference
+                                         reference = sum(data$reference$predictions[, "median"]))           # add in reference
           species_richness_raw$category <- factor(1:4, levels = 4:1,
                  labels = c(
                             "Reference estimate",
@@ -138,7 +147,7 @@ predictionsServer <- function(id,
           # data <- lapply(data, function(x) NULL)
           data$Xocc <- NULL
           data$species_prob_current <- NULL
-          data$species_prob_ref <- NULL
+          data$reference <- NULL
           data$species_richness <- NULL
         }
         data
@@ -146,9 +155,9 @@ predictionsServer <- function(id,
       
       # reference prediction saving
       observeEvent(input$savetoreference, {
-        datar()$refXocc <- datar()$Xocc
-	      datar()$refRegion <- current_values()$selected_region
-        referencepred(datar()$species_prob_current)
+        reference_user$Xocc <- datar()$Xocc
+        reference_user$region <- current_values()$selected_region
+        reference_user$predictions <- datar()$species_prob_current
       })
       
       # draw species plots

@@ -212,21 +212,23 @@ plot_allspeciesrel(data$spec_different)
 \begin{center}
 \scriptsize
 ```{r refregion, results='asis'}
-refRegion <- data$refRegion
-if (!is.null(refRegion)){
+refRegion <- data$reference$region
+if (is.null(refRegion)){
+  cat("These reference attributes were the default reference values, which were based on the average of our data. \\\\")
+} else {
   cat("The reference patch(es) were in the region:",
       refRegion,
       "\\\\")
 }
 ```
 ```{r showrefpatch, fig.height = 7, fig.width = 6, out.height = "60%"}
-refpatchprops <- makeniceprops(t(data$refXocc))
+refpatchprops <- makeniceprops(t(data$reference$Xocc))
 knitr::kable(refpatchprops, digits = 3,
       format = "latex",
       booktabs = TRUE,
       row.names = TRUE,
       col.names = paste("Patch", 1:ncol(refpatchprops)))
-plot_allspeciesprob(data$species_prob_ref) +
+plot_allspeciesprob(data$reference$predictions) +
   ggtitle("Reference Occupancy Probability")
 ```
 \end{center}
