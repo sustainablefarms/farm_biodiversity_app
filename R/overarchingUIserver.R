@@ -116,16 +116,19 @@ server <- function(input, output, session) {
   fromlocation <- selectlocationServer("location")
   
   ## YfA
-  yfavals <- selectYfAServer("yfa", locationinfo = fromlocation)
+  fromyfa <- selectYfAServer("yfa", locationinfo = fromlocation)
   
   ## Combine!
-  cval <- reactive({
-    c(fromlocation(), 
-           reactiveValuesToList(yfavals),
+  cval <- eventReactive({c(reactiveValuesToList(fromyfa),
+    reactiveValuesToList(frompatch))}, {
+    out <- c(fromlocation(),
+             reactiveValuesToList(fromyfa),
            reactiveValuesToList(frompatch))
+    out
   })
   if (isTRUE(getOption("shiny.testmode"))){
-    observeEvent(cval(), print(list2DF(cval())))
+    observeEvent(cval(), {print("New cval() evaluation")
+                          print(list2DF(cval()))})
     # cval(readRDS("./tests/testthat/current_values_1patch.rds"))
   }
   
