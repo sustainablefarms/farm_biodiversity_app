@@ -94,10 +94,10 @@ server <- function(input, output, session) {
   data <- reactiveValues(
     selected_region = NULL,
     species_predictions = NULL)
-  cval <- reactiveVal(
-    value = NULL,
-    label = "Current Predictor Values"
-  )
+  # cval <- reactiveVal(
+  #   value = NULL,
+  #   label = "Current Predictor Values"
+  # )
   exportTestValues(selected_region = data$selected_region,
                    patches = current_values$patches) 
   ## SF logo
@@ -119,15 +119,15 @@ server <- function(input, output, session) {
   yfavals <- selectYfAServer("yfa", locationinfo = fromlocation)
   
   ## Combine!
-  observe({
-    cval(c(reactiveValuesToList(fromlocation), 
+  cval <- reactive({
+    c(reactiveValuesToList(fromlocation), 
            reactiveValuesToList(yfavals),
-           reactiveValuesToList(frompatch)))
-    if (isTRUE(getOption("shiny.testmode"))){
-      print(list2DF(cval()))
+           reactiveValuesToList(frompatch))
+  }) %>% throttle(1000, priority = 100)
+  if (isTRUE(getOption("shiny.testmode"))){
+    observeEvent(cval(), print(list2DF(cval())))
     # cval(readRDS("./tests/testthat/current_values_1patch.rds"))
-    }
-  })
+  }
   
   ## PREDICTIONS
   output$pred <- renderUI({
@@ -138,7 +138,7 @@ server <- function(input, output, session) {
     })
   usedflt <- predictionsServer("pred", cval,
                     model_data,
-                    report_path)
+                    report_path) 
   
   ## Help
   observeEvent(input$intro, {

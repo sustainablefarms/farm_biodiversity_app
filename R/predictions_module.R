@@ -98,9 +98,9 @@ predictionsServer <- function(id,
       referencepred <- reactiveVal(value = species_prob_mean,
                                    label = "Reference Predictions")
       
-      observe({
+      datar <- reactive({
         if(
-          current_values()$locationcomplete & current_values()$allpatchcomplete
+          isTRUE(current_values()$locationcomplete & current_values()$allpatchcomplete)
         ){
           # saveRDS(isolate(current_values()), file = "current_values.rds"); stop("Saving current values - app is in debug mode and will end")
           data$Xocc <- newXocc_fromselected(current_values())
@@ -141,32 +141,32 @@ predictionsServer <- function(id,
           data$species_prob_ref <- NULL
           data$species_richness <- NULL
         }
+        data
       })
       
       # reference prediction saving
       observeEvent(input$savetoreference, {
-        data$refXocc <- data$Xocc
-	data$refRegion <- current_values()$selected_region
-        referencepred(data$species_prob_current)
+        datar()$refXocc <- datar()$Xocc
+	      datar()$refRegion <- current_values()$selected_region
+        referencepred(datar()$species_prob_current)
       })
       
       # draw species plots
-      observe({
         # req(data$species_prob_current)
-        validate(need(data$species_prob_current, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
         output$common_species <- plotly::renderPlotly({
-          species_plotly_common(tocommon(data$species_prob_current))
+          validate(need(datar()$species_prob_current, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
+          species_plotly_common(tocommon(datar()$species_prob_current))
         })
         output$diff_species <- plotly::renderPlotly({
-          species_plotly_different(data$spec_different)
+          validate(need(datar()$spec_different, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
+          species_plotly_different(datar()$spec_different)
         })
-      })
 
       
       # draw species richness
       output$species_richness <- renderPlot({
-        validate(need(data$species_richness, ""))
-        richness_plot(data$species_richness)
+        validate(need(datar()$species_richness, ""))
+        richness_plot(datar()$species_richness)
       })
       
       # modal more detail stuff
@@ -174,7 +174,7 @@ predictionsServer <- function(id,
         moredetailopens(moredetailopens() + 1)
         showModal(
           modalDialog(
-            predictionsdetailUI(ns("detail"), isolate(data$speciesinfo_topten), isolate(data$speciesinfo_botten)),
+            predictionsdetailUI(ns("detail"), isolate(datar()$speciesinfo_topten), isolate(datar()$speciesinfo_botten)),
             title = "More Detail on Predictions",
             size = "l",
       easyClose = TRUE,
@@ -189,12 +189,12 @@ predictionsServer <- function(id,
                    removeModal()
       )
       
-      predictionsdetailServer("detail", data, moredetailopens)
+      predictionsdetailServer("detail", datar(), moredetailopens)
       
       output$downloaddata <- downloadHandler(
         filename = "predictions.csv",
         content = function(file) {
-          outdata <- data$species_prob_current
+          outdata <- datar()$species_prob_current
           outdata <- cbind(Species = rownames(outdata), as.data.frame(outdata))
           colnames(outdata)[colnames(outdata) == "median"] <- "Predicted Probability"
           colnames(outdata)[colnames(outdata) == "bestsite"] <- "Patch"
@@ -236,7 +236,7 @@ predictionsServer <- function(id,
         output$downloaddataverbose <- downloadHandler(
           filename = "predictions.rds",
           content = function(file) {
-            saveRDS(reactiveValuesToList(data), file)
+            saveRDS(datar(), file)
           })
       }
       
