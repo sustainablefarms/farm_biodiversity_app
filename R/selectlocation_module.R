@@ -160,7 +160,7 @@ selectlocationServer <- function(id){
             }
             locinfo
           }
-        })
+        }) %>% throttle(3000)
         
         # insert region name
         output$regionname <- renderText({
