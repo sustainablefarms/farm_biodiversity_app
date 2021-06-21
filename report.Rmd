@@ -155,7 +155,7 @@ buildspeclatex_justimage <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
   imagetex <- imagetexfun(speciesinfo[specinforow,])
   out <- c(
-    "\\begin{minipage}[b][0.30\\textwidth][t]{0.23\\textwidth}",
+    "\\begin{minipage}[b][0.40\\textwidth][t]{0.23\\textwidth}",
     "\\begin{center}",
     # "\\\\ \\vspace*{1ex} ",
     specname,
