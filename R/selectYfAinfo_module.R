@@ -31,11 +31,11 @@ selectYfAServer <- function(id, locationinfo){
         # PrecSeasonality.YfA    = new_data_mean$PrecSeasonality.YfA
       )
 
-      stopifnot(is.reactivevalues(locationinfo))
+      stopifnot(is.reactive(locationinfo))
       observe({
-	validate(need(locationinfo$AnnPrec.lt, ""))
+	validate(need(locationinfo()$AnnPrec.lt, ""))
 	updateSliderInput(inputId = "AnnPrec.YfA",
-			  value = locationinfo$AnnPrec.lt)
+			  value = locationinfo()$AnnPrec.lt)
       }, priority = 100)
 
       observeEvent(input$AnnPrec.YfA, {
@@ -45,8 +45,8 @@ selectYfAServer <- function(id, locationinfo){
 
       
       output$annprec.lt.region <- renderText({
-        validate(need(locationinfo$selected_region, ""))
-        paste0("(long term average for ", locationinfo$selected_region, ": ", locationinfo$AnnPrec.lt , "mm",
+        validate(need(locationinfo()$selected_region, ""))
+        paste0("(long term average for ", locationinfo()$selected_region, ": ", locationinfo()$AnnPrec.lt , "mm",
                 ")")
       })
       

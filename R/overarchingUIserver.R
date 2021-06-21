@@ -120,10 +120,10 @@ server <- function(input, output, session) {
   
   ## Combine!
   cval <- reactive({
-    c(reactiveValuesToList(fromlocation), 
+    c(fromlocation(), 
            reactiveValuesToList(yfavals),
            reactiveValuesToList(frompatch))
-  }) %>% throttle(1000, priority = 100)
+  })
   if (isTRUE(getOption("shiny.testmode"))){
     observeEvent(cval(), print(list2DF(cval())))
     # cval(readRDS("./tests/testthat/current_values_1patch.rds"))
