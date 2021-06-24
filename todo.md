@@ -22,6 +22,12 @@ output:
   + species removed
 + types of farms in More Information. Could get from the 2010 Lindenmayer book? Talks about wheat sheep belt, and more
 + links to box gum grassy woodlands
++ acknowledgements
+  + field team
+  + Suzannah
+  + van Dijk lab
+  + DBL
+  + MLA and Sustainable farms
 
 ## Caveats
 + get max patch size for model (Ask Dan for patch areas, to look for maximum in our data)
@@ -31,6 +37,7 @@ output:
 # Outputs
 + convert plotly to have the default cursor style
 + show the ref values in a tooltip or something
++ remove 'patch' column from downloaded table
 
 
 # Outputs: More Detail
@@ -39,6 +46,8 @@ output:
 + Authorship: Martin, Albert, Dan?
 + box gum grassy woodland to title case
 + for phone have a visible scroll bar or something that shows users there is more down the page, or smaller pages
++ checkbox checked color make in keeping with color scheme
++ from the mastering shiny book it almost looks like reactiveVal and reactiveValues are only useful in rare situations, but I'm not sure what they are. There were no examples of reactiveVal and reactive() operating together, so I don't have good idea of what the reactive graph looks like.
 
 # Other
 + __Get onto SF website__
