@@ -28,8 +28,8 @@ predictionsdetailUI <- function(id, speciesinfo_topten, speciesinfo_botten){
                   infotooltip(tags$div(tags$p("This is the ratio of each species' estimated occupancy probability to the reference occupancy probability.",
 				   "For example, if the Superb Parrot has a ratio of '2', then it is estimated that the Superb Parrot is twice as likely to live in your farm's woodland than in the reference farm."),
 				   tags$p(
-				   "A ratio of '1' means the species is <em>equally</em> as likely to occupy your farm's woodland as the reference farm.",
-				   "A ratio smaller than 1 means the species is <em>less</em> likely to occupy your farm's woodland than the reference farm."),
+				   "A ratio of '1' means the species is", tags$em("equally"), "as likely to occupy your farm's woodland as the reference farm.",
+				   "A ratio smaller than 1 means the species is", tags$em("less"), "likely to occupy your farm's woodland than the reference farm."),
 				tags$p("Body length data from",
 			             linknewtab(href = "https://www.nature.com/articles/sdata201561", "Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015)."))
 				   )))),
