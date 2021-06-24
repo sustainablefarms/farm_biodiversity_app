@@ -31,7 +31,7 @@ selectYfAServer <- function(id, locationinfo){
         out <- list()
         out$AnnPrec.YfA <- input$AnnPrec.YfA
         out
-      }) %>% throttle(3000)
+      }) %>% throttle(1000)
       
       output$annprec.lt.region <- renderText({
         validate(need(locationinfo()$selected_region, ""))
