@@ -27,7 +27,7 @@ out <- modalDialog(
   tags$p(
          tags$em("More help:"),
 	 "Click on",
-         actionButton2("overallhelp", "More Help", class = "badge_tiny"),
+         actionButton2("overallhelpfake", "More Help", class = "badge_tiny"),
 	 "at the top of the app and on the",
 	 infotooltip("Clicking on this icon will usually display helpful information."),
 	 "icons."
@@ -36,16 +36,16 @@ out <- modalDialog(
          tags$em("More details on estimates:"),
 	 "See estimates for all species and some photos by",
 	 "clicking",
-          actionButton2("moredetail", "View More Detail", class = "download_badge"),
+          actionButton2("moredetailfake", "View More Detail", class = "download_badge"),
 	 "or downloading a",
-          actionButton2("downloadreport", "Report", class = "download_badge"),
+          actionButton2("downloadreportfake", "Report", class = "download_badge"),
 	 "You can also download a table of the estimates in '.csv' format.",
 	 "Hover over a species occupancy estimate to get insight into what model predictors influence that species."
         ),
 
 
   tags$p("Show this screen again by clicking",
-    actionButton2("intro", "Intro", class = "badge_tiny"),
+    actionButton2("introfake", "Intro", class = "badge_tiny"),
     "at the top of the app."
 	 ),
   title = appname,
