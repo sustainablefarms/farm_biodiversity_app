@@ -94,8 +94,6 @@ server <- function(input, output, session) {
   data <- reactiveValues(
     selected_region = NULL,
     species_predictions = NULL)
-  exportTestValues(selected_region = data$selected_region,
-                   patches = current_values$patches) 
   ## SF logo
   output$sflogo <- renderImage(
     list(src = "Sustainable Farms logo RGB.png",
