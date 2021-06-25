@@ -25,7 +25,7 @@ predictionsUI <- function(id, usedflt){
       fluidRow(
         column(width = 6, 
            tags$div(HTML("<plottitle>Most Likely Species</plottitle>"),
-                  infotooltip(title = tags$html(tags$p("The 10 most likely species to live in your farm's box gum grassy woodland according to our model."),
+                  infotooltip(title = tags$html(tags$p("The 10 most likely species to live in your farm's Box Gum Grassy Woodland according to our model."),
 					   proboccplotdescription))
           ),
           plotly::plotlyOutput(ns("common_species"), height = "300px")

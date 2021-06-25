@@ -11,8 +11,8 @@ out <- modalDialog(
     linknewtab(href = "https://doi.org/10.1002/ecy.2754",
 	       "[Tobler et al. 2019]"),
     "that",
-    "estimates occupancy of 62 different bird species in remnant or planted box gum grassy woodlands patches.",
-    "The model was trained on bird surveys conducted in spring inside remnant box gum grassy woodland and planted woodland patches from 2000 to 2017.",
+    "estimates occupancy of 62 different bird species in remnant or planted Box Gum Grassy Woodland patches.",
+    "The model was trained on bird surveys conducted in spring inside remnant Box Gum Grassy Woodland and planted woodland patches from 2000 to 2017.",
     "Patches were in farmland in northern Victoria, NSW and southern QLD.",
     "The model accounts for the detection difficulty of each species in these surveys, the windiness at the time of the survey, and time of day of the survey."
   ),
@@ -36,7 +36,7 @@ out <- modalDialog(
          "For each set of occupancy estimates, the full set of environmental values used to make the estimates are given in the report that can be downloaded."),
   tags$div(class='subheader', tags$h3("WHAT IS A PATCH?")),
   patchdefn,
-  tags$p("This use of the term 'patch' comes from our focus on box gum grassy woodlands and the way bird survey locations were selected."),
+  tags$p("This use of the term 'patch' comes from our focus on Box Gum Grassy Woodlands and from the bird survey locations that we used."),
 
   tags$p(
   "In this app, a", tags$em("planted patch"), "is a patch",

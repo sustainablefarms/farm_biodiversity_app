@@ -48,7 +48,7 @@ techcovar2nicename <- function(techcovarnames){
 }
 ```
 
-Welcome to a detailed report of species occupancy estimates for the box gum grassy woodland patches on your farm.
+Welcome to a detailed report of species occupancy estimates for the Box Gum Grassy Woodland patches on your farm.
 We hope you enjoy it.
 In the next section you'll find the information we used to estimate the occupancy probabilities.
 Then you'll find pictures of the 10 most likely species across your patches.
@@ -60,7 +60,7 @@ and the occupancy probability of every species in our model arranged by body len
 This report was generated at `r Sys.time()` from version `r appversion` of the Sustainable Farm's `r appname` (`r appurl`).
 
 # The Patch Properites Used for Estimation
-The estimates of bird occupancy in this report were based on the below properties of box gum grassy woodland patches.
+The estimates of bird occupancy in this report were based on the below properties of Box Gum Grassy Woodland patches.
 The long term climate information was extracted for the region you selected from the \href{https://www.worldclim.org/data/bioclim.html}{WorldClim} (version 1.4) climate database.
 We used the centre of your region for this.
 
@@ -148,7 +148,7 @@ for (specname in row.names(data$species_prob_current)[topten]){
 \newpage
 
 # The 10 Least Likely Species on Your Farm
-Of the birds in the model, the 10 least likely species to reside in your box gum grassy woodland patches are below.
+Of the birds in the model, the 10 least likely species to reside in your Box Gum Grassy Woodland patches are below.
 ```{r bottomten, results='asis'}
 bottomten <- order(data$species_prob_current[, "median"], decreasing = FALSE)[1:10]
 buildspeclatex_justimage <- function(specname){
@@ -190,7 +190,7 @@ a <- lapply(texs, cat)
 
 \clearpage
 # Occupancy Probability of Every Species in the Model
-Below is the estimated probability of each species in the model occupying at least one box gum grassy woodland patch on your farm.
+Below is the estimated probability of each species in the model occupying at least one Box Gum Grassy Woodland patch on your farm.
 There is a 95% chance that the \emph{true} occupancy probability is within the error bars, assuming our model is correct (the uncertainty is due to uncertainty of model parameter values).
 
 We computed both estimate and error bars by taking the maximum of the occupancy probability of all patches.

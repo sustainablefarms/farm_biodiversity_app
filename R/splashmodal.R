@@ -1,6 +1,6 @@
 splashmodal <- function(){
 out <- modalDialog(
-  tags$p("This app estimates which bird species are likely to be in your farm's box gum grassy woodland (including plantings) in spring.",
+  tags$p("This app estimates which bird species are likely to be in your farm's Box Gum Grassy Woodland (including plantings) in spring.",
 	 "It estimates occupancy for 60 woodland bird species, including five of conservation concern:",
 	"Brown Treecreeper, Diamond Firetail, Dusky Woodswallow, Grey-crowned Babbler, and Superb Parrot."),
   tags$p(
@@ -14,7 +14,7 @@ out <- modalDialog(
 	 tags$ul(
             tags$li("convert part of a paddock into new woodland"),
             tags$li("build a new shelterbelt"),
-            tags$li("remove box gum grassy woodland"),
+            tags$li("remove Box Gum Grassy Woodland"),
 	    tags$li("dissuade Noisy Miners, which are often aggressive towards other birds, from living in your woodland patches"),
 	    tags$li("have a wetter year"),
 	    tags$li("and more")

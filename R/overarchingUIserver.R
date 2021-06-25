@@ -44,7 +44,7 @@ ui <- function(){
       tags$span(class = 'main', appname),
       tags$span(style = "white-space:nowrap;", class = 'subtitle', "By Kassel Hingee & Martin Westgate.",
 	       "Version", appversion),
-      tags$span(class = 'subtitle', HTML("<br>Birds you can expect to see in spring in your farm's box gum grassy woodland remnants and plantings.")),
+      tags$span(class = 'subtitle', HTML("<br>Birds you can expect to see in spring in your farm's Box Gum Grassy Woodland remnants and plantings.")),
     actionButton2("intro", "Intro", class = "badge_tiny"),
     actionButton2("overallhelp", "More Help", class = "badge_tiny"),
            )),
