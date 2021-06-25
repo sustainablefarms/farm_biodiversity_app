@@ -13,7 +13,7 @@ selectlocationUI <- function(id){
          #   width = "100%"),
          fluidRow(
            column(width = 8,
-             if (isTRUE(getOption("shiny.testmode"))){
+             if (FALSE & isTRUE(getOption("shiny.testmode"))){
                actionButton(ns("fake_region_number"), label = "Next Region")
              } else {
                plotly::plotlyOutput(ns("plot_points"), height = "350px")
@@ -114,7 +114,7 @@ selectlocationServer <- function(id){
         })
         
         # observe clicks on the region plot
-        if (isTRUE(getOption("shiny.testmode"))){
+        if (FALSE & isTRUE(getOption("shiny.testmode"))){
           selected_region <- reactive({data$points$label[input$fake_region_number]})
         } else {
         selected_region <- reactive({
