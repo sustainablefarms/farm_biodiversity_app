@@ -13,11 +13,11 @@ selectlocationUI <- function(id){
          #   width = "100%"),
          fluidRow(
            column(width = 8,
-             # if (isTRUE(getOption("shiny.testmode"))){
-               # actionButton(ns("fake_region_number"), label = "Next Region")
-             # } else {
+             if (isTRUE(getOption("shiny.testmode"))){
+               actionButton(ns("fake_region_number"), label = "Next Region")
+             } else {
                plotly::plotlyOutput(ns("plot_points"), height = "350px")
-             # }
+             }
              ),
            column(width = 4, 
              # style = "
@@ -114,14 +114,24 @@ selectlocationServer <- function(id){
         })
         
         # observe clicks on the region plot
-        outOfModule <- reactive({
-          locinfo <- list()
+        if (isTRUE(getOption("shiny.testmode"))){
+          selected_region <- reactive({data$points$label[input$fake_region_number]})
+        } else {
+        selected_region <- reactive({
+          sel_reg <- ""
           if(!is.null(data$points)){
             click_region <- plotly::event_data(
               event = "plotly_click",
               source = "region_map"
             )$pointNumber + 1 # Note: plotly uses Python-style indexing, hence +1
-            locinfo$selected_region <- data$points$label[click_region]
+            sel_reg <- data$points$label[click_region]
+          } 
+          sel_reg
+        })
+        }
+        outOfModule <- reactive({
+          locinfo <- list()
+            locinfo$selected_region <- selected_region()
             # add climate data
             climate_row <- which(data$points$label == locinfo$selected_region)
             locinfo$MaxTWarmMonth.lt <- data$points$MaxTWarmMonth[climate_row]
@@ -143,7 +153,6 @@ selectlocationServer <- function(id){
               locinfo$locationcomplete <- FALSE
             }
             locinfo
-          }
         }) %>% throttle(1000)
         
         # insert region name
