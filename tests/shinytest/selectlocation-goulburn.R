@@ -1,4 +1,4 @@
-app <- ShinyDriver$new(".")#./../")
+app <- ShinyDriver$new("../../")
 app$snapshotInit("selectlocation-goulburn")
 Sys.sleep(0.5)
 app$setInputs(overallhelpfake = "click")
@@ -9,6 +9,9 @@ app$snapshot()
 app$findElement('button[data-dismiss]')$click() #closes the modal
 app$snapshot()
 
-app$setInputs(`plotly_click-A` = "M5,0A5,5 0 1,1 0,-5A5,5 0 0,1 5,0Z", allowInputNoBinding_ = TRUE)
-app$findElement('g.points path.point')$getName()
-app$takeScreenshot()
+# simulating a plotly click on goulburn below. To change to other locations I suspect changing the pointNumber will suffice
+#plotly_click is the event type, 'region_map' is the source. Combined with a "-" give the eventID in plotly::event_data
+# the event info I think can be obtained from session$rootScope()$input[[eventID]]
+# the value when clicking can be obtained by print(session$rootScope()$input[["plotly_click-region_map"]]) in a reactive in selectionlocation_module
+app$setInputs(`plotly_click-region_map` = '[{\"curveNumber\":0,\"pointNumber\":0,\"x\":149.603897167433,\"y\":-34.5156485191709}]', allowInputNoBinding_ = TRUE, priority_ = "input")
+app$snapshot()
