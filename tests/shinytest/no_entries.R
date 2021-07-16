@@ -6,5 +6,5 @@ app$setInputs(moredetailfake = "click")
 app$setInputs(downloadreportfake = "click")
 app$setInputs(introfake = "click")
 app$findElement('button[data-dismiss]')$click() #closes the modal
-
+Sys.sleep(1)
 app$snapshot()

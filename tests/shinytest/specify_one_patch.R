@@ -8,9 +8,12 @@ app$setInputs(introfake = "click")
 app$findElement('button[data-dismiss]')$click() #closes the modal
 
 app$setInputs(`patch-patch_number_1` = "click")
+Sys.sleep(1)
 app$snapshot()
 app$setInputs(`patch-pc_woody3000m_1` = 15.5)
 app$setInputs(`patch-pc_woody500m_1` = 14)
+Sys.sleep(1)
 app$snapshot()
 app$setInputs(`patch-choose_patch_attributes_execute` = "click")
+Sys.sleep(1)
 app$snapshot()

@@ -10,8 +10,8 @@ output:
 # Help
 + birds on farms imagery for splash page
 + use icons or virtual tours
-+ details tool tip at top: make them auto bottom (on phone they miss page)
 + make the website icon be sustainable farm's (called a favicon, and not possible for shinyapps)
++ Are the planted patches BGGW or not??
 
 ## More Help
 + species list? describe species
@@ -27,11 +27,9 @@ output:
 
 ## Caveats
 + get max patch size for model (Ask Dan for patch areas, to look for maximum in our data)
-+ __box gum grassy woodlands__ and plantings
-  + __test on other woodlands__
++ __test on other woodlands__
 
 # Outputs
-+ convert plotly to have the default cursor style
 + show the ref values in a tooltip or something
 + remove 'patch' column from downloaded table
 
@@ -39,8 +37,8 @@ output:
 # Outputs: More Detail
 
 # Overall
++ track usage: talk to Alice on this
 + Authorship: Martin, Albert, Dan?
-+ box gum grassy woodland to title case
 + for phone have a visible scroll bar or something that shows users there is more down the page, or smaller pages
 + checkbox checked color make in keeping with color scheme
 + from the mastering shiny book it almost looks like reactiveVal and reactiveValues are only useful in rare situations, but I'm not sure what they are. There were no examples of reactiveVal and reactive() operating together, so I don't have good idea of what the reactive graph looks like.

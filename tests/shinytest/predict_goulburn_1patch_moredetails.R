@@ -19,6 +19,7 @@ app$setInputs(`patch-choose_patch_attributes_execute` = "click")
 
 # look at more details modal
 app$setInputs(`pred-moredetail` = "click")
+Sys.sleep(1)
 app$snapshot()
 
 # hide more details modal
@@ -26,5 +27,5 @@ app$setInputs(`pred-hide` = "click")
 
 # download report and csv
 app$snapshotDownload("pred-downloaddata")
-app$snapshotDownload("pred-downloadreport")
+app$snapshotDownload("pred-downloadreport") # can't compare easily
 app$snapshot()

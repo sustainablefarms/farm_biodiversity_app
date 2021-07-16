@@ -7,6 +7,7 @@ app$setInputs(downloadreportfake = "click")
 app$setInputs(introfake = "click")
 app$snapshot()
 app$findElement('button[data-dismiss]')$click() #closes the modal
+Sys.sleep(1)
 app$snapshot()
 
 # simulating a plotly click on goulburn below. To change to other locations I suspect changing the pointNumber will suffice
