@@ -1,0 +1,2063 @@
+{
+  "input": {
+    ".clientValue-default-plotlyCrosstalkOpts": {
+      "on": "plotly_click",
+      "persistent": false,
+      "dynamic": false,
+      "selectize": false,
+      "opacityDim": 0.2,
+      "selected": {
+        "opacity": 1
+      },
+      "debounce": 0,
+      "color": [
+
+      ]
+    },
+    "downloadreportfake": 1,
+    "intro": 0,
+    "introfake": 1,
+    "location-show_maxtemp_modal": 0,
+    "location-show_mintemp_modal": 0,
+    "location-show_precip_cold_modal": 0,
+    "location-show_precip_warm_modal": 0,
+    "moredetailfake": 1,
+    "overallhelp": 0,
+    "overallhelpfake": 1,
+    "patch-choose_n_patches": 0,
+    "patch-choose_patch_attributes_execute": 1,
+    "patch-IsRemnant_1": true,
+    "patch-noisy_miner_1": true,
+    "patch-patch_number_1": 1,
+    "patch-pc_woody3000m_1": 15.5,
+    "patch-pc_woody500m_1": 14,
+    "plotly_afterplot-A": "\"pred-diff_species\"",
+    "plotly_afterplot-region_map": "\"location-plot_points\"",
+    "plotly_click-region_map": "[{\"curveNumber\":0,\"pointNumber\":0,\"x\":149.603897167433,\"y\":-34.5156485191709}]",
+    "plotly_relayout-A": "{\"width\":226,\"height\":300}",
+    "pred-moredetail": 0,
+    "pred-savetoreference": 0,
+    "pred-usedefaultreference": false,
+    "viewcvals": 0,
+    "yfa-AnnPrec.YfA": 897
+  },
+  "output": {
+    "location-map": {
+      "src": "[image data sha1: 91ccff026783a2ee53d0a12aeb3c1f044b93cf11]",
+      "width": 60,
+      "height": 200,
+      "alt": "Plot object",
+      "coordmap": {
+        "panels": [
+          {
+            "panel": 1,
+            "row": 1,
+            "col": 1,
+            "panel_vars": {
+
+            },
+            "log": {
+              "x": null,
+              "y": null
+            },
+            "domain": {
+              "left": 148.93630566015,
+              "right": 150.40006456885,
+              "bottom": -35.1740286358499,
+              "top": -33.8265807571499
+            },
+            "mapping": {
+              "x": null,
+              "y": null,
+              "geometry": "geometry"
+            },
+            "range": {
+              "left": 0,
+              "right": 60,
+              "bottom": 133.509777998837,
+              "top": 66.4902220011628
+            }
+          }
+        ],
+        "dims": {
+          "width": 60,
+          "height": 200
+        }
+      }
+    },
+    "location-plot_points": {
+      "x": {
+        "layout": {
+          "margin": {
+            "b": 0,
+            "l": 0,
+            "t": 0,
+            "r": 0,
+            "pad": 0
+          },
+          "xaxis": {
+            "showgrid": false,
+            "zeroline": false,
+            "ticks": "",
+            "showticklabels": false,
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "title": "",
+            "showline": false,
+            "fixedrange": true,
+            "scaleanchor": "y",
+            "scaleratio": 0.81004507506011
+          },
+          "yaxis": {
+            "showgrid": false,
+            "zeroline": false,
+            "ticks": "",
+            "showticklabels": false,
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "scaleanchor": "x",
+            "title": "",
+            "showline": false,
+            "fixedrange": true
+          },
+          "dragmode": false,
+          "paper_bgcolor": "transparent",
+          "plot_bgcolor": "transparent",
+          "scene": {
+            "zaxis": {
+              "title": [
+
+              ]
+            }
+          },
+          "hovermode": "closest",
+          "showlegend": false
+        },
+        "source": "region_map",
+        "config": {
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "data": [
+          {
+            "x": [
+              149.603897167433,
+              148.89317110628,
+              148.49572789024,
+              149.533292422197,
+              148.682825533056,
+              147.924902264263,
+              148.025908784489,
+              150.02852840764,
+              149.543271836602,
+              149.143887770302,
+              148.847149189209,
+              148.703967911334,
+              148.963820888869,
+              147.183940997916,
+              146.281336859597,
+              148.124638543134,
+              148.016373295133,
+              148.144215856213,
+              147.677933774124,
+              147.379887940421,
+              147.144305077741,
+              145.597615725366,
+              145.155458896963,
+              146.016490853472,
+              146.426370231006,
+              146.430010129481,
+              146.649274636069,
+              146.997823253865,
+              145.896000270369,
+              145.539877248166
+            ],
+            "y": [
+              -34.5156485191709,
+              -34.876331447112,
+              -34.3097188476459,
+              -33.4397044999448,
+              -33.7399570038706,
+              -33.4616832179737,
+              -33.8792592655564,
+              -32.7479219729185,
+              -32.4048809885628,
+              -33.6077972907502,
+              -33.1463468306489,
+              -32.2611449709809,
+              -32.6512826566735,
+              -35.7563459751216,
+              -35.6425751314109,
+              -36.0216293054152,
+              -34.5993367165344,
+              -35.0230225382735,
+              -34.8141614958965,
+              -34.3932947880579,
+              -35.1466189503589,
+              -36.7325295170573,
+              -36.8202674282335,
+              -36.5810678671561,
+              -36.066015014921,
+              -36.5910312570761,
+              -36.1563543905268,
+              -36.3298347611681,
+              -36.1472472949328,
+              -36.3733378915181
+            ],
+            "mode": "markers",
+            "marker": {
+              "color": [
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e9c63",
+                "#4e839c",
+                "#4e839c",
+                "#4e839c",
+                "#4e839c",
+                "#4e839c",
+                "#4e839c",
+                "#4e839c",
+                "#4e839c",
+                "#4e839c"
+              ],
+              "size": 10,
+              "line": {
+                "color": "rgba(31,119,180,1)"
+              }
+            },
+            "hoverinfo": [
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text",
+              "text"
+            ],
+            "text": [
+              "Goulburn Region",
+              "Yass Region",
+              "Young Region",
+              "Bathurst Region",
+              "Cowra Region",
+              "Forbes",
+              "Grenfell",
+              "Mudgee Region - East",
+              "Mudgee Region - West",
+              "Blayney",
+              "Orange Region",
+              "Dubbo Region",
+              "Wellington",
+              "Albury Region",
+              "Corowa Region",
+              "Tumbarumba",
+              "Cootamundra",
+              "Gundagai",
+              "Junee",
+              "Temora",
+              "Wagga Wagga Region",
+              "Euroa",
+              "Nagambie",
+              "Benalla Region",
+              "Rutherglen",
+              "Wangaratta Region",
+              "Chiltern - Indigo Valley",
+              "Yackandandah",
+              "Moira",
+              "Shepparton Region - East"
+            ],
+            "type": "scatter",
+            "error_y": {
+              "color": "rgba(31,119,180,1)"
+            },
+            "error_x": {
+              "color": "rgba(31,119,180,1)"
+            },
+            "line": {
+              "color": "rgba(31,119,180,1)"
+            },
+            "xaxis": "x",
+            "yaxis": "y",
+            "frame": null
+          },
+          {
+            "x": [
+              148.7962337,
+              148.8100406,
+              149.1209019,
+              149.3992872,
+              149.1386669,
+              149.0488114,
+              148.7884166,
+              148.7962337,
+              null,
+              152,
+              151.93972,
+              152,
+              null,
+              144,
+              144.3491109,
+              144.6167533,
+              144.7779743,
+              144.9824049,
+              144.9236153,
+              144.9681785,
+              145.1139227,
+              145.3548253,
+              145.5323902,
+              145.812159,
+              145.9026934,
+              146.1853843,
+              146.6118677,
+              146.9419036,
+              147.0529633,
+              147.1169743,
+              147.3110289,
+              147.4042644,
+              147.5518731,
+              147.7084146,
+              147.9975712,
+              148.0386151,
+              148.2174433,
+              148.1088881,
+              149.976679,
+              149.7707959,
+              149.488689,
+              148.2896152,
+              147.7883874,
+              146.8835341,
+              146.9227871,
+              146.5512091,
+              146.2136034,
+              146.2919176,
+              146.4777931,
+              146.42651,
+              146.3464088,
+              146.123145,
+              145.9188712,
+              145.7622261,
+              145.6069882,
+              145.3720118,
+              145.416645,
+              145.5489331,
+              145.481926,
+              145.2537562,
+              145.1840163,
+              145.231641,
+              144.9360497,
+              144.6622207,
+              144.9206251,
+              145.1177503,
+              144.9269125,
+              144.3609699,
+              144.4806617,
+              144.69273,
+              144.6614852,
+              144.4274231,
+              144,
+              null,
+              152,
+              151.7852189,
+              151.7338316,
+              151.7937135,
+              151.6604828,
+              151.6440771,
+              151.587306,
+              151.6137869,
+              151.5097681,
+              151.5651412,
+              151.5279251,
+              151.665423,
+              151.570463,
+              151.5028651,
+              151.519514,
+              151.4411489,
+              151.504939,
+              151.417187,
+              151.2581108,
+              151.2374782,
+              151.200009,
+              151.1664335,
+              151.0727692,
+              151.155553,
+              151.1207849,
+              151.231342,
+              151.1593539,
+              151.2980579,
+              151.308559,
+              151.335044,
+              151.30004,
+              151.074652,
+              151.281893,
+              151.265618,
+              151.118176,
+              151.230302,
+              151.082455,
+              151.171761,
+              150.928064,
+              150.921957,
+              150.8116961,
+              150.9043349,
+              150.749607,
+              150.832993,
+              150.760349,
+              150.679425,
+              150.7004888,
+              150.479656,
+              150.276325,
+              150.1772629,
+              150.234431,
+              150.150243,
+              150.148049,
+              149.904122,
+              149.944052,
+              149.872976,
+              150.005155,
+              150.050372,
+              149.944946,
+              149.976679,
+              148.1088881,
+              148.2174433,
+              148.0386151,
+              147.9975712,
+              147.7084146,
+              147.5518731,
+              147.4042644,
+              147.3110289,
+              147.1169743,
+              147.0529633,
+              146.9419036,
+              146.6118677,
+              146.1853843,
+              145.9026934,
+              145.812159,
+              145.5323902,
+              145.3548253,
+              145.1139227,
+              144.9681785,
+              144.9236153,
+              144.9824049,
+              144.7779743,
+              144.6167533,
+              144.3491109,
+              144,
+              null,
+              151.7966443,
+              151.6852469,
+              151.7889802,
+              151.7966443,
+              null,
+              151.5651221,
+              151.5651221,
+              null,
+              151.0423423,
+              151.1145216,
+              151.0423423,
+              null,
+              148.7962337,
+              148.7884166,
+              149.0488114,
+              149.1386669,
+              149.3992872,
+              149.1209019,
+              148.8100406,
+              148.7962337,
+              null,
+              151.3228748,
+              151.3756931,
+              151.3228748,
+              null,
+              151.3020532,
+              151.3020532
+            ],
+            "y": [
+              -35.4015161,
+              -35.307412,
+              -35.1245173,
+              -35.3190897,
+              -35.4283191,
+              -35.9204102,
+              -35.6977401,
+              -35.4015161,
+              null,
+              -32.669342589298,
+              -32.736765,
+              -32.7273657857808,
+              null,
+              -35.5585389443347,
+              -35.7671416,
+              -36.0766595,
+              -36.1299196,
+              -36.0715578,
+              -35.9889508,
+              -35.8658418,
+              -35.8205884,
+              -35.8670484,
+              -35.8048585,
+              -35.9918383,
+              -35.9524957,
+              -36.0419921,
+              -35.9721327,
+              -36.1154465,
+              -36.1078814,
+              -35.9984937,
+              -36.061155,
+              -35.9435621,
+              -36.0040948,
+              -35.9285448,
+              -36.0477658,
+              -36.3912088,
+              -36.5988531,
+              -36.8008655,
+              -37.50506,
+              -37.5604919,
+              -37.7743781,
+              -37.8109882,
+              -37.9552472,
+              -38.634447,
+              -38.596409,
+              -38.703789,
+              -38.6955325,
+              -38.904281,
+              -38.7901595,
+              -39.1299862,
+              -39.1255462,
+              -38.8315425,
+              -38.9068762,
+              -38.6646278,
+              -38.678762,
+              -38.536297,
+              -38.407246,
+              -38.371688,
+              -38.231736,
+              -38.224682,
+              -38.3746546,
+              -38.4096127,
+              -38.4969985,
+              -38.3105677,
+              -38.350066,
+              -38.1438809,
+              -37.8400349,
+              -38.1067031,
+              -38.1644901,
+              -38.12027,
+              -38.2725793,
+              -38.2820962,
+              -38.5113956946724,
+              null,
+              -32.7978974141401,
+              -32.92024,
+              -32.8776387,
+              -32.9265685,
+              -33.084065,
+              -32.975321,
+              -32.989685,
+              -33.082133,
+              -33.093661,
+              -33.100586,
+              -33.159146,
+              -33.090256,
+              -33.289405,
+              -33.3404,
+              -33.219379,
+              -33.308968,
+              -33.354148,
+              -33.523271,
+              -33.570107,
+              -33.453752,
+              -33.536052,
+              -33.4267066,
+              -33.449206,
+              -33.467828,
+              -33.599548,
+              -33.538865,
+              -33.654644,
+              -33.572368,
+              -33.664145,
+              -33.582024,
+              -33.823934,
+              -33.8205182,
+              -33.834334,
+              -33.968615,
+              -33.990669,
+              -34.026323,
+              -34.060558,
+              -34.086503,
+              -34.316566,
+              -34.493495,
+              -34.507993,
+              -34.5967391,
+              -34.854716,
+              -35.075099,
+              -34.992211,
+              -35.023882,
+              -35.1230397,
+              -35.289831,
+              -35.723612,
+              -35.7030755,
+              -35.832537,
+              -35.891139,
+              -36.267275,
+              -36.918694,
+              -37.055665,
+              -37.082265,
+              -37.142889,
+              -37.259739,
+              -37.275161,
+              -37.50506,
+              -36.8008655,
+              -36.5988531,
+              -36.3912088,
+              -36.0477658,
+              -35.9285448,
+              -36.0040948,
+              -35.9435621,
+              -36.061155,
+              -35.9984937,
+              -36.1078814,
+              -36.1154465,
+              -35.9721327,
+              -36.0419921,
+              -35.9524957,
+              -35.9918383,
+              -35.8048585,
+              -35.8670484,
+              -35.8205884,
+              -35.8658418,
+              -35.9889508,
+              -36.0715578,
+              -36.1299196,
+              -36.0766595,
+              -35.7671416,
+              -35.5585389443347,
+              null,
+              -32.8191275,
+              -32.824087,
+              -32.884348,
+              -32.8191275,
+              null,
+              -33.194881,
+              -33.194881,
+              null,
+              -33.9511428,
+              -34.0012146,
+              -33.9511428,
+              null,
+              -35.4015161,
+              -35.6977401,
+              -35.9204102,
+              -35.4283191,
+              -35.3190897,
+              -35.1245173,
+              -35.307412,
+              -35.4015161,
+              null,
+              -33.427934,
+              -33.5005738,
+              -33.427934,
+              null,
+              -33.4969653,
+              -33.4969653
+            ],
+            "_bbox": [
+              144,
+              -39.1299862,
+              152,
+              -32.669342589298
+            ],
+            "mode": "lines",
+            "type": "scatter",
+            "showlegend": false,
+            "hoverinfo": [
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              null,
+              "none",
+              "none",
+              "none",
+              null,
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              null,
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              null,
+              "none",
+              "none",
+              "none",
+              "none",
+              null,
+              "none",
+              "none",
+              null,
+              "none",
+              "none",
+              "none",
+              null,
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              null,
+              "none",
+              "none",
+              "none",
+              null,
+              "none",
+              "none"
+            ],
+            "line": {
+              "color": "gray"
+            },
+            "marker": {
+              "color": "rgba(255,127,14,1)",
+              "line": {
+                "color": "rgba(255,127,14,1)"
+              }
+            },
+            "error_y": {
+              "color": "rgba(255,127,14,1)"
+            },
+            "error_x": {
+              "color": "rgba(255,127,14,1)"
+            },
+            "xaxis": "x",
+            "yaxis": "y",
+            "frame": null
+          },
+          {
+            "x": [
+              146.155458896963,
+              146.155458896963
+            ],
+            "y": [
+              -33.2611449709809,
+              -37.3202674282335
+            ],
+            "text": [
+              "NSW",
+              "VIC"
+            ],
+            "type": "scatter",
+            "mode": "text",
+            "textfont": {
+              "size": 20
+            },
+            "showlegend": false,
+            "marker": {
+              "color": "rgba(44,160,44,1)",
+              "line": {
+                "color": "rgba(44,160,44,1)"
+              }
+            },
+            "error_y": {
+              "color": "rgba(44,160,44,1)"
+            },
+            "error_x": {
+              "color": "rgba(44,160,44,1)"
+            },
+            "line": {
+              "color": "rgba(44,160,44,1)"
+            },
+            "xaxis": "x",
+            "yaxis": "y",
+            "frame": null
+          }
+        ],
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.2,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.1.1",
+          "src": {
+            "href": "crosstalk-1.1.1"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "1.57.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-1.57.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "1.57.1",
+          "src": {
+            "href": "plotly-main-1.57.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "location-regionname": "Goulburn Region",
+    "location-show_maxtemp": {
+      "html": "<button id=\"location-show_maxtemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Annual<br>Maximum<br>Temperature<h3>25.4&deg;C<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "location-show_mintemp": {
+      "html": "<button id=\"location-show_mintemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Annual<br>Minimum<br>Temperature<h3>-0.5&deg;C<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "location-show_precip_cold": {
+      "html": "<button id=\"location-show_precip_cold_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Winter<br>Preciptiation<h3>238mm<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "location-show_precip_warm": {
+      "html": "<button id=\"location-show_precip_warm_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Summer<br>Preciptiation<h3>217mm<\/h3><\/button>",
+      "deps": [
+
+      ]
+    },
+    "patch-nmimage": {
+      "src": "[image data sha1: 973f16c34d0d34126a28af055c5fbc98c86df9c2]",
+      "alt": "An image of noisy miners",
+      "height": "100px"
+    },
+    "patch-patch_num_complete_1": {
+      "html": "<span class=\"glyphicon glyphicon-ok\" style=\"color: white;\"><\/span>",
+      "deps": [
+
+      ]
+    },
+    "patch-patch_selector": {
+      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>1<\/h3><\/button>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "pred": {
+      "html": "<script>$(function () {\n        $('[data-toggle=tooltip]').tooltip()\n      })<\/script>\n<p class=\"alignleft\">\n  <plottitle>Expected Number of Species<\/plottitle>\n  <span class=\"glyphicon glyphicon-info-sign\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"The &lt;em&gt;second&lt;/em&gt; bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm. &lt;br&gt;&lt;br&gt; The top bar is the number of species we expect if there is only 1.5 hectares of woody vegetation canopy within 500m of every patch centre. The third bar is the number of species we expect if there is 15 hectares of woody vegetation canopy within 500m of every patch centre. The final bar is the number of species we expect from your reference estimates. &lt;br&gt;&lt;br&gt;Each species was assigned an occupancy probability equal to the maximum of all patches (we use the maximum as we expect occupancy between patches to be highly correlated).\" data-container=\"body\" data-trigger=\"focus\" data-html=\"FALSE\" style=\"cursor: pointer; font-size: 120%; color: #CC9900\" data-placement=\"bottom\"><\/span>\n<\/p>\n<p class=\"alignright\">\n  <em>\n    <span id=\"pred-warn\" class=\"shiny-html-output\"><\/span>\n  <\/em>\n<\/p>\n<div style=\"clear: both;\"><\/div>\n<div id=\"pred-species_richness\" class=\"shiny-plot-output\" style=\"width:100%;height:250px;\"><\/div>\n<div class=\"row\">\n  <div class=\"col-sm-6\">\n    <div>\n      <plottitle>Most Likely Species<\/plottitle>\n      <span class=\"glyphicon glyphicon-info-sign\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"&lt;html&gt;&#10;  &lt;p&gt;The 10 most likely species to live in your farm&#39;s Box Gum Grassy Woodland according to our model.&lt;/p&gt;&#10;  &lt;html&gt;&#10;    &lt;p&gt;&#10;      Bar length and printed percentage indicate the estimated probability of occupancy for each of the species, ignoring interactions between species.&#10;      When there are multiple patches, the occupancy probability is the maximum of the occupancy probability of the individual patches.&#10;    &lt;/p&gt;&#10;    &lt;p&gt;&#10;      The error bars summarise uncertainty due to the uncertainty of the model parameters.&#10;      These error bars are 95% credible intervals (highest posterior density intervals to be precise):&#10;      if the modelling assumptions are correct then there is a 95% probability that the actual on-ground occupancy probability is within the credible interval.&#10;    &lt;/p&gt;&#10;  &lt;/html&gt;&#10;&lt;/html&gt;\" data-container=\"body\" data-trigger=\"focus\" data-html=\"FALSE\" style=\"cursor: pointer; font-size: 120%; color: #CC9900\" data-placement=\"auto\"><\/span>\n    <\/div>\n    <div id=\"pred-common_species\" style=\"width:100%; height:300px; \" class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme\"><\/div>\n  <\/div>\n  <div class=\"col-sm-6\">\n    <span>\n      <plottitle>Relative Probability (Ratio to Reference)<\/plottitle>\n      <span class=\"glyphicon glyphicon-info-sign\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"This is the ratio of each species&#39; estimated occupancy probability to the reference occupancy probability. For example, if the Superb Parrot has a ratio of &#39;2&#39;, then it is estimated that the Superb Parrot is twice as likely to live in your farm&#39;s woodland than in the reference farm. The species with the 10 biggest ratios are shown. &lt;br&gt;&lt;br&gt; Each row is a species. The ratio is given in the white box. The length and colours of the bars also represent the ratio. Hover over a bar to get more information about that species. &lt;br&gt;&lt;br&gt;The reference can be set using the &#39;Update&#39; button and &#39;Use default&#39; checkbox below this figure. &lt;br&gt;&lt;br&gt;The ratios of all species can be seen by clicking &#39;View More Detail&#39; or downloading a report.\" data-container=\"body\" data-trigger=\"focus\" data-html=\"FALSE\" style=\"cursor: pointer; font-size: 120%; color: #CC9900\" data-placement=\"auto\"><\/span>\n    <\/span>\n    <div id=\"pred-diff_species\" style=\"width:100%; height:300px; \" class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme\"><\/div>\n  <\/div>\n<\/div>\n<div class=\"row\">\n  <div class=\"col-sm-6\">\n    <a id=\"pred-downloaddataverbose\" class=\"btn btn-default shiny-download-link download_badge\" href=\"\" target=\"_blank\" download>\n      <i class=\"fa fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n      Verbose Prediction Data\n    <\/a>\n    <button class=\"btn btn-default action-button download_badge\" id=\"pred-moredetail\" type=\"button\">View More Detail<\/button>\n    <a id=\"pred-downloaddata\" class=\"btn btn-default shiny-download-link download_badge\" href=\"\" target=\"_blank\" download>\n      <i class=\"fa fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n      Table\n    <\/a>\n    <a id=\"pred-downloadreport\" class=\"btn btn-default shiny-download-link download_badge\" href=\"\" target=\"_blank\" download>\n      <i class=\"fa fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n      Report\n    <\/a>\n  <\/div>\n  <div class=\"col-sm-5 offset-md-1 col-sm-offset-1\" style=\"text-align: right\">\n    Reference:\n    <span class=\"glyphicon glyphicon-info-sign\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"&lt;html&gt;&#10;  &lt;em&gt;Comparing to Other Estimates&lt;/em&gt;&#10;  &lt;html&gt;&#10;    &lt;p&gt;&#10;      Often it is useful to compare the current set of estimates to estimates under different scenarios.&#10;      The reference estimates are useful for doing this, and can be set using the &#39;Update&#39; button and &#39;Use Default&#39; checkbox in the bottom right of the app.&#10;      After you set the current estimates as the &#39;reference&#39;, you can alter your rainfall, patches and location and watch how the estimates change.&#10;    &lt;/p&gt;&#10;    &lt;p&gt;&#10;      The resulting figures summarise differences between two sets of estimates, they do not account for accuracy and other distributional properties.&#10;      The default reference is estimates for a hypothetical farm with a single remnant patch that is occupied by Noisy Miners, and&#10;      climate, rainfall, and woody vegetation canopy equal to the average of our data.&#10;    &lt;/p&gt;&#10;  &lt;/html&gt;&#10;  &lt;p&gt;&#10;    &lt;em&gt;Update&lt;/em&gt;&#10;    sets the reference estimates to the current estimates.&#10;    After setting the reference estimates for the first time, uncheck&#10;    &lt;em&gt;Use Default&lt;/em&gt;&#10;    to use them.&#10;    Initially the ratio of occupancy probabilities to reference probabilities will be all 1.&#10;    This will be the case until you alter attributes of the farm&#39;s woodland.&#10;  &lt;/p&gt;&#10;  &lt;p&gt;&#10;    &lt;em&gt;Use Default,&lt;/em&gt;&#10;    when checked, overides the saved estimates with the default estimates.&#10;    Uncheck&#10;    &lt;em&gt;Use Default&lt;/em&gt;&#10;    to use the saved reference.&#10;  &lt;/p&gt;&#10;&lt;/html&gt;\" data-container=\"body\" data-trigger=\"focus\" data-html=\"FALSE\" style=\"cursor: pointer; font-size: 120%; color: #CC9900\" data-placement=\"auto\" HTML=\"TRUE\"><\/span>\n    <button id=\"pred-savetoreference\" style=\"width: 80px;\" type=\"button\" class=\"action-button badge_tiny\">Update<\/button>\n    <span class=\"form-group shiny-input-container\">\n      <span class=\"checkbox\" style=\"display:inline;\">\n        <label>\n          <input id=\"pred-usedefaultreference\" type=\"checkbox\"/>\n          <span>Use Default<\/span>\n        <\/label>\n      <\/span>\n    <\/span>\n  <\/div>\n<\/div>",
+      "deps": [
+        {
+          "name": "htmlwidgets",
+          "version": "1.5.3",
+          "src": {
+            "href": "htmlwidgets-1.5.3"
+          },
+          "meta": null,
+          "script": "htmlwidgets.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "package": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-binding",
+          "version": "4.9.3",
+          "src": {
+            "href": "plotly-binding-4.9.3"
+          },
+          "meta": null,
+          "script": "plotly.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "package": null,
+          "all_files": false
+        },
+        {
+          "name": "font-awesome",
+          "version": "5.13.0",
+          "src": {
+            "href": "font-awesome-5.13.0"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": [
+            "css/all.min.css",
+            "css/v4-shims.min.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    },
+    "pred-common_species": {
+      "x": {
+        "layout": {
+          "margin": {
+            "b": 0,
+            "l": 0,
+            "t": 0,
+            "r": 0
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "title": "value",
+            "visible": false,
+            "fixedrange": true
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "title": "species",
+            "type": "category",
+            "categoryorder": "array",
+            "categoryarray": [
+              0.99010980582499,
+              0.939231492987187,
+              0.919857045348701,
+              0.897057559525921,
+              0.690588129592315,
+              0.652081573761145,
+              0.643811022700072,
+              0.551493318084542,
+              0.540875281379836,
+              0.51937935408771
+            ],
+            "visible": false,
+            "fixedrange": true,
+            "autorange": "reversed"
+          },
+          "hovermode": "closest",
+          "showlegend": false,
+          "dragmode": false,
+          "annotations": [
+            {
+              "text": "99%",
+              "x": 0.965309359713301,
+              "y": "Eastern Rosella",
+              "xanchor": "right",
+              "xshift": -3,
+              "font": {
+                "color": "rgba(0,0,0,1)"
+              },
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "94%",
+              "x": 0.8524206097711,
+              "y": "Striated Pardalote",
+              "xanchor": "right",
+              "xshift": -3,
+              "font": {
+                "color": "rgba(0,0,0,1)"
+              },
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "92%",
+              "x": 0.810495276834852,
+              "y": "Crimson Rosella",
+              "xanchor": "right",
+              "xshift": -3,
+              "font": {
+                "color": "rgba(0,0,0,1)"
+              },
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "90%",
+              "x": 0.745482115601897,
+              "y": "Australian Magpie",
+              "xanchor": "right",
+              "xshift": -3,
+              "font": {
+                "color": "rgba(0,0,0,1)"
+              },
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "69%",
+              "x": 0.501454712925197,
+              "y": "Grey Fantail",
+              "xanchor": "right",
+              "xshift": -3,
+              "font": {
+                "color": "rgba(0,0,0,1)"
+              },
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "65%",
+              "x": 0.445317654456363,
+              "y": "Yellow-faced Honeyeater",
+              "xanchor": "right",
+              "xshift": -3,
+              "font": {
+                "color": "rgba(0,0,0,1)"
+              },
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "64%",
+              "x": 0.451306104114126,
+              "y": "Yellow-rumped Thornbill",
+              "xanchor": "right",
+              "xshift": -3,
+              "font": {
+                "color": "rgba(0,0,0,1)"
+              },
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "55%",
+              "x": 0.347325028161372,
+              "y": "Common Starling",
+              "xanchor": "right",
+              "xshift": -3,
+              "font": {
+                "color": "rgba(0,0,0,1)"
+              },
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "54%",
+              "x": 0.286864249020903,
+              "y": "Black-faced Cuckoo-shrike",
+              "xanchor": "right",
+              "xshift": -3,
+              "font": {
+                "color": "rgba(0,0,0,1)"
+              },
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "52%",
+              "x": 0.324685478435442,
+              "y": "Rufous Whistler",
+              "xanchor": "right",
+              "xshift": -3,
+              "font": {
+                "color": "rgba(0,0,0,1)"
+              },
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            }
+          ]
+        },
+        "source": "A",
+        "config": {
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "data": [
+          {
+            "type": "bar",
+            "y": [
+              "Eastern Rosella",
+              "Striated Pardalote",
+              "Crimson Rosella",
+              "Australian Magpie",
+              "Grey Fantail",
+              "Yellow-faced Honeyeater",
+              "Yellow-rumped Thornbill",
+              "Common Starling",
+              "Black-faced Cuckoo-shrike",
+              "Rufous Whistler"
+            ],
+            "x": [
+              0.99010980582499,
+              0.939231492987187,
+              0.919857045348701,
+              0.897057559525921,
+              0.690588129592315,
+              0.652081573761145,
+              0.643811022700072,
+              0.551493318084542,
+              0.540875281379836,
+              0.51937935408771
+            ],
+            "marker": {
+              "color": [
+                "#178BCA",
+                "#3E94CF",
+                "#4898D0",
+                "#529CD2",
+                "#9CC4E5",
+                "#A8CCE8",
+                "#AACEE9",
+                "#C6E0F1",
+                "#CAE3F2",
+                "#D0E7F4"
+              ],
+              "line": {
+                "color": "rgba(31,119,180,1)"
+              },
+              "showscale": false
+            },
+            "showlegend": false,
+            "text": [
+              "Eastern Rosella",
+              "Striated Pardalote",
+              "Crimson Rosella",
+              "Australian Magpie",
+              "Grey Fantail",
+              "Yellow-faced Honeyeater",
+              "Yellow-rumped Thornbill",
+              "Common Starling",
+              "Black-faced Cuckoo-shrike",
+              "Rufous Whistler"
+            ],
+            "textposition": [
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside"
+            ],
+            "insidetextanchor": "start",
+            "insidetextfont": {
+              "color": [
+                "#EDEDED",
+                "#ECECEC",
+                "#ECECEC",
+                "#EBEBEB",
+                "#0E0E0E",
+                "#0D0D0D",
+                "#0C0C0C",
+                "#080808",
+                "#070707",
+                "#060606"
+              ]
+            },
+            "orientation": "h",
+            "error_y": {
+              "color": "rgba(31,119,180,1)"
+            },
+            "error_x": {
+              "visible": true,
+              "type": "data",
+              "array": [
+                0.00927305803251277,
+                0.0501065728144823,
+                0.0674500016916533,
+                0.0891116789009327,
+                0.142749784628813,
+                0.197046269042874,
+                0.164516220520453,
+                0.189510043380128,
+                0.265494102081942,
+                0.196487462035622
+              ],
+              "arrayminus": [
+                0.0248004461116891,
+                0.0868108832160873,
+                0.109361768513849,
+                0.151575443924024,
+                0.189133416667118,
+                0.206763919304782,
+                0.192504918585946,
+                0.20416828992317,
+                0.254011032358932,
+                0.194693875652268
+              ],
+              "symmetric": false,
+              "color": "#000000"
+            },
+            "xaxis": "x",
+            "yaxis": "y",
+            "frame": null,
+            "hoverinfo": true,
+            "hovertext": [
+              "Eastern Rosellas are<br>more likely with<br>Noisy Miners.",
+              "Striated Pardalotes<br>are more likely in<br>wetter years with<br>Noisy Miners.",
+              "Crimson Rosellas are<br>more likely without<br>Noisy Miners.",
+              "Australian Magpies<br>are more likely with<br>little nearby woody<br>canopy and/or Noisy<br>Miners.",
+              "Grey Fantails are<br>more likely with<br>more nearby woody<br>canopy, without<br>Noisy Miners, and/or<br>in planted patches.",
+              "Yellow-faced<br>Honeyeaters are more<br>likely without Noisy<br>Miners.",
+              "Yellow-rumped<br>Thornbills are more<br>likely in patches<br>without Noisy Miners<br>and/or not-remnant<br>patches.",
+              "Common Starlings are<br>more likely in<br>wetter years with<br>little nearby woody<br>canopy, and little<br>regional woody<br>canopy.",
+              "Black-faced<br>Cuckoo-shrikes are<br>more likely without<br>Noisy Miners.",
+              "Rufous Whistlers are<br>more likely with<br>more nearby woody<br>canopy, without<br>Noisy Miners, and/or<br>in planted patches."
+            ],
+            "hoverlabel": {
+              "bgcolor": "white",
+              "font": {
+                "color": "black",
+                "size": 12
+              }
+            },
+            "hovertemplate": "%{hovertext}<extra><\/extra>"
+          }
+        ],
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.2,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.1.1",
+          "src": {
+            "href": "crosstalk-1.1.1"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "1.57.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-1.57.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "1.57.1",
+          "src": {
+            "href": "plotly-main-1.57.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "pred-diff_species": {
+      "x": {
+        "layout": {
+          "margin": {
+            "b": 0,
+            "l": 0,
+            "t": 0,
+            "r": 0
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "title": "value",
+            "visible": false,
+            "fixedrange": true,
+            "type": "log"
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "title": "species",
+            "type": "category",
+            "categoryorder": "array",
+            "categoryarray": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "visible": false,
+            "fixedrange": true,
+            "autorange": "reversed"
+          },
+          "hovermode": "closest",
+          "showlegend": false,
+          "dragmode": false,
+          "annotations": [
+            {
+              "text": "x 1",
+              "x": 0,
+              "y": "Yellow-rumped Thornbill",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "x 1",
+              "x": 0,
+              "y": "Red Wattlebird",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "x 1",
+              "x": 0,
+              "y": "Dusky Woodswallow",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "x 1",
+              "x": 0,
+              "y": "White-browed Woodswallow",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "x 1",
+              "x": 0,
+              "y": "Rufous Songlark",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "x 1",
+              "x": 0,
+              "y": "Grey Shrike-thrush",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "x 1",
+              "x": 0,
+              "y": "Black-faced Cuckoo-shrike",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "x 1",
+              "x": 0,
+              "y": "Australian Raven",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "x 1",
+              "x": 0,
+              "y": "Australian Magpie",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            },
+            {
+              "text": "x 1",
+              "x": 0,
+              "y": "Laughing Kookaburra",
+              "xanchor": "right",
+              "xshift": -3,
+              "bgcolor": "rgba(255,255,255,1)",
+              "showarrow": false,
+              "showlegend": false
+            }
+          ]
+        },
+        "source": "A",
+        "config": {
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "data": [
+          {
+            "type": "bar",
+            "y": [
+              "Yellow-rumped Thornbill",
+              "Red Wattlebird",
+              "Dusky Woodswallow",
+              "White-browed Woodswallow",
+              "Rufous Songlark",
+              "Grey Shrike-thrush",
+              "Black-faced Cuckoo-shrike",
+              "Australian Raven",
+              "Australian Magpie",
+              "Laughing Kookaburra"
+            ],
+            "x": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "marker": {
+              "color": [
+                "#87B8DF",
+                "#87B8DF",
+                "#87B8DF",
+                "#87B8DF",
+                "#87B8DF",
+                "#87B8DF",
+                "#87B8DF",
+                "#87B8DF",
+                "#87B8DF",
+                "#87B8DF"
+              ],
+              "line": {
+                "color": "rgba(31,119,180,1)"
+              },
+              "showscale": false
+            },
+            "showlegend": false,
+            "text": [
+              "Yellow-rumped Thornbill",
+              "Red Wattlebird",
+              "Dusky Woodswallow",
+              "White-browed Woodswallow",
+              "Rufous Songlark",
+              "Grey Shrike-thrush",
+              "Black-faced Cuckoo-shrike",
+              "Australian Raven",
+              "Australian Magpie",
+              "Laughing Kookaburra"
+            ],
+            "textposition": [
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside",
+              "inside"
+            ],
+            "insidetextanchor": "start",
+            "insidetextfont": {
+              "color": [
+                "#111111",
+                "#111111",
+                "#111111",
+                "#111111",
+                "#111111",
+                "#111111",
+                "#111111",
+                "#111111",
+                "#111111",
+                "#111111"
+              ]
+            },
+            "orientation": "h",
+            "error_y": {
+              "color": "rgba(31,119,180,1)"
+            },
+            "error_x": {
+              "color": "rgba(31,119,180,1)"
+            },
+            "xaxis": "x",
+            "yaxis": "y",
+            "frame": null,
+            "hoverinfo": true,
+            "hovertext": [
+              "Yellow-rumped<br>Thornbills are more<br>likely in patches<br>without Noisy Miners<br>and/or not-remnant<br>patches.",
+              "Red Wattlebirds are<br>more likely in<br>patches without<br>Noisy Miners and/or<br>not-remnant patches.",
+              "Dusky Woodswallows<br>are more likely in<br>patches that are<br>remnant and/or<br>without Noisy<br>Miners.",
+              "White-browed<br>Woodswallow are more<br>likely in drier<br>years and/or<br>remnants.",
+              "Rufous Songlark are<br>more likely in<br>patches without<br>Noisy Miners.",
+              "Grey Shrike-thrushs<br>are more likely in<br>plantings or without<br>Noisy Miners.",
+              "Black-faced<br>Cuckoo-shrikes are<br>more likely without<br>Noisy Miners.",
+              "Australian Ravens<br>are not particularly<br>associated with any<br>of the predictors.",
+              "Australian Magpies<br>are more likely with<br>little nearby woody<br>canopy and/or Noisy<br>Miners.",
+              "Laughing Kookaburras<br>are more likely in<br>remnants."
+            ],
+            "hoverlabel": {
+              "bgcolor": "white",
+              "font": {
+                "color": "black",
+                "size": 12
+              }
+            },
+            "hovertemplate": "%{hovertext}<extra><\/extra>"
+          }
+        ],
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.2,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.1.1",
+          "src": {
+            "href": "crosstalk-1.1.1"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "1.57.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-1.57.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "1.57.1",
+          "src": {
+            "href": "plotly-main-1.57.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "pred-species_richness": {
+      "src": "[image data sha1: 1ab62d0bb30da43cf17fc4fa08ff66e91f791436]",
+      "width": 481,
+      "height": 250,
+      "alt": "Plot object",
+      "coordmap": {
+        "panels": [
+          {
+            "panel": 1,
+            "row": 1,
+            "col": 1,
+            "panel_vars": {
+
+            },
+            "log": {
+              "x": null,
+              "y": null
+            },
+            "domain": {
+              "left": 0,
+              "right": 25,
+              "bottom": 0.4,
+              "top": 4.6,
+              "discrete_limits": {
+                "y": [
+                  "Reference estimate",
+                  "More woody canopy nearby",
+                  "Your estimate",
+                  "Less woody canopy nearby"
+                ]
+              }
+            },
+            "mapping": {
+              "x": "E",
+              "y": "category",
+              "fill": "category"
+            },
+            "range": {
+              "left": 5.47945205479452,
+              "right": 321.58904109589,
+              "bottom": 230.58904109589,
+              "top": 5.47945205479452
+            }
+          }
+        ],
+        "dims": {
+          "width": 481,
+          "height": 250
+        }
+      }
+    },
+    "pred-warn": {
+      "message": "",
+      "call": "NULL",
+      "type": [
+        "shiny.silent.error",
+        "validation"
+      ]
+    },
+    "yfa-annprec.lt.region": "(long term average for Goulburn Region: 897mm)"
+  },
+  "export": {
+
+  }
+}
