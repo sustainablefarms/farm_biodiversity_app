@@ -1,0 +1,16 @@
+app <- ShinyDriver$new("../../")
+app$snapshotInit("specify_one_patch")
+
+app$setInputs(overallhelpfake = "click")
+app$setInputs(moredetailfake = "click")
+app$setInputs(downloadreportfake = "click")
+app$setInputs(introfake = "click")
+app$findElement('button[data-dismiss]')$click() #closes the modal
+
+app$setInputs(`patch-patch_number_1` = "click")
+app$snapshot()
+app$setInputs(`patch-pc_woody3000m_1` = 15.5)
+app$setInputs(`patch-pc_woody500m_1` = 14)
+app$snapshot()
+app$setInputs(`patch-choose_patch_attributes_execute` = "click")
+app$snapshot()
