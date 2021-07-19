@@ -35,6 +35,7 @@ output:
 
 
 # Outputs: More Detail
+In the report include the species richness estimates.
 
 # Overall
 + track usage: talk to Alice on this
