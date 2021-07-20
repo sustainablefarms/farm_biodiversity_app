@@ -79,7 +79,8 @@ patchattr_UI <- function(id, value, woody500m, woody3000m, noisy_miner, IsRemnan
                      tags$img(src = "https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png",
                               alt = "CC BY-NC-SA 3.0",
                               height = "20px")
-          ), textOutput(ns("text"))
+          ), 
+          tags$div("shortspecvalues", textOutput(ns("text")))
         )
       )
 )
@@ -90,16 +91,15 @@ patchattr_Server <- function(id, value){
     id,
     function(input, output, session){
       ns <- session$ns
-      print(session$rootScope()$input)
       specifiedvals <- reactive({
         out <- c(woody500m = input[[paste0("pc_woody500m_", value)]],
           woody3000m = input[[paste0("pc_woody3000m_", value)]],
           noisy_miner = input[[paste0("noisy_miner_", value)]],
           IsRemnant = input[[paste0("IsRemnant_", value)]]
           )
-        print(out)
         out
       })
       output$text <- renderText(format(specifiedvals()))
+      return(specifiedvals)
     })
   }

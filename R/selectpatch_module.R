@@ -158,6 +158,7 @@ selectpatchServer <- function(id){
     }
   })
 
+
   # output$text <- renderPrint({
   #   # paste(
   #   #   paste(current_values$mistorey, collapse = "; "),
@@ -177,6 +178,9 @@ selectpatchServer <- function(id){
     )
     if(nrow(click_values$patches) == length(previous_values$patch_buttons)){
       update_check <- (click_values$patches$value > previous_values$patch_buttons)
+      #For above: I suspect previous_values$patch_buttons records the number of times a click has been executed, 
+      #and click_values$patches$value increments each time the button is clicked. 
+      #So value > patch_button means the modal needs to be opened.
       if(any(update_check)){
         previous_values$selected_patch <- click_values$patches$id[which(update_check)]
         patch_modal(
@@ -191,17 +195,14 @@ selectpatchServer <- function(id){
     }
     previous_values$patch_buttons <- click_values$patches$value
   })
+  out <- patchattr_Server("patch1", 1)
 
   # collect input values from modal
   observeEvent(input$choose_patch_attributes_execute, {
-    current_values$woody500m[previous_values$selected_patch] <- curr_specified_attr[["woody500m"]]
-    print(current_values)
-    current_values$woody3000m[previous_values$selected_patch] <- input[[
-      paste0("pc_woody3000m_", previous_values$selected_patch)]]
-    current_values$noisy_miner[previous_values$selected_patch] <- input[[
-      paste0("noisy_miner_", previous_values$selected_patch)]]
-    current_values$IsRemnant[previous_values$selected_patch] <- input[[
-      paste0("IsRemnant_", previous_values$selected_patch)]]
+    current_values$woody500m[previous_values$selected_patch] <- out()[["woody500m"]] 
+    current_values$woody3000m[previous_values$selected_patch] <- out()[["woody3000m"]] 
+    current_values$noisy_miner[previous_values$selected_patch] <- out()[["noisy_miner"]] 
+    current_values$IsRemnant[previous_values$selected_patch] <- out()[["IsRemnant"]] 
 
     # add a green tick
     output[[paste0("patch_num_complete_", previous_values$selected_patch)]] <- renderUI({patchcompletesymbol})

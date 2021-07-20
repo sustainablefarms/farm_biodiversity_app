@@ -17,7 +17,7 @@ patch_modal <- function(
           $('[data-toggle=tooltip]').tooltip()
         })"
       ),
-      patchattr_UI("patch1", value, woody500m, woody3000m, noisy_miner, IsRemnant),
+      patchattr_UI(ns("patch1"), value, woody500m, woody3000m, noisy_miner, IsRemnant),
       tags$br(),
       actionButton(inputId = ns("choose_patch_attributes_execute"), label = "Save"),
       modalButton("Cancel"),
