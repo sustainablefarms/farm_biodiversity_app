@@ -20,16 +20,16 @@
     "moredetailfake": 1,
     "overallhelp": 0,
     "overallhelpfake": 1,
-    "patch-choose_n_patches": 0,
-    "patch-choose_n_patches_execute": 1,
     "patch-choose_patch_attributes_execute": 1,
-    "patch-IsRemnant_1": true,
-    "patch-n_patches": "2",
-    "patch-noisy_miner_1": true,
     "patch-patch_number_1": 1,
     "patch-patch_number_2": 0,
-    "patch-pc_woody3000m_1": 9,
-    "patch-pc_woody500m_1": 9.5,
+    "patch-patch_selector-choose_n_patches": 0,
+    "patch-patch_selector-choose_n_patches_execute": 1,
+    "patch-patch_selector-n_patches": "2",
+    "patch-patchattr-IsRemnant": true,
+    "patch-patchattr-noisy_miner": true,
+    "patch-patchattr-pc_woody3000m": 9,
+    "patch-patchattr-pc_woody500m": 9.5,
     "plotly_afterplot-region_map": "\"location-plot_points\"",
     "viewcvals": 0,
     "yfa-AnnPrec.YfA": 708
@@ -1045,11 +1045,6 @@
     "location-show_mintemp": null,
     "location-show_precip_cold": null,
     "location-show_precip_warm": null,
-    "patch-nmimage": {
-      "src": "[image data sha1: 973f16c34d0d34126a28af055c5fbc98c86df9c2]",
-      "alt": "An image of noisy miners",
-      "height": "100px"
-    },
     "patch-patch_num_complete_1": {
       "html": "<span class=\"glyphicon glyphicon-ok\" style=\"color: white;\"><\/span>",
       "deps": [
@@ -1062,11 +1057,16 @@
 
       ]
     },
-    "patch-patch_selector": {
-      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>2<\/h3><\/button>\n<\/div>",
+    "patch-patch_selector-patch_selector": {
+      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-patch_selector-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>2<\/h3><\/button>\n<\/div>",
       "deps": [
 
       ]
+    },
+    "patch-patchattr-nmimage": {
+      "src": "[image data sha1: 973f16c34d0d34126a28af055c5fbc98c86df9c2]",
+      "alt": "An image of noisy miners",
+      "height": "100px"
     },
     "pred": {
       "message": "",

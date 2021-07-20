@@ -7,13 +7,13 @@ app$setInputs(downloadreportfake = "click")
 app$setInputs(introfake = "click")
 app$findElement('button[data-dismiss]')$click() #closes the modal
 
-app$setInputs(`patch-choose_n_patches` = "click")
+app$setInputs(`patch-patch_selector-choose_n_patches` = "click")
 Sys.sleep(1)
 app$snapshot()
-app$setInputs(`patch-n_patches` = "2")
+app$setInputs(`patch-patch_selector-n_patches` = "2")
 Sys.sleep(1)
 app$snapshot()
-app$setInputs(`patch-choose_n_patches_execute` = "click")
+app$setInputs(`patch-patch_selector-choose_n_patches_execute` = "click")
 Sys.sleep(1)
 app$snapshot()
 # specify patch 1

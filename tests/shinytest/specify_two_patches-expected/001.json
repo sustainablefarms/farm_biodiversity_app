@@ -20,10 +20,10 @@
     "moredetailfake": 1,
     "overallhelp": 0,
     "overallhelpfake": 1,
-    "patch-choose_n_patches": 1,
-    "patch-choose_n_patches_execute": 0,
-    "patch-n_patches": "1",
     "patch-patch_number_1": 0,
+    "patch-patch_selector-choose_n_patches": 1,
+    "patch-patch_selector-choose_n_patches_execute": 0,
+    "patch-patch_selector-n_patches": "1",
     "plotly_afterplot-region_map": "\"location-plot_points\"",
     "viewcvals": 0,
     "yfa-AnnPrec.YfA": 708
@@ -1045,8 +1045,8 @@
 
       ]
     },
-    "patch-patch_selector": {
-      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>1<\/h3><\/button>\n<\/div>",
+    "patch-patch_selector-patch_selector": {
+      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-patch_selector-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>1<\/h3><\/button>\n<\/div>",
       "deps": [
 
       ]

@@ -30,6 +30,7 @@ pkgload::load_all("."); myapp()
 # app_selectlocationonly()
 # pkgload::load_all("."); app_predictionsonly()
 # pkgload::load_all("."); app_predictiondetailsonly()
+# pkgload::load_all("."); app_patchattronly()
 # 
 # main_app_prep() # loads things into global environment, prepares report file
 # shinyApp(ui, server)
