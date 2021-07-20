@@ -33,7 +33,7 @@ selectpatchServer <- function(id){
         IsRemnant = NA,
         year = 2018)
       clicked_record <- reactiveValues( #record of
-        patches = 1, # number of patches 
+        #patches = 1, # number of patches - obsolete as of patchnumselector_module
         patch_buttons = c(0), #and number of times their buttons pressed
         selected_patch = NULL) #and the most recently clicked patch (for updating values)
       update <- reactiveValues( # for altering number of patch buttons
@@ -47,7 +47,8 @@ selectpatchServer <- function(id){
         patches = NULL)
       
   ## FARM
-
+  
+  # specify number of patches
   patchnum_Server("patch_selector", update)
   observe(print(format(reactiveValuesToList(update))))
 
@@ -72,7 +73,6 @@ selectpatchServer <- function(id){
       })
       update$add_logical <- FALSE
       update$numpatches_existing <- update$numpatches_new
-      clicked_record$patches <- update$numpatches_existing
       patch_attributes$patches <- update$numpatches_existing
       patch_attributes$woody500m[update$add_values] <- NA
       patch_attributes$woody3000m[update$add_values] <- NA
@@ -95,7 +95,6 @@ selectpatchServer <- function(id){
       })
       update$remove_logical <- FALSE
       update$numpatches_existing <- update$numpatches_new
-      clicked_record$patches <- update$numpatches_existing
       patch_attributes$patches <- update$numpatches_existing
       patch_attributes$woody500m <- patch_attributes$woody500m[-update$remove_values]
       patch_attributes$woody3000m <- patch_attributes$woody3000m[-update$remove_values]
@@ -103,18 +102,6 @@ selectpatchServer <- function(id){
       patch_attributes$IsRemnant <- patch_attributes$IsRemnant[-update$remove_values]
     }
   })
-
-
-  # output$text <- renderPrint({
-  #   # paste(
-  #   #   paste(patch_attributes$mistorey, collapse = "; "),
-  #      paste(patch_attributes$woody500m, collapse = "; ")
-  #   #   paste(patch_attributes$noisy_miner, collapse = "; "),
-  #   # collapse = "  |   ")
-  # })
-  # output$text <- renderPrint({clicked_record$selected_patch})
-  # output$text <- renderPrint({paste(patch_attributes$woody500m, collapse = "; ")})
-  # output$text <- renderPrint({str(click_now$patches)})
 
   # for each patch, launch a modal to set new values
   observe({
