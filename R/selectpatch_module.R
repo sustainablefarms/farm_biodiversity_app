@@ -46,6 +46,8 @@ selectpatchServer <- function(id){
       click_values <- reactiveValues(
         patches = NULL)
       
+  curr_specified_attr <- patchattr_Server("patch1", 1)
+      
   ## FARM
 
   # warning sign for patch number 1
@@ -192,8 +194,8 @@ selectpatchServer <- function(id){
 
   # collect input values from modal
   observeEvent(input$choose_patch_attributes_execute, {
-    current_values$woody500m[previous_values$selected_patch] <- input[[
-      paste0("pc_woody500m_", previous_values$selected_patch)]]
+    current_values$woody500m[previous_values$selected_patch] <- curr_specified_attr[["woody500m"]]
+    print(current_values)
     current_values$woody3000m[previous_values$selected_patch] <- input[[
       paste0("pc_woody3000m_", previous_values$selected_patch)]]
     current_values$noisy_miner[previous_values$selected_patch] <- input[[

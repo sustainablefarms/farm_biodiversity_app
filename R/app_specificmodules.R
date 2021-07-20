@@ -63,3 +63,9 @@ app_selectlocationonly <- function(){
       selectlocationServer("location")
     })
 }
+
+app_patchattronly <- function(){
+  shinyApp(patchattr_UI("patch1", 1, 7, 7, TRUE, TRUE),
+           function(input, output, session){patchattr_Server("patch1", 1)}
+  )
+}
