@@ -26,7 +26,8 @@ app_selectpatchonly <- function(){
       theme = bslib::bs_theme(version = 3, "lumen"))
       },
            function(input, output, session){
-             selectpatchServer("patch")
+             output <- selectpatchServer("patch")
+             observe(print(data.frame(reactiveValuesToList(output))))
            })
 }
 

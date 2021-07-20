@@ -46,8 +46,6 @@ selectpatchServer <- function(id){
       click_values <- reactiveValues(
         patches = NULL)
       
-  curr_specified_attr <- patchattr_Server("patch1", 1)
-      
   ## FARM
 
   # warning sign for patch number 1
@@ -195,7 +193,7 @@ selectpatchServer <- function(id){
     }
     previous_values$patch_buttons <- click_values$patches$value
   })
-  out <- patchattr_Server("patch1", 1)
+  out <- patchattr_Server("patchattr")
 
   # collect input values from modal
   observeEvent(input$choose_patch_attributes_execute, {

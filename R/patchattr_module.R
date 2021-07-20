@@ -1,5 +1,5 @@
 # patch attributes module
-patchattr_UI <- function(id, value, woody500m, woody3000m, noisy_miner, IsRemnant){
+patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
   ns <- NS(id)
   tagList(
         # 500m WCF
@@ -11,7 +11,7 @@ patchattr_UI <- function(id, value, woody500m, woody3000m, noisy_miner, IsRemnan
                                             tags$p("The values available for selection were chosen to cover 90% of our data.")))
                     ),
           sliderInput(label = NULL,
-            inputId = ns(paste0("pc_woody500m_", value)),
+            inputId = ns("pc_woody500m"),
             min = 2, max = 20, step = 0.5,
 	    width = "100%",
             value = woody500m)
@@ -25,13 +25,13 @@ patchattr_UI <- function(id, value, woody500m, woody3000m, noisy_miner, IsRemnan
                                 placement = "auto bottom")
                     ),
           sliderInput(label = NULL,
-            inputId = ns(paste0("pc_woody3000m_", value)),
+            inputId = ns("pc_woody3000m"),
             min = 2, max = 20, step = 0.5,
 	    width = "100%",
             value = woody3000m)
           ),
       tags$div(
-        inlinecheckBoxInput(ns(paste0("IsRemnant_", value)),
+        inlinecheckBoxInput(ns("IsRemnant"),
             value = if (IsRemnant){TRUE} else {NULL},
             label = tags$span("Is this patch remnant woodland?")
           ),
@@ -45,7 +45,7 @@ patchattr_UI <- function(id, value, woody500m, woody3000m, noisy_miner, IsRemnan
       tags$br(),
       fluidRow(
         column(5,
-          inlinecheckBoxInput(ns(paste0("noisy_miner_", value)),
+          inlinecheckBoxInput(ns("noisy_miner"),
                               value = if (noisy_miner){TRUE} else {NULL},
                               tags$span("Noisy Miners present?")
           ),
@@ -92,10 +92,10 @@ patchattr_Server <- function(id, value){
     function(input, output, session){
       ns <- session$ns
       specifiedvals <- reactive({
-        out <- c(woody500m = input[[paste0("pc_woody500m_", value)]],
-          woody3000m = input[[paste0("pc_woody3000m_", value)]],
-          noisy_miner = input[[paste0("noisy_miner_", value)]],
-          IsRemnant = input[[paste0("IsRemnant_", value)]]
+        out <- c(woody500m = input[["pc_woody500m"]],
+          woody3000m = input[["pc_woody3000m"]],
+          noisy_miner = input[["noisy_miner"]],
+          IsRemnant = input[["IsRemnant"]]
           )
         out
       })
