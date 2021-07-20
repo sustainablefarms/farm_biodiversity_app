@@ -79,8 +79,8 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
                      tags$img(src = "https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png",
                               alt = "CC BY-NC-SA 3.0",
                               height = "20px")
-          ), 
-          tags$div("shortspecvalues", textOutput(ns("text")))
+          )#, 
+          #tags$div("shortspecvalues", textOutput(ns("text")))
         )
       )
 )
@@ -91,6 +91,14 @@ patchattr_Server <- function(id, value){
     id,
     function(input, output, session){
       ns <- session$ns
+      # noisy miner image
+      output$nmimage <- renderImage({
+        list(src = "./data/alaimgs_final/c4c37912-34ea-420b-9c77-65b59a8c9391.jpg",
+        alt = "An image of noisy miners",
+        height = "100px")
+      }, deleteFile = FALSE, quoted = FALSE)
+    
+      # combine values into an output
       specifiedvals <- reactive({
         out <- c(woody500m = input[["pc_woody500m"]],
           woody3000m = input[["pc_woody3000m"]],
@@ -99,7 +107,6 @@ patchattr_Server <- function(id, value){
           )
         out
       })
-      output$text <- renderText(format(specifiedvals()))
       return(specifiedvals)
     })
   }
