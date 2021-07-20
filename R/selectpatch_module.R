@@ -153,12 +153,6 @@ selectpatchServer <- function(id){
     }
   })
   
-  output$nmimage <- renderImage({
-    list(src = "./data/alaimgs_final/c4c37912-34ea-420b-9c77-65b59a8c9391.jpg",
-    alt = "An image of noisy miners",
-    height = "100px")
-    }, deleteFile = FALSE, quoted = FALSE)
-  
   patch_attributes
 
   }
