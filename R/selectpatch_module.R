@@ -4,7 +4,7 @@ selectpatchUI <- function(id){
       HTML("<div class='subheader'><h2>PATCHES ON FARM</h2></div>"),
       verbatimTextOutput("text"),
       column(width = 3,
-        uiOutput(ns("patch_selector")),
+        patchnum_UI(ns("patch_selector")),
       ),
       column(width = 1),
       column(width = 8,
@@ -24,9 +24,7 @@ selectpatchServer <- function(id){
     function(input, output, session){
       ns <- session$ns
       # set up reactive values
-      data <- reactiveValues(
-        species_predictions = NULL)
-      current_values <- reactiveValues(
+      patch_attributes <- reactiveValues( # patch attributes
         allpatchcomplete = FALSE,
         patches = 1,
         woody500m = NA,
@@ -34,86 +32,32 @@ selectpatchServer <- function(id){
         noisy_miner = NA,
         IsRemnant = NA,
         year = 2018)
-      previous_values <- reactiveValues(
-        patches = 1,
-        patch_buttons = c(0),
-        selected_patch = NULL)
-      update <- reactiveValues(
+      clicked_record <- reactiveValues( #record of
+        patches = 1, # number of patches 
+        patch_buttons = c(0), #and number of times their buttons pressed
+        selected_patch = NULL) #and the most recently clicked patch (for updating values)
+      update <- reactiveValues( # for altering number of patch buttons
+        numpatches_existing = 1, #Number of Patches Before Updating
+        numpatches_new = 1, #Number of Patches Requested Just Now
         add_logical = FALSE,
         add_values = NULL,
         remove_logical = FALSE,
         remove_values = NULL)
-      click_values <- reactiveValues(
+      click_now <- reactiveValues(
         patches = NULL)
       
   ## FARM
 
+  patchnum_Server("patch_selector", update)
+  observe(print(format(reactiveValuesToList(update))))
+
+  ## PATCH BUTTONS
   # warning sign for patch number 1
   output[["patch_num_complete_1"]] <- renderUI({patchincompletewarn})
 
-  # number of patches
-  output$patch_selector <- renderUI({
-    tags$div(
-      tags$script("$(function () {
-          $('[data-toggle=tooltip]').tooltip()
-        })"
-      ),
-    actionButton2(
-      inputId = ns("choose_n_patches"),
-      label = HTML(paste0("Number of<br>patches<br><h3>", current_values$patches, "</h3>")),
-      class = "badge"
-    ) 
-    )
-  })
-  observeEvent(input$choose_n_patches, {
-    showModal(
-      modalDialog(
-        radioButtons(ns("n_patches"),
-                     label = "Number of woodland patches",
-                     choiceNames = as.character(1:6),
-                     choiceValues = 1:6,
-                     inline = TRUE,
-                     width = "100%",
-                     selected = current_values$patches),
-        tags$br(),
-	patchdefn,
-	tags$br(),
-        actionButton(ns("choose_n_patches_execute"), "Save"),
-        modalButton("Cancel"),
-        title = "Select number of patches",
-        footer = NULL,
-        easyClose = FALSE
-      )
-    )
-  })
-
-  # once number of patches is chosen, decide whether to add or subtract 'patch' buttons
-  observeEvent(input$choose_n_patches_execute, {
-    current_values$patches <- as.integer(input$n_patches)
-    if(previous_values$patches > current_values$patches){
-      update$add_logical <- FALSE
-      update$add_values <- NULL
-      update$remove_logical <- TRUE
-      update$remove_values <- seq_len(previous_values$patches)[-seq_len(current_values$patches)]
-    }
-    if(previous_values$patches == current_values$patches){
-      update$add_logical <- FALSE
-      update$add_values <- NULL
-      update$remove_logical <- FALSE
-      update$remove_values <- NULL
-    }
-    if(previous_values$patches < current_values$patches){
-      update$add_logical <- TRUE
-      update$add_values <- seq_len(current_values$patches)[-seq_len(previous_values$patches)]
-      update$remove_logical <- FALSE
-      update$remove_values <- NULL
-    }
-    removeModal()
-  })
-
   # add 'patch' buttons
   observeEvent(update$add_values, {
-    if(!is.null(input$n_patches) & update$add_logical){
+    if(update$add_logical){
       lapply(update$add_values, function(a){
         add_reference_ui(
           entry_number = a,
@@ -127,18 +71,20 @@ selectpatchServer <- function(id){
 		patchincompletewarn})
       })
       update$add_logical <- FALSE
-      previous_values$patches <- current_values$patches
-      current_values$woody500m[update$add_values] <- NA
-      current_values$woody3000m[update$add_values] <- NA
-      current_values$noisy_miner[update$add_values] <- NA
-      current_values$IsRemnant[update$add_values] <- NA
-      current_values$allpatchcomplete <- FALSE
+      update$numpatches_existing <- update$numpatches_new
+      clicked_record$patches <- update$numpatches_existing
+      patch_attributes$patches <- update$numpatches_existing
+      patch_attributes$woody500m[update$add_values] <- NA
+      patch_attributes$woody3000m[update$add_values] <- NA
+      patch_attributes$noisy_miner[update$add_values] <- NA
+      patch_attributes$IsRemnant[update$add_values] <- NA
+      patch_attributes$allpatchcomplete <- FALSE
     }
   })
 
   # substract 'patch' buttons
   observeEvent(update$remove_values, {
-    if(!is.null(input$n_patches) & update$remove_logical){
+    if(update$remove_logical){
       lapply(update$remove_values, function(a){
         removeUI(
           selector = paste0("#patch_number_", a)  #the '#' here tells jQuery to find the UI element based on element id.
@@ -148,73 +94,75 @@ selectpatchServer <- function(id){
         )
       })
       update$remove_logical <- FALSE
-      previous_values$patches <- current_values$patches
-      current_values$woody500m <- current_values$woody500m[-update$remove_values]
-      current_values$woody3000m <- current_values$woody3000m[-update$remove_values]
-      current_values$noisy_miner <- current_values$noisy_miner[-update$remove_values]
-      current_values$IsRemnant <- current_values$IsRemnant[-update$remove_values]
+      update$numpatches_existing <- update$numpatches_new
+      clicked_record$patches <- update$numpatches_existing
+      patch_attributes$patches <- update$numpatches_existing
+      patch_attributes$woody500m <- patch_attributes$woody500m[-update$remove_values]
+      patch_attributes$woody3000m <- patch_attributes$woody3000m[-update$remove_values]
+      patch_attributes$noisy_miner <- patch_attributes$noisy_miner[-update$remove_values]
+      patch_attributes$IsRemnant <- patch_attributes$IsRemnant[-update$remove_values]
     }
   })
 
 
   # output$text <- renderPrint({
   #   # paste(
-  #   #   paste(current_values$mistorey, collapse = "; "),
-  #      paste(current_values$woody500m, collapse = "; ")
-  #   #   paste(current_values$noisy_miner, collapse = "; "),
+  #   #   paste(patch_attributes$mistorey, collapse = "; "),
+  #      paste(patch_attributes$woody500m, collapse = "; ")
+  #   #   paste(patch_attributes$noisy_miner, collapse = "; "),
   #   # collapse = "  |   ")
   # })
-  # output$text <- renderPrint({previous_values$selected_patch})
-  # output$text <- renderPrint({paste(current_values$woody500m, collapse = "; ")})
-  # output$text <- renderPrint({str(click_values$patches)})
+  # output$text <- renderPrint({clicked_record$selected_patch})
+  # output$text <- renderPrint({paste(patch_attributes$woody500m, collapse = "; ")})
+  # output$text <- renderPrint({str(click_now$patches)})
 
   # for each patch, launch a modal to set new values
   observe({
-    click_values$patches <- input_tracker(
+    click_now$patches <- input_tracker(
       input = input,
       string = "patch_number_[[:digit:]]+"
     )
-    if(nrow(click_values$patches) == length(previous_values$patch_buttons)){
-      update_check <- (click_values$patches$value > previous_values$patch_buttons)
-      #For above: I suspect previous_values$patch_buttons records the number of times a click has been executed, 
-      #and click_values$patches$value increments each time the button is clicked. 
+    if(nrow(click_now$patches) == length(clicked_record$patch_buttons)){
+      update_check <- (click_now$patches$value > clicked_record$patch_buttons)
+      #For above: I suspect clicked_record$patch_buttons records the number of times a click has been executed, 
+      #and click_now$patches$value increments each time the button is clicked. 
       #So value > patch_button means the modal needs to be opened.
       if(any(update_check)){
-        previous_values$selected_patch <- click_values$patches$id[which(update_check)]
+        clicked_record$selected_patch <- click_now$patches$id[which(update_check)]
         patch_modal(
-          value = previous_values$selected_patch,
-          woody500m = current_values$woody500m[previous_values$selected_patch],
-          woody3000m = current_values$woody3000m[previous_values$selected_patch],
-          noisy_miner = current_values$noisy_miner[previous_values$selected_patch],
-          IsRemnant = current_values$IsRemnant[previous_values$selected_patch],
+          value = clicked_record$selected_patch,
+          woody500m = patch_attributes$woody500m[clicked_record$selected_patch],
+          woody3000m = patch_attributes$woody3000m[clicked_record$selected_patch],
+          noisy_miner = patch_attributes$noisy_miner[clicked_record$selected_patch],
+          IsRemnant = patch_attributes$IsRemnant[clicked_record$selected_patch],
           ns
         )
       }
     }
-    previous_values$patch_buttons <- click_values$patches$value
+    clicked_record$patch_buttons <- click_now$patches$value
   })
   out <- patchattr_Server("patchattr")
 
   # collect input values from modal
   observeEvent(input$choose_patch_attributes_execute, {
-    current_values$woody500m[previous_values$selected_patch] <- out()[["woody500m"]] 
-    current_values$woody3000m[previous_values$selected_patch] <- out()[["woody3000m"]] 
-    current_values$noisy_miner[previous_values$selected_patch] <- out()[["noisy_miner"]] 
-    current_values$IsRemnant[previous_values$selected_patch] <- out()[["IsRemnant"]] 
+    patch_attributes$woody500m[clicked_record$selected_patch] <- out()[["woody500m"]] 
+    patch_attributes$woody3000m[clicked_record$selected_patch] <- out()[["woody3000m"]] 
+    patch_attributes$noisy_miner[clicked_record$selected_patch] <- out()[["noisy_miner"]] 
+    patch_attributes$IsRemnant[clicked_record$selected_patch] <- out()[["IsRemnant"]] 
 
     # add a green tick
-    output[[paste0("patch_num_complete_", previous_values$selected_patch)]] <- renderUI({patchcompletesymbol})
+    output[[paste0("patch_num_complete_", clicked_record$selected_patch)]] <- renderUI({patchcompletesymbol})
 
     removeModal()
 
     
-    if (length(current_values$woody500m) == current_values$patches &
-      !any(is.na(current_values$woody500m)) &
-      length(current_values$woody3000m) == current_values$patches &
-      !any(is.na(current_values$woody3000m)) ){
-      current_values$allpatchcomplete <- TRUE
+    if (length(patch_attributes$woody500m) == patch_attributes$patches &
+      !any(is.na(patch_attributes$woody500m)) &
+      length(patch_attributes$woody3000m) == patch_attributes$patches &
+      !any(is.na(patch_attributes$woody3000m)) ){
+      patch_attributes$allpatchcomplete <- TRUE
     } else {
-      current_values$allpatchcomplete <- FALSE
+      patch_attributes$allpatchcomplete <- FALSE
     }
   })
   
@@ -224,7 +172,7 @@ selectpatchServer <- function(id){
     height = "100px")
     }, deleteFile = FALSE, quoted = FALSE)
   
-  current_values
+  patch_attributes
 
   }
 )
