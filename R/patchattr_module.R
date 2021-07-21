@@ -2,6 +2,8 @@
 patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
   ns <- NS(id)
   tagList(
+    tabsetPanel(
+      tabPanel("Manual", 
         # 500m WCF
         tags$div(
           tags$html(tags$span("Nearby Woody Canopy: Woody vegetation canopy within 500m of patch centre (% area)"),
@@ -29,7 +31,9 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
             min = 2, max = 20, step = 0.5,
 	    width = "100%",
             value = woody3000m)
-          ),
+          )),
+          tabPanel("LatLon")),
+   
       tags$div(
         inlinecheckBoxInput(ns("IsRemnant"),
             value = if (IsRemnant){TRUE} else {NULL},

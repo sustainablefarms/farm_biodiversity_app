@@ -66,7 +66,11 @@ app_selectlocationonly <- function(){
 }
 
 app_patchattronly <- function(){
-  shinyApp(patchattr_UI("patch1", 1, 7, 7, TRUE, TRUE),
-           function(input, output, session){patchattr_Server("patch1", 1)}
+  shinyApp(    {fluidPage(
+    includeCSS("./www/base.css"),
+    patchattr_UI("patchattr", 7, 7, TRUE, TRUE),
+    theme = bslib::bs_theme(version = 3, "lumen"))
+  },
+           function(input, output, session){patchattr_Server("patchattr")}
   )
 }
