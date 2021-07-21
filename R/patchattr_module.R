@@ -83,8 +83,8 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
                      tags$img(src = "https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png",
                               alt = "CC BY-NC-SA 3.0",
                               height = "20px")
-          )#, 
-          #tags$div("shortspecvalues", textOutput(ns("text")))
+          ), 
+          tags$div("shortspecvalues", textOutput(ns("text")))
         )
       )
 )
@@ -111,6 +111,7 @@ patchattr_Server <- function(id, value){
           )
         out
       })
+      output$text <- renderText(format(specifiedvals()))
       return(specifiedvals)
     })
   }
