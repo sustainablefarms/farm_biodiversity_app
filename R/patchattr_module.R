@@ -32,8 +32,20 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
 	    width = "100%",
             value = woody3000m)
           )),
-          tabPanel("LatLon")),
+          tabPanel("LatLon",
+                     # textOutput(ns("pc_woody500m_latlon")),
+                     textInput(ns("lat"), "Latitude", value = "", width = '100px',
+                               placeholder = "latitude"),
+                     textInput(ns("lon"), "Longitude", value = "", width = '100px',
+                               placeholder = "longitude"),
+                     textInput(ns("yearforcanopy"), "Year", value = "2018", width = '100px',
+                               placeholder = "2018")
+                     # tags$div("Satellite based Regional Woody Canopy Cover:",
+                              # textOutput(ns("pc_woody3000m_latlon"), inline = TRUE))
+                   ),
+      selected = "LatLon"),
    
+                     tags$div("test: ", textOutput(ns("pc_woody500m_latlon"))),
       tags$div(
         inlinecheckBoxInput(ns("IsRemnant"),
             value = if (IsRemnant){TRUE} else {NULL},
@@ -90,10 +102,11 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
 )
 }
 
-patchattr_Server <- function(id, value){
+patchattr_Server <- function(id){
   moduleServer(
     id,
     function(input, output, session){
+      print(input)
       ns <- session$ns
       # noisy miner image
       output$nmimage <- renderImage({
@@ -101,6 +114,8 @@ patchattr_Server <- function(id, value){
         alt = "An image of noisy miners",
         height = "100px")
       }, deleteFile = FALSE, quoted = FALSE)
+      
+      output$pc_woody500m_latlon <- renderText({"brrrarrr?"}) #renderText(input$lat)
     
       # combine values into an output
       specifiedvals <- reactive({
