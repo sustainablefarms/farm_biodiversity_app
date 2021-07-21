@@ -2,8 +2,6 @@
 patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
   ns <- NS(id)
   tagList(
-    tabsetPanel(
-      tabPanel("Manual", 
         # 500m WCF
         tags$div(
           tags$html(tags$span("Nearby Woody Canopy: Woody vegetation canopy within 500m of patch centre (% area)"),
@@ -30,22 +28,26 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
             inputId = ns("pc_woody3000m"),
             min = 2, max = 20, step = 0.5,
 	    width = "100%",
-            value = woody3000m)
-          )),
-          tabPanel("LatLon",
-                     # textOutput(ns("pc_woody500m_latlon")),
+            value = woody3000m),
+
+tags$div(inlinecheckBoxInput(ns("fromlatlon"),
+                    value = FALSE,
+                    tags$span("Get woody canopy from latlon")
+)),
+          conditionalPanel("input.fromlatlon",
+                     textOutput(ns("pc_woody500m_latlon")),
                      textInput(ns("lat"), "Latitude", value = "", width = '100px',
                                placeholder = "latitude"),
                      textInput(ns("lon"), "Longitude", value = "", width = '100px',
                                placeholder = "longitude"),
                      textInput(ns("yearforcanopy"), "Year", value = "2018", width = '100px',
-                               placeholder = "2018")
+                               placeholder = "2018"),
+                     ns = ns)
                      # tags$div("Satellite based Regional Woody Canopy Cover:",
                               # textOutput(ns("pc_woody3000m_latlon"), inline = TRUE))
                    ),
-      selected = "LatLon"),
    
-                     tags$div("test: ", textOutput(ns("pc_woody500m_latlon"))),
+                     # tags$div("test: ", textOutput(ns("pc_woody500m_latlon"))),
       tags$div(
         inlinecheckBoxInput(ns("IsRemnant"),
             value = if (IsRemnant){TRUE} else {NULL},
@@ -122,7 +124,8 @@ patchattr_Server <- function(id){
         out <- c(woody500m = input[["pc_woody500m"]],
           woody3000m = input[["pc_woody3000m"]],
           noisy_miner = input[["noisy_miner"]],
-          IsRemnant = input[["IsRemnant"]]
+          IsRemnant = input[["IsRemnant"]],
+          fromlatlon = input[["fromlatlon"]]
           )
         out
       })
