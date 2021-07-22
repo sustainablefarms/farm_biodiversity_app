@@ -2,55 +2,8 @@
 patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
   ns <- NS(id)
   tagList(
-        waiter::use_waiter(),
-        # 500m WCF
-        tags$div(
-          tags$html(tags$span("Nearby Woody Canopy: Woody vegetation canopy within 500m of patch centre (% area)"),
-                    infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area within 500m of the patch centre.",
-"Tree canopy inside the patch is included.",
-                                         WCFdesc(),
-                                            tags$p("The values available for selection were chosen to cover 90% of our data.")))
-                    ),
-          sliderInput(label = NULL,
-            inputId = ns("pc_woody500m"),
-            min = 2, max = 20, step = 0.5,
-	    width = "100%",
-            value = woody500m)
-          ),
-        tags$div(
-          tags$html(tags$span("Regional Woody Canopy: Woody vegetation canopy within 3km of patch centre (% area)"),
-                    infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area within 3km of the patch centre.",
-"Tree canopy inside the patch is included (but would have little effect due to the 3km scale).",
-               WCFdesc(),
-               tags$p("The values available for selection were chosen to cover 90% of our data.")),
-                                placement = "auto bottom")
-                    ),
-          sliderInput(label = NULL,
-            inputId = ns("pc_woody3000m"),
-            min = 2, max = 20, step = 0.5,
-	    width = "100%",
-            value = woody3000m),
-
-tags$div(inlinecheckBoxInput(ns("fromlatlon"),
-                    value = FALSE,
-                    tags$span("Get woody canopy from latlon")
-)),
-          conditionalPanel("input.fromlatlon",
-                     textInput(ns("lat"), "Latitude", value = "", width = '100px',
-                               placeholder = "-36.123456789"),
-                     textInput(ns("lon"), "Longitude", value = "", width = '100px',
-                               placeholder = "longitude"),
-                     textInput(ns("yearforcanopy"), "Year", value = "2018", width = '100px',
-                               placeholder = "2018"),
-                     actionButton(ns("getwoodycanopy"), "Get", class = "download_badge"),
-                     tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE)),
-                     # tags$div("test: ", textOutput(ns("pc_woody500m_latlon"))),
-                     # tags$div("test: ", textOutput(ns("pc_woody3000m_latlon"))),
-                     ns = ns)
-                     # tags$div("Satellite based Regional Woody Canopy Cover:",
-                              # textOutput(ns("pc_woody3000m_latlon"), inline = TRUE))
-                   ),
-   
+        waiter::use_waiter(spinners = 1),
+   # remnant and noisy miners first
       tags$div(
         inlinecheckBoxInput(ns("IsRemnant"),
             value = if (IsRemnant){TRUE} else {NULL},
@@ -103,7 +56,60 @@ tags$div(inlinecheckBoxInput(ns("fromlatlon"),
           ), 
           tags$div("shortspecvalues", textOutput(ns("text")))
         )
-      )
+      ),
+	
+	# WCF
+        # 500m WCF
+        tags$div(
+          tags$html(tags$span("Nearby Woody Canopy: Woody vegetation canopy within 500m of patch centre (% area)"),
+                    infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area within 500m of the patch centre.",
+"Tree canopy inside the patch is included.",
+                                         WCFdesc(),
+                                            tags$p("The values available for selection were chosen to cover 90% of our data.")))
+                    ),
+          sliderInput(label = NULL,
+            inputId = ns("pc_woody500m"),
+            min = 2, max = 20, step = 0.5,
+	    width = "100%",
+            value = woody500m)
+          ),
+        tags$div(
+          tags$html(tags$span("Regional Woody Canopy: Woody vegetation canopy within 3km of patch centre (% area)"),
+                    infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area within 3km of the patch centre.",
+"Tree canopy inside the patch is included (but would have little effect due to the 3km scale).",
+               WCFdesc(),
+               tags$p("The values available for selection were chosen to cover 90% of our data.")),
+                                placement = "auto bottom")
+                    ),
+          sliderInput(label = NULL,
+            inputId = ns("pc_woody3000m"),
+            min = 2, max = 20, step = 0.5,
+	    width = "100%",
+            value = woody3000m),
+
+ # from lat lon
+shinyWidgets::materialSwitch(ns("fromlatlon"),
+                             label = "Get woody canopy amounts from satellite",
+                             value = FALSE,
+                             status = "primary",
+                             width = '100%'),
+          conditionalPanel("input.fromlatlon",
+              fluidRow(
+                column(4, textInput(ns("lon"), "Longitude", value = "", width = '100%',
+                                    placeholder = "145.123456789")),
+                column(4, textInput(ns("lat"), "Latitude", value = "", width = '100%',
+                                    placeholder = "-35.123456789")),
+                column(3, textInput(ns("yearforcanopy"), "Year", value = "2018", width = '100%',
+                                    placeholder = "2018")),
+                column(1, actionButton(ns("getwoodycanopy"), "Get", class = "download_badge"))
+              ),
+              tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE)),
+                     # tags$div("test: ", textOutput(ns("pc_woody500m_latlon"))),
+                     # tags$div("test: ", textOutput(ns("pc_woody3000m_latlon"))),
+              ns = ns)
+                     # tags$div("Satellite based Regional Woody Canopy Cover:",
+                              # textOutput(ns("pc_woody3000m_latlon"), inline = TRUE))
+                   )
 )
 }
 
@@ -122,37 +128,38 @@ patchattr_Server <- function(id){
 
       
       # from lat lon work
-      wait <- waiter::Waiter$new(id = ns("getwoodycanopy"))
+      wait <- waiter::Waiter$new(id = ns("getwoodycanopy"), html = waiter::spin_wave())
       pc_woody500m_latlon <- reactiveVal(label = "woody500m from latlon")
       pc_woody3000m_latlon <- reactiveVal(label = "woody3000m from latlon")
       latlonerror <- reactiveVal("", label = "latlonerror")
       observeEvent(input$getwoodycanopy, {
         wait$show()
         latlonerror("")
-        lat <- suppressWarnings(as.numeric(input$lat))
-        lon <- suppressWarnings(as.numeric(input$lon))
-        year <- suppressWarnings(as.numeric(input$yearforcanopy))
-        if (any(is.na(lat), is.na(lon), is.na(year))){
-          latlonerror("One or more inputs could not be interpreted as numerical.")
-          pc_woody500m_latlon(NULL)
-          pc_woody3000m_latlon(NULL)
-        }  
-        wcfs <- canopyfromlatlon(lon,lat,year)
-        if (!is.null(wcfs)){
-          if (any(wcfs < 2) | any(wcfs > 20)){
-            latlonerror(
-              paste(sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m and %3.1f%% of the area within 3km.", wcfs[[1]], wcfs[[2]]),
-                    "At least one of these percentages is outside the capabilities of the model.",
-                    "Treat any estimates of bird occupancy with an extra degree of caution.")
-              )
-          } 
-          updateSliderInput(inputId = "pc_woody500m",
-                            value = wcfs$`500m`)
-          updateSliderInput(inputId = "pc_woody3000m",
-                            value = wcfs$`3000m`)
-          pc_woody500m_latlon(wcfs[[1]])
-          pc_woody3000m_latlon(wcfs[[2]])
-        }
+        wcfs <- tryCatch(
+          {
+            lat <- parsechar(input$lat, "Latitude")
+            lon <- parsechar(input$lon, "Longitude")
+            year <- parsechar(input$yearforcanopy, "Year")
+            wcfs <- canopyfromlatlon(lon,lat,year)
+            checkfinalwcfs(wcfs)
+            wcfs
+          },
+          error = function(e) {
+            latlonerror(e$message)
+            pc_woody500m_latlon(NULL)
+            pc_woody3000m_latlon(NULL)
+            return(e)
+          },
+          warning = function(w) {latlonerror(w$message); return(wcfs)}
+        )            
+        if (!is.null(wcfs[["500m"]])){
+              updateSliderInput(inputId = "pc_woody500m",
+                                value = wcfs$`500m`)
+              updateSliderInput(inputId = "pc_woody3000m",
+                                value = wcfs$`3000m`)
+              pc_woody500m_latlon(wcfs[[1]])
+              pc_woody3000m_latlon(wcfs[[2]])
+          }
         wait$hide()
       },
         ignoreInit = FALSE)
