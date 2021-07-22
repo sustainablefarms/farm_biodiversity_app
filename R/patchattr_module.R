@@ -2,6 +2,7 @@
 patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
   ns <- NS(id)
   tagList(
+        waiter::use_waiter(),
         # 500m WCF
         tags$div(
           tags$html(tags$span("Nearby Woody Canopy: Woody vegetation canopy within 500m of patch centre (% area)"),
@@ -35,19 +36,21 @@ tags$div(inlinecheckBoxInput(ns("fromlatlon"),
                     tags$span("Get woody canopy from latlon")
 )),
           conditionalPanel("input.fromlatlon",
-                     textOutput(ns("pc_woody500m_latlon")),
                      textInput(ns("lat"), "Latitude", value = "", width = '100px',
-                               placeholder = "latitude"),
+                               placeholder = "-36.123456789"),
                      textInput(ns("lon"), "Longitude", value = "", width = '100px',
                                placeholder = "longitude"),
                      textInput(ns("yearforcanopy"), "Year", value = "2018", width = '100px',
                                placeholder = "2018"),
+                     actionButton(ns("getwoodycanopy"), "Get", class = "download_badge"),
+                     tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE)),
+                     # tags$div("test: ", textOutput(ns("pc_woody500m_latlon"))),
+                     # tags$div("test: ", textOutput(ns("pc_woody3000m_latlon"))),
                      ns = ns)
                      # tags$div("Satellite based Regional Woody Canopy Cover:",
                               # textOutput(ns("pc_woody3000m_latlon"), inline = TRUE))
                    ),
    
-                     # tags$div("test: ", textOutput(ns("pc_woody500m_latlon"))),
       tags$div(
         inlinecheckBoxInput(ns("IsRemnant"),
             value = if (IsRemnant){TRUE} else {NULL},
@@ -116,8 +119,51 @@ patchattr_Server <- function(id){
         alt = "An image of noisy miners",
         height = "100px")
       }, deleteFile = FALSE, quoted = FALSE)
+
       
-      output$pc_woody500m_latlon <- renderText({"brrrarrr?"}) #renderText(input$lat)
+      # from lat lon work
+      wait <- waiter::Waiter$new(id = ns("getwoodycanopy"))
+      pc_woody500m_latlon <- reactiveVal(label = "woody500m from latlon")
+      pc_woody3000m_latlon <- reactiveVal(label = "woody3000m from latlon")
+      latlonerror <- reactiveVal("", label = "latlonerror")
+      observeEvent(input$getwoodycanopy, {
+        wait$show()
+        latlonerror("")
+        lat <- suppressWarnings(as.numeric(input$lat))
+        lon <- suppressWarnings(as.numeric(input$lon))
+        year <- suppressWarnings(as.numeric(input$yearforcanopy))
+        if (any(is.na(lat), is.na(lon), is.na(year))){
+          latlonerror("One or more inputs could not be interpreted as numerical.")
+          pc_woody500m_latlon(NULL)
+          pc_woody3000m_latlon(NULL)
+        }  
+        wcfs <- canopyfromlatlon(lon,lat,year)
+        if (!is.null(wcfs)){
+          if (any(wcfs < 2) | any(wcfs > 20)){
+            latlonerror(
+              paste(sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m and %3.1f%% of the area within 3km.", wcfs[[1]], wcfs[[2]]),
+                    "At least one of these percentages is outside the capabilities of the model.",
+                    "Treat any estimates of bird occupancy with an extra degree of caution.")
+              )
+          } 
+          updateSliderInput(inputId = "pc_woody500m",
+                            value = wcfs$`500m`)
+          updateSliderInput(inputId = "pc_woody3000m",
+                            value = wcfs$`3000m`)
+          pc_woody500m_latlon(wcfs[[1]])
+          pc_woody3000m_latlon(wcfs[[2]])
+        }
+        wait$hide()
+      },
+        ignoreInit = FALSE)
+      
+      output$latlonerror <- renderText(latlonerror())
+      output$pc_woody500m_latlon <- renderText({
+        validate(need(pc_woody500m_latlon, label = "woody500m"))
+        pc_woody500m_latlon()})
+      output$pc_woody3000m_latlon <- renderText({
+        validate(need(pc_woody3000m_latlon, label = "woody3000m"))
+        pc_woody3000m_latlon()})
     
       # combine values into an output
       specifiedvals <- reactive({
