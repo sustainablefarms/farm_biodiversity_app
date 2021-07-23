@@ -119,8 +119,10 @@ selectpatchServer <- function(id){
       update$remove_logical <- FALSE
       update$numpatches_existing <- update$numpatches_new
       other_attributes$patches <- update$numpatches_existing
-      each_patch_attribute[[as.character(update$remove_values)]] <- defaultnewpatchvalues
-      other_attributes$patchcomplete[[update$remove_values]] <- NA
+      for (i in update$remove_values){ #can't index multiple parts of a reactiveValues object at once, hence the for loop
+        each_patch_attribute[[as.character(i)]] <- defaultnewpatchvalues
+      }
+      other_attributes$patchcomplete[update$remove_values] <- NA
     }
   })
 
