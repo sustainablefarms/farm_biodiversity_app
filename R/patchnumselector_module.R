@@ -3,7 +3,7 @@ patchnum_UI <- function(id){
   uiOutput(ns("patch_selector"))
 }
 
-patchnum_Server <- function(id, update){
+patchnum_Server <- function(id, update, maxpatchnum){
   moduleServer(
     id,
     function(input, output, session){
@@ -28,8 +28,8 @@ patchnum_Server <- function(id, update){
       modalDialog(
         radioButtons(ns("n_patches"),
                      label = "Number of woodland patches",
-                     choiceNames = as.character(1:6),
-                     choiceValues = 1:6,
+                     choiceNames = as.character(1:maxpatchnum),
+                     choiceValues = 1:maxpatchnum,
                      inline = TRUE,
                      width = "100%",
                      selected = update$numpatches_existing),

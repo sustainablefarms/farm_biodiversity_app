@@ -185,7 +185,7 @@ patchattr_Server <- function(id){
     
       # combine values into an output
       specifiedvals <- reactive({
-        out <- c(woody500m = input[["pc_woody500m"]],
+        out <- list(woody500m = input[["pc_woody500m"]],
           woody3000m = input[["pc_woody3000m"]],
           noisy_miner = input[["noisy_miner"]],
           IsRemnant = input[["IsRemnant"]],

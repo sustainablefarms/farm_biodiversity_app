@@ -23,7 +23,23 @@ selectpatchServer <- function(id){
     id,
     function(input, output, session){
       ns <- session$ns
+      maxpatchnum <- 6
       # set up reactive values
+      # store patch attributes
+      defaultnewpatchvalues <- list(woody500m = NA,
+                                    woody3000m = NA,
+                                    noisy_miner = NA,
+                                    IsRemnant = NA,
+                                    fromlatlon = FALSE)
+      allpatchesdflt <- rep(list(defaultnewpatchvalues), maxpatchnum)
+      names(allpatchesdflt) <- 1:maxpatchnum
+      each_patch_attribute <- do.call(reactiveValues, args = allpatchesdflt) # list of patch attributes
+      other_attributes <- reactiveValues(
+        patchcomplete = c(FALSE, rep(NA, maxpatchnum - 1)),
+        allpatchcomplete = FALSE,
+        patches = 1,
+        year = 2018
+      )
       patch_attributes <- reactiveValues( # patch attributes
         allpatchcomplete = FALSE,
         patches = 1,
@@ -45,12 +61,20 @@ selectpatchServer <- function(id){
         remove_values = NULL)
       click_now <- reactiveValues(
         patches = NULL)
+      outinfo <- reactiveValues( #to send out of this module
+        allpatchcomplete = FALSE,
+        patches = 1,
+        woody500m = NA,
+        woody3000m = NA,
+        noisy_miner = NA,
+        IsRemnant = NA,
+        year = NA
+      )
       
   ## FARM
   
   # specify number of patches
-  patchnum_Server("patch_selector", update)
-  observe(print(format(reactiveValuesToList(update))))
+  patchnum_Server("patch_selector", update, maxpatchnum = 6)
 
   ## PATCH BUTTONS
   # warning sign for patch number 1
@@ -73,12 +97,9 @@ selectpatchServer <- function(id){
       })
       update$add_logical <- FALSE
       update$numpatches_existing <- update$numpatches_new
-      patch_attributes$patches <- update$numpatches_existing
-      patch_attributes$woody500m[update$add_values] <- NA
-      patch_attributes$woody3000m[update$add_values] <- NA
-      patch_attributes$noisy_miner[update$add_values] <- NA
-      patch_attributes$IsRemnant[update$add_values] <- NA
-      patch_attributes$allpatchcomplete <- FALSE
+      other_attributes$patches <- update$numpatches_existing
+      each_patch_attribute[[as.character(update$add_values)]] <- defaultnewpatchvalues
+      other_attributes$patchcomplete[[update$add_values]] <- FALSE
     }
   })
 
@@ -95,11 +116,9 @@ selectpatchServer <- function(id){
       })
       update$remove_logical <- FALSE
       update$numpatches_existing <- update$numpatches_new
-      patch_attributes$patches <- update$numpatches_existing
-      patch_attributes$woody500m <- patch_attributes$woody500m[-update$remove_values]
-      patch_attributes$woody3000m <- patch_attributes$woody3000m[-update$remove_values]
-      patch_attributes$noisy_miner <- patch_attributes$noisy_miner[-update$remove_values]
-      patch_attributes$IsRemnant <- patch_attributes$IsRemnant[-update$remove_values]
+      other_attributes$patches <- update$numpatches_existing
+      each_patch_attribute[[as.character(update$remove_values)]] <- defaultnewpatchvalues
+      other_attributes$patchcomplete[[update$remove_values]] <- NA
     }
   })
 
@@ -118,10 +137,10 @@ selectpatchServer <- function(id){
         clicked_record$selected_patch <- click_now$patches$id[which(update_check)]
         patch_modal(
           value = clicked_record$selected_patch,
-          woody500m = patch_attributes$woody500m[clicked_record$selected_patch],
-          woody3000m = patch_attributes$woody3000m[clicked_record$selected_patch],
-          noisy_miner = patch_attributes$noisy_miner[clicked_record$selected_patch],
-          IsRemnant = patch_attributes$IsRemnant[clicked_record$selected_patch],
+          woody500m =   each_patch_attribute[[as.character(clicked_record$selected_patch)]]$woody500m,
+          woody3000m =  each_patch_attribute[[as.character(clicked_record$selected_patch)]]$woody3000m,
+          noisy_miner = each_patch_attribute[[as.character(clicked_record$selected_patch)]]$noisy_miner,
+          IsRemnant =   each_patch_attribute[[as.character(clicked_record$selected_patch)]]$IsRemnant,
           ns
         )
       }
@@ -132,29 +151,35 @@ selectpatchServer <- function(id){
 
   # collect input values from modal
   observeEvent(input$choose_patch_attributes_execute, {
-    patch_attributes$woody500m[clicked_record$selected_patch] <- out()[["woody500m"]] 
-    patch_attributes$woody3000m[clicked_record$selected_patch] <- out()[["woody3000m"]] 
-    patch_attributes$noisy_miner[clicked_record$selected_patch] <- out()[["noisy_miner"]] 
-    patch_attributes$IsRemnant[clicked_record$selected_patch] <- out()[["IsRemnant"]] 
-
-    # add a green tick
+    each_patch_attribute[[as.character(clicked_record$selected_patch)]] <- out()[names(defaultnewpatchvalues)]
+    print(each_patch_attribute[[as.character(clicked_record$selected_patch)]])
+    # record as done internally
+    other_attributes$patchcomplete[[clicked_record$selected_patch]] <- TRUE
+    # now add a green tick
     output[[paste0("patch_num_complete_", clicked_record$selected_patch)]] <- renderUI({patchcompletesymbol})
-
     removeModal()
-
-    
-    if (length(patch_attributes$woody500m) == patch_attributes$patches &
-      !any(is.na(patch_attributes$woody500m)) &
-      length(patch_attributes$woody3000m) == patch_attributes$patches &
-      !any(is.na(patch_attributes$woody3000m)) ){
-      patch_attributes$allpatchcomplete <- TRUE
-    } else {
-      patch_attributes$allpatchcomplete <- FALSE
-    }
   })
   
-  patch_attributes
-
+  # update export info whenever patches become complete (or new incomplete patches added)
+  observeEvent({other_attributes$patchcomplete}, {
+    showNotification("Module output updated")
+    # check if the new saved values means all patches are complete
+    if (all(isTRUE(other_attributes$patchcomplete[1:other_attributes$patches]))){
+      outinfo$allpatchcomplete <- TRUE
+    } else {
+      outinfo$allpatchcomplete <- FALSE
+    }
+    each_patch_attribute_l <- reactiveValuesToList(each_patch_attribute)[as.character(1:other_attributes$patches)] #the order of the reactiveValues after listing is not fixed!
+    outinfo$woody500m = vapply(each_patch_attribute_l, function(x) x[["woody500m"]], FUN.VALUE = 3.5)
+    outinfo$woody3000m = vapply(each_patch_attribute_l, function(x) x[["woody3000m"]], FUN.VALUE = 3.5)
+    outinfo$noisy_miner = vapply(each_patch_attribute_l, function(x) x[["noisy_miner"]], FUN.VALUE  = 0)
+    outinfo$IsRemnant = vapply(each_patch_attribute_l, function(x) x[["IsRemnant"]], FUN.VALUE = 0)
+    outinfo$year = other_attributes$year
+    outinfo$patches = other_attributes$patches
+    # print(reactiveValuesToList(each_patch_attribute))
+  })
+  
+  outinfo #return value of the server
   }
 )
 }
