@@ -28,7 +28,6 @@ canopyfromlatlon <- function(lon, lat, year){
 
   out <- c(within500m, within3000m) 
   names(out) <- c("500m", "3000m")
-  print(out)
   if (any(out == -9999)){stop(simpleError("Data is missing for this location."))}
   return(out)
 }

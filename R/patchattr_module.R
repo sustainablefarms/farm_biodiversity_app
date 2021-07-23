@@ -4,7 +4,9 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
   tagList(
         waiter::use_waiter(spinners = 1),
    # remnant and noisy miners first
-      tags$div(
+   fluidRow(
+     column(7, 
+      fluidRow(
         inlinecheckBoxInput(ns("IsRemnant"),
             value = if (IsRemnant){TRUE} else {NULL},
             label = tags$span("Is this patch remnant woodland?")
@@ -16,10 +18,7 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
 	                  plantedpatchdefn))
 			    
         ),
-      tags$br(),
-      fluidRow(
-        column(5,
-          inlinecheckBoxInput(ns("noisy_miner"),
+      fluidRow(inlinecheckBoxInput(ns("noisy_miner"),
                               value = if (noisy_miner){TRUE} else {NULL},
                               tags$span("Noisy Miners present?")
           ),
@@ -41,8 +40,8 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
                "for a profile of Noisy Miners." 
               )
             )
-          ),
-        column(7, 
+          )),
+        column(5, 
           linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
                     style = "float: left",
                     imageOutput(ns("nmimage"), height = "100px", inline = TRUE)),
@@ -53,8 +52,7 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
                      tags$img(src = "https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png",
                               alt = "CC BY-NC-SA 3.0",
                               height = "20px")
-          ), 
-          tags$div("shortspecvalues", textOutput(ns("text")))
+          )
         )
       ),
 	
@@ -89,24 +87,29 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
 
  # from lat lon
 shinyWidgets::materialSwitch(ns("fromlatlon"),
-                             label = "Get woody canopy amounts from satellite",
+                             label = tags$span("Get woody canopy amounts from satellite",
+                                               "(see ", linknewtab(href = 'http://anuwald.science/tree',
+                                                                   "http://anuwald.science/tree"), 
+                                               "and ",linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
+                                                               "Liao et al. (IJAEOG, 2020)"), ")"),
                              value = FALSE,
                              status = "primary",
                              width = '100%'),
+tags$div(id = ns("inputfromlatlonpanel"),
           conditionalPanel("input.fromlatlon",
               fluidRow(
                 column(4, textInput(ns("lon"), "Longitude", value = "", width = '100%',
                                     placeholder = "145.123456789")),
                 column(4, textInput(ns("lat"), "Latitude", value = "", width = '100%',
                                     placeholder = "-35.123456789")),
-                column(3, textInput(ns("yearforcanopy"), "Year", value = "2018", width = '100%',
+                column(2, textInput(ns("yearforcanopy"), "Year", value = "2018", width = '100%',
                                     placeholder = "2018")),
-                column(1, actionButton(ns("getwoodycanopy"), "Get", class = "download_badge"))
+                column(2, actionButton(ns("getwoodycanopy"), "Get", class = "download_badge"))
               ),
               tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE)),
                      # tags$div("test: ", textOutput(ns("pc_woody500m_latlon"))),
                      # tags$div("test: ", textOutput(ns("pc_woody3000m_latlon"))),
-              ns = ns)
+              ns = ns))
                      # tags$div("Satellite based Regional Woody Canopy Cover:",
                               # textOutput(ns("pc_woody3000m_latlon"), inline = TRUE))
                    )
@@ -128,12 +131,19 @@ patchattr_Server <- function(id){
 
       
       # from lat lon work
-      wait <- waiter::Waiter$new(id = ns("getwoodycanopy"), html = waiter::spin_wave())
+      wait <- waiter::Waiter$new(id = ns("getwoodycanopy"), 
+                                 html = waiter::spin_wave(),
+                                 color = "#178BCA")
       pc_woody500m_latlon <- reactiveVal(label = "woody500m from latlon")
       pc_woody3000m_latlon <- reactiveVal(label = "woody3000m from latlon")
+      usedlon <- reactiveVal(NULL, label = "Longitude used for getting canopy")
+      usedlat <- reactiveVal(NULL, label = "Latitude used for getting canopy")
+      usedyear <- reactiveVal(NULL, label = "Year used for getting canopy")
       latlonerror <- reactiveVal("", label = "latlonerror")
-      observeEvent(input$getwoodycanopy, {
-        wait$show()
+      getwoodycanopy_d <- reactive({
+        input$getwoodycanopy
+        wait$show()}) %>% debounce(1000) # to stop heaps of clicking doing things, but show waiter from first click
+      observeEvent(getwoodycanopy_d(), {
         latlonerror("")
         wcfs <- tryCatch(
           {
@@ -153,6 +163,7 @@ patchattr_Server <- function(id){
           warning = function(w) {latlonerror(w$message); return(wcfs)}
         )            
         if (!is.null(wcfs[["500m"]])){
+              usedlon(lon); usedlat(lat); usedyear(year)
               updateSliderInput(inputId = "pc_woody500m",
                                 value = wcfs$`500m`)
               updateSliderInput(inputId = "pc_woody3000m",
@@ -178,11 +189,20 @@ patchattr_Server <- function(id){
           woody3000m = input[["pc_woody3000m"]],
           noisy_miner = input[["noisy_miner"]],
           IsRemnant = input[["IsRemnant"]],
-          fromlatlon = input[["fromlatlon"]]
+          fromlatlon = input[["fromlatlon"]],
+          usedlon = usedlon(),
+          usedlat = usedlat(),
+          usedyear = usedyear()
           )
         out
       })
-      output$text <- renderText(format(specifiedvals()))
+      if (isTRUE(getOption("shiny.testmode"))){
+        observeEvent(specifiedvals(),
+                     {
+                       showNotification(paste(names(specifiedvals()), specifiedvals(),
+                                              sep = " = ", collapse = ", "))
+                     })
+      }
       return(specifiedvals)
     })
   }
