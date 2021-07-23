@@ -16,12 +16,13 @@ app$setInputs(`plotly_click-region_map` = '[{\"curveNumber\":0,\"pointNumber\":0
 
 # specify the patch
 app$setInputs(`patch-patch_number_1` = "click")
-app$setInputs(`patch-pc_woody3000m_1` = 15.5)
-app$setInputs(`patch-pc_woody500m_1` = 14)
+app$setInputs(`patch-patchattr-pc_woody3000m` = 15.5)
+app$setInputs(`patch-patchattr-pc_woody500m` = 14)
 app$setInputs(`patch-choose_patch_attributes_execute` = "click")
 
 # set rainfall
 app$setInputs(`yfa-AnnPrec.YfA` = 460)
 
 # capture predictions
+Sys.sleep(1) #wait for notifications to close
 app$snapshot()

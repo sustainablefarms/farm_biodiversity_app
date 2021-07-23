@@ -4,8 +4,16 @@ output:
   html_document: default
 ---
 
++ on main waiting page display the sf logo with the spinner
++ debounce for get in latlon
++ saved values for latlon and whether it is in use
++ prettier reference to the tree cover page
++ Noisy Miner image from birdlife (using server) rather than going to ALA
++ when calling use_waiter specify the spinner(s) used
+
 # Inputs
 + woody canopy in raw areas, not percentages
++ debounce for lat and lon
 
 # Help
 + birds on farms imagery for splash page

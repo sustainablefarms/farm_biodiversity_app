@@ -13,9 +13,10 @@ app$setInputs(`plotly_click-region_map` = '[{\"curveNumber\":0,\"pointNumber\":0
 
 # specify the patch
 app$setInputs(`patch-patch_number_1` = "click")
-app$setInputs(`patch-pc_woody3000m_1` = 15.5)
-app$setInputs(`patch-pc_woody500m_1` = 14)
+app$setInputs(`patch-patchattr-pc_woody3000m` = 15.5)
+app$setInputs(`patch-patchattr-pc_woody500m` = 14)
 app$setInputs(`patch-choose_patch_attributes_execute` = "click")
+Sys.sleep(1) # waiting for notifications to end
 
 # make this reference
 app$setInputs(`pred-savetoreference` = "click")

@@ -15,17 +15,17 @@ app$findElement('button[data-dismiss]')$click() #closes the modal
 app$setInputs(`plotly_click-region_map` = '[{\"curveNumber\":0,\"pointNumber\":0,\"x\":149.603897167433,\"y\":-34.5156485191709}]', allowInputNoBinding_ = TRUE, priority_ = "input")
 
 # specify the patch number
-app$setInputs(`patch-choose_n_patches` = "click")
-app$setInputs(`patch-n_patches` = "2")
-app$setInputs(`patch-choose_n_patches_execute` = "click")
+app$setInputs(`patch-patch_selector-choose_n_patches` = "click")
+app$setInputs(`patch-patch_selector-n_patches` = "2")
+app$setInputs(`patch-patch_selector-choose_n_patches_execute` = "click")
 # specify patch 1
 app$setInputs(`patch-patch_number_1` = "click")
 app$setInputs(`patch-choose_patch_attributes_execute` = "click")
 
 # specify patch 2
 app$setInputs(`patch-patch_number_2` = "click")
-app$setInputs(`patch-pc_woody500m_2` = 2)
+app$setInputs(`patch-patchattr-pc_woody500m` = 2)
 app$setInputs(`patch-choose_patch_attributes_execute` = "click")
 
-Sys.sleep(0.5)
+Sys.sleep(1)
 app$snapshot()
