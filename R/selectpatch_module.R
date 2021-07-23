@@ -152,17 +152,12 @@ selectpatchServer <- function(id){
   # collect input values from modal
   observeEvent(input$choose_patch_attributes_execute, {
     each_patch_attribute[[as.character(clicked_record$selected_patch)]] <- out()[names(defaultnewpatchvalues)]
-    print(each_patch_attribute[[as.character(clicked_record$selected_patch)]])
     # record as done internally
     other_attributes$patchcomplete[[clicked_record$selected_patch]] <- TRUE
     # now add a green tick
     output[[paste0("patch_num_complete_", clicked_record$selected_patch)]] <- renderUI({patchcompletesymbol})
-    removeModal()
-  })
-  
-  # update export info whenever patches become complete (or new incomplete patches added)
-  observeEvent({other_attributes$patchcomplete}, {
-    showNotification("Module output updated")
+    
+    #update output values
     # check if the new saved values means all patches are complete
     if (all(isTRUE(other_attributes$patchcomplete[1:other_attributes$patches]))){
       outinfo$allpatchcomplete <- TRUE
@@ -176,8 +171,16 @@ selectpatchServer <- function(id){
     outinfo$IsRemnant = vapply(each_patch_attribute_l, function(x) x[["IsRemnant"]], FUN.VALUE = 0)
     outinfo$year = other_attributes$year
     outinfo$patches = other_attributes$patches
-    # print(reactiveValuesToList(each_patch_attribute))
+    
+    # close modal
+    removeModal()
   })
+  
+  # BELOW IS OLD: update export info whenever patches become complete (or new incomplete patches added)
+  # but doesn't work for editing the current patch
+  # observeEvent({other_attributes$patchcomplete}, {
+  # 
+  # })
   
   outinfo #return value of the server
   }
