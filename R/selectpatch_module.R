@@ -98,8 +98,10 @@ selectpatchServer <- function(id){
       update$add_logical <- FALSE
       update$numpatches_existing <- update$numpatches_new
       other_attributes$patches <- update$numpatches_existing
-      each_patch_attribute[[as.character(update$add_values)]] <- defaultnewpatchvalues
-      other_attributes$patchcomplete[[update$add_values]] <- FALSE
+      for (i in update$add_values){ # reactiveValues doesn't allow index extraction using multiple strings, hence this for loop grr
+        each_patch_attribute[[as.character(i)]] <- defaultnewpatchvalues
+      }
+      other_attributes$patchcomplete[update$add_values] <- FALSE
     }
   })
 
@@ -151,7 +153,7 @@ selectpatchServer <- function(id){
 
   # collect input values from modal
   observeEvent(input$choose_patch_attributes_execute, {
-    each_patch_attribute[[as.character(clicked_record$selected_patch)]] <- out()[names(defaultnewpatchvalues)]
+    each_patch_attribute[[as.character(clicked_record$selected_patch)]] <- out()
     # record as done internally
     other_attributes$patchcomplete[[clicked_record$selected_patch]] <- TRUE
     # now add a green tick
