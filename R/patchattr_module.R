@@ -141,9 +141,11 @@ patchattr_Server <- function(id){
       usedyear <- reactiveVal(NULL, label = "Year used for getting canopy")
       latlonerror <- reactiveVal("", label = "latlonerror")
       getwoodycanopy_d <- reactive({
+        validate(need(input$getwoodycanopy > 0, "")) #0 is the initial value ignore setting at this value (so ignoreInit works later)
         input$getwoodycanopy
         wait$show()}) %>% debounce(1000) # to stop heaps of clicking doing things, but show waiter from first click
       observeEvent(getwoodycanopy_d(), {
+        showNotification(as.character(input$getwoodycanopy))
         latlonerror("")
         wcfs <- tryCatch(
           {
