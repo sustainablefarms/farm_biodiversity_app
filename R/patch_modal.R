@@ -1,15 +1,12 @@
 patch_modal <- function(
   value = 1,
-  woody500m = NULL,
-  woody3000m = NULL,
-  noisy_miner = NULL,
-  IsRemnant = NULL,
+  attributes = NULL,
   ns #the namespace function
 ){
-  if(is.null(woody500m) | is.na(woody500m)){woody500m <- round(new_data_mean$WCF_500/0.5) * 0.5}
-  if(is.null(woody3000m) | is.na(woody3000m)){woody3000m <- round(new_data_mean$WCF_3000/0.5) * 0.5}
-  if(is.null(noisy_miner) | is.na(noisy_miner)){noisy_miner <- TRUE}
-  if(is.null(IsRemnant) | is.na(IsRemnant)){IsRemnant <- TRUE}
+  if(is.null(attributes$woody500m) | is.na(attributes$woody500m)){attributes$woody500m <- round(new_data_mean$WCF_500/0.5) * 0.5}
+  if(is.null(attributes$woody3000m) | is.na(attributes$woody3000m)){attributes$woody3000m <- round(new_data_mean$WCF_3000/0.5) * 0.5}
+  if(is.null(attributes$noisy_miner) | is.na(attributes$noisy_miner)){attributes$noisy_miner <- TRUE}
+  if(is.null(attributes$IsRemnant) | is.na(attributes$IsRemnant)){attributes$IsRemnant <- TRUE}
   showModal(
     modalDialog(
       # the following enables bootstrap 3's inbuilt tooltips
@@ -17,7 +14,7 @@ patch_modal <- function(
           $('[data-toggle=tooltip]').tooltip()
         })"
       ),
-      patchattr_UI(ns("patchattr"), woody500m, woody3000m, noisy_miner, IsRemnant),
+      patchattr_UI(ns("patchattr"), attributes),
       tags$br(),
       actionButton(inputId = ns("choose_patch_attributes_execute"), label = "Save"),
       modalButton("Cancel"),

@@ -1,5 +1,5 @@
 # patch attributes module
-patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
+patchattr_UI <- function(id, attributes){
   ns <- NS(id)
   tagList(
         waiter::use_waiter(spinners = 1),
@@ -8,7 +8,7 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
      column(7, 
       fluidRow(
         inlinecheckBoxInput(ns("IsRemnant"),
-            value = if (IsRemnant){TRUE} else {NULL},
+            value = if (attributes$IsRemnant){TRUE} else {NULL},
             label = tags$span("Is this patch remnant woodland?")
           ),
 	infotooltip(
@@ -19,7 +19,7 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
 			    
         ),
       fluidRow(inlinecheckBoxInput(ns("noisy_miner"),
-                              value = if (noisy_miner){TRUE} else {NULL},
+                              value = if (attributes$noisy_miner){TRUE} else {NULL},
                               tags$span("Noisy Miners present?")
           ),
           infotooltip(
@@ -69,7 +69,7 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
             inputId = ns("pc_woody500m"),
             min = 2, max = 20, step = 0.5,
 	    width = "100%",
-            value = woody500m)
+            value = attributes$woody500m)
           ),
         tags$div(
           tags$html(tags$span("Regional Woody Canopy: Woody vegetation canopy within 3km of patch centre (% area)"),
@@ -83,7 +83,7 @@ patchattr_UI <- function(id, woody500m, woody3000m, noisy_miner, IsRemnant){
             inputId = ns("pc_woody3000m"),
             min = 2, max = 20, step = 0.5,
 	    width = "100%",
-            value = woody3000m),
+            value = attributes$woody3000m),
 
  # from lat lon
 shinyWidgets::materialSwitch(ns("fromlatlon"),
@@ -92,17 +92,17 @@ shinyWidgets::materialSwitch(ns("fromlatlon"),
                                                                    "http://anuwald.science/tree"), 
                                                "and ",linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
                                                                "Liao et al. (IJAEOG, 2020)"), ")"),
-                             value = FALSE,
+                             value = attributes$fromlatlon,
                              status = "primary",
                              width = '100%'),
 tags$div(id = ns("inputfromlatlonpanel"),
           conditionalPanel("input.fromlatlon",
               fluidRow(
-                column(4, textInput(ns("lon"), "Longitude", value = "", width = '100%',
+                column(4, textInput(ns("lon"), "Longitude", value = attributes$usedlon, width = '100%',
                                     placeholder = "145.123456789")),
-                column(4, textInput(ns("lat"), "Latitude", value = "", width = '100%',
+                column(4, textInput(ns("lat"), "Latitude", value = attributes$usedlat, width = '100%',
                                     placeholder = "-35.123456789")),
-                column(2, textInput(ns("yearforcanopy"), "Year", value = "2018", width = '100%',
+                column(2, textInput(ns("yearforcanopy"), "Year", value = attributes$usedyear, width = '100%',
                                     placeholder = "2018")),
                 column(2, actionButton(ns("getwoodycanopy"), "Get", class = "download_badge"))
               ),

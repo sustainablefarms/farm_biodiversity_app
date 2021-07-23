@@ -141,10 +141,7 @@ selectpatchServer <- function(id){
         clicked_record$selected_patch <- click_now$patches$id[which(update_check)]
         patch_modal(
           value = clicked_record$selected_patch,
-          woody500m =   each_patch_attribute[[as.character(clicked_record$selected_patch)]]$woody500m,
-          woody3000m =  each_patch_attribute[[as.character(clicked_record$selected_patch)]]$woody3000m,
-          noisy_miner = each_patch_attribute[[as.character(clicked_record$selected_patch)]]$noisy_miner,
-          IsRemnant =   each_patch_attribute[[as.character(clicked_record$selected_patch)]]$IsRemnant,
+          attributes = isolate(each_patch_attribute[[as.character(clicked_record$selected_patch)]]),
           ns
         )
       }
