@@ -160,7 +160,7 @@ selectpatchServer <- function(id){
     
     #update output values
     # check if the new saved values means all patches are complete
-    if (all(isTRUE(other_attributes$patchcomplete[1:other_attributes$patches]))){
+    if (isTRUE(all(other_attributes$patchcomplete[1:other_attributes$patches]))){
       outinfo$allpatchcomplete <- TRUE
     } else {
       outinfo$allpatchcomplete <- FALSE
