@@ -24,20 +24,21 @@
     "moredetailfake": 1,
     "overallhelp": 0,
     "overallhelpfake": 1,
-    "patch-choose_n_patches": 0,
-    "patch-choose_n_patches_execute": 1,
     "patch-choose_patch_attributes_execute": 1,
-    "patch-IsRemnant_1": true,
-    "patch-IsRemnant_2": true,
-    "patch-n_patches": "2",
-    "patch-noisy_miner_1": true,
-    "patch-noisy_miner_2": true,
     "patch-patch_number_1": 1,
     "patch-patch_number_2": 1,
-    "patch-pc_woody3000m_1": 9,
-    "patch-pc_woody3000m_2": 9,
-    "patch-pc_woody500m_1": 9.5,
-    "patch-pc_woody500m_2": 2,
+    "patch-patch_selector-choose_n_patches": 0,
+    "patch-patch_selector-choose_n_patches_execute": 1,
+    "patch-patch_selector-n_patches": "2",
+    "patch-patchattr-fromlatlon": false,
+    "patch-patchattr-getwoodycanopy": 0,
+    "patch-patchattr-IsRemnant": true,
+    "patch-patchattr-lat": "",
+    "patch-patchattr-lon": "",
+    "patch-patchattr-noisy_miner": true,
+    "patch-patchattr-pc_woody3000m": 9,
+    "patch-patchattr-pc_woody500m": 2,
+    "patch-patchattr-yearforcanopy": "",
     "plotly_afterplot-A": "\"pred-diff_species\"",
     "plotly_afterplot-region_map": "\"location-plot_points\"",
     "plotly_click-region_map": "[{\"curveNumber\":0,\"pointNumber\":0,\"x\":149.603897167433,\"y\":-34.5156485191709}]",
@@ -1107,11 +1108,6 @@
 
       ]
     },
-    "patch-nmimage": {
-      "src": "[image data sha1: 973f16c34d0d34126a28af055c5fbc98c86df9c2]",
-      "alt": "An image of noisy miners",
-      "height": "100px"
-    },
     "patch-patch_num_complete_1": {
       "html": "<span class=\"glyphicon glyphicon-ok\" style=\"color: white;\"><\/span>",
       "deps": [
@@ -1124,11 +1120,16 @@
 
       ]
     },
-    "patch-patch_selector": {
-      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>2<\/h3><\/button>\n<\/div>",
+    "patch-patch_selector-patch_selector": {
+      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-patch_selector-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>2<\/h3><\/button>\n<\/div>",
       "deps": [
 
       ]
+    },
+    "patch-patchattr-nmimage": {
+      "src": "[image data sha1: 973f16c34d0d34126a28af055c5fbc98c86df9c2]",
+      "alt": "An image of noisy miners",
+      "height": "100px"
     },
     "pred": {
       "html": "<script>$(function () {\n        $('[data-toggle=tooltip]').tooltip()\n      })<\/script>\n<p class=\"alignleft\">\n  <plottitle>Expected Number of Species<\/plottitle>\n  <span class=\"glyphicon glyphicon-info-sign\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"The &lt;em&gt;second&lt;/em&gt; bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm. &lt;br&gt;&lt;br&gt; The top bar is the number of species we expect if there is only 1.5 hectares of woody vegetation canopy within 500m of every patch centre. The third bar is the number of species we expect if there is 15 hectares of woody vegetation canopy within 500m of every patch centre. The final bar is the number of species we expect from your reference estimates. &lt;br&gt;&lt;br&gt;Each species was assigned an occupancy probability equal to the maximum of all patches (we use the maximum as we expect occupancy between patches to be highly correlated).\" data-container=\"body\" data-trigger=\"focus\" data-html=\"FALSE\" style=\"cursor: pointer; font-size: 120%; color: #CC9900\" data-placement=\"bottom\"><\/span>\n<\/p>\n<p class=\"alignright\">\n  <em>\n    <span id=\"pred-warn\" class=\"shiny-html-output\"><\/span>\n  <\/em>\n<\/p>\n<div style=\"clear: both;\"><\/div>\n<div id=\"pred-species_richness\" class=\"shiny-plot-output\" style=\"width:100%;height:250px;\"><\/div>\n<div class=\"row\">\n  <div class=\"col-sm-6\">\n    <div>\n      <plottitle>Most Likely Species<\/plottitle>\n      <span class=\"glyphicon glyphicon-info-sign\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"&lt;html&gt;&#10;  &lt;p&gt;The 10 most likely species to live in your farm&#39;s Box Gum Grassy Woodland according to our model.&lt;/p&gt;&#10;  &lt;html&gt;&#10;    &lt;p&gt;&#10;      Bar length and printed percentage indicate the estimated probability of occupancy for each of the species, ignoring interactions between species.&#10;      When there are multiple patches, the occupancy probability is the maximum of the occupancy probability of the individual patches.&#10;    &lt;/p&gt;&#10;    &lt;p&gt;&#10;      The error bars summarise uncertainty due to the uncertainty of the model parameters.&#10;      These error bars are 95% credible intervals (highest posterior density intervals to be precise):&#10;      if the modelling assumptions are correct then there is a 95% probability that the actual on-ground occupancy probability is within the credible interval.&#10;    &lt;/p&gt;&#10;  &lt;/html&gt;&#10;&lt;/html&gt;\" data-container=\"body\" data-trigger=\"focus\" data-html=\"FALSE\" style=\"cursor: pointer; font-size: 120%; color: #CC9900\" data-placement=\"auto\"><\/span>\n    <\/div>\n    <div id=\"pred-common_species\" style=\"width:100%; height:300px; \" class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme\"><\/div>\n  <\/div>\n  <div class=\"col-sm-6\">\n    <span>\n      <plottitle>Relative Probability (Ratio to Reference)<\/plottitle>\n      <span class=\"glyphicon glyphicon-info-sign\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"This is the ratio of each species&#39; estimated occupancy probability to the reference occupancy probability. For example, if the Superb Parrot has a ratio of &#39;2&#39;, then it is estimated that the Superb Parrot is twice as likely to live in your farm&#39;s woodland than in the reference farm. The species with the 10 biggest ratios are shown. &lt;br&gt;&lt;br&gt; Each row is a species. The ratio is given in the white box. The length and colours of the bars also represent the ratio. Hover over a bar to get more information about that species. &lt;br&gt;&lt;br&gt;The reference can be set using the &#39;Update&#39; button and &#39;Use default&#39; checkbox below this figure. &lt;br&gt;&lt;br&gt;The ratios of all species can be seen by clicking &#39;View More Detail&#39; or downloading a report.\" data-container=\"body\" data-trigger=\"focus\" data-html=\"FALSE\" style=\"cursor: pointer; font-size: 120%; color: #CC9900\" data-placement=\"auto\"><\/span>\n    <\/span>\n    <div id=\"pred-diff_species\" style=\"width:100%; height:300px; \" class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme\"><\/div>\n  <\/div>\n<\/div>\n<div class=\"row\">\n  <div class=\"col-sm-6\">\n    <a id=\"pred-downloaddataverbose\" class=\"btn btn-default shiny-download-link download_badge\" href=\"\" target=\"_blank\" download>\n      <i class=\"fa fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n      Verbose Prediction Data\n    <\/a>\n    <button class=\"btn btn-default action-button download_badge\" id=\"pred-moredetail\" type=\"button\">View More Detail<\/button>\n    <a id=\"pred-downloaddata\" class=\"btn btn-default shiny-download-link download_badge\" href=\"\" target=\"_blank\" download>\n      <i class=\"fa fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n      Table\n    <\/a>\n    <a id=\"pred-downloadreport\" class=\"btn btn-default shiny-download-link download_badge\" href=\"\" target=\"_blank\" download>\n      <i class=\"fa fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n      Report\n    <\/a>\n  <\/div>\n  <div class=\"col-sm-5 offset-md-1 col-sm-offset-1\" style=\"text-align: right\">\n    Reference:\n    <span class=\"glyphicon glyphicon-info-sign\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"&lt;html&gt;&#10;  &lt;em&gt;Comparing to Other Estimates&lt;/em&gt;&#10;  &lt;html&gt;&#10;    &lt;p&gt;&#10;      Often it is useful to compare the current set of estimates to estimates under different scenarios.&#10;      The reference estimates are useful for doing this, and can be set using the &#39;Update&#39; button and &#39;Use Default&#39; checkbox in the bottom right of the app.&#10;      After you set the current estimates as the &#39;reference&#39;, you can alter your rainfall, patches and location and watch how the estimates change.&#10;    &lt;/p&gt;&#10;    &lt;p&gt;&#10;      The resulting figures summarise differences between two sets of estimates, they do not account for accuracy and other distributional properties.&#10;      The default reference is estimates for a hypothetical farm with a single remnant patch that is occupied by Noisy Miners, and&#10;      climate, rainfall, and woody vegetation canopy equal to the average of our data.&#10;    &lt;/p&gt;&#10;  &lt;/html&gt;&#10;  &lt;p&gt;&#10;    &lt;em&gt;Update&lt;/em&gt;&#10;    sets the reference estimates to the current estimates.&#10;    After setting the reference estimates for the first time, uncheck&#10;    &lt;em&gt;Use Default&lt;/em&gt;&#10;    to use them.&#10;    Initially the ratio of occupancy probabilities to reference probabilities will be all 1.&#10;    This will be the case until you alter attributes of the farm&#39;s woodland.&#10;  &lt;/p&gt;&#10;  &lt;p&gt;&#10;    &lt;em&gt;Use Default,&lt;/em&gt;&#10;    when checked, overides the saved estimates with the default estimates.&#10;    Uncheck&#10;    &lt;em&gt;Use Default&lt;/em&gt;&#10;    to use the saved reference.&#10;  &lt;/p&gt;&#10;&lt;/html&gt;\" data-container=\"body\" data-trigger=\"focus\" data-html=\"FALSE\" style=\"cursor: pointer; font-size: 120%; color: #CC9900\" data-placement=\"auto\" HTML=\"TRUE\"><\/span>\n    <button id=\"pred-savetoreference\" style=\"width: 80px;\" type=\"button\" class=\"action-button badge_tiny\">Update<\/button>\n    <span class=\"form-group shiny-input-container\">\n      <span class=\"checkbox\" style=\"display:inline;\">\n        <label>\n          <input id=\"pred-usedefaultreference\" type=\"checkbox\" checked=\"checked\"/>\n          <span>Use Default<\/span>\n        <\/label>\n      <\/span>\n    <\/span>\n  <\/div>\n<\/div>",
