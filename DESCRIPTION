@@ -16,6 +16,11 @@ Imports:
     msod,
     sf,
     ggbeeswarm,
+    shinyWidgets,
+    sf,
+    httr,
+    geojsonsf,
+    readr,
     waiter
 Suggests:
     testthat
