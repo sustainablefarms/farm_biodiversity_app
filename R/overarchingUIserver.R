@@ -19,12 +19,12 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   covarnicenames_tbl <<- read.csv("./data/nicecovarnames.csv", header = TRUE)
   apptempdir <<- tempdir()
   report_path <<- paste0(apptempdir, "/", "report.Rmd") #file location assumes host is a unix machine
-  stopifnot(file.copy("report.Rmd", report_path, overwrite = TRUE)) 
+  stopifnot(file.copy("data/report.Rmd", report_path, overwrite = TRUE)) 
   dir.create(paste0(apptempdir,"/www/"))
   stopifnot(file.copy("./www/Sustainable Farms logo RGB.png", paste0(apptempdir, "/www/"), overwrite = TRUE)) 
   stopifnot(file.copy(paste0("./www/", speciesinfo$imgfilename), paste0(apptempdir, "/www/"), overwrite = TRUE)) 
 }
-  
+
 # UI
 ui <- function(){
   out <- fluidPage(
