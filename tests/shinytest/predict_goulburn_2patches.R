@@ -1,4 +1,4 @@
-app <- ShinyDriver$new("../../")
+app <- ShinyDriver$new("../../", shinyOptions = list(test.mode = TRUE))
 app$snapshotInit("predict_goulburn_2patches")
 
 app$setInputs(overallhelpfake = "click")

@@ -1,4 +1,4 @@
-app <- ShinyDriver$new("../../")
+app <- ShinyDriver$new("../../", shinyOptions = list(test.mode = TRUE))
 app$snapshotInit("no_entries")
 
 app$setInputs(overallhelpfake = "click")

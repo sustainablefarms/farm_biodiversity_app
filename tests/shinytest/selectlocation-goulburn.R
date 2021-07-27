@@ -1,4 +1,4 @@
-app <- ShinyDriver$new("../../")
+app <- ShinyDriver$new("../../", shinyOptions = list(test.mode = TRUE))
 app$snapshotInit("selectlocation-goulburn")
 Sys.sleep(0.5)
 app$setInputs(overallhelpfake = "click")
