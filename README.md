@@ -1,4 +1,17 @@
+# README
+<!-- vim-markdown-toc GFM -->
 
+* [Introduction](#introduction)
+* [Running and Deploying the App](#running-and-deploying-the-app)
+	* [Offline](#offline)
+	* [Deploy the App to shinyapps.io](#deploy-the-app-to-shinyappsio)
+* [Reactive Flow](#reactive-flow)
+* [Files and Directories](#files-and-directories)
+* [Testing](#testing)
+* [Running Modules](#running-modules)
+* [Shiny Options](#shiny-options)
+
+<!-- vim-markdown-toc -->
 ## Introduction
 This is the code repository for running the Sustainable Farms bird occupancy estimator web app. The web app is built using R shiny. It has a backend of R and a front-end based on Bootstrap 3. The app is deployed on shinyapps.io.
 
@@ -87,12 +100,12 @@ Directories:
 
 + www/ Stores files for the web app to access during execution. Mostly this is images in high and low res form. A (messy) collection of css styles used in the app is in base.css.
 
-# Testing
+## Testing
 Snapshot testing using `shinytest` tests all the main feature of the app, and how it looks. At commit 836ade58385d5465e42ae5749b3307531ce760c9 these tests passed except for tiny aesthetic differences AND the downloaded pdf report (which is always different due to the timestamp in it).
 
 Take care with `predict_goulburn_1patch_moredetails.R` as the comparison of the downloaded pdf breaks the `shinytest` viewing functions. I've been getting away with looking at the .png snapshots in the corresponding expected and current directories.
 
-# Running Modules 
+## Running Modules 
 Most modules can be run stand alone with nearly all features intact (references for the predictions module is an exception). Functions for running these modules as a shiny app are in the same .R file as the other module functions. For example the predictionsdetail module can be run with the function below, which is in `module_predictionsdetail.R`
 
 ```
@@ -100,7 +113,7 @@ app_predictiondetails()
 ```
 
 
-# Shiny Options
+## Shiny Options
 The main `app.R` file in the root directory contains some options for running shiny.
 
 ```
