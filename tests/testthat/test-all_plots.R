@@ -6,7 +6,7 @@ test_that("prediction plots for Gundagai and a single patch", {
   model_data <- load_model_data()
   new_data_mean <- get_new_data_mean(model_data)
   data <- list()
-  current_values <- readRDS("./current_values_1patch.rds")
+  current_values <- readRDS(system.file("data", "test-current_values_2patches.rds", package = packageName()))
   current_values <- isolate(current_values)
     data$Xocc <- newXocc_fromselected(current_values)
     modwXocc <- msod::supplant_new_data(model_data, data$Xocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
