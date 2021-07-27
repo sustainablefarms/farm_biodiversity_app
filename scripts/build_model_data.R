@@ -1,4 +1,11 @@
-# delete Australian Wood Duck and Australasian Pipit
+# slim down full model object - so fits better in an app and also does not share sensitive information
+fit <- readRDS("../Experiments/10_withAlbertData/fittedmodels/10_7_0_best1065_timewind_2lv.rds")
+fit2 <- msod::minimise_fit.jsodm_lv(fit)
+fit2$XoccProcess <- fit$toXocc$params$mainparams
+fit2$XoccColNames <- colnames(fit$data$Xocc)
+saveRDS(fit2, file = "data/model_data.rds")
+
+### until end of file deletes Australian Wood Duck and Australasian Pipit ####
 model_data <- readRDS("./data/model_data.rds")
 # save occ to check later
 pocc1 <- msod:::get_occ_b(model_data, usesummary = 1)
@@ -41,10 +48,4 @@ pocc2 <- msod:::get_occ_b(model_data, usesummary = 1)
 stopifnot(all.equal(pocc1[-idxtoremove, , , drop = FALSE ], pocc2))
 
 saveRDS(model_data, "./data/model_data.rds")
-
-### Code used to build saved fitted object ###
-# fit <- readRDS("../Experiments/10_withAlbertData/fittedmodels/10_7_0_best1065_timewind_2lv.rds")
-# fit2 <- msod::minimise_fit.jsodm_lv(fit)
-# fit2$XoccProcess <- fit$toXocc$params$mainparams
-# fit2$XoccColNames <- colnames(fit$data$Xocc)
-# saveRDS(fit2, file = "data/model_data.rds")
+#### End of deleting Australian Wood Duck and Australasian Pipit ####

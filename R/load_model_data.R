@@ -17,9 +17,4 @@ get_new_data_mean <- function(model_data){
   return(new_data_mean)
 }
 
-### Code used to build saved fitted object ###
-# fit <- readRDS("../Experiments/10_withAlbertData/fittedmodels/10_7_0_best1065_timewind_2lv.rds")
-# fit2 <- msod::minimise_fit.jsodm_lv(fit)
-# fit2$XoccProcess <- fit$toXocc$params$mainparams
-# fit2$XoccColNames <- colnames(fit$data$Xocc)
-# saveRDS(fit2, file = "data/model_data.rds")
+### Code used to build saved fitted object in ./scripts/build_model_data.R ###
