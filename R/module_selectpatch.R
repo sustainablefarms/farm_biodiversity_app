@@ -216,3 +216,18 @@ selectpatchServer <- function(id){
   }
 )
 }
+
+app_selectpatch <- function(){
+  main_app_prep()
+  
+  shinyApp(
+    {fluidPage(
+      includeCSS("./www/base.css"),
+      fluidRow(selectpatchUI("patch")),
+      theme = bslib::bs_theme(version = 3, "lumen"))
+    },
+    function(input, output, session){
+      output <- selectpatchServer("patch")
+      observe(print(data.frame(reactiveValuesToList(output))))
+    })
+}

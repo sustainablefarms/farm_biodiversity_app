@@ -7,24 +7,24 @@ predictionsUI <- function(id, usedflt){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
-      tags$p(class = "alignleft",
-        HTML("<plottitle>Expected Number of Species</plottitle>"),
-                  infotooltip(title = paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
-                                    "<br><br>",
-                                    "The top bar is the number of species we expect if there is only 1.5 hectares of woody vegetation canopy within 500m of every patch centre.",
-				    "The third bar is the number of species we expect if there is 15 hectares of woody vegetation canopy within 500m of every patch centre.",
-				    "The final bar is the number of species we expect from your reference estimates.",
-                              "<br><br>Each species was assigned an occupancy probability equal to the maximum of all patches (we use the maximum as we expect occupancy between patches to be highly correlated)."
-                              ),
-                              placement = "bottom")
-      ),
-      tags$p(class =  "alignright",
-             tags$em(uiOutput(ns("warn"), inline = TRUE))),
-      tags$div(style="clear: both;"),
-      plotOutput(ns("species_richness"), height = "250px"),
-      fluidRow(
-        column(width = 6, 
-           tags$div(HTML("<plottitle>Most Likely Species</plottitle>"),
+    tags$p(class = "alignleft",
+           HTML("<plottitle>Expected Number of Species</plottitle>"),
+           infotooltip(title = paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
+                                     "<br><br>",
+                                     "The top bar is the number of species we expect if there is only 1.5 hectares of woody vegetation canopy within 500m of every patch centre.",
+                                     "The third bar is the number of species we expect if there is 15 hectares of woody vegetation canopy within 500m of every patch centre.",
+                                     "The final bar is the number of species we expect from your reference estimates.",
+                                     "<br><br>Each species was assigned an occupancy probability equal to the maximum of all patches (we use the maximum as we expect occupancy between patches to be highly correlated)."
+           ),
+           placement = "bottom")
+    ),
+    tags$p(class =  "alignright",
+           tags$em(uiOutput(ns("warn"), inline = TRUE))),
+    tags$div(style="clear: both;"),
+    plotOutput(ns("species_richness"), height = "250px"),
+    fluidRow(
+      column(width = 6, 
+             tags$div(HTML("<plottitle>Most Likely Species</plottitle>"),
                   infotooltip(title = tags$html(tags$p("The 10 most likely species to live in your farm's Box Gum Grassy Woodland according to our model."),
 					   proboccplotdescription))
           ),
@@ -253,4 +253,21 @@ predictionsServer <- function(id,
     })
 }
 
-
+# for running predictions module standalone (I think reference will not work though)
+app_predictions <- function(){
+  main_app_prep()
+  current_values <- reactiveVal(value = readRDS("./data/test-current_values_2patches.rds")) #isolate(current_values())
+  # current_values <- do.call(reactiveValues, readRDS("tests/testthat/current_values_2patches.rds"))
+  
+  shinyApp(
+    {fluidPage(
+      includeCSS("./www/base.css"),
+      fluidRow(predictionsUI("pred", FALSE)),
+      theme = bslib::bs_theme(version = 3, "lumen"))
+      },
+           function(input, output, session){
+             predictionsServer("pred", current_values,
+                               model_data, 
+                               report_path)
+           })
+}

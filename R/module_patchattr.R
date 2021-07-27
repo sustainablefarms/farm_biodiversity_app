@@ -207,3 +207,16 @@ patchattr_Server <- function(id){
       return(specifiedvals)
     })
   }
+
+
+
+app_patchattr <- function(){
+  attributes <- list(IsRemnant = TRUE, noisy_miner = FALSE, woody500m = 3.5, woody3000m = 8.2, fromlatlon = FALSE)
+  shinyApp(    {fluidPage(
+    includeCSS("./www/base.css"),
+    patchattr_UI("patchattr", attributes),
+    theme = bslib::bs_theme(version = 3, "lumen"))
+  },
+           function(input, output, session){patchattr_Server("patchattr")}
+  )
+}

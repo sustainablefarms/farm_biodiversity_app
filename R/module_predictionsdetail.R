@@ -92,3 +92,24 @@ predictionsdetailServer <- function(id,
       })
     })
   }
+
+app_predictiondetails <- function(){
+  main_app_prep()
+  data <- do.call(reactiveValues, readRDS("data/test-predictions_data_2patches.rds"))
+  modalopens <- reactiveVal(value = 1)
+  # observe({
+  #   topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
+  #   data$toptennames <- row.names(data$species_prob_current)[topten]
+  #   data$speciesinfo_topten <- speciesinfo[row.names(data$species_prob_current)[topten], ]
+  # })
+  
+  shinyApp(
+    {fluidPage(
+      includeCSS("./www/base.css"),
+      predictionsdetailUI("detail", isolate(data$speciesinfo_topten), isolate(data$speciesinfo_botten)),
+      theme = bslib::bs_theme(version = 3, "lumen"))
+      },
+           function(input, output, session){
+             predictionsdetailServer("detail", data, modalopens)
+           })
+}
