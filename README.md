@@ -54,6 +54,16 @@ Files in the root directory:
  + .gitignore  A file for using .git
 
 Directories:
+ + R/ Contains functions for the app to build and run. Includes UI and Server shiny app functions, functions for creating small parts of the UI, full modules and more.
+   + `main` contains the main UI and server function for the app.
+   + `module_` files contain individual modules used in the app, most also contain a function for running the modules in standalone (very useful for development).
+   + `UI_` files contain functions or objects for creating purely UI components in the app
+   + `plot_` files contain function for plotting (which are typically then used in a outputPlot or outputPlotly call)
+   + `prep_` files are used for preparing or loading data, usually at the start of the app
+   + `serverhelp_` files are used by R in the server functions to help obtain, compute, sort, and modify covariate values or prediction information. `compute_prediction_data` does the core work of generating occupancy probability estimates
+   + `_disable_autoload.R` is an empty file for telling R shiny to stop autoloading - I don't think it worked though.
+
+
  + data/ Stores various data for making and presenting results.
    + birdinfotable.rds is a precompiled bird info table. Prepared by calling `prep_birdinfotable()`.
    + consstatus.rds is a table of the 5 species of conservation concern in the model
@@ -65,8 +75,17 @@ Directories:
    + species_alaimages.csv An unused table giving suggested images from the Atlas of Living Australia to use for each bird. BirdLife Australia photographers tended to produce more eye catching images, so I have used BirdLife photographs instead.
    + species_birdlifeimgs.csv Table of BirdLife Australia photographs for each species. Used for reading in the images (which are saved in www/ for access reasons), printing the correct attribution and linking to the full image on birdlifephotography.org.au
    + species_shortstory.csv For each species a short sentence or two by Kassel Hingee summarising non-climate loadings for each species. These summaries are used as tooltips in the plotly species summaries.
-   + state_borders.rds is a data set of state border vectors used to give context to the location
+   + state_borders.rds is a data set of state border vectors used to give context to the location. Prepared using `prepare_state_borders.R`
    + test-current_values_2patches.rds and test-predictions_data_2patches.rds contain covariate values and corresponding species predictions. They are used for testing modules and for experimenting with knitting report.Rmd
    + traits.rds Prepared by `preptraits()`, contains traits of each of the bird species. Used, for example, to order species by size in some plots.
+
++ scripts/ Contains R scripts for preparing various pieces of data (in data/) for the web app. I think `sa2_info.R` does not run fully in its current form. A demonstration of a redirection app (for if the app url changes) is included in `redirect_app.R`.
+
++ tests/
+  + shinytest/ Contains a directory of snapshot tests for `shinytest`. Run these using `shinytest::testApp()`
+  + testthat/ Obsolete `testthat` tests, primarily used for testing plotting, but now that shinytest is working they aren't needed.
+
++ www/ Stores files for the web app to access during execution. Mostly this is images in high and low res form. A (messy) collection of css styles used in the app is in base.css.
+
 
 
