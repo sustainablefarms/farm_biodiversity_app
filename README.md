@@ -101,7 +101,7 @@ Directories:
 + www/ Stores files for the web app to access during execution. Mostly this is images in high and low res form. A (messy) collection of css styles used in the app is in base.css.
 
 ## Testing
-Snapshot testing using `shinytest` tests all the main feature of the app, and how it looks. At commit 836ade58385d5465e42ae5749b3307531ce760c9 these tests passed except for tiny aesthetic differences AND the downloaded pdf report (which is always different due to the timestamp in it).
+Snapshot testing using `shinytest` tests all the main feature of the app, and how it looks. At commit 113d5b5a135d490d83484cd31bc890246c65533c on Jul 28, 2021, these tests passed except for tiny aesthetic differences AND the downloaded pdf report (which is always different due to the timestamp in it).
 
 Take care with `predict_goulburn_1patch_moredetails.R` as the comparison of the downloaded pdf breaks the `shinytest` viewing functions. I've been getting away with looking at the .png snapshots in the corresponding expected and current directories.
 
