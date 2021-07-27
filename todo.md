@@ -3,7 +3,26 @@ output:
   pdf_document: default
   html_document: default
 ---
++ climate_modal() -> modal_climateplot()
++ onespecwords() -> onespec_occdesc()
++ patchincompletewarn() -> attrincomplete()
++ vulnerablespeciesUI() -> avulnerablespeciesUI()
 
++ event tracking:
+  + bird life links
+  + download csv
+  + download report
+  + view more details
+  + use the reference
+  + track all inputs
+    + get lat lon
+    + change rainfall
+    + location selected
+    + number of patches
+    + patch attributes
+
++ url snapshots/bookmarking
++ unify versions in the app and in the DESCRIPTION
 + on main waiting page display the sf logo with the spinner
 + debounce for get in latlon
 + saved values for latlon and whether it is in use
