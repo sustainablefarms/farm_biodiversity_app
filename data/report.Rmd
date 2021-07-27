@@ -13,7 +13,7 @@ header-includes:
   \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
   \usepackage{tikz}
   \usetikzlibrary{calc}
-  \graphicspath{{www/}}
+  \graphicspath{{www/}}  #to get report to build with images change this to ../www/
 ---
 
 \begin{tikzpicture}[overlay, remember picture]
@@ -27,14 +27,17 @@ header-includes:
 
 ```{r setup, echo = FALSE, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center')
+if (params$loadexampledata){
+  knitr::opts_knit$set(root.dir = normalizePath(".."))
+}
 ```
 
 ```{r load, echo = FALSE, include = FALSE}
 if (params$loadexampledata){
   pkgload::load_all(".")
   main_app_prep()
-  current_values <- readRDS("tests/testthat/current_values_2patchesb.rds")
-  data <- readRDS("tests/testthat/predictions_data_2patchesb.rds")
+  current_values <- readRDS("data/test-current_values_2patches.rds")
+  data <- readRDS("data/test-predictions_data_2patches.rds")
 } else {
   data <- isolate(reactiveValuesToList(data))
   current_values <- isolate(current_values())
