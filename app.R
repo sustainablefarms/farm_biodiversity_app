@@ -6,7 +6,7 @@ options(
 )
 pkgload::load_all("."); myapp()
 # pkgload::load_all("."); app_selectpatchonly()
-# app_selectlocationonly()
+# pkgload::load_all("."); app_selectlocationonly()
 # pkgload::load_all("."); app_predictionsonly()
 # pkgload::load_all("."); app_predictiondetailsonly()
 # pkgload::load_all("."); app_patchattronly()
