@@ -87,5 +87,30 @@ Directories:
 
 + www/ Stores files for the web app to access during execution. Mostly this is images in high and low res form. A (messy) collection of css styles used in the app is in base.css.
 
+# Testing
+Snapshot testing using `shinytest` tests all the main feature of the app, and how it looks. At commit 836ade58385d5465e42ae5749b3307531ce760c9 these tests passed except for tiny aesthetic differences AND the downloaded pdf report (which is always different due to the timestamp in it).
 
+Take care with `predict_goulburn_1patch_moredetails.R` as the comparison of the downloaded pdf breaks the `shinytest` viewing functions. I've been getting away with looking at the .png snapshots in the corresponding expected and current directories.
+
+# Running Modules 
+Most modules can be run stand alone with nearly all features intact (references for the predictions module is an exception). Functions for running these modules as a shiny app are in the same .R file as the other module functions. For example the predictionsdetail module can be run with the function below, which is in `module_predictionsdetail.R`
+
+```
+app_predictiondetails()
+```
+
+
+# Shiny Options
+The main `app.R` file in the root directory contains some options for running shiny.
+
+```
+options(
+  shiny.launch.browser = FALSE,
+  shiny.port = 7214,
+  shiny.testmode = FALSE
+)
+```
+
+The first two options stops shiny from launching a browser window, and makes sure shiny always hosts pages visible to the port 7214.
+The option `shiny.testmode` is for testing purposes. Set to `TRUE` to get buttons that allows downloading covariate values and prediction values from the app (and maybe more things).
 
