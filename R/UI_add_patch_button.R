@@ -1,5 +1,5 @@
 # function to add a single title + selector buttons to the ui
-add_reference_ui <- function(
+add_patch_button <- function(
   entry_number, # an index to record which entry these data are linked to
   ui_selector, # i.e. where in the UI should this go? Starts with a #
   ns # shiny name space function

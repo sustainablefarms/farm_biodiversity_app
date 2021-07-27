@@ -84,7 +84,7 @@ selectpatchServer <- function(id){
   observeEvent(update$add_values, {
     if(update$add_logical){
       lapply(update$add_values, function(a){
-        add_reference_ui(
+        add_patch_button(
           entry_number = a,
           ui_selector = "placeholder",
           ns
