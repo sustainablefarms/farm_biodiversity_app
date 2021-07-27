@@ -14,7 +14,9 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   load_birdinfotable()
   consstatus <<- load_constatus()
   appname <<- "Bird Checker: A Bird Occupancy Estimator"
-  appversion <<- as.character(packageVersion(packageName()))
+  if (!isTRUE(getOption("shiny.testmode"))){
+    appversion <<- as.character(packageVersion(packageName()))
+  } else {appversion <<- "0.9"} #so that the same version number appears in all shinytest snapshot tests
   appurl <<- "https://sustfarm.shinyapps.io/bird_checker/"
   covarnicenames_tbl <<- read.csv("./data/nicecovarnames.csv", header = TRUE)
   apptempdir <<- tempdir()
