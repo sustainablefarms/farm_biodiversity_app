@@ -69,14 +69,6 @@ selectpatchServer <- function(id){
         patches = 1,
         year = 2018
       )
-      patch_attributes <- reactiveValues( # patch attributes
-        allpatchcomplete = FALSE,
-        patches = 1,
-        woody500m = NA,
-        woody3000m = NA,
-        noisy_miner = NA,
-        IsRemnant = NA,
-        year = 2018)
       clicked_record <- reactiveValues( #record of
         #patches = 1, # number of patches - obsolete as of patchnumselector_module
         patch_buttons = c(0), #and number of times their buttons pressed
@@ -88,7 +80,7 @@ selectpatchServer <- function(id){
         add_values = NULL,
         remove_logical = FALSE,
         remove_values = NULL)
-      click_now <- reactiveValues(
+      click_now <- reactiveValues( # for clicks now - opening patch modals
         patches = NULL)
       outinfo <- reactiveValues( #to send out of this module
         allpatchcomplete = FALSE,
@@ -192,12 +184,7 @@ selectpatchServer <- function(id){
     removeModal()
   })
   
-  # BELOW IS OLD: update export info whenever patches become complete (or new incomplete patches added)
-  # but doesn't work for editing the current patch
-  # observeEvent({other_attributes$patchcomplete}, {
-  # 
-  # })
-    #update output values
+  #update output values
   observeEvent({other_attributes$patches * other_attributes$patchcomplete}, {
     # check if the new saved values means all patches are complete
     if (isTRUE(all(other_attributes$patchcomplete[1:other_attributes$patches]))){
