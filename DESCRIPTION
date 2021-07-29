@@ -21,6 +21,7 @@ Imports:
     httr,
     geojsonsf,
     readr,
+    shinyjs,
     waiter
 Suggests:
     testthat

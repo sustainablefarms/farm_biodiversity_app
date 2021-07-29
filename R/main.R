@@ -38,6 +38,7 @@ ui <- function(){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
+    shinyjs::useShinyjs(),
     HTML("<div class='header'>"),
     fluidRow(
       column(width = 2,
@@ -78,7 +79,8 @@ ui <- function(){
       ),
       fluidRow(
         HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
-        uiOutput("pred")
+        tags$div(id = "predpanel", predictionsUI("pred", usedflt = NULL)) %>%
+          shinyjs::hidden()
       )
     ),
     title = appname,
@@ -129,12 +131,14 @@ server <- function(input, output, session) {
   }
   
   ## PREDICTIONS
-  output$pred <- renderUI({
-    validate(need(cval()$locationcomplete & cval()$allpatchcomplete,
-             ""))
-    tagList(
-      predictionsUI("pred", usedflt()))
-    })
+  # reveal predictions panel
+  observeEvent(cval(), {
+    if (cval()$locationcomplete & cval()$allpatchcomplete){
+      shinyjs::show("predpanel")
+    } else {
+      shinyjs::hide("predpanel")
+    }
+  })
   usedflt <- predictionsServer("pred", cval,
                     model_data,
                     report_path) 
