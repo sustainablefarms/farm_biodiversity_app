@@ -62,7 +62,7 @@ ui <- function(){
       tags$div(tags$em("3. See your birds."))
 	   ),
     column(width = 3,
-      fluidRow(selectlocationUI("location")),
+      fluidRow(selectlocationUI("location")), #could be more appropriate to use verticalLayout for these fluidRows without column
       # plotOutput("climate", height = "300px")
       fluidRow(selectYfAUI("yfa")),
       if (isTRUE(getOption("shiny.testmode"))){
@@ -74,14 +74,13 @@ ui <- function(){
     ),
     column(width = 1),
     column(width = 6,
-      fluidRow(
+      fluidRow(  #consider using verticalLayout() for these columnless fluidRows
         selectpatchUI("patch")
       ),
       fluidRow(
-        HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
-        tags$div(id = "predpanel", predictionsUI("pred")) %>%
-          shinyjs::hidden()
+        predictionsUI("pred")
       )
+
     ),
     title = appname,
     theme = bslib::bs_theme(version = 3, "lumen")
@@ -131,14 +130,6 @@ server <- function(input, output, session) {
   }
   
   ## PREDICTIONS
-  # reveal predictions panel
-  observeEvent(cval(), {
-    if (cval()$locationcomplete & cval()$allpatchcomplete){
-      shinyjs::show("predpanel")
-    } else {
-      shinyjs::hide("predpanel")
-    }
-  })
   predictionsServer("pred", cval,
                     model_data,
                     report_path) 

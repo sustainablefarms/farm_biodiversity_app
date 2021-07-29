@@ -7,8 +7,16 @@ predictionsUI <- function(id){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
-    tags$p(class = "alignleft",
-           HTML("<plottitle>Expected Number of Species</plottitle>"),
+  tags$div(class ='subheader',
+           tags$h2("BIRD BIODIVERSITY",
+                  tags$p(class =  "alignright",
+                  tags$em(uiOutput(ns("warn"), inline = TRUE))))),
+  tags$div(style="clear: both;"),
+  tags$div(id = ns("predpanel"), 
+  tabsetPanel(
+    tabPanel(
+    title = tags$p(
+           HTML("Expected Number of Species"),
            infotooltip(title = paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
                                      "<br><br>",
                                      "The top bar is the number of species we expect if there is only 1.5 hectares of woody vegetation canopy within 500m of every patch centre.",
@@ -18,10 +26,10 @@ predictionsUI <- function(id){
            ),
            placement = "bottom")
     ),
-    tags$p(class =  "alignright",
-           tags$em(uiOutput(ns("warn"), inline = TRUE))),
-    tags$div(style="clear: both;"),
-    plotOutput(ns("species_richness"), height = "250px"),
+    plotOutput(ns("species_richness"), height = "250px")
+    ),
+    tabPanel("Another summary", "More info to put here"),
+    type = "pills"),
     fluidRow(
       column(width = 6, 
              tags$div(HTML("<plottitle>Most Likely Species</plottitle>"),
@@ -74,6 +82,8 @@ predictionsUI <- function(id){
 				                               inline = TRUE)
                )
       )
+  ) %>%
+    shinyjs::hidden()
   )
 }
 
@@ -116,6 +126,7 @@ predictionsServer <- function(id,
         if(
           isTRUE(current_values()$locationcomplete & current_values()$allpatchcomplete)
         ){
+          shinyjs::show("predpanel") # reveal predictions panel
           # saveRDS(isolate(current_values()), file = "current_values.rds"); stop("Saving current values - app is in debug mode and will end")
           data$Xocc <- newXocc_fromselected(current_values())
           modwXocc <- msod::supplant_new_data(model_data, data$Xocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
@@ -149,6 +160,7 @@ predictionsServer <- function(id,
           data$speciesinfo_botten <- speciesinfo[row.names(data$species_prob_current)[botten], ]
           # saveRDS(isolate(reactiveValuesToList(data)), file = "data.rds"); stop("Saving data - app will end now")
         } else {
+          shinyjs::hide("predpanel")
           # data <- lapply(data, function(x) NULL)
           data$Xocc <- NULL
           data$species_prob_current <- NULL
@@ -168,18 +180,18 @@ predictionsServer <- function(id,
       # draw species plots
         # req(data$species_prob_current)
         output$common_species <- plotly::renderPlotly({
-          validate(need(datar()$species_prob_current, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
+          validate(need(datar()$species_prob_current, label = "Estimates")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
           species_plotly_common(tocommon(datar()$species_prob_current))
         })
         output$diff_species <- plotly::renderPlotly({
-          validate(need(datar()$spec_different, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
+          validate(need(datar()$spec_different, label = "Estimates")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
           species_plotly_different(datar()$spec_different)
         })
 
       
       # draw species richness
       output$species_richness <- renderPlot({
-        validate(need(datar()$species_richness, ""))
+        validate(need(datar()$species_richness, "Estimates"))
         richness_plot(datar()$species_richness)
       })
       
@@ -235,7 +247,7 @@ predictionsServer <- function(id,
       output$warn <- renderUI({
         validate(need(current_values()$locationcomplete & current_values()$allpatchcomplete, ""))
         warn <- warn_oot(current_values())
-        validate(need(warn[["warn"]], ""))
+        validate(need(warn[["warn"]], message = ""))
         tagList(
           tags$script("$(function () {
                         $('[data-toggle=tooltip]').tooltip()
