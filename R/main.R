@@ -79,7 +79,7 @@ ui <- function(){
       ),
       fluidRow(
         HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
-        tags$div(id = "predpanel", predictionsUI("pred", usedflt = NULL)) %>%
+        tags$div(id = "predpanel", predictionsUI("pred")) %>%
           shinyjs::hidden()
       )
     ),
@@ -139,7 +139,7 @@ server <- function(input, output, session) {
       shinyjs::hide("predpanel")
     }
   })
-  usedflt <- predictionsServer("pred", cval,
+  predictionsServer("pred", cval,
                     model_data,
                     report_path) 
   

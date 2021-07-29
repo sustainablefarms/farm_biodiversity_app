@@ -1,5 +1,5 @@
 # predictions module
-predictionsUI <- function(id, usedflt){
+predictionsUI <- function(id){
   ns <- NS(id)
   tagList(
     # the following enables bootstrap 3's inbuilt tooltips
@@ -54,7 +54,7 @@ predictionsUI <- function(id, usedflt){
           downloadButton(ns("downloadreport"), "Report", class = "download_badge")
                ),
         column(width = 5, offset = 1,
-          style = "text-align: right",
+          # style = "text-align: right",
             "Reference:",
           infotooltip(title = tags$html(tags$em("Comparing to Other Estimates"),
 				  referencesblurb,
@@ -66,7 +66,12 @@ predictionsUI <- function(id, usedflt){
                                    "Uncheck", tags$em("Use Default"), "to use the saved reference.")),
 		      HTML = TRUE),
             actionButton2(ns("savetoreference"), label = "Update", class = "badge_tiny", width = "80px"),
-            inlinecheckBoxInput(ns("usedefaultreference"), label = "Use Default", value = is.null(usedflt) | isTRUE(usedflt))
+				  shinyWidgets::materialSwitch(ns("usedefaultreference"),
+				                               label = "Default in Use",
+				                               value = TRUE,
+				                               status = "primary",
+				                               right = TRUE,
+				                               inline = TRUE)
                )
       )
   )
@@ -262,7 +267,7 @@ app_predictions <- function(){
   shinyApp(
     {fluidPage(
       includeCSS("./www/base.css"),
-      fluidRow(predictionsUI("pred", FALSE)),
+      fluidRow(predictionsUI("pred")),
       theme = bslib::bs_theme(version = 3, "lumen"))
       },
            function(input, output, session){
