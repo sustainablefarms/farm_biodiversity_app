@@ -3,6 +3,7 @@ output:
   pdf_document: default
   html_document: default
 ---
++ From Richard Beggs: references require some thought. Maybe a notification when you change things, and when you set the reference.
 + climate_modal() -> modal_climateplot()
 + onespecwords() -> onespec_occdesc()
 + patchincompletewarn() -> attrincomplete()
