@@ -131,6 +131,7 @@ selectpatchServer <- function(id){
         each_patch_attribute[[as.character(i)]] <- defaultnewpatchvalues
       }
       other_attributes$patchcomplete[update$add_values] <- FALSE
+      outinfo$allpatchcomplete <- FALSE
     }
   })
 
@@ -187,7 +188,17 @@ selectpatchServer <- function(id){
     # now add a green tick
     output[[paste0("patch_num_complete_", clicked_record$selected_patch)]] <- renderUI({patchcompletesymbol})
     
+    # close modal
+    removeModal()
+  })
+  
+  # BELOW IS OLD: update export info whenever patches become complete (or new incomplete patches added)
+  # but doesn't work for editing the current patch
+  # observeEvent({other_attributes$patchcomplete}, {
+  # 
+  # })
     #update output values
+  observeEvent({other_attributes$patches * other_attributes$patchcomplete}, {
     # check if the new saved values means all patches are complete
     if (isTRUE(all(other_attributes$patchcomplete[1:other_attributes$patches]))){
       outinfo$allpatchcomplete <- TRUE
@@ -201,16 +212,7 @@ selectpatchServer <- function(id){
     outinfo$IsRemnant = vapply(each_patch_attribute_l, function(x) x[["IsRemnant"]], FUN.VALUE = 0)
     outinfo$year = other_attributes$year
     outinfo$patches = other_attributes$patches
-    
-    # close modal
-    removeModal()
   })
-  
-  # BELOW IS OLD: update export info whenever patches become complete (or new incomplete patches added)
-  # but doesn't work for editing the current patch
-  # observeEvent({other_attributes$patchcomplete}, {
-  # 
-  # })
   
   outinfo #return value of the server
   }
