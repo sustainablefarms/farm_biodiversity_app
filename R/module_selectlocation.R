@@ -213,7 +213,7 @@ selectlocationServer <- function(id){
       actionButton2(
         inputId = ns("show_precip_warm_modal"),
         label = HTML(paste0(
-          "Summer<br>Preciptiation<h3>",
+          "Summer<br>Precipitation<h3>",
           outOfModule()$PrecWarmQ.lt,
           "mm</h3>")),
         class = "badge",
@@ -227,7 +227,7 @@ selectlocationServer <- function(id){
       actionButton2(
         inputId = ns("show_precip_cold_modal"),
         label = HTML(paste0(
-          "Winter<br>Preciptiation<h3>",
+          "Winter<br>Precipitation<h3>",
           outOfModule()$PrecColdQ.lt,
           "mm</h3>")),
         class = "badge",
