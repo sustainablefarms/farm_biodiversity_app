@@ -124,8 +124,14 @@ server <- function(input, output, session) {
     out
   })
   if (isTRUE(getOption("shiny.testmode"))){
-    observeEvent(cval(), {print("New cval() evaluation")
-                          print(list2DF(cval()))})
+    observeEvent(cval(), {
+      forprint <- capture.output(print(t(list2DF(cval())), quote = FALSE))
+      showNotification(tags$div(style = "font-size = 60%;", 
+                                HTML(paste(forprint, collapse = "<br>"))),
+                       duration = 10)
+      print("New cval() evaluation")
+      print(forprint, quote = FALSE, right = FALSE)
+      })
     # cval(readRDS("./tests/testthat/current_values_1patch.rds"))
   }
   
