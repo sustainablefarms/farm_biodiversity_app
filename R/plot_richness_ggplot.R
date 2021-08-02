@@ -1,11 +1,11 @@
 # richness plot
 
-richness_plot <- function(species_richness){
+richness_plot <- function(species_richness, plotmax = 25){
   plot <- ggplot(species_richness, aes(x = category, y = E, fill = category)) +
   geom_bar(stat = "identity") +
   scale_y_continuous(expand = c(0, 0)) +
   expand_limits(
-    y = c(0, max(25, species_richness$E * 1.1))) +
+    y = c(0, max(plotmax, species_richness$E * 1.1))) +
   scale_x_discrete(position = "top") +
   scale_discrete_manual(aesthetics = "fill", values = c("#81a2b3", "#4e839c", "#81a2b3", "#4e839c")) +
   # geom_errorbar(aes(ymin = E - 2 * sqrt(V), ymax = E + 2 * sqrt(V)), width = 0.2) +

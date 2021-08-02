@@ -28,8 +28,12 @@ predictionsUI <- function(id){
     ),
     plotOutput(ns("species_richness"), height = "250px")
     ),
-    tabPanel("Another summary", "More info to put here"),
-    type = "pills"),
+    tabPanel(
+      title = tags$p("Very small species",
+                     infotooltip(title = "The expected number of species that have body weight less than 20g"),
+                     placement = "bottom"),
+      plotOutput(ns("specrich_vsmall"), height = "250px")),
+    type = "tabs"),
     fluidRow(
       column(width = 6, 
              tags$div(HTML("<plottitle>Most Likely Species</plottitle>"),
@@ -99,6 +103,7 @@ predictionsServer <- function(id,
         reference = NULL,
         species_prob_current = NULL,
         species_richness = NULL,
+        specrich_vsmall = NULL,
         toptennames = NULL,
         speciesinfo_topten = NULL,
         speciesinfo_botten = NULL)
@@ -139,8 +144,6 @@ predictionsServer <- function(id,
           isTRUE(current_values()$locationcomplete & current_values()$allpatchcomplete)
         ){
           shinyjs::show("predpanel") # reveal predictions panel
-          # showNotification("Computing Predictions")
-          # saveRDS(isolate(current_values()), file = "current_values.rds"); stop("Saving current values - app is in debug mode and will end")
           data$Xocc <- newXocc_fromselected(current_values())
           altXoccs <- alternative_Xoccs(data$Xocc)
           spec_probs <- lapply(c(list(current = data$Xocc), altXoccs), 
@@ -152,11 +155,8 @@ predictionsServer <- function(id,
             data$reference <- reference_mean
           }
           
-          species_richness_raw <- vapply(c(spec_probs, list(reference = data$reference$predictions)),
-                                         function(x){sum(x[, "median"])}, FUN.VALUE = 1.11)
-          warning("Richness ignores interactions between species. Interactions were too time consuming to include.")
-          data$species_richness <- data.frame(E = species_richness_raw,
-                     category = alternative_Xoccs_nicename(names(species_richness_raw)))
+          data$species_richness <- specrich_all(c(spec_probs, list(reference = data$reference$predictions)))
+          data$specrich_vsmall <- specrich_vsmall(c(spec_probs, list(reference = data$reference$predictions)))
           
           # relative probabilities
           data$spec_different <- todifferent(data$species_prob_current, data$reference$predictions)
@@ -173,6 +173,7 @@ predictionsServer <- function(id,
           data$species_prob_current <- NULL
           data$reference <- NULL
           data$species_richness <- NULL
+          data$specrich_vsmall <- NULL
         }
         data
       })
@@ -200,6 +201,12 @@ predictionsServer <- function(id,
       output$species_richness <- renderPlot({
         validate(need(datar()$species_richness, "Estimates"))
         richness_plot(datar()$species_richness)
+      })
+      
+      # draw species richness
+      output$specrich_vsmall <- renderPlot({
+        validate(need(datar()$specrich_vsmall, label = "Estimates"))
+        richness_plot(datar()$specrich_vsmall, plotmax = 15)
       })
       
       # modal more detail stuff

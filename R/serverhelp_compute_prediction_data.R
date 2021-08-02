@@ -73,3 +73,27 @@ alternative_Xoccs_nicename <- function(techname){
          ordered = TRUE)
   return(out)
 }
+
+#' @description Given a list of species probabilities for different alternatives, 
+#' compute the expected number of species for each alternative, 
+#' and return it in a nice data frame with an ordered factor for names.
+specrich_all <- function(spec_probs){
+  species_richness_raw <- vapply(spec_probs,
+                               function(x){sum(x[, "median"])}, FUN.VALUE = 1.11)
+  warning("Richness ignores interactions between species. Interactions were too time consuming to include.")
+  out <- data.frame(E = species_richness_raw,
+                    category = alternative_Xoccs_nicename(names(species_richness_raw)))
+  return(out)
+}
+
+#' @description Richness of v. small birds (threshold of 20g from Ikin et al 2019, Table 1)
+specrich_vsmall <- function(spec_probs){
+  vsmallspecnames <- traits$`Common Name`[traits$`Body Mass` < 20]
+  species_richness_raw <- vapply(spec_probs,
+                               function(x){sum(x[vsmallspecnames, "median"])}, FUN.VALUE = 1.11)
+  warning("Richness ignores interactions between species. Interactions were too time consuming to include.")
+  out <- data.frame(E = species_richness_raw,
+                    category = alternative_Xoccs_nicename(names(species_richness_raw)))
+  return(out)
+}
+
