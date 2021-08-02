@@ -121,12 +121,25 @@ predictionsServer <- function(id,
         predictions = species_prob_mean
       )
       
+  # reveal predictions panel - this must be an 'observe' I think.
+      # My guess at the reason for this is that output plots don't
+      # get invalidated when they are in a 'hidden' element 
+  observeEvent(current_values(), {
+    if (current_values()$locationcomplete & current_values()$allpatchcomplete){
+      shinyjs::show("predpanel")
+    } else {
+      shinyjs::hide("predpanel")
+    }
+  })
+      
+      
       # compute predictions below
       datar <- reactive({
         if(
           isTRUE(current_values()$locationcomplete & current_values()$allpatchcomplete)
         ){
           shinyjs::show("predpanel") # reveal predictions panel
+          showNotification("Computing Predictions")
           # saveRDS(isolate(current_values()), file = "current_values.rds"); stop("Saving current values - app is in debug mode and will end")
           data$Xocc <- newXocc_fromselected(current_values())
           modwXocc <- msod::supplant_new_data(model_data, data$Xocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
