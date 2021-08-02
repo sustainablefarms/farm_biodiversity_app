@@ -37,27 +37,39 @@ topnrows <- function(df, n, rankingcolumn){
   return(df[order(df[, rankingcolumn], decreasing = TRUE)[1:n], ])
 }
 
-compute_richness <- function(model_data, Xocc){
-  # richness calculations
-  # get richness
-  richness_data <- list(low = Xocc, current = Xocc, high = Xocc)
-  # richness_data[[1]]$NMdetected <- 0; richness_data[[3]]$NMdetected <- 1
-  richness_data[[1]]$WCF_500 <- 2; richness_data[[3]]$WCF_500 <- 20
-  pbapply::pboptions(type = "none")
-  richness_predictions <- lapply(richness_data, function(a){
-    mod <- msod::supplant_new_data(model_data, a, 
-                                            toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
-                                                                            model_data$XoccProcess$scale,
-                                                                            model_data$XoccColNames)})
-    specpred <- msod:::poccupancy_mostfavourablesite.jsodm_lv(mod)
-    return(E = sum(specpred[ , "median"]))
-  })
-  warning("Computations ignore interactions between species - faster and expectations may ignore these anyway")
-  richness_df <- as.data.frame(do.call(rbind, richness_predictions))
-  names(richness_df)[[1]] <- "E"
-  
-  species_richness <- richness_df
-  
-  
-  return(species_richness)
+#' @description Get species probabilities for a given Xocc
+get_spec_prob <- function(model_data, Xocc){ 
+  modwXocc <- msod::supplant_new_data(model_data, Xocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
+                                                                               model_data$XoccProcess$scale,
+                                                                               model_data$XoccColNames)})
+  species_prob <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwXocc)
+  return(species_prob)
+}
+
+#' @description Make alternative Xoccs - for use in richness comparisons, and other summaries
+alternative_Xoccs <- function(Xocc){#low and high WCF only for now
+  Xoccs <- list(lowWCF500 = Xocc,
+                highWCF500 = Xocc)
+  Xoccs$lowWCF500$WCF_500 <- 2
+  Xoccs$highWCF500$WCF_500 <- 20
+  return(Xoccs)
+}
+
+#' @description Returns nicer names for the different Xocc alternatives, and a fixed ordering
+alternative_Xoccs_nicename <- function(techname){
+  nicenames <- 
+    c(current = "Your estimate",
+      reference = "Reference estimate",
+      lowWCF500 = "Less woody canopy nearby",
+      highWCF500 = "More woody canopy nearby")
+  nameorder <- 
+    c(current = 2,
+      reference = 4,
+      lowWCF500 = 1,
+      highWCF500 = 3)
+  # return a factor of the nice names, with the ordering of the factor determined by nameorder
+  out <- factor(nicenames[techname],
+         levels = nicenames[names(sort(nameorder[techname], decreasing = TRUE))], 
+         ordered = TRUE)
+  return(out)
 }

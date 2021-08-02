@@ -139,33 +139,27 @@ predictionsServer <- function(id,
           isTRUE(current_values()$locationcomplete & current_values()$allpatchcomplete)
         ){
           shinyjs::show("predpanel") # reveal predictions panel
-          showNotification("Computing Predictions")
+          # showNotification("Computing Predictions")
           # saveRDS(isolate(current_values()), file = "current_values.rds"); stop("Saving current values - app is in debug mode and will end")
           data$Xocc <- newXocc_fromselected(current_values())
-          modwXocc <- msod::supplant_new_data(model_data, data$Xocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
-                                                                               model_data$XoccProcess$scale,
-                                                                               model_data$XoccColNames)})
-          print(modwXocc$data$Xocc)
+          altXoccs <- alternative_Xoccs(data$Xocc)
+          spec_probs <- lapply(c(list(current = data$Xocc), altXoccs), 
+                               function(x) get_spec_prob(model_data, x))
+          data$species_prob_current <- spec_probs$current
           if (!isTRUE(input$usedefaultreference)){
             data$reference <- reactiveValuesToList(reference_user)
           } else {
             data$reference <- reference_mean
           }
-          data$species_prob_current <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwXocc)
+          
+          species_richness_raw <- vapply(c(spec_probs, list(reference = data$reference$predictions)),
+                                         function(x){sum(x[, "median"])}, FUN.VALUE = 1.11)
+          warning("Richness ignores interactions between species. Interactions were too time consuming to include.")
+          data$species_richness <- data.frame(E = species_richness_raw,
+                     category = alternative_Xoccs_nicename(names(species_richness_raw)))
+          
+          # relative probabilities
           data$spec_different <- todifferent(data$species_prob_current, data$reference$predictions)
-          species_richness_raw <- rbind(compute_richness(model_data, data$Xocc),
-                                         reference = sum(data$reference$predictions[, "median"]))           # add in reference
-          species_richness_raw$category <- factor(1:4, levels = 4:1,
-                 labels = c(
-                            "Reference estimate",
-                            "More woody canopy nearby",
-                            "Your estimate",
-                   "Less woody canopy nearby"
-                   ),
-                 ordered = TRUE
-          )
-          data$species_richness <- species_richness_raw
-
           topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
           botten <- order(data$species_prob_current[, "median"], decreasing = FALSE)[1:10]
           data$toptennames <- row.names(data$species_prob_current)[topten]
