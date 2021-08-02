@@ -179,19 +179,8 @@ selectpatchServer <- function(id){
     other_attributes$patchcomplete[[clicked_record$selected_patch]] <- TRUE
     # now add a green tick
     output[[paste0("patch_num_complete_", clicked_record$selected_patch)]] <- renderUI({patchcompletesymbol})
-    
-    # close modal
-    removeModal()
-  })
-  
-  #update output values
-  observeEvent({other_attributes$patches * other_attributes$patchcomplete}, {
-    # check if the new saved values means all patches are complete
-    if (isTRUE(all(other_attributes$patchcomplete[1:other_attributes$patches]))){
-      outinfo$allpatchcomplete <- TRUE
-    } else {
-      outinfo$allpatchcomplete <- FALSE
-    }
+   
+    # update output values 
     each_patch_attribute_l <- reactiveValuesToList(each_patch_attribute)[as.character(1:other_attributes$patches)] #the order of the reactiveValues after listing is not fixed!
     outinfo$woody500m = vapply(each_patch_attribute_l, function(x) x[["woody500m"]], FUN.VALUE = 3.5)
     outinfo$woody3000m = vapply(each_patch_attribute_l, function(x) x[["woody3000m"]], FUN.VALUE = 3.5)
@@ -199,6 +188,18 @@ selectpatchServer <- function(id){
     outinfo$IsRemnant = vapply(each_patch_attribute_l, function(x) x[["IsRemnant"]], FUN.VALUE = 0)
     outinfo$year = other_attributes$year
     outinfo$patches = other_attributes$patches
+    # close modal
+    removeModal()
+  })
+  
+  #update output values more
+  observeEvent({other_attributes$patches * other_attributes$patchcomplete}, {
+    # check if the new saved values means all patches are complete
+    if (isTRUE(all(other_attributes$patchcomplete[1:other_attributes$patches]))){
+      outinfo$allpatchcomplete <- TRUE
+    } else {
+      outinfo$allpatchcomplete <- FALSE
+    }
   })
   
   outinfo #return value of the server
