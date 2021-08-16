@@ -4,6 +4,7 @@ output:
   html_document: default
 ---
 
++ patch description separated, approximately, by 50m or more from other woody vegetation
 + a notice about needing javascript if it isn't enabled
 + delete script that enables tooltip for predictionsUI - not needed now that it is loaded at start of app
 + From Richard Beggs: references require some thought. Maybe a notification when you change things, and when you set the reference.
