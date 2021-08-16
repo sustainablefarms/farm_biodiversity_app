@@ -119,9 +119,9 @@ selectpatchServer <- function(id){
       update$add_logical <- FALSE
       update$numpatches_existing <- update$numpatches_new
       other_attributes$patches <- update$numpatches_existing
-      for (i in update$add_values){ # reactiveValues doesn't allow index extraction using multiple strings, hence this for loop grr
-        each_patch_attribute[[as.character(i)]] <- defaultnewpatchvalues
-      }
+      # for (i in update$add_values){ # reactiveValues doesn't allow index extraction using multiple strings, hence this for loop grr
+      #   each_patch_attribute[[as.character(i)]] <- defaultnewpatchvalues
+      # }
       other_attributes$patchcomplete[update$add_values] <- FALSE
       outinfo$allpatchcomplete <- FALSE
     }
@@ -200,6 +200,32 @@ selectpatchServer <- function(id){
     } else {
       outinfo$allpatchcomplete <- FALSE
     }
+  })
+  
+  # Save extra values in state$values when we bookmark
+  onBookmark(function(state) {
+    state$values$update <- reactiveValuesToList(update)
+    state$values$each_patch_attribute <- reactiveValuesToList(each_patch_attribute)
+    state$values$other_attributes <- reactiveValuesToList(other_attributes)
+  })
+  
+  # Read values from state$values when we restore
+  onRestore(function(state) {
+    update$numpatches_existing <- 1 
+    update$numpatches_new      <- state$values$update$numpatches_new
+    update$add_logical         <- state$values$update$add_logical
+    update$add_values          <- state$values$update$add_values
+    update$remove_logical      <- state$values$update$remove_logical
+    update$remove_values       <- state$values$update$remove_values
+    for (i in 1:length(state$values$each_patch_attribute)){
+      patchid <- names(state$values$each_patch_attribute)[[i]]
+      each_patch_attribute[[patchid]] <- state$values$each_patch_attribute[[patchid]]
+    }
+    namlist <- names(state$values$other_attributes)
+    for (nam in namlist){
+      other_attributes[[nam]] <- state$values$other_attributes[[nam]]
+    }
+    
   })
   
   outinfo #return value of the server
