@@ -282,12 +282,21 @@ selectlocationServer <- function(id){
   
   # Save extra values in state$values when we bookmark
   onBookmark(function(state) {
-    state$values$selected_region <- selected_region()
+    # if (length(selected_region()) == 0){
+      # state$values$selected_region <- "None"
+    # } else {
+      state$values$selected_region <- selected_region()
+    # }
   })
   
   # Read values from state$values when we restore
   onRestored(function(state) {
-    selected_region(state$values$selected_region)
+    urlselected_region <- state$values$selected_region
+    if (length(urlselected_region) == 0){
+      selected_region("")
+    } else {
+      selected_region(urlselected_region)
+    }
   })
       
       outOfModule
