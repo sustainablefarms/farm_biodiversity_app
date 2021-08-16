@@ -291,6 +291,7 @@ selectlocationServer <- function(id){
   
   # Read values from state$values when we restore
   onRestored(function(state) {
+    # url converts "" values to list() values so below needed to fix it
     urlselected_region <- state$values$selected_region
     if (length(urlselected_region) == 0){
       selected_region("")
