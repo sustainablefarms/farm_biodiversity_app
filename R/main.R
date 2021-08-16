@@ -1,7 +1,7 @@
 # overarching UI and Server
 myapp <- function(){
   main_app_prep() # loads things into global environment, prepares report file
-  shinyApp(ui, server)
+  shinyApp(ui, server, enableBookmarking = "url")
 }
 
 main_app_prep <- function(){  # loads things into global environment, prepares report file
@@ -28,7 +28,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
 }
 
 # UI
-ui <- function(){
+ui <- function(request){
   out <- fluidPage(
     waiter::use_waiter(), 
     waiter::waiter_preloader(),
@@ -184,6 +184,20 @@ server <- function(input, output, session) {
       }, deleteFile = FALSE, quoted = FALSE)
     })
   }
+  
+  # Automatically bookmark every time an input changes
+  setBookmarkExclude(c(".clientValue-default-plotlyCrosstalkOpts",
+                       "plotly_click-region_map",
+                       "plotly_relayout-region_map",
+                       "plotly_afterplot-A",
+                       "plotly_afterplot-region_map",
+                       "plotly_hover-region_map"))
+  observe({
+    reactiveValuesToList(input)
+    session$doBookmark()
+  })
+  # Update the query string
+  onBookmarked(updateQueryString)
 
 } # end server
 

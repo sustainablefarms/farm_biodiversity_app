@@ -48,6 +48,7 @@ selectlocationServer <- function(id){
     id,
     function(input, output, session){
       # set up reactive values
+      selected_region <- reactiveVal("")
       data <- reactiveValues(
         climate = NULL,
         polygons = NULL,
@@ -115,9 +116,9 @@ selectlocationServer <- function(id){
         
         # observe clicks on the region plot
         if (FALSE & isTRUE(getOption("shiny.testmode"))){
-          selected_region <- reactive({data$points$label[input$fake_region_number]})
+          selected_region(data$points$label[input$fake_region_number])
         } else {
-        selected_region <- reactive({
+        observe({
           sel_reg <- ""
           if(!is.null(data$points)){
             click_region <- plotly::event_data(
@@ -125,8 +126,8 @@ selectlocationServer <- function(id){
               source = "region_map"
             )$pointNumber + 1 # Note: plotly uses Python-style indexing, hence +1
             sel_reg <- data$points$label[click_region]
-          } 
-          sel_reg
+          }
+          selected_region(sel_reg)
         })
         }
         outOfModule <- reactive({
@@ -277,6 +278,16 @@ selectlocationServer <- function(id){
     climate_modal(ns,
 		  "The winter precipitation is the average precipitation of the coldest quarter from 1960 - 1990 estimated by",
                   linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
+  })
+  
+  # Save extra values in state$values when we bookmark
+  onBookmark(function(state) {
+    state$values$selected_region <- selected_region()
+  })
+  
+  # Read values from state$values when we restore
+  onRestored(function(state) {
+    selected_region(state$values$selected_region)
   })
       
       outOfModule
