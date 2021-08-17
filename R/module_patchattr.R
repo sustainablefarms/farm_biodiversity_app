@@ -204,6 +204,16 @@ patchattr_Server <- function(id){
                                               sep = " = ", collapse = ", "), duration = 0.5)
                      })
       }
+      
+      setBookmarkExclude(c("IsRemnant", 
+                           "fromlatlon",
+                           "pc_woody3000m",
+                           "pc_woody500m",
+                           "getwoodycanopy",
+                           "noisy_miner",
+                           "yearforcanopy",
+                           "lon",
+                           "lat"))
       return(specifiedvals)
     })
   }

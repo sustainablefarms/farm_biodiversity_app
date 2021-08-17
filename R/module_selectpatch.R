@@ -246,7 +246,11 @@ selectpatchServer <- function(id){
   onRestore(function(state) {
     namlist <- names(state$values$each_patch_attribute)
     for (nam in namlist){
-      each_patch_attribute[[nam]] <- state$values$each_patch_attribute[[nam]]
+      # process to correct null state values to NA
+      attrlist <- lapply(state$values$each_patch_attribute[[nam]],
+                         function(x) if(is.null(x)){return(NA)}else{return(x)})
+      each_patch_attribute[[nam]] <- attrlist
+      
     }
     namlist <- names(state$values$other_attributes)
     for (nam in namlist){
