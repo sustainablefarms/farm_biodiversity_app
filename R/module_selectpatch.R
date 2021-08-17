@@ -91,6 +91,7 @@ selectpatchServer <- function(id){
         IsRemnant = NA,
         year = NA
       )
+      patchchangeevent <- reactiveVal(0) #  increment whenever the patch number of patch complete changes
       
   ## FARM
   
@@ -113,8 +114,13 @@ selectpatchServer <- function(id){
       })
       # add orange tick
       lapply(update$add_values, function(a){
-	output[[paste0("patch_num_complete_", a)]] <- renderUI({
-		patchincompletewarn})
+        if (isTruthy(other_attributes$patchcomplete[[a]])){
+          output[[paste0("patch_num_complete_", a)]] <- renderUI({
+            patchcompletesymbol})
+        } else {
+          output[[paste0("patch_num_complete_", a)]] <- renderUI({
+            patchincompletewarn})
+        }
       })
       update$add_logical <- FALSE
       update$numpatches_existing <- update$numpatches_new
@@ -122,8 +128,6 @@ selectpatchServer <- function(id){
       # for (i in update$add_values){ # reactiveValues doesn't allow index extraction using multiple strings, hence this for loop grr
       #   each_patch_attribute[[as.character(i)]] <- defaultnewpatchvalues
       # }
-      other_attributes$patchcomplete[update$add_values] <- FALSE
-      outinfo$allpatchcomplete <- FALSE
     }
   })
 
@@ -141,10 +145,6 @@ selectpatchServer <- function(id){
       update$remove_logical <- FALSE
       update$numpatches_existing <- update$numpatches_new
       other_attributes$patches <- update$numpatches_existing
-      for (i in update$remove_values){ #can't index multiple parts of a reactiveValues object at once, hence the for loop
-        each_patch_attribute[[as.character(i)]] <- defaultnewpatchvalues
-      }
-      other_attributes$patchcomplete[update$remove_values] <- NA
     }
   })
 
@@ -186,14 +186,17 @@ selectpatchServer <- function(id){
     outinfo$woody3000m = vapply(each_patch_attribute_l, function(x) x[["woody3000m"]], FUN.VALUE = 3.5)
     outinfo$noisy_miner = vapply(each_patch_attribute_l, function(x) x[["noisy_miner"]], FUN.VALUE  = 0)
     outinfo$IsRemnant = vapply(each_patch_attribute_l, function(x) x[["IsRemnant"]], FUN.VALUE = 0)
-    outinfo$year = other_attributes$year
-    outinfo$patches = other_attributes$patches
+    patchchangeevent(1 + patchchangeevent())
     # close modal
     removeModal()
   })
   
   #update output values more
-  observeEvent({other_attributes$patches * other_attributes$patchcomplete}, {
+  observeEvent(other_attributes$patches, {patchchangeevent(1 + patchchangeevent())})
+  observeEvent(sum(other_attributes$patchcomplete, na.rm = TRUE), {patchchangeevent(1 + patchchangeevent())})
+  observeEvent(patchchangeevent(), {
+    outinfo$year = other_attributes$year
+    outinfo$patches = other_attributes$patches
     # check if the new saved values means all patches are complete
     if (isTRUE(all(other_attributes$patchcomplete[1:other_attributes$patches]))){
       outinfo$allpatchcomplete <- TRUE
