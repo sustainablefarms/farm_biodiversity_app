@@ -148,7 +148,7 @@ selectlocationServer <- function(id){
             locinfo$MinTColdMonth.YfA <- new_data_mean$MinTColdMonth.YfA
             locinfo$PrecColdQ.YfA <- new_data_mean$PrecColdQ.YfA
             locinfo$PrecSeasonality.YfA <- new_data_mean$PrecSeasonality.YfA
-            if (length(locinfo$selected_region) > 0){
+            if (isTruthy(locinfo$selected_region)){
               locinfo$locationcomplete <- TRUE
             } else {
               locinfo$locationcomplete <- FALSE
@@ -182,7 +182,7 @@ selectlocationServer <- function(id){
   ## CLIMATE buttons and plots
 
   output$show_maxtemp <- renderUI({
-    if(length(outOfModule()$selected_region) > 0){
+    if(isTruthy(outOfModule()$locationcomplete)){
       actionButton2(
         inputId = ns("show_maxtemp_modal"),
         label = HTML(paste0(
@@ -196,7 +196,7 @@ selectlocationServer <- function(id){
   })
 
   output$show_mintemp <- renderUI({
-    if(length(outOfModule()$selected_region) > 0){
+    if(isTruthy(outOfModule()$locationcomplete)){
       actionButton2(
         inputId = ns("show_mintemp_modal"),
         label = HTML(paste0(
@@ -210,7 +210,7 @@ selectlocationServer <- function(id){
   })
 
   output$show_precip_warm <- renderUI({
-    if(length(outOfModule()$selected_region) > 0){
+    if(isTruthy(outOfModule()$locationcomplete)){
       actionButton2(
         inputId = ns("show_precip_warm_modal"),
         label = HTML(paste0(
@@ -224,7 +224,7 @@ selectlocationServer <- function(id){
   })
 
   output$show_precip_cold <- renderUI({
-    if(length(outOfModule()$selected_region) > 0){
+    if(isTruthy(outOfModule()$locationcomplete)){
       actionButton2(
         inputId = ns("show_precip_cold_modal"),
         label = HTML(paste0(
