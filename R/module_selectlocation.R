@@ -119,15 +119,16 @@ selectlocationServer <- function(id){
           selected_region(data$points$label[input$fake_region_number])
         } else {
         observe({
-          sel_reg <- ""
-          if(!is.null(data$points)){
+          if(!is.null(data$points)){ # if data points supplied (currently they always are)
             click_region <- plotly::event_data(
               event = "plotly_click",
               source = "region_map"
             )$pointNumber + 1 # Note: plotly uses Python-style indexing, hence +1
-            sel_reg <- data$points$label[click_region]
+            if (isTruthy(click_region)){
+              if (is.numeric(click_region) && (click_region > 0)){ #if something is selected then update region
+                selected_region(data$points$label[click_region])
+            }}
           }
-          selected_region(sel_reg)
         })
         }
         outOfModule <- reactive({
@@ -153,6 +154,8 @@ selectlocationServer <- function(id){
             } else {
               locinfo$locationcomplete <- FALSE
             }
+            showNotification(paste("Long term climate updated:", locinfo$selected_region))
+            
             locinfo
         }) %>% throttle(1000)
         
@@ -290,7 +293,7 @@ selectlocationServer <- function(id){
   })
   
   # Read values from state$values when we restore
-  onRestored(function(state) {
+  onRestore(function(state) {
     # url converts "" values to list() values so below needed to fix it
     urlselected_region <- state$values$selected_region
     if (length(urlselected_region) == 0){
