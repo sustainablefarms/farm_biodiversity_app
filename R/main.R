@@ -199,6 +199,7 @@ server <- function(input, output, session) {
                        "plotly_relayout-region_map",
                        "plotly_afterplot-A",
                        "plotly_relayout-A",
+                       "plotly_hover-A",
                        "plotly_afterplot-region_map",
                        "plotly_hover-region_map"))
   
