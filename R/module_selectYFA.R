@@ -26,16 +26,11 @@ selectYfAServer <- function(id, locationinfo){
         value = NULL
       )
       observeEvent(locationinfo()$AnnPrec.lt, {
-        if (isTruthy(yfabookmark$usebookmark)){
-          updateSliderInput(inputId = "AnnPrec.YfA",
-                            value = yfabookmark$value)
-          yfabookmark$usebookmark <- FALSE
-        } else {
 	validate(need(locationinfo()$AnnPrec.lt, ""))
 	updateSliderInput(inputId = "AnnPrec.YfA",
 			  value = locationinfo()$AnnPrec.lt)
-        }
-      }, priority = 100)
+	showNotification(paste("YfA from lt:", locationinfo()$AnnPrec.lt))
+      }, priority = 100, ignoreInit = TRUE, ignoreNULL = TRUE)
       
       outOfModule <- reactive({
         out <- list()
@@ -49,15 +44,7 @@ selectYfAServer <- function(id, locationinfo){
                 ")")
       })
       
-      onBookmark(function(state) {
-        state$values$AnnPrec.YfA <- outOfModule()$AnnPrec.YfA
-      })
-      
-      # Read values from state$values when we restore
-      onRestored(function(state) {
-        yfabookmark$usebookmark <- TRUE
-        yfabookmark$value <- state$values$AnnPrec.YfA
-      })
+      # setBookmarkExclude(c("AnnPrec.YfA"))
       
       outOfModule
     }
