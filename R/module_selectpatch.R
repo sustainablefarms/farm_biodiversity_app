@@ -203,7 +203,8 @@ selectpatchServer <- function(id){
   })
   
   
-  setBookmarkExclude(c(paste0("patch_number_", 1:maxpatchnum),
+  setBookmarkExclude(c("patch_selector",
+		       paste0("patch_number_", 1:maxpatchnum),
                        "choose_patch_attributes_execute"))
   
   # Save extra values in state$values when we bookmark
