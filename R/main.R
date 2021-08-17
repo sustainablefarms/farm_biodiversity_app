@@ -70,7 +70,11 @@ ui <- function(request){
       },
       if (isTRUE(getOption("shiny.testmode"))){
         actionButton("viewcvals", "View Current Values", class = "download_badge")
+      },
+      if (isTRUE(getOption("shiny.testmode"))){
+        actionButton("viewfrompatch", "View Current Values from Patch", class = "download_badge")
       }
+      
     ),
     column(width = 1),
     column(width = 6,
@@ -173,6 +177,19 @@ server <- function(input, output, session) {
     })
     output$cvals <- renderPrint({
       cval()
+    })
+    observeEvent(input$viewfrompatch, {
+      showModal(
+        modalDialog(
+          verbatimTextOutput("frompatch"),
+          title = "Current Values from Patch",
+          size = "l",
+          easyClose = TRUE,
+        )
+      )
+    })
+    output$frompatch <- renderPrint({
+      reactiveValuesToList(frompatch)
     })
     
     #species images

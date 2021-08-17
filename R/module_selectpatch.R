@@ -14,7 +14,10 @@ selectpatchUI <- function(id){
 			    HTML("&ensp;"),
 	     htmlOutput(outputId = ns("patch_num_complete_1"), inline = TRUE)),
           class = "patch_badge"),
-        div(id = "placeholder")
+        div(id = "placeholder"),
+	     if (isTRUE(getOption("shiny.testmode"))){
+	       actionButton(ns("viewoutinfo"), "View Current Out Info", class = "download_badge")
+	     }
       ))
 }
 
@@ -100,7 +103,15 @@ selectpatchServer <- function(id){
 
   ## PATCH BUTTONS
   # warning sign for patch number 1
-  output[["patch_num_complete_1"]] <- renderUI({patchincompletewarn})
+  output[[paste0("patch_num_complete_", 1)]] <- renderUI({
+    if (isTruthy(other_attributes$patchcomplete[[1]])){
+      uiout <- patchcompletesymbol
+    } else {
+      uiout <- patchincompletewarn
+    }
+    uiout
+  })
+  # output[["patch_num_complete_1"]] <- renderUI({patchincompletewarn})
 
   # add 'patch' buttons
   observeEvent(update$add_values, {
@@ -180,12 +191,6 @@ selectpatchServer <- function(id){
     # now add a green tick
     output[[paste0("patch_num_complete_", clicked_record$selected_patch)]] <- renderUI({patchcompletesymbol})
    
-    # update output values 
-    each_patch_attribute_l <- reactiveValuesToList(each_patch_attribute)[as.character(1:other_attributes$patches)] #the order of the reactiveValues after listing is not fixed!
-    outinfo$woody500m = vapply(each_patch_attribute_l, function(x) x[["woody500m"]], FUN.VALUE = 3.5)
-    outinfo$woody3000m = vapply(each_patch_attribute_l, function(x) x[["woody3000m"]], FUN.VALUE = 3.5)
-    outinfo$noisy_miner = vapply(each_patch_attribute_l, function(x) x[["noisy_miner"]], FUN.VALUE  = 0)
-    outinfo$IsRemnant = vapply(each_patch_attribute_l, function(x) x[["IsRemnant"]], FUN.VALUE = 0)
     patchchangeevent(1 + patchchangeevent())
     # close modal
     removeModal()
@@ -195,14 +200,35 @@ selectpatchServer <- function(id){
   observeEvent(other_attributes$patches, {patchchangeevent(1 + patchchangeevent())})
   observeEvent(sum(other_attributes$patchcomplete, na.rm = TRUE), {patchchangeevent(1 + patchchangeevent())})
   observeEvent(patchchangeevent(), {
-    outinfo$year = other_attributes$year
-    outinfo$patches = other_attributes$patches
+    showNotification(paste("Updating outinfo. Patches =", other_attributes$patches))
+    outinfo$year <- other_attributes$year
+    outinfo$patches <- other_attributes$patches
+    # update patch specific info
+    each_patch_attribute_l <- reactiveValuesToList(each_patch_attribute)[as.character(1:other_attributes$patches)] #the order of the reactiveValues after listing is not fixed!
+    outinfo$woody500m = vapply(each_patch_attribute_l, function(x) x[["woody500m"]], FUN.VALUE = 3.5)
+    outinfo$woody3000m = vapply(each_patch_attribute_l, function(x) x[["woody3000m"]], FUN.VALUE = 3.5)
+    outinfo$noisy_miner = vapply(each_patch_attribute_l, function(x) x[["noisy_miner"]], FUN.VALUE  = 0)
+    outinfo$IsRemnant = vapply(each_patch_attribute_l, function(x) x[["IsRemnant"]], FUN.VALUE = 0)
     # check if the new saved values means all patches are complete
     if (isTRUE(all(other_attributes$patchcomplete[1:other_attributes$patches]))){
       outinfo$allpatchcomplete <- TRUE
     } else {
       outinfo$allpatchcomplete <- FALSE
     }
+  })
+  
+  observeEvent(input$viewoutinfo, {
+    showModal(
+      modalDialog(
+        verbatimTextOutput(ns("outinfo")),
+        title = "Current Out Values",
+        size = "l",
+        easyClose = TRUE,
+      )
+    )
+  })
+  output$outinfo <- renderPrint({
+    reactiveValuesToList(outinfo)
   })
   
   
