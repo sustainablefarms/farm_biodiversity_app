@@ -186,6 +186,22 @@ server <- function(input, output, session) {
     })
   }
   
+  setBookmarkExclude(c("overallhelpfake",
+                       "moredetailfake",
+                       "viewcvals",
+                       "overallhelp",
+                       "waiter_shown",
+                       "introfake",
+                       "downloadreportfake",
+                       "intro",
+                       ".clientValue-default-plotlyCrosstalkOpts",
+                       "plotly_click-region_map",
+                       "plotly_relayout-region_map",
+                       "plotly_afterplot-A",
+                       "plotly_relayout-A",
+                       "plotly_afterplot-region_map",
+                       "plotly_hover-region_map"))
+  
   # Automatically bookmark every time an input changes
   observe({
     reactiveValuesToList(input)

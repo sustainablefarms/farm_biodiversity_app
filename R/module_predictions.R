@@ -254,6 +254,9 @@ predictionsServer <- function(id,
           })
       }
       
+      setBookmarkExclude(c("savetoreference",
+                           "moredetail"))
+      
       reactive(input$usedefaultreference)
     })
 }

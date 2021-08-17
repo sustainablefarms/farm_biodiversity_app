@@ -282,12 +282,11 @@ selectlocationServer <- function(id){
                   linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
   })
   
-  setBookmarkExclude(c(".clientValue-default-plotlyCrosstalkOpts",
-                       "plotly_click-region_map",
-                       "plotly_relayout-region_map",
-                       "plotly_afterplot-A",
-                       "plotly_afterplot-region_map",
-                       "plotly_hover-region_map"))
+  setBookmarkExclude(c("show_maxtemp_modal",
+                       "plot_points_waiter_hidden",
+                       "show_precip_warm_modal",
+                       "show_mintemp_modal",
+                       "show_precip_cold_modal"))
   # Save extra values in state$values when we bookmark
   onBookmark(function(state) {
     # if (length(selected_region()) == 0){
