@@ -202,24 +202,20 @@ selectpatchServer <- function(id){
     }
   })
   
+  
+  setBookmarkExclude(paste0("patch_number_", 1:maxpatchnum))
+  
   # Save extra values in state$values when we bookmark
   onBookmark(function(state) {
-    state$values$update <- reactiveValuesToList(update)
     state$values$each_patch_attribute <- reactiveValuesToList(each_patch_attribute)
     state$values$other_attributes <- reactiveValuesToList(other_attributes)
   })
   
   # Read values from state$values when we restore
   onRestore(function(state) {
-    update$numpatches_existing <- 1 
-    update$numpatches_new      <- state$values$update$numpatches_new
-    update$add_logical         <- state$values$update$add_logical
-    update$add_values          <- state$values$update$add_values
-    update$remove_logical      <- state$values$update$remove_logical
-    update$remove_values       <- state$values$update$remove_values
-    for (i in 1:length(state$values$each_patch_attribute)){
-      patchid <- names(state$values$each_patch_attribute)[[i]]
-      each_patch_attribute[[patchid]] <- state$values$each_patch_attribute[[patchid]]
+    namlist <- names(state$values$each_patch_attribute)
+    for (nam in namlist){
+      each_patch_attribute[[nam]] <- state$values$each_patch_attribute[[nam]]
     }
     namlist <- names(state$values$other_attributes)
     for (nam in namlist){
