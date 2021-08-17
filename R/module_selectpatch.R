@@ -219,7 +219,7 @@ selectpatchServer <- function(id){
   
   # Save extra values in state$values when we bookmark
   onBookmark(function(state) {
-    state$values$each_patch_attribute <- reactiveValuesToList(each_patch_attribute)
+    state$values$each_patch_attribute <- reactiveValuesToList(each_patch_attribute)[as.character(1:other_attributes$patches)]
     state$values$other_attributes <- reactiveValuesToList(other_attributes)
   })
   
