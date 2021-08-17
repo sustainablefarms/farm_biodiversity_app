@@ -217,6 +217,7 @@ selectpatchServer <- function(id){
     }
   })
   
+	if (isTRUE(getOption("shiny.testmode"))){
   observeEvent(input$viewoutinfo, {
     showModal(
       modalDialog(
@@ -230,7 +231,7 @@ selectpatchServer <- function(id){
   output$outinfo <- renderPrint({
     reactiveValuesToList(outinfo)
   })
-  
+	}
   
   setBookmarkExclude(c("patch_selector",
 		       paste0("patch_number_", 1:maxpatchnum),
