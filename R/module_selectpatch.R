@@ -23,10 +23,10 @@ patch_modal <- function(
   attributes = NULL,
   ns #the namespace function
 ){
-  if(is.null(attributes$woody500m) | is.na(attributes$woody500m)){attributes$woody500m <- round(new_data_mean$WCF_500/0.5) * 0.5}
-  if(is.null(attributes$woody3000m) | is.na(attributes$woody3000m)){attributes$woody3000m <- round(new_data_mean$WCF_3000/0.5) * 0.5}
-  if(is.null(attributes$noisy_miner) | is.na(attributes$noisy_miner)){attributes$noisy_miner <- TRUE}
-  if(is.null(attributes$IsRemnant) | is.na(attributes$IsRemnant)){attributes$IsRemnant <- TRUE}
+  if(!isTruthy(attributes$woody500m)){attributes$woody500m <- round(new_data_mean$WCF_500/0.5) * 0.5}
+  if(!isTruthy(attributes$woody3000m)){attributes$woody3000m <- round(new_data_mean$WCF_3000/0.5) * 0.5}
+  if(!isTruthy(as.integer(attributes$noisy_miner))){attributes$noisy_miner <- TRUE}
+  if(!isTruthy(as.integer(attributes$IsRemnant))){attributes$IsRemnant <- TRUE}
   showModal(
     modalDialog(
       # the following enables bootstrap 3's inbuilt tooltips
