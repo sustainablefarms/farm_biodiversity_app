@@ -29,7 +29,6 @@ selectYfAServer <- function(id, locationinfo){
 	validate(need(locationinfo()$AnnPrec.lt, ""))
 	updateSliderInput(inputId = "AnnPrec.YfA",
 			  value = locationinfo()$AnnPrec.lt)
-	showNotification(paste("YfA from lt:", locationinfo()$AnnPrec.lt))
       }, priority = 100, ignoreInit = TRUE, ignoreNULL = TRUE)
       
       outOfModule <- reactive({

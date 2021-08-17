@@ -154,7 +154,6 @@ selectlocationServer <- function(id){
             } else {
               locinfo$locationcomplete <- FALSE
             }
-            showNotification(paste("Long term climate updated:", locinfo$selected_region))
             
             locinfo
         }) %>% throttle(1000)

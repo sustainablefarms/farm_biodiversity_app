@@ -15,9 +15,6 @@ selectpatchUI <- function(id){
 	     htmlOutput(outputId = ns("patch_num_complete_1"), inline = TRUE)),
           class = "patch_badge"),
         div(id = "placeholder"),
-	     if (isTRUE(getOption("shiny.testmode"))){
-	       actionButton(ns("viewoutinfo"), "View Current Out Info", class = "download_badge")
-	     }
       ))
 }
 
@@ -200,7 +197,6 @@ selectpatchServer <- function(id){
   observeEvent(other_attributes$patches, {patchchangeevent(1 + patchchangeevent())})
   observeEvent(sum(other_attributes$patchcomplete, na.rm = TRUE), {patchchangeevent(1 + patchchangeevent())})
   observeEvent(patchchangeevent(), {
-    showNotification(paste("Updating outinfo. Patches =", other_attributes$patches))
     outinfo$year <- other_attributes$year
     outinfo$patches <- other_attributes$patches
     # update patch specific info
@@ -216,22 +212,6 @@ selectpatchServer <- function(id){
       outinfo$allpatchcomplete <- FALSE
     }
   })
-  
-	if (isTRUE(getOption("shiny.testmode"))){
-  observeEvent(input$viewoutinfo, {
-    showModal(
-      modalDialog(
-        verbatimTextOutput(ns("outinfo")),
-        title = "Current Out Values",
-        size = "l",
-        easyClose = TRUE,
-      )
-    )
-  })
-  output$outinfo <- renderPrint({
-    reactiveValuesToList(outinfo)
-  })
-	}
   
   setBookmarkExclude(c("patch_selector",
 		       paste0("patch_number_", 1:maxpatchnum),
