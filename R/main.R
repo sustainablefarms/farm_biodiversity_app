@@ -203,12 +203,6 @@ server <- function(input, output, session) {
   }
   
   # Automatically bookmark every time an input changes
-  setBookmarkExclude(c(".clientValue-default-plotlyCrosstalkOpts",
-                       "plotly_click-region_map",
-                       "plotly_relayout-region_map",
-                       "plotly_afterplot-A",
-                       "plotly_afterplot-region_map",
-                       "plotly_hover-region_map"))
   observe({
     reactiveValuesToList(input)
     session$doBookmark()
