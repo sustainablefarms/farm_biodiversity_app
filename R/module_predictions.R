@@ -254,8 +254,23 @@ predictionsServer <- function(id,
           })
       }
       
+      # bookmarking settings
       setBookmarkExclude(c("savetoreference",
                            "moredetail"))
+      observe({
+        reactiveValuesToList(reference_user)
+        input$savetoreference
+        session$doBookmark()
+      })
+      onBookmark(function(state) {
+        state$values$reference_user <- reactiveValuesToList(reference_user)
+      })
+      onRestore(function(state) {
+        namlist <- names(state$values$reference_user)
+        for (nam in namlist){
+          reference_user[[nam]] <- state$values$reference_user[[nam]]
+        }
+      })
       
       reactive(input$usedefaultreference)
     })
