@@ -1,7 +1,7 @@
 # overarching UI and Server
 myapp <- function(){
   main_app_prep() # loads things into global environment, prepares report file
-  shinyApp(ui, server, enableBookmarking = "url")
+  shinyApp(ui, server)
 }
 
 main_app_prep <- function(){  # loads things into global environment, prepares report file
@@ -25,6 +25,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   dir.create(paste0(apptempdir,"/www/"))
   stopifnot(file.copy("./www/Sustainable Farms logo RGB.png", paste0(apptempdir, "/www/"), overwrite = TRUE)) 
   stopifnot(file.copy(paste0("./www/", speciesinfo$imgfilename), paste0(apptempdir, "/www/"), overwrite = TRUE)) 
+  enableBookmarking(store = "url")
 }
 
 # UI
