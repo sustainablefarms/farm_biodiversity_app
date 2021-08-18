@@ -256,19 +256,27 @@ predictionsServer <- function(id,
       
       # bookmarking settings
       setBookmarkExclude(c("savetoreference",
-                           "moredetail"))
+                           "moredetail",
+                           "usedefaultreference"))
       observe({
-        reactiveValuesToList(reference_user)
         input$savetoreference
+        input$usedefaultreference
         session$doBookmark()
       })
       onBookmark(function(state) {
-        state$values$reference_user <- reactiveValuesToList(reference_user)
+        if (isTruthy(reference_user$region)){
+          state$values$userreferencesaved <- TRUE
+        } else {
+          state$values$userreferencesaved <- FALSE
+        }
       })
-      onRestore(function(state) {
-        namlist <- names(state$values$reference_user)
-        for (nam in namlist){
-          reference_user[[nam]] <- state$values$reference_user[[nam]]
+      onRestored(function(state) {
+        if (isTruthy(state$values$userreferencesaved)){
+          showNotification("Sorry. Did not load user defined reference values: not supported by server.", 
+                           type = "warning")
+          shinyWidgets::updateMaterialSwitch(session = session,
+                                             inputId = "usedefaultreference",
+                                             value = TRUE)
         }
       })
       
