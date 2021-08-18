@@ -77,6 +77,10 @@ patchnum_Server <- function(id, update, maxpatchnum){
                        "n_patches",
                        "choose_n_patches_execute"))
   
+  observe({
+    update$numpatches_new
+    session$doBookmark()
+  })
   # Save extra values in state$values when we bookmark
   onBookmark(function(state) {
     # state$values$update <- reactiveValuesToList(update)

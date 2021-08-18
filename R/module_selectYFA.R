@@ -43,7 +43,11 @@ selectYfAServer <- function(id, locationinfo){
                 ")")
       })
       
-      # setBookmarkExclude(c("AnnPrec.YfA"))
+      # bookmarking
+      observe({
+        outOfModule()
+        session$doBookmark()
+      })
       
       outOfModule
     }

@@ -217,6 +217,13 @@ selectpatchServer <- function(id){
 		       paste0("patch_number_", 1:maxpatchnum),
                        "choose_patch_attributes_execute"))
   
+  observe({
+    reactiveValuesToList(outinfo)
+    reactiveValuesToList(each_patch_attribute)
+    reactiveValuesToList(other_attributes)
+    session$doBookmark()
+  })
+  
   # Save extra values in state$values when we bookmark
   onBookmark(function(state) {
     state$values$each_patch_attribute <- reactiveValuesToList(each_patch_attribute)[as.character(1:other_attributes$patches)]

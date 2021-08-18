@@ -25,7 +25,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   dir.create(paste0(apptempdir,"/www/"))
   stopifnot(file.copy("./www/Sustainable Farms logo RGB.png", paste0(apptempdir, "/www/"), overwrite = TRUE)) 
   stopifnot(file.copy(paste0("./www/", speciesinfo$imgfilename), paste0(apptempdir, "/www/"), overwrite = TRUE)) 
-  enableBookmarking(store = "url")
+  enableBookmarking(store = "server")
 }
 
 # UI
@@ -205,10 +205,6 @@ server <- function(input, output, session) {
                        "plotly_hover-region_map"))
   
   # Automatically bookmark every time an input changes
-  observe({
-    reactiveValuesToList(input)
-    session$doBookmark()
-  })
   # Update the query string
   onBookmarked(updateQueryString)
 
