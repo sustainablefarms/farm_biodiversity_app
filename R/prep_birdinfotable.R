@@ -26,3 +26,8 @@ load_birdinfotable <- function(){
   speciesinfo <<- infotable
   return(speciesinfo)
 }
+
+# get a list of the photographers
+# gsub(" 2.*", "", imgs$copyrightholder) %>%
+# unique() %>%
+# paste(collapse = ", ")
