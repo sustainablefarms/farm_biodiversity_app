@@ -27,3 +27,4 @@ Suggests:
     testthat
 Encoding: UTF-8
 ByteCompile: true
+RoxygenNote: 7.1.1
