@@ -33,6 +33,7 @@ ui <- function(request){
   out <- fluidPage(
     waiter::use_waiter(), 
     waiter::waiter_preloader(),
+    tags$head(includeHTML("./www/google-analytics.html")),
     includeCSS("./www/base.css"),
     # the following enables bootstrap 3's inbuilt tooltips
     tags$script("$(function () {
