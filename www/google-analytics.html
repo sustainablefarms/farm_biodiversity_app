@@ -8,9 +8,13 @@
   gtag('config', 'G-C7HN26FLS5');
 
   $(document).ready(function(){
-    $(":button").mouseenter('click', function(e) {
+    $(":button").on('click', function(e) {
        alert($(this).text());
-       $(this).css("background-color","blue");
+       ga('send', 'event', 'button', $(this).text());
+    });
+    $(".btn").on('click', function(e) {
+       alert($(this).text());
+       ga('send', 'event', 'button', $(this).text());
     });
   });
 
