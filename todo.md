@@ -3,6 +3,7 @@ output:
   pdf_document: default
   html_document: default
 ---
++ set wvc for patch based on region
 + Nearby % woody vegetation cover = 2%
 + Nearby % woody vegetation cover = 20%
 + From Richard Beggs: references require some thought. Maybe a notification when you change things, and when you set the reference.
