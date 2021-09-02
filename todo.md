@@ -3,9 +3,18 @@ output:
   pdf_document: default
   html_document: default
 ---
-+ set wvc for patch based on region
+High Priority:
++ In the report include the species richness estimates.
 + Nearby % woody vegetation cover = 2%
 + Nearby % woody vegetation cover = 20%
++ Noisy Miner image from birdlife (using server) rather than going to ALA
++ Cleaner use and description for references
++ types of farms in More Information. Could get from the 2010 Lindenmayer book? Talks about wheat sheep belt, and more
+
+
+
+Regular Priority:
++ set wvc for patch based on region
 + From Richard Beggs: references require some thought. Maybe a notification when you change things, and when you set the reference.
 + climate_modal() -> modal_climateplot()
 + onespecwords() -> onespec_occdesc()
@@ -13,11 +22,6 @@ output:
 + vulnerablespeciesUI() -> avulnerablespeciesUI()
 
 + event tracking:
-  + bird life links
-  + download csv
-  + download report
-  + view more details
-  + use the reference
   + track all inputs
     + get lat lon
     + change rainfall
@@ -25,13 +29,7 @@ output:
     + number of patches
     + patch attributes
 
-+ url snapshots/bookmarking
-+ unify versions in the app and in the DESCRIPTION
-+ on main waiting page display the sf logo with the spinner
-+ debounce for get in latlon
-+ saved values for latlon and whether it is in use
 + prettier reference to the tree cover page
-+ Noisy Miner image from birdlife (using server) rather than going to ALA
 + when calling use_waiter specify the spinner(s) used
 
 # Inputs
@@ -47,7 +45,6 @@ output:
 ## More Help
 + species list? describe species
   + species removed
-+ types of farms in More Information. Could get from the 2010 Lindenmayer book? Talks about wheat sheep belt, and more
 + links to box gum grassy woodlands
 + acknowledgements
   + field team
@@ -66,7 +63,6 @@ output:
 
 
 # Outputs: More Detail
-In the report include the species richness estimates.
 
 # Overall
 + track usage: talk to Alice on this
