@@ -10,11 +10,14 @@
   $(document).ready(function(){
     $(":button").on('click', function(e) {
        alert($(this).text());
-       ga('send', 'event', 'button', $(this).text());
+       //ga('send', 'event', 'button', $(this).text());
     });
     $(".btn").on('click', function(e) {
        alert($(this).text());
-       ga('send', 'event', 'button', $(this).text());
+       //ga('send', 'event', 'button', $(this).text());
+    });
+    $(".material-switch").on('change', function(){
+       alert($(this).children("span").text());
     });
   });
 
