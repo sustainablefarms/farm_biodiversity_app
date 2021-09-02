@@ -13,7 +13,7 @@ header-includes:
   \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
   \usepackage{tikz}
   \usetikzlibrary{calc}
-  \graphicspath{{www/}}  #to get report to build with images change this to ../www/
+  \graphicspath{{../www/}}  #to get report to build with images change this to ../www/
 ---
 
 \begin{tikzpicture}[overlay, remember picture]
@@ -236,7 +236,23 @@ plot_allspeciesprob(data$reference$predictions) +
 ```
 \end{center}
 
+\clearpage
+# Expected Number of Species
 
+Below presents estimates of the average number of species occupying the `r if (current_values$patches > 1){"patches"} else {"patch"}` specified `Your Estimate'.
+Also shown are estimates of the average number of species if `r if (current_values$patches > 1){"all patches have"} else {"the patch has"}` woody cover within 500m equal to 2% ('Less woody canopy nearby') or equal to 20% ('More woody canopy nearby').
+The estimated average number of species in the reference scenario ('Reference') is also shown.
+
+Due to the species in `r appname`, these estimates should be viewed as an estimate of the average number of sedentary, common, and land-based bird species occupying the `r if (current_values$patches > 1){"patches"} else {"patch"}`.
+According to the statistical model behind these estimates for a single patch, the actual number of species could vary by 8 from the estimated average.
+
+\begin{center}
+```{r specrich,  fig.height = 2, fig.width = 8, out.width = "80%"}
+plot <- richness_plot(data$species_richness)
+plot
+
+```
+\end{center}
 
 
 
