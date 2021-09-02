@@ -3,7 +3,6 @@ patchattr_UI <- function(id, attributes){
   ns <- NS(id)
   tagList(
         waiter::use_waiter(spinners = 1),
-   includeScript("./www/eventtracks.html"),
    # remnant and noisy miners first
    fluidRow(
      column(7, 

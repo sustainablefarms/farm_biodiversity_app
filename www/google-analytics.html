@@ -9,16 +9,19 @@
 
   $(document).ready(function(){
     $(":button").on('click', function(e) {
-       alert($(this).text());
+       alert($(this).text() + " main");
        //ga('send', 'event', 'button', $(this).text());
     });
     $(".btn").on('click', function(e) {
-       alert($(this).text());
+       alert($(this).text() + " main2");
        //ga('send', 'event', 'button', $(this).text());
     });
     $(".material-switch").on('change', function(){
-       alert($(this).children("span").text() + Boolean($(this).children("input:checked").val()));
+       alert($(this).children("span").text() + " " + Boolean($(this).children("input:checked").val()) + " main3");
        //ga('send', 'event', 'switch', $(this).children("span").text(), Boolean($(this).children("input:checked").val()));
+    });
+    $("#patch-patchattr-getwoodycanopy").on('click', function(){
+       alert($(this).text() + " special");
     });
   });
 
