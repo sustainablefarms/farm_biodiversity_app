@@ -9,22 +9,25 @@
 
   $(document).ready(function(){
     $(":button, .btn").on('click', function(e) {
-       alert($(this).text() + " main0");
-       //ga('send', 'event', 'button', $(this).text());
+       //alert($(this).text() + " main0");
+       ga('send', 'event', 'button', $(this).text());
     });
     $(".material-switch").on('change', function(){
-       alert($(this).children("span").text() + " " + Boolean($(this).children("input:checked").val()) + " main3");
-       //ga('send', 'event', 'switch', $(this).children("span").text(), Boolean($(this).children("input:checked").val()));
+       //alert($(this).children("span").text() + " " + Boolean($(this).children("input:checked").val()) + " main3");
+       ga('send', 'event', 'switch', $(this).children("span").text(), Boolean($(this).children("input:checked").val()));
     });
   });
   $(document).on('click', "#patch-patchattr-getwoodycanopy", function(){
-     alert($(this).text() + " special");
+     //alert($(this).text() + " special");
+     ga('send', 'event', 'button', "Get woody canopy from lat lon");
   });
   $(document).on('click', ".birdlifeprofile a.cpyrhtlink", function(){
-     alert($(this).text() + " special");
+     //alert($(this).text() + " special");
+     ga('send', 'event', 'hyperlink', "Clicked link to birdlifephotography");
   });
   $(document).on('click', ".birdlifeprofile a.imglink", function(){
-     alert($(this).text() + " special imglink");
+     //alert($(this).text() + " special imglink");
+     ga('send', 'event', 'hyperlink', "Clicked link to birdlife profile");
   });
   //$(document).on('click', "a", function(){
   //   $(this).attr("href") == "http://anuwald.science/tree"
