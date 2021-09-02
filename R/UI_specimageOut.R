@@ -3,14 +3,17 @@
 specimageOut <- function(specinfo, height = "200px"){
 	 cpyrht <- tags$div(style = "font-size: 70%",
 	                    linknewtab(href = paste0("https://birdlifephotography.org.au/index.php/show-image?return=search&single&id=", specinfo$birdlife_id),
-                                     HTML(paste0("&copy;", gsub("birdlifephotography.org.au", "", specinfo$copyrightholder)))))
+                                     HTML(paste0("&copy;", gsub("birdlifephotography.org.au", "", specinfo$copyrightholder))),
+				     class = "cpyrhtlink"))
 
      out <- tags$div(specinfo$species,
+		     class = "birdlifeprofile",
 		 infotooltip(title = specinfo$story),
                   style = "float: left; margin: 5px",
                   tags$br(),
         linknewtab(
           href = specinfo$url,
+	  class = "imglink",
           style="text-align: center",
           tags$img(`data-src` = gsub(".*/data/birdlifeimgs/", "", specinfo$imgfilename),
 		   src = "",
