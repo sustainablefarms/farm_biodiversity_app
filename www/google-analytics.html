@@ -17,7 +17,8 @@
        //ga('send', 'event', 'button', $(this).text());
     });
     $(".material-switch").on('change', function(){
-       alert($(this).children("span").text());
+       alert($(this).children("span").text() + Boolean($(this).children("input:checked").val()));
+       //ga('send', 'event', 'switch', $(this).children("span").text(), Boolean($(this).children("input:checked").val()));
     });
   });
 
