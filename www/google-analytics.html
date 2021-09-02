@@ -8,12 +8,8 @@
   gtag('config', 'G-C7HN26FLS5');
 
   $(document).ready(function(){
-    $(":button").on('click', function(e) {
-       alert($(this).text() + " main");
-       //ga('send', 'event', 'button', $(this).text());
-    });
-    $(".btn").on('click', function(e) {
-       alert($(this).text() + " main2");
+    $(":button, .btn").on('click', function(e) {
+       alert($(this).text() + " main0");
        //ga('send', 'event', 'button', $(this).text());
     });
     $(".material-switch").on('change', function(){
@@ -21,12 +17,9 @@
        //ga('send', 'event', 'switch', $(this).children("span").text(), Boolean($(this).children("input:checked").val()));
     });
   });
-    $(document).on('click', "#patch-patchattr-getwoodycanopy", function(){
-       alert($(this).text() + " special");
-    });
-    $(document).on('click', "#pred-savetoreference", function(){
-       alert($(this).text() + " special");
-    });
+  $(document).on('click', "#patch-patchattr-getwoodycanopy", function(){
+     alert($(this).text() + " special");
+  });
 
 </script>
 
