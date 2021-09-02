@@ -20,10 +20,13 @@
        alert($(this).children("span").text() + " " + Boolean($(this).children("input:checked").val()) + " main3");
        //ga('send', 'event', 'switch', $(this).children("span").text(), Boolean($(this).children("input:checked").val()));
     });
-    $("#patch-patchattr-getwoodycanopy").on('click', function(){
+  });
+    $(document).on('click', "#patch-patchattr-getwoodycanopy", function(){
        alert($(this).text() + " special");
     });
-  });
+    $(document).on('click', "#pred-savetoreference", function(){
+       alert($(this).text() + " special");
+    });
 
 </script>
 
