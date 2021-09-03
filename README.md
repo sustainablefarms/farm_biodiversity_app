@@ -10,6 +10,7 @@
 * [Testing](#testing)
 * [Running Modules](#running-modules)
 * [Shiny Options](#shiny-options)
+* [Google Analytics Tracking](#google-analytics-tracking)
 
 <!-- vim-markdown-toc -->
 ## Introduction
@@ -126,4 +127,27 @@ options(
 
 The first two options stops shiny from launching a browser window, and makes sure shiny always hosts pages visible to the port 7214.
 The option `shiny.testmode` is for testing purposes. Set to `TRUE` to get buttons that allows downloading covariate values and prediction values from the app (and maybe more things).
+
+
+## Google Analytics Tracking
+The app includes Google Analytics tracking for each button pressed, each switch toggled, and each outlink. This is probably overdoing it.
+Selected region, longitude and latitude are *not* tracked.
+
+Button clicks in Google Analytics generally have the 'button' category and have event_label equal to their unique input id
+
+Settings for this are all in www/google-analytics.html. It uses gtag.js (hence the use of the function gtag rather than ga). 
+The current ID for tracking is for the release version. The development version has a different measurement ID: G-C7HN26FLS5
+
+Particularly interesting events to watch in the analytics are:
+Report downloads: button > event_category=button > event_label = pred-downloadreport
+Table downloads: button > event_category=button > event_label = pred-downloaddata
+View more detail: button > event_category=button > event_label = pred-moredetail
+Get data from satellite: button > event_category=button > event_label = patch-patchattr-getwoodycanopy
+Updated reference: button > event_category=button > event_label = pred-savetoreference
+
+Clicked to birdlife: outlink > event_category=outlink > event_label = to_birdlife_profile
+Clicked to birdlife photography: outlink > event_category=outlink > event_label = to_birdlife_photography
+Clicked to wald tree map: outlink > event_category=outlink > event_label = to_wald_tree
+
+Non-default reference used: switch > event_category=switch > event_label = pred-usedefaultreference > value = FALSE
 
