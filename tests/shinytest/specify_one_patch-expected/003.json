@@ -33,6 +33,9 @@
     "patch-patchattr-pc_woody500m": 14,
     "patch-patchattr-yearforcanopy": "",
     "plotly_afterplot-region_map": "\"location-plot_points\"",
+    "pred-moredetail": 0,
+    "pred-savetoreference": 0,
+    "pred-usedefaultreference": true,
     "viewcvals": 0,
     "yfa-AnnPrec.YfA": 708
   },
@@ -1063,14 +1066,6 @@
       "src": "[image data sha1: 973f16c34d0d34126a28af055c5fbc98c86df9c2]",
       "alt": "An image of noisy miners",
       "height": "100px"
-    },
-    "pred": {
-      "message": "",
-      "call": "NULL",
-      "type": [
-        "shiny.silent.error",
-        "validation"
-      ]
     },
     "yfa-annprec.lt.region": {
       "message": "",

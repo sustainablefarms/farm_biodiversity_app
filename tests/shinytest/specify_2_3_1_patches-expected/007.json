@@ -27,6 +27,9 @@
     "patch-patch_selector-choose_n_patches_execute": 0,
     "patch-patch_selector-n_patches": "3",
     "plotly_afterplot-region_map": "\"location-plot_points\"",
+    "pred-moredetail": 0,
+    "pred-savetoreference": 0,
+    "pred-usedefaultreference": true,
     "viewcvals": 0,
     "yfa-AnnPrec.YfA": 708
   },
@@ -1063,14 +1066,6 @@
       "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-patch_selector-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>3<\/h3><\/button>\n<\/div>",
       "deps": [
 
-      ]
-    },
-    "pred": {
-      "message": "",
-      "call": "NULL",
-      "type": [
-        "shiny.silent.error",
-        "validation"
       ]
     },
     "yfa-annprec.lt.region": {

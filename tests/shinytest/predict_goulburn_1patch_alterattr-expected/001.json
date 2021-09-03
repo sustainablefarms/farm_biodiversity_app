@@ -72,8 +72,7 @@
             },
             "mapping": {
               "x": null,
-              "y": null,
-              "geometry": "geometry"
+              "y": null
             },
             "range": {
               "left": 0,
@@ -1952,7 +1951,7 @@
       ]
     },
     "pred-species_richness": {
-      "src": "[image data sha1: 687c07d1fa783a99306434ed17442c296a229091]",
+      "src": "[image data sha1: 5d7edb2d0988eb098cdfcfcde43134e0c1214ebb]",
       "width": 481,
       "height": 250,
       "alt": "Plot object",
@@ -1986,7 +1985,7 @@
             "mapping": {
               "x": "E",
               "y": "category",
-              "fill": "category"
+              "fill": "E"
             },
             "range": {
               "left": 5.47945205479452,

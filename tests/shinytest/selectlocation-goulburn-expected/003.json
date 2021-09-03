@@ -28,6 +28,9 @@
     "patch-patch_selector-choose_n_patches": 0,
     "plotly_afterplot-region_map": "\"location-plot_points\"",
     "plotly_click-region_map": "[{\"curveNumber\":0,\"pointNumber\":0,\"x\":149.603897167433,\"y\":-34.5156485191709}]",
+    "pred-moredetail": 0,
+    "pred-savetoreference": 0,
+    "pred-usedefaultreference": true,
     "viewcvals": 0,
     "yfa-AnnPrec.YfA": 897
   },
@@ -58,8 +61,7 @@
             },
             "mapping": {
               "x": null,
-              "y": null,
-              "geometry": "geometry"
+              "y": null
             },
             "range": {
               "left": 0,
@@ -1079,13 +1081,13 @@
       ]
     },
     "location-show_precip_cold": {
-      "html": "<button id=\"location-show_precip_cold_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Winter<br>Preciptiation<h3>238mm<\/h3><\/button>",
+      "html": "<button id=\"location-show_precip_cold_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Winter<br>Precipitation<h3>238mm<\/h3><\/button>",
       "deps": [
 
       ]
     },
     "location-show_precip_warm": {
-      "html": "<button id=\"location-show_precip_warm_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Summer<br>Preciptiation<h3>217mm<\/h3><\/button>",
+      "html": "<button id=\"location-show_precip_warm_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Summer<br>Precipitation<h3>217mm<\/h3><\/button>",
       "deps": [
 
       ]
@@ -1100,14 +1102,6 @@
       "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-patch_selector-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>1<\/h3><\/button>\n<\/div>",
       "deps": [
 
-      ]
-    },
-    "pred": {
-      "message": "",
-      "call": "NULL",
-      "type": [
-        "shiny.silent.error",
-        "validation"
       ]
     },
     "yfa-annprec.lt.region": "(long term average for Goulburn Region: 897mm)"
