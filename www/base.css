@@ -142,12 +142,17 @@ plottitle {
 
 .badge:hover {
   color: white;
-  background-color: #81a2b3;
+  background-color: #8bb095;
 }
 
 .badge_small:hover {
   color: white;
-  background-color: #81a2b3;
+  background-color: #8bb095;
+}
+
+.badge_tiny:hover {
+  color: white;
+  background-color: #8bb095;
 }
 
 .patch_badge:hover {
