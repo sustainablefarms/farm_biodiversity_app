@@ -1,5 +1,9 @@
 rfiles <- list.files("./R", full.names = TRUE)
-appfile <- "app.R"
+rootfiles <- c(
+  "app.R",
+  "DESCRIPTION",
+  "NAMESPACE"
+)
 
 wwwfiles1 <- list.files("./www", pattern = "^lowres.*", full.names = TRUE) # birdlife images
 wwwfiles2 <- paste0("./www/", c(
@@ -23,5 +27,5 @@ c("nicecovarnames.csv",
 "model_data.rds",
 "traits.rds"))
 
-files <- c(appfile, datafiles, rfiles, wwwfiles1, wwwfiles2)
+files <- c(rootfiles, datafiles, rfiles, wwwfiles1, wwwfiles2)
 cat(files, file = "./data/filemanifest.txt", sep = "\n")

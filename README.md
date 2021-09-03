@@ -50,7 +50,7 @@ If the app doesn't run as expected, logs kept by shinyapps.io can be accessed fr
 Once the app is running correctly on shinyapps.io, deploy the app under the release name, which is currently 'bird_checker'.
 
 ```
-rsconnect::deployApp(appName = "bird_checker")
+rsconnect::deployApp(appName = "bird_checker", appFileManifest = "./data/filemanifest.txt")
 ```
 
 ## Reactive Flow

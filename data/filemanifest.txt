@@ -1,4 +1,6 @@
 app.R
+DESCRIPTION
+NAMESPACE
 ./data/nicecovarnames.csv
 ./data/report.Rmd
 ./data/alaimgs_final/c4c37912-34ea-420b-9c77-65b59a8c9391.jpg
