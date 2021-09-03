@@ -4,16 +4,17 @@ output:
   html_document: default
 ---
 High Priority:
-+ In the report include the species richness estimates.
 + Nearby % woody vegetation cover = 2%
 + Nearby % woody vegetation cover = 20%
 + Noisy Miner image from birdlife (using server) rather than going to ALA
 + Cleaner use and description for references
 + types of farms in More Information. Could get from the 2010 Lindenmayer book? Talks about wheat sheep belt, and more
++ a notification when reference is updated, and when things change.
 
 
 
 Regular Priority:
++ make ggplot in more detail and reports same color scheme as summary online
 + set wvc for patch based on region
 + From Richard Beggs: references require some thought. Maybe a notification when you change things, and when you set the reference.
 + climate_modal() -> modal_climateplot()
@@ -22,19 +23,15 @@ Regular Priority:
 + vulnerablespeciesUI() -> avulnerablespeciesUI()
 
 + event tracking:
-  + track all inputs
-    + get lat lon
+  + track more inputs 
     + change rainfall
-    + location selected
     + number of patches
-    + patch attributes
 
 + prettier reference to the tree cover page
 + when calling use_waiter specify the spinner(s) used
 
 # Inputs
 + woody canopy in raw areas, not percentages
-+ debounce for lat and lon
 
 # Help
 + birds on farms imagery for splash page
@@ -65,7 +62,6 @@ Regular Priority:
 # Outputs: More Detail
 
 # Overall
-+ track usage: talk to Alice on this
 + Authorship: Martin, Albert, Dan?
 + for phone have a visible scroll bar or something that shows users there is more down the page, or smaller pages
 + checkbox checked color make in keeping with color scheme
