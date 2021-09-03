@@ -5,7 +5,7 @@ actionButton2 <- function(inputId, label, class = "badge", icon = NULL, width = 
   tags$button(id = inputId,
     style = if (!is.null(width))paste0("width: ", validateCssUnit(width), ";"),
     type = "button",
-    class = paste("action-button", class), # btn btn-default # these override css
+    class = paste("btn-default action-button", class), # btn btn-default # these override css
     `data-val` = value,
     list(validateIcon(icon), label),
     ...)
