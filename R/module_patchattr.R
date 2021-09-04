@@ -5,7 +5,7 @@ patchattr_UI <- function(id, attributes){
         waiter::use_waiter(spinners = 1),
    # remnant and noisy miners first
    fluidRow(
-     column(7, 
+     column(6, 
       fluidRow(
         inlinecheckBoxInput(ns("IsRemnant"),
             value = if (attributes$IsRemnant){TRUE} else {NULL},
@@ -41,17 +41,18 @@ patchattr_UI <- function(id, attributes){
               )
             )
           )),
-        column(5, 
+        column(6, #Noisy Miner photo
+	  # first the image 
           linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
                     style = "float: left",
-                    imageOutput(ns("nmimage"), height = "100px", inline = TRUE)),
-          style = "font-size: 70%",
-          linknewtab(href = "https://images.ala.org.au/image/details?imageId=c4c37912-34ea-420b-9c77-65b59a8c9391", "Creator: Joe"),
-          tags$br(),
-          linknewtab(href="https://creativecommons.org/licenses/by-nc-sa/3.0/",
-                     tags$img(src = "https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png",
-                              alt = "CC BY-NC-SA 3.0",
-                              height = "20px")
+		    tags$img(src = "lowres-cb59057b0d4ef2a9ce75c19a128ca2ca.jpg",
+		             alt = "Noisy Miner photo",
+		             height = "100px",
+			     inline = TRUE)),
+	  tags$span("A Noisy Miner", tags$br()),
+          tags$span(style = "font-size: 60%",
+		    linknewtab(href = "https://birdlifephotography.org.au/index.php/show-image?return=search&single&id=19910",
+	                      HTML("&copy;Con Boekel 2016 birdlifephotography.org.au"))
           )
         )
       ),
@@ -122,13 +123,6 @@ patchattr_Server <- function(id){
     function(input, output, session){
       print(input)
       ns <- session$ns
-      # noisy miner image
-      output$nmimage <- renderImage({
-        list(src = "./data/alaimgs_final/c4c37912-34ea-420b-9c77-65b59a8c9391.jpg",
-        alt = "An image of noisy miners",
-        height = "100px")
-      }, deleteFile = FALSE, quoted = FALSE)
-
       
       # from lat lon work
       wait <- waiter::Waiter$new(id = ns("getwoodycanopy"), 
