@@ -10,6 +10,8 @@ High Priority:
 + Cleaner use and description for references
 + types of farms in More Information. Could get from the 2010 Lindenmayer book? Talks about wheat sheep belt, and more
 + a notification when reference is updated, and when things change.
++ a warning that javascript is required
++ tooltips that work on phones
 
 
 
