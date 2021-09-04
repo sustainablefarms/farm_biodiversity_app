@@ -9,7 +9,7 @@
 
 
 //following is specific custom events
-  $(document).on('click', ":button, .btn", function(e) {
+  $(document).on('click', "#pred-moredetail, #pred-downloaddata, #pred-downloadreport, #pred-savetoreference", function(e) {
       gtag('event', 'button', {
                               'event_category': 'button',
                               'event_label': $(this).attr("id")});
