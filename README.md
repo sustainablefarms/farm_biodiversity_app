@@ -130,15 +130,7 @@ The option `shiny.testmode` is for testing purposes. Set to `TRUE` to get button
 
 
 ## Google Analytics Tracking
-The app includes Google Analytics tracking for each button pressed, each switch toggled, and each outlink. This is probably overdoing it.
-Selected region, longitude and latitude are *not* tracked.
-
-Button clicks in Google Analytics generally have the 'button' category and have event_label equal to their unique input id
-
-Settings for this are all in www/google-analytics.html. It uses gtag.js (hence the use of the function gtag rather than ga). 
-The current ID for tracking is for the release version. The development version has a different measurement ID: G-C7HN26FLS5
-
-Particularly interesting events to watch in the analytics are:
+The app includes Google Analytics tracking for 
 Report downloads: button > event_category=button > event_label = pred-downloadreport
 Table downloads: button > event_category=button > event_label = pred-downloaddata
 View more detail: button > event_category=button > event_label = pred-moredetail
@@ -150,4 +142,12 @@ Clicked to birdlife photography: outlink > event_category=outlink > event_label 
 Clicked to wald tree map: outlink > event_category=outlink > event_label = to_wald_tree
 
 Non-default reference used: switch > event_category=switch > event_label = pred-usedefaultreference > value = FALSE
+
+Selected region, longitude and latitude are *not* tracked.
+
+Settings for this are all in www/google-analytics.html. 
+It uses gtag.js (hence the use of the function gtag rather than ga). 
+The current ID for tracking is for the release version. 
+The development version has a different measurement ID: G-C7HN26FLS5
+
 
