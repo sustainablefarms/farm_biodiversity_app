@@ -163,6 +163,7 @@ predictionsServer <- function(id,
       shinyjs::disable("usedefaultreference") #disable turning off default reference
       observeEvent(input$savetoreference, {
         shinyjs::enable("usedefaultreference")#enabling turning off default reference now that a reference is set
+	shinyWidgets::updateMaterialSwitch(session = session, inputId = "usedefaultreference", value = FALSE)
         reference_user$Xocc <- datar()$Xocc
         reference_user$region <- current_values()$selected_region
         reference_user$predictions <- datar()$species_prob_current
