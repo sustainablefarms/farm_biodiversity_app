@@ -14,9 +14,15 @@ $(document).ready(function(){
                               'event_label': $(this).attr("id")});
   });
   
-  $("##pred-downloaddata, #pred-downloadreport").on('click', function(e) {
-      gtag('event', 'downloadmore', {
-                              'event_category': 'button',
+  $("#pred-downloaddata").on('click', function(e) {
+      gtag('event', 'downloadcsv', {
+                              'event_category': 'download',
+                              'event_label': $(this).attr("id")});
+  });
+  
+  $("#pred-downloadreport").on('click', function(e) {
+      gtag('event', 'downloadreport', {
+                              'event_category': 'download',
                               'event_label': $(this).attr("id")});
   });
   
@@ -37,10 +43,10 @@ $(document).ready(function(){
 });
 
 // the fetching of woody canopy needs special handling as too many other buttons and is only generated part way through page interaction. (Selecting by id doesn't seem to work in the childSelector argument of 'on'). There is matching message sender in the patch attribute module
-Shiny.addCustomMessageHandler('gotwoodycanopyfromlatlon', function(nothing) {
-      gtag('event', 'gotlatlonfromsatellite', {
+Shiny.addCustomMessageHandler('getwoodycanopyfromlatlon', function(nothing) {
+      gtag('event', 'getlatlonfromsatellite', {
                               'event_category': 'button',
-                              'event_label': 'gotlatlonfromsatellite'
+                              'event_label': 'getlatlonfromsatellite'
       });
 });
 

@@ -139,7 +139,7 @@ patchattr_Server <- function(id){
         input$getwoodycanopy
         wait$show()}) %>% debounce(1000) # to stop heaps of clicking doing things, but show waiter from first click
       observeEvent(getwoodycanopy_d(), {
-        session$sendCustomMessage("gotwoodycanopyfromlatlon", "nothing")
+        session$sendCustomMessage("getwoodycanopyfromlatlon", "nothing")
         latlonerror("")
         wcfs <- tryCatch(
           {
