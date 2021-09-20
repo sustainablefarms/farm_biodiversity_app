@@ -130,20 +130,23 @@ The option `shiny.testmode` is for testing purposes. Set to `TRUE` to get button
 
 
 ## Google Analytics Tracking
-The app includes Google Analytics tracking for 
-Report downloads: button > event_category=button > event_label = pred-downloadreport
-Table downloads: button > event_category=button > event_label = pred-downloaddata
-View more detail: button > event_category=button > event_label = pred-moredetail
-Get data from satellite: button > event_category=button > event_label = patch-patchattr-getwoodycanopy
-Updated reference: button > event_category=button > event_label = pred-savetoreference
-
-Clicked to birdlife: outlink > event_category=outlink > event_label = to_birdlife_profile
-Clicked to birdlife photography: outlink > event_category=outlink > event_label = to_birdlife_photography
-Clicked to wald tree map: outlink > event_category=outlink > event_label = to_wald_tree
-
-Non-default reference used: switch > event_category=switch > event_label = pred-usedefaultreference > value = FALSE
-
+The app includes Google Analytics tracking for the activities in the following table. 
+Event Name and Event Category should both be available to Google Analytics. 
 Selected region, longitude and latitude are *not* tracked.
+
+|Description   | Event Name | Event Category |
+|--------------|------------|----------------|
+|View more detail| viewmoredetail | button |
+|Download the csv| downloadcsv | download |
+Download the report| downloadreport | download
+Update reference| updatereference | button
+Switch off/on default reference | switchreference | switch, value is FALSE when default turned off (I think).
+Request to get woody canopy from WALD's satellite data | getlatlonfromsatellite | button
+When new predictions made | predictionsmade | server
+Click a link to birdlife photography | link_birdlifephotography | outbound_link
+Click a link to a birdlife profile page | link_birdlifeprofile | outbound_link
+Click a link to WALD's tree map viewing page | link_waldtree | outbound_link
+
 
 Settings for this are all in www/google-analytics.html. 
 It uses gtag.js (hence the use of the function gtag rather than ga). 
