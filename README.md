@@ -132,7 +132,7 @@ The option `shiny.testmode` is for testing purposes. Set to `TRUE` to get button
 ## Google Analytics Tracking
 The app includes Google Analytics tracking for the activities in the following table. 
 Event Name and Event Category should both be available to Google Analytics. 
-Selected region, longitude and latitude are *not* tracked.
+Selected longitude and latitude are *not* tracked, however the URL is saved by some automatic Google Analytics tracking, and the URL contains the region, planting (vs remnant), Noisy Miner occupancy, nearby woody cover and regional woody cover.
 
 |Description   | Event Name | Event Category |
 |--------------|------------|----------------|
