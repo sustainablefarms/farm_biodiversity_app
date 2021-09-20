@@ -44,6 +44,14 @@ Shiny.addCustomMessageHandler('gotwoodycanopyfromlatlon', function(nothing) {
       });
 });
 
+// So does server-side calculation of predictions
+Shiny.addCustomMessageHandler('predictionsmade', function(nothing) {
+      gtag('event', 'predictionsmade', {
+                              'event_category': 'server',
+                              'event_label': 'predictionsmade'
+      });
+});
+
 //the following search for 'a' objects with the right start to the hyperref
   $(document).on('click', "a[href^='https://birdlifephotography.org.au']", function(){
       gtag('event', 'link_birdlifephotography', {

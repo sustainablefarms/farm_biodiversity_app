@@ -149,6 +149,7 @@ predictionsServer <- function(id,
           data$speciesinfo_topten <- speciesinfo[row.names(data$species_prob_current)[topten], ]
           data$speciesinfo_botten <- speciesinfo[row.names(data$species_prob_current)[botten], ]
           # saveRDS(isolate(reactiveValuesToList(data)), file = "data.rds"); stop("Saving data - app will end now")
+          session$sendCustomMessage("predictionsmade", "nothing")
         } else {
           # data <- lapply(data, function(x) NULL)
           data$Xocc <- NULL
