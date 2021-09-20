@@ -34,12 +34,6 @@ $(document).ready(function(){
       });
   });
   
-  $("#patch-patchattr-getwoodycanopy").on('click', function(){
-      gtag('event', 'getlatlonfromsatellite', {
-                              'event_category': 'button',
-                              'event_label': $(this).attr("id")
-      });
-  });
 });
 
 // the fetching of woody canopy needs special handling as too many other buttons and is only generated part way through page interaction. (Selecting by id doesn't seem to work in the childSelector argument of 'on'). There is matching message sender in the patch attribute module
@@ -52,8 +46,8 @@ Shiny.addCustomMessageHandler('gotwoodycanopyfromlatlon', function(nothing) {
 
 //the following search for 'a' objects with the right start to the hyperref
   $(document).on('click', "a[href^='https://birdlifephotography.org.au']", function(){
-      gtag('event', 'outlink', {
-                              'event_category': 'outlink',
+      gtag('event', 'link_birdlifephotography', {
+                              'event_category': 'outbound_link',
                               'event_label': 'to_birdlife_photography',
                               'label' : $(this).attr("href")
       });
@@ -61,8 +55,8 @@ Shiny.addCustomMessageHandler('gotwoodycanopyfromlatlon', function(nothing) {
   
   
   $(document).on('click', "a[href^='https://birdlife.org.au']", function(){
-      gtag('event', 'outlink', {
-                              'event_category': 'outlink',
+      gtag('event', 'link_birdlifeprofile', {
+                              'event_category': 'outbound_link',
                               'event_label': 'to_birdlife_profile',
                               'label' : $(this).attr("href")
       });
@@ -70,8 +64,8 @@ Shiny.addCustomMessageHandler('gotwoodycanopyfromlatlon', function(nothing) {
   
   
   $(document).on('click', "a[href='http://anuwald.science/tree']", function(){
-      gtag('event', 'outlink', {
-                              'event_category': 'outlink',
+      gtag('event', 'link_waldtree', {
+                              'event_category': 'outbound_link',
                               'event_label': 'to_wald_tree',
                               'label' : $(this).attr("href")
       });
