@@ -7,36 +7,68 @@
 
   gtag('config', 'G-DW3G9MGL96', {cookie_flags: 'SameSite=None;Secure'});
 
-
-//following is specific custom events
-  $(document).on('click', "#pred-moredetail, #pred-downloaddata, #pred-downloadreport, #pred-savetoreference", function(e) {
-      gtag('event', 'button', {
+$(document).ready(function(){
+  $("#pred-moredetail").on('click', function(e) {
+      gtag('event', 'viewmoredetail', {
                               'event_category': 'button',
                               'event_label': $(this).attr("id")});
   });
   
+  $("#pred-moredetail, #pred-downloaddata").on('click', function(e) {
+      gtag('event', 'downloadmore', {
+                              'event_category': 'button',
+                              'event_label': $(this).attr("id")});
+  });
   
-  $(document).on('change', ".material-switch", function(){
-      gtag('event', 'switch', {
+  $("#pred-savetoreference").on('click', function(e) {
+      gtag('event', 'updatereference', {
+                              'event_category': 'button',
+                              'event_label': $(this).attr("id")});
+  });
+  
+  $("#pred-usedefaultreference").on('change', function(){
+      gtag('event', 'switchreference', {
                               'event_category': 'switch',
                               'event_label': $(this).attr("id"),
                               'value': Boolean($(this).children("input:checked").val())
       });
   });
-  $(document).on('click', "a[href^='https://birdlifephotography.org.au'", function(){
+  
+  $("#patch-patchattr-getwoodycanopy").on('click', function(){
+      gtag('event', 'getlatlonfromsatellite', {
+                              'event_category': 'button',
+                              'event_label': $(this).attr("id")
+      });
+  });
+});
+
+// the fetching of woody canopy needs special handling as too many other buttons and is only generated part way through page interaction. (Selecting by id doesn't seem to work in the childSelector argument of 'on'). There is matching message sender in the patch attribute module
+Shiny.addCustomMessageHandler('gotwoodycanopyfromlatlon', function(nothing) {
+      gtag('event', 'gotlatlonfromsatellite', {
+                              'event_category': 'button',
+                              'event_label': 'gotlatlonfromsatellite'
+      });
+});
+
+//the following search for 'a' objects with the right start to the hyperref
+  $(document).on('click', "a[href^='https://birdlifephotography.org.au']", function(){
       gtag('event', 'outlink', {
                               'event_category': 'outlink',
                               'event_label': 'to_birdlife_photography',
                               'label' : $(this).attr("href")
       });
   });
-  $(document).on('click', "a[href^='https://birdlife.org.au'", function(){
+  
+  
+  $(document).on('click', "a[href^='https://birdlife.org.au']", function(){
       gtag('event', 'outlink', {
                               'event_category': 'outlink',
                               'event_label': 'to_birdlife_profile',
                               'label' : $(this).attr("href")
       });
   });
+  
+  
   $(document).on('click', "a[href='http://anuwald.science/tree']", function(){
       gtag('event', 'outlink', {
                               'event_category': 'outlink',
