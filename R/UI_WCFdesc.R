@@ -25,8 +25,8 @@ tags$b("This same method is available to you - use the toggle below.")),
 tags$p("Typical foliage cover for Australian temperate woodlands is",
        linknewtab(href = "https://www.publish.csiro.au/book/5230", "(Hnatiuk et al., 2010)"),
       tags$ul(
-	     tags$li("30% - 70% when crowns are slightly separated or just touching"),
-	     tags$li("10% - 30% when crowns are clearly separated.")
+	     tags$li("30% - 70% when crowns are slightly separate or just touching"),
+	     tags$li("10% - 30% when crowns are clearly separate.")
 	     )),
 
 tags$p("The estimates of foliage cover can differ between years due to water availability, and disturbances or management (such as fire or planting more trees)",
