@@ -60,7 +60,7 @@ patchattr_UI <- function(id, attributes){
 	# WCF
         # 500m WCF
         tags$div(
-          tags$html(tags$span("Nearby Woody Cover: Foliage cover within 500m of patch centre (% area)"),
+          tags$html(tags$span("Nearby Woody Cover: tall foliage cover within 500m of patch centre (% area)"),
                     infotooltip(title = WCFdesc2())),
           sliderInput(label = NULL,
             inputId = ns("pc_woody500m"),
