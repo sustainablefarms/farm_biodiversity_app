@@ -44,7 +44,8 @@ ui <- function(request){
     HTML("<div class='header'>"),
     fluidRow(
       column(width = 2,
-             tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px")),    
+             linknewtab(href = "http://sustainablefarms.org.au/",
+                        tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px"))),    
     column(width = 10, offset = 0, 
       tags$span(class = 'main', appname),
       tags$span(style = "white-space:nowrap;", class = 'subtitle', "By Kassel Hingee & Martin Westgate.",
