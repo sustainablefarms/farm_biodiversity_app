@@ -60,12 +60,8 @@ patchattr_UI <- function(id, attributes){
 	# WCF
         # 500m WCF
         tags$div(
-          tags$html(tags$span("Nearby Woody Canopy: Woody vegetation canopy within 500m of patch centre (% area)"),
-                    infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area within 500m of the patch centre.",
-"Tree canopy inside the patch is included.",
-                                         WCFdesc(),
-                                            tags$p("The values available for selection were chosen to cover 90% of our data.")))
-                    ),
+          tags$html(tags$span("Nearby Woody Cover: Foliage cover within 500m of patch centre (% area)"),
+                    infotooltip(title = WCFdesc2())),
           sliderInput(label = NULL,
             inputId = ns("pc_woody500m"),
             min = 2, max = 20, step = 0.5,
