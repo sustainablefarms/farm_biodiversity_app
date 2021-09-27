@@ -4,8 +4,6 @@ output:
   html_document: default
 ---
 High Priority:
-+ Nearby % woody vegetation cover = 2%
-+ Nearby % woody vegetation cover = 20%
 + Cleaner use and description for references
 + types of farms in More Information. Could get from the 2010 Lindenmayer book? Talks about wheat sheep belt, and more
 + a notification when reference is updated, and when things change.

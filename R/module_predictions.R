@@ -11,8 +11,8 @@ predictionsUI <- function(id){
            HTML("<plottitle>Expected Number of Species</plottitle>"),
            infotooltip(title = paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
                                      "<br><br>",
-                                     "The top bar is the number of species we expect if there is only 1.5 hectares of woody vegetation canopy within 500m of every patch centre.",
-                                     "The third bar is the number of species we expect if there is 15 hectares of woody vegetation canopy within 500m of every patch centre.",
+                                     "The top bar is the number of species we expect if there is 2% (1.5ha) nearby woody cover for every patch.",
+                                     "The third bar is the number of species we expect if there is 20% (15ha) nearby woody cover for every patch.",
                                      "The final bar is the number of species we expect from your reference estimates.",
                                      "<br><br>Each species was assigned an occupancy probability equal to the maximum of all patches (we use the maximum as we expect occupancy between patches to be highly correlated)."
            ),
@@ -135,9 +135,9 @@ predictionsServer <- function(id,
           species_richness_raw$category <- factor(1:4, levels = 4:1,
                  labels = c(
                             "Reference estimate",
-                            "More woody canopy nearby",
+                            "Nearby woody cover = 20%",
                             "Your estimate",
-                   "Less woody canopy nearby"
+                   "Nearby woody cover = 2%"
                    ),
                  ordered = TRUE
           )
