@@ -6,13 +6,15 @@ output:
 High Priority:
 + Nearby % woody vegetation cover = 2%
 + Nearby % woody vegetation cover = 20%
-+ Noisy Miner image from birdlife (using server) rather than going to ALA
 + Cleaner use and description for references
 + types of farms in More Information. Could get from the 2010 Lindenmayer book? Talks about wheat sheep belt, and more
 + a notification when reference is updated, and when things change.
 + a warning that javascript is required
-+ tooltips that work on phones
-
++ tooltips that work on phones: accordions
++ make 50m gap language clearer - see email with Ange
++ the species info about sensitivity into the species descriptions?
++ change 'must be provided' backup to something else for species estimate summaries
++ compute_richness use poccupancy_margotherspeciespmaxsite() -- see a branch
 
 
 Regular Priority:
