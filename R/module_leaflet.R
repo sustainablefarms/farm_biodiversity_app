@@ -1,4 +1,6 @@
 # leaflet module. Good help here: https://rstudio.github.io/leaflet/shiny.html
+# it appears that sufficient attribution is included as part of the map automatically
+# see:  https://github.com/leaflet-extras/leaflet-providers
 
 library(shiny)
 library(leaflet)
@@ -24,9 +26,9 @@ leaflet_Server <- function(id){
   output$mymap <- renderLeaflet({
     leaflet() %>%
       addTiles(group = "Map") %>%
-      addProviderTiles("Esri.WorldImagery", group = "Imagery") %>%
+      addProviderTiles("Esri.WorldImagery", group = "Imagery Powered by Esri") %>%
       addLayersControl(
-        baseGroups = c("Map", "Imagery")) %>%
+        baseGroups = c("Map", "Imagery powered by Esri")) %>%
       fitBounds(bbox[["xmin"]], bbox[["ymin"]],
                   bbox[["xmax"]], bbox[["ymax"]])
   })
