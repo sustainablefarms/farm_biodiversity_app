@@ -178,7 +178,7 @@ selectpatchServer <- function(id){
     }
     clicked_record$patch_buttons <- click_now$patches$value
   })
-  out <- patchattr_Server("patchattr")
+  out <- patchattr_Server("patchattr", clicked_record) #clicked_record used so that know to refresh when modal is being opened again
 
   # collect input values from modal
   observeEvent(input$choose_patch_attributes_execute, {
@@ -254,6 +254,7 @@ selectpatchServer <- function(id){
 
 app_selectpatch <- function(){
   main_app_prep()
+  enableBookmarking(store = "disable")
   
   shinyApp(
     {fluidPage(

@@ -10,7 +10,7 @@ leaflet_UI <- function(id){
   fluidPage(leafletOutput(ns("mymap")))
 }
 
-leaflet_Server <- function(id){
+leaflet_Server <- function(id, clicked_record){
   moduleServer(
     id,
     function(input, output, session){
@@ -24,6 +24,10 @@ leaflet_Server <- function(id){
   }, ignoreNULL = FALSE)
   
   output$mymap <- renderLeaflet({
+    # sensitivity to something that makes the map be regenerated
+    vals <- reactiveValuesToList(clicked_record) 
+    # for some reason refreshing is needed for map clicks to be noticed.
+    showNotification("Leaflet generated")
     leaflet() %>%
       addTiles(group = "Map") %>%
       addProviderTiles("Esri.WorldImagery", group = "Imagery Powered by Esri") %>%
@@ -35,6 +39,7 @@ leaflet_Server <- function(id){
   
   observe({
     validate(need(input$mymap_click, ""))
+    showNotification(paste(input$mymap_click, collapse = " "))
     leafletProxy("mymap") %>%
       removeMarker("newpatch_marker") %>%
       addMarkers(lng = input$mymap_click$lng,

@@ -114,7 +114,7 @@ tags$div(id = ns("inputfromlatlonpanel"),
 )
 }
 
-patchattr_Server <- function(id){
+patchattr_Server <- function(id, clicked_record){
   moduleServer(
     id,
     function(input, output, session){
@@ -122,7 +122,7 @@ patchattr_Server <- function(id){
       ns <- session$ns
       
       # from lat lon work
-      leafletout <- leaflet_Server("leaflet")
+      leafletout <- leaflet_Server("leaflet", clicked_record)
       observe({
         validate(need(leafletout(), ""))
         updateTextInput(inputId = "lon", value = leafletout()$lng)
@@ -202,6 +202,11 @@ patchattr_Server <- function(id){
                                               sep = " = ", collapse = ", "), duration = 0.5)
                      })
       }
+      
+      observe({
+        showNotification(paste(input$fromlatlon))
+        # print(names(reactiveValuesToList(input)))
+      })
       
       setBookmarkExclude(c("IsRemnant", 
                            "fromlatlon",
