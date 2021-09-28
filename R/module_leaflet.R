@@ -3,16 +3,15 @@
 library(shiny)
 library(leaflet)
 
-r_colors <- rgb(t(col2rgb(colors()) / 255))
-names(r_colors) <- colors()
-
 ui <- fluidPage(
-  leafletOutput("mymap"),
-  p(),
-  actionButton("recalc", "New points")
+  leafletOutput("mymap")
 )
 
 server <- function(input, output, session) {
+  region_polygons <- readRDS("data/sa2_polygons.rds") 
+  # polygons[region_polygons$SA2_NAME16 == outOfModule()$selected_region, ]
+  roi <- region_polygons %>% sf::st_transform(4326)
+  bbox <- sf::st_bbox(roi)
   
   points <- eventReactive(input$recalc, {
     cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
@@ -20,10 +19,12 @@ server <- function(input, output, session) {
   
   output$mymap <- renderLeaflet({
     leaflet() %>%
-      addProviderTiles(providers$Stamen.TonerLite,
-                       options = providerTileOptions(noWrap = TRUE)
-      ) %>%
-      addMarkers(data = points())
+      addTiles(group = "Map") %>%
+      addProviderTiles("Esri.WorldImagery", group = "Imagery") %>%
+      addLayersControl(
+        baseGroups = c("Map", "Imagery")) %>%
+      fitBounds(bbox[["xmin"]], bbox[["ymin"]],
+                  bbox[["xmax"]], bbox[["ymax"]])
   })
   
   observe({
