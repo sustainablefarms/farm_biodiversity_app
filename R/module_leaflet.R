@@ -37,7 +37,7 @@ leaflet_Server <- function(id){
     validate(need(input$mymap_click, ""))
     leafletProxy("mymap") %>%
       removeMarker("newpatch_marker") %>%
-      addCircleMarkers(lng = input$mymap_click$lng,
+      addMarkers(lng = input$mymap_click$lng,
                       lat = input$mymap_click$lat,
                       layerId = "newpatch_marker")
   })
