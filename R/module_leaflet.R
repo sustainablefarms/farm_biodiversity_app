@@ -34,6 +34,7 @@ leaflet_Server <- function(id){
   observe({
     showNotification(paste(input$mymap_click, collapse = " "))
   })
+  reactive(input$mymap_click)
 })}
 
 app_leaflet <- function(){

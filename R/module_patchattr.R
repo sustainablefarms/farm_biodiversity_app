@@ -94,6 +94,7 @@ shinyWidgets::materialSwitch(ns("fromlatlon"),
                              width = '100%'),
 tags$div(id = ns("inputfromlatlonpanel"),
           conditionalPanel("input.fromlatlon",
+              leaflet_UI(ns("leaflet")),
               fluidRow(
                 column(4, textInput(ns("lon"), "Longitude", value = attributes$usedlon, width = '100%',
                                     placeholder = "145.123456789")),
@@ -121,6 +122,7 @@ patchattr_Server <- function(id){
       ns <- session$ns
       
       # from lat lon work
+      leaflet_Server("leaflet")
       wait <- waiter::Waiter$new(id = ns("getwoodycanopy"), 
                                  html = waiter::spin_wave(),
                                  color = "#178BCA")
