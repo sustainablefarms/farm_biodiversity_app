@@ -122,7 +122,12 @@ patchattr_Server <- function(id){
       ns <- session$ns
       
       # from lat lon work
-      leaflet_Server("leaflet")
+      leafletout <- leaflet_Server("leaflet")
+      observe({
+        validate(need(leafletout(), ""))
+        updateTextInput(inputId = "lon", value = leafletout()$lng)
+        updateTextInput(inputId = "lat", value = leafletout()$lat)
+      })
       wait <- waiter::Waiter$new(id = ns("getwoodycanopy"), 
                                  html = waiter::spin_wave(),
                                  color = "#178BCA")
