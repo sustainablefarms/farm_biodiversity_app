@@ -34,7 +34,12 @@ leaflet_Server <- function(id){
   })
   
   observe({
-    showNotification(paste(input$mymap_click, collapse = " "))
+    validate(need(input$mymap_click, ""))
+    leafletProxy("mymap") %>%
+      removeMarker("newpatch_marker") %>%
+      addCircleMarkers(lng = input$mymap_click$lng,
+                      lat = input$mymap_click$lat,
+                      layerId = "newpatch_marker")
   })
   reactive(input$mymap_click)
 })}
@@ -44,4 +49,3 @@ app_leaflet <- function(){
   function(input, output, session){leaflet_Server("leaflet")}
   )
 }
-app_leaflet()
