@@ -13,6 +13,7 @@ High Priority:
 + the species info about sensitivity into the species descriptions?
 + change 'must be provided' backup to something else for species estimate summaries
 + compute_richness use poccupancy_margotherspeciespmaxsite() -- see a branch
++ map like clicking: see https://github.com/leaflet-extras/leaflet-providers and https://developers.arcgis.com/documentation/mapping-apis-and-services/deployment/basemap-attribution/ for attribution instructions. I think it will work!!
 
 
 Regular Priority:
