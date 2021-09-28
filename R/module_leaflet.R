@@ -10,7 +10,7 @@ leaflet_UI <- function(id){
   fluidPage(leafletOutput(ns("mymap")))
 }
 
-leaflet_Server <- function(id, clicked_record){
+leaflet_Server <- function(id, refresh){
   moduleServer(
     id,
     function(input, output, session){
@@ -25,8 +25,16 @@ leaflet_Server <- function(id, clicked_record){
   
   output$mymap <- renderLeaflet({
     # sensitivity to something that makes the map be regenerated
-    vals <- reactiveValuesToList(clicked_record) 
+    if (is.reactivevalues(refresh)){
+      vals <- reactiveValuesToList(refresh) 
+    } else if (is.reactive(refresh)) {
+      vals <- refresh()
+    } else {
+      vals <- refresh
+    }
     # for some reason refreshing is needed for map clicks to be noticed.
+    
+    
     showNotification("Leaflet generated")
     leaflet() %>%
       addTiles(group = "Map") %>%
