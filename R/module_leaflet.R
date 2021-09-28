@@ -3,11 +3,15 @@
 library(shiny)
 library(leaflet)
 
-ui <- fluidPage(
-  leafletOutput("mymap")
-)
+leaflet_UI <- function(id){ 
+  ns <- NS(id)
+  fluidPage(leafletOutput(ns("mymap")))
+}
 
-server <- function(input, output, session) {
+leaflet_Server <- function(id){
+  moduleServer(
+    id,
+    function(input, output, session){
   region_polygons <- readRDS("data/sa2_polygons.rds") 
   # polygons[region_polygons$SA2_NAME16 == outOfModule()$selected_region, ]
   roi <- region_polygons %>% sf::st_transform(4326)
@@ -30,6 +34,11 @@ server <- function(input, output, session) {
   observe({
     showNotification(paste(input$mymap_click, collapse = " "))
   })
-}
+})}
 
-shinyApp(ui, server)
+app_leaflet <- function(){
+  shinyApp(leaflet_UI("leaflet"),
+  function(input, output, session){leaflet_Server("leaflet")}
+  )
+}
+app_leaflet()
