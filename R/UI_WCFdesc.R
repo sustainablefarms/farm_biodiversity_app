@@ -14,6 +14,8 @@ WCFdesc2 <- function(){
 	tagList(
 tags$p("Here we regard woody cover, or foliage cover, as the % area covered by the vertical projection of foliage and branches",
       "greater than 2m in height",
+      # "We use percentage woody cover within 500m and within 3km of the patch centre.",
+      # "Keep in mind that this includes open areas and that tree crowns rarely provide complete foliage cover (e.g. the the sky is often visible through tree canopies).",
       linknewtab(href = "https://www.publish.csiro.au/book/5230",
 		"(Hnatiuk et al., 2010;"),
       linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
