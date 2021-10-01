@@ -16,6 +16,7 @@ NAMESPACE
 ./data/traits.rds
 ./R/_disable_autoload.R
 ./R/main.R
+./R/module_leaflet.R
 ./R/module_patchattr.R
 ./R/module_patchnum.R
 ./R/module_predictions.R
