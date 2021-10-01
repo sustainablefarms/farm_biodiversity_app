@@ -70,7 +70,7 @@ patchattr_UI <- function(id, attributes){
                                    "Liao et al. (IJAEOG, 2020)"), ")"),
 shinyWidgets::materialSwitch(ns("showmap"),
                              label = "Show map",
-                             value = attributes$fromlatlon,
+                             value = attributes$showmap,
                              status = "primary",
                              width = '100%'),
   conditionalPanel("input.showmap",
