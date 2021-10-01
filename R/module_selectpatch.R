@@ -226,9 +226,10 @@ selectpatchServer <- function(id, selected_region){
   
   # Save extra values in state$values when we bookmark
   onBookmark(function(state) {
-    state$values$each_patch_attribute <- 
-      reactiveValuesToList(each_patch_attribute)[as.character(1:other_attributes$patches)][c("woody500m", "woody3000m",
-                                                                                             "noisy_miner", "IsRemnant")]
+    each_patch_attribute <- reactiveValuesToList(each_patch_attribute)[as.character(1:other_attributes$patches)]
+    # bookmark the non-sensitive non-location information
+    each_patch_attribute2 <- lapply(each_patch_attribute, function(x) x[c("woody500m", "woody3000m", "noisy_miner", "IsRemnant")])
+    state$values$each_patch_attribute <- each_patch_attribute2
     state$values$other_attributes <- reactiveValuesToList(other_attributes)
   })
   
