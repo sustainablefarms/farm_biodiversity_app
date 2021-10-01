@@ -59,7 +59,7 @@ selectpatchServer <- function(id){
                                     woody3000m = NA,
                                     noisy_miner = NA,
                                     IsRemnant = NA,
-                                    fromlatlon = FALSE)
+                                    showmap = TRUE)
       allpatchesdflt <- rep(list(defaultnewpatchvalues), maxpatchnum)
       names(allpatchesdflt) <- 1:maxpatchnum
       each_patch_attribute <- do.call(reactiveValues, args = allpatchesdflt) # list of patch attributes
