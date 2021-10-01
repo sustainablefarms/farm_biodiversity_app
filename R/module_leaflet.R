@@ -32,7 +32,7 @@ leaflet_Server <- function(id, refresh, selected_region){
     }
   })
   
-  output$mymap <- renderLeaflet({
+  output$mymap <- leaflet::renderLeaflet({
     updatebbox()
     # sensitivity to something that makes the map be regenerated
     if (is.reactivevalues(refresh)){
