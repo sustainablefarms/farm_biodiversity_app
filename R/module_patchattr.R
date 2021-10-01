@@ -68,27 +68,26 @@ patchattr_UI <- function(id, attributes){
                                        "http://anuwald.science/tree"), 
                    "and ",linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
                                    "Liao et al. (IJAEOG, 2020)"), ")"),
- # from lat lon
-shinyWidgets::materialSwitch(ns("fromlatlon"),
+shinyWidgets::materialSwitch(ns("showmap"),
                              label = "Show map",
                              value = attributes$fromlatlon,
                              status = "primary",
                              width = '100%'),
-tags$div(id = ns("inputfromlatlonpanel"),
-          conditionalPanel("input.fromlatlon",
-              leaflet_UI(ns("leaflet")),
-              ns = ns)),
-              fluidRow(
-                column(4, textInput(ns("lon"), "Longitude", value = attributes$usedlon, width = '100%',
-                                    placeholder = "145.123456789")),
-                column(4, textInput(ns("lat"), "Latitude", value = attributes$usedlat, width = '100%',
-                                    placeholder = "-35.123456789")),
-                column(2, textInput(ns("yearforcanopy"), "Year", value = attributes$usedyear, width = '100%',
-                                    placeholder = "2018")),
-                column(2, actionButton(ns("getwoodycanopy"), "Get", class = "download_badge"))
-              ),
-              tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE)),
-	
+  conditionalPanel("input.showmap",
+      leaflet_UI(ns("leaflet")),
+      ns = ns)),
+ # from lat lon
+  fluidRow(
+    column(4, textInput(ns("lon"), "Longitude", value = attributes$usedlon, width = '100%',
+                        placeholder = "145.123456789")),
+    column(4, textInput(ns("lat"), "Latitude", value = attributes$usedlat, width = '100%',
+                        placeholder = "-35.123456789")),
+    column(2, textInput(ns("yearforcanopy"), "Year", value = attributes$usedyear, width = '100%',
+                        placeholder = "2018")),
+    column(2, actionButton(ns("getwoodycanopy"), "Get", class = "download_badge"))
+  ),
+  tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE)),
+
 	
 	
 #################################
@@ -117,7 +116,7 @@ tags$div(id = ns("inputfromlatlonpanel"),
 	    width = "100%",
             value = attributes$woody3000m)
 
-)))
+))
 }
 
 patchattr_Server <- function(id, clicked_record){
@@ -194,7 +193,7 @@ patchattr_Server <- function(id, clicked_record){
           woody3000m = input[["pc_woody3000m"]],
           noisy_miner = input[["noisy_miner"]],
           IsRemnant = input[["IsRemnant"]],
-          fromlatlon = input[["fromlatlon"]],
+          showmap = input[["showmap"]],
           usedlon = usedlon(),
           usedlat = usedlat(),
           usedyear = usedyear()
@@ -210,12 +209,12 @@ patchattr_Server <- function(id, clicked_record){
       }
       
       observe({
-        showNotification(paste(input$fromlatlon))
+        showNotification(paste(input$showmap))
         # print(names(reactiveValuesToList(input)))
       })
       
       setBookmarkExclude(c("IsRemnant", 
-                           "fromlatlon",
+                           "showmap",
                            "pc_woody3000m",
                            "pc_woody500m",
                            "getwoodycanopy",
@@ -230,7 +229,7 @@ patchattr_Server <- function(id, clicked_record){
 
 
 app_patchattr <- function(){
-  attributes <- list(IsRemnant = TRUE, noisy_miner = FALSE, woody500m = 3.5, woody3000m = 8.2, fromlatlon = FALSE)
+  attributes <- list(IsRemnant = TRUE, noisy_miner = FALSE, woody500m = 3.5, woody3000m = 8.2, showmap = FALSE)
   clicked_record <- reactiveValues( #record of
     #patches = 1, # number of patches - obsolete as of patchnumselector_module
     patch_buttons = 1, #and number of times their buttons pressed
