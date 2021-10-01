@@ -208,10 +208,6 @@ patchattr_Server <- function(id, clicked_record){
                      })
       }
       
-      observe({
-        showNotification(paste(input$showmap))
-        # print(names(reactiveValuesToList(input)))
-      })
       
       setBookmarkExclude(c("IsRemnant", 
                            "showmap",
