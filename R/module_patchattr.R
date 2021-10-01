@@ -63,19 +63,21 @@ patchattr_UI <- function(id, attributes){
 	tags$div("Species occupancies depend heavily on the amount of 2m+ woody vegetation cover, or foliage cover,",
 	"inside the patch and in the surrounding landscape."),
   tags$div(HTML("<plottitle>Get from satellite</plottitle>")),
+ tags$div("Get woody canopy amounts from satellite",
+                   "(see ", linknewtab(href = 'http://anuwald.science/tree',
+                                       "http://anuwald.science/tree"), 
+                   "and ",linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
+                                   "Liao et al. (IJAEOG, 2020)"), ")"),
  # from lat lon
 shinyWidgets::materialSwitch(ns("fromlatlon"),
-                             label = tags$span("Get woody canopy amounts from satellite",
-                                               "(see ", linknewtab(href = 'http://anuwald.science/tree',
-                                                                   "http://anuwald.science/tree"), 
-                                               "and ",linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
-                                                               "Liao et al. (IJAEOG, 2020)"), ")"),
+                             label = "Show map",
                              value = attributes$fromlatlon,
                              status = "primary",
                              width = '100%'),
 tags$div(id = ns("inputfromlatlonpanel"),
           conditionalPanel("input.fromlatlon",
               leaflet_UI(ns("leaflet")),
+              ns = ns)),
               fluidRow(
                 column(4, textInput(ns("lon"), "Longitude", value = attributes$usedlon, width = '100%',
                                     placeholder = "145.123456789")),
@@ -86,12 +88,6 @@ tags$div(id = ns("inputfromlatlonpanel"),
                 column(2, actionButton(ns("getwoodycanopy"), "Get", class = "download_badge"))
               ),
               tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE)),
-                     # tags$div("test: ", textOutput(ns("pc_woody500m_latlon"))),
-                     # tags$div("test: ", textOutput(ns("pc_woody3000m_latlon"))),
-              ns = ns)),
-                     # tags$div("Satellite based Regional Woody Canopy Cover:",
-                              # textOutput(ns("pc_woody3000m_latlon"), inline = TRUE))
-  
 	
 	
 	
