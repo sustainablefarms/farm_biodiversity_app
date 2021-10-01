@@ -19,10 +19,6 @@ leaflet_Server <- function(id, refresh){
   roi <- region_polygons %>% sf::st_transform(4326)
   bbox <- sf::st_bbox(roi)
   
-  points <- eventReactive(input$recalc, {
-    cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
-  }, ignoreNULL = FALSE)
-  
   output$mymap <- renderLeaflet({
     # sensitivity to something that makes the map be regenerated
     if (is.reactivevalues(refresh)){
@@ -35,10 +31,10 @@ leaflet_Server <- function(id, refresh){
     # for some reason refreshing is needed for map clicks to be noticed.
     
     
-    showNotification("Leaflet generated")
+    # showNotification("Leaflet generated")
     leaflet() %>%
-      addTiles(group = "Map") %>%
       addProviderTiles("Esri.WorldImagery", group = "Imagery Powered by Esri") %>%
+      addTiles(group = "Map") %>%
       addLayersControl(
         baseGroups = c("Map", "Imagery powered by Esri")) %>%
       fitBounds(bbox[["xmin"]], bbox[["ymin"]],
@@ -47,7 +43,7 @@ leaflet_Server <- function(id, refresh){
   
   observe({
     validate(need(input$mymap_click, ""))
-    showNotification(paste(input$mymap_click, collapse = " "))
+    # showNotification(paste(input$mymap_click, collapse = " "))
     leafletProxy("mymap") %>%
       removeMarker("newpatch_marker") %>%
       addMarkers(lng = input$mymap_click$lng,
@@ -59,6 +55,6 @@ leaflet_Server <- function(id, refresh){
 
 app_leaflet <- function(){
   shinyApp(leaflet_UI("leaflet"),
-  function(input, output, session){leaflet_Server("leaflet")}
+  function(input, output, session){leaflet_Server("leaflet", "NA")}
   )
 }
