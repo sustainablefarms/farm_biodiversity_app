@@ -99,7 +99,7 @@ server <- function(input, output, session) {
   # set up required data
   # 1. from model
   # 2. reactive values
-  selected_region <- reactiveVal(value = NULL, label = "Selected region")
+  # selected_region <- reactiveVal(value = NULL, label = "Selected region")
   data <- reactiveValues(
     selected_region = NULL,
     species_predictions = NULL)
@@ -117,9 +117,7 @@ server <- function(input, output, session) {
 
   ## REGION
   fromlocation <- selectlocationServer("location")
-  observe({
-    selected_region(fromlocation()$selected_region)
-  })
+  selected_region <- reactive({fromlocation()$selected_region})
   
   ## YfA
   fromyfa <- selectYfAServer("yfa", locationinfo = fromlocation)

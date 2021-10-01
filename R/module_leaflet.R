@@ -24,10 +24,7 @@ leaflet_Server <- function(id, refresh, selected_region){
     ymin = bbox_allregions[["ymin"]],
     ymax = bbox_allregions[["ymax"]]
   )
-  observe({
-    showNotification(selected_region())
-  })
-  observe({
+  updatebbox <- reactive({
     validate(need(selected_region(), ""))
     roi <- region_polygons[region_polygons$SA2_NAME16 == selected_region(), ]
     bboxtmp <- sf::st_bbox(roi)
@@ -35,10 +32,10 @@ leaflet_Server <- function(id, refresh, selected_region){
     bbox$xmax <- bboxtmp[["xmax"]]
     bbox$ymin <- bboxtmp[["ymin"]]
     bbox$ymax <- bboxtmp[["ymax"]]
-    showNotification(paste(reactiveValuesToList(bbox), collapse = " "))
   })
   
   output$mymap <- renderLeaflet({
+    updatebbox()
     # sensitivity to something that makes the map be regenerated
     if (is.reactivevalues(refresh)){
       vals <- reactiveValuesToList(refresh) 
