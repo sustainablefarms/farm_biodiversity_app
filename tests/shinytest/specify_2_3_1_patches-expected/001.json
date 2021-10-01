@@ -1049,7 +1049,7 @@
       ]
     },
     "patch-patch_selector-patch_selector": {
-      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-patch_selector-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>1<\/h3><\/button>\n<\/div>",
+      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-patch_selector-choose_n_patches\" type=\"button\" class=\"btn-default action-button badge\">Number of<br>patches<br><h3>1<\/h3><\/button>\n<\/div>",
       "deps": [
 
       ]

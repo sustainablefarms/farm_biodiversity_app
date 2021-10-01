@@ -1,4 +1,4 @@
-app <- ShinyDriver$new("./", shinyOptions = list(test.mode = TRUE))
+app <- ShinyDriver$new("../../", shinyOptions = list(test.mode = TRUE))
 app$snapshotInit("specify_one_patch_fromlatlon")
 
 app$setInputs(overallhelpfake = "click")

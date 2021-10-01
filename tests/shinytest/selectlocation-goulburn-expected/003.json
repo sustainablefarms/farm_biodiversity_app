@@ -1069,25 +1069,25 @@
     },
     "location-regionname": "Goulburn Region",
     "location-show_maxtemp": {
-      "html": "<button id=\"location-show_maxtemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Annual<br>Maximum<br>Temperature<h3>25.4&deg;C<\/h3><\/button>",
+      "html": "<button id=\"location-show_maxtemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"btn-default action-button badge\">Annual<br>Maximum<br>Temperature<h3>25.4&deg;C<\/h3><\/button>",
       "deps": [
 
       ]
     },
     "location-show_mintemp": {
-      "html": "<button id=\"location-show_mintemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Annual<br>Minimum<br>Temperature<h3>-0.5&deg;C<\/h3><\/button>",
+      "html": "<button id=\"location-show_mintemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"btn-default action-button badge\">Annual<br>Minimum<br>Temperature<h3>-0.5&deg;C<\/h3><\/button>",
       "deps": [
 
       ]
     },
     "location-show_precip_cold": {
-      "html": "<button id=\"location-show_precip_cold_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Winter<br>Precipitation<h3>238mm<\/h3><\/button>",
+      "html": "<button id=\"location-show_precip_cold_modal\" style=\"width: 100%;\" type=\"button\" class=\"btn-default action-button badge\">Winter<br>Precipitation<h3>238mm<\/h3><\/button>",
       "deps": [
 
       ]
     },
     "location-show_precip_warm": {
-      "html": "<button id=\"location-show_precip_warm_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Summer<br>Precipitation<h3>217mm<\/h3><\/button>",
+      "html": "<button id=\"location-show_precip_warm_modal\" style=\"width: 100%;\" type=\"button\" class=\"btn-default action-button badge\">Summer<br>Precipitation<h3>217mm<\/h3><\/button>",
       "deps": [
 
       ]
@@ -1099,7 +1099,7 @@
       ]
     },
     "patch-patch_selector-patch_selector": {
-      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-patch_selector-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>1<\/h3><\/button>\n<\/div>",
+      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-patch_selector-choose_n_patches\" type=\"button\" class=\"btn-default action-button badge\">Number of<br>patches<br><h3>1<\/h3><\/button>\n<\/div>",
       "deps": [
 
       ]

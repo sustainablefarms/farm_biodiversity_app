@@ -27,14 +27,29 @@
     "patch-choose_patch_attributes_execute": 1,
     "patch-patch_number_1": 1,
     "patch-patch_selector-choose_n_patches": 0,
-    "patch-patchattr-fromlatlon": false,
     "patch-patchattr-getwoodycanopy": 0,
     "patch-patchattr-IsRemnant": true,
     "patch-patchattr-lat": "",
+    "patch-patchattr-leaflet-mymap_bounds": {
+      "north": -34.5020297944346,
+      "east": 149.666748046875,
+      "south": -34.5020297944346,
+      "west": 149.666748046875
+    },
+    "patch-patchattr-leaflet-mymap_center": {
+      "lng": 149.666748046875,
+      "lat": -34.5020297944346
+    },
+    "patch-patchattr-leaflet-mymap_groups": [
+      "Imagery Powered by Esri",
+      "Map"
+    ],
+    "patch-patchattr-leaflet-mymap_zoom": 8,
     "patch-patchattr-lon": "",
     "patch-patchattr-noisy_miner": true,
     "patch-patchattr-pc_woody3000m": 15.5,
     "patch-patchattr-pc_woody500m": 14,
+    "patch-patchattr-showmap": true,
     "patch-patchattr-yearforcanopy": "",
     "plotly_afterplot-A": "\"pred-common_species\"",
     "plotly_afterplot-region_map": "\"location-plot_points\"",
@@ -1080,25 +1095,25 @@
     },
     "location-regionname": "Goulburn Region",
     "location-show_maxtemp": {
-      "html": "<button id=\"location-show_maxtemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Annual<br>Maximum<br>Temperature<h3>25.4&deg;C<\/h3><\/button>",
+      "html": "<button id=\"location-show_maxtemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"btn-default action-button badge\">Annual<br>Maximum<br>Temperature<h3>25.4&deg;C<\/h3><\/button>",
       "deps": [
 
       ]
     },
     "location-show_mintemp": {
-      "html": "<button id=\"location-show_mintemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Annual<br>Minimum<br>Temperature<h3>-0.5&deg;C<\/h3><\/button>",
+      "html": "<button id=\"location-show_mintemp_modal\" style=\"width: 100%;\" type=\"button\" class=\"btn-default action-button badge\">Annual<br>Minimum<br>Temperature<h3>-0.5&deg;C<\/h3><\/button>",
       "deps": [
 
       ]
     },
     "location-show_precip_cold": {
-      "html": "<button id=\"location-show_precip_cold_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Winter<br>Precipitation<h3>238mm<\/h3><\/button>",
+      "html": "<button id=\"location-show_precip_cold_modal\" style=\"width: 100%;\" type=\"button\" class=\"btn-default action-button badge\">Winter<br>Precipitation<h3>238mm<\/h3><\/button>",
       "deps": [
 
       ]
     },
     "location-show_precip_warm": {
-      "html": "<button id=\"location-show_precip_warm_modal\" style=\"width: 100%;\" type=\"button\" class=\"action-button badge\">Summer<br>Precipitation<h3>217mm<\/h3><\/button>",
+      "html": "<button id=\"location-show_precip_warm_modal\" style=\"width: 100%;\" type=\"button\" class=\"btn-default action-button badge\">Summer<br>Precipitation<h3>217mm<\/h3><\/button>",
       "deps": [
 
       ]
@@ -1110,15 +1125,126 @@
       ]
     },
     "patch-patch_selector-patch_selector": {
-      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-patch_selector-choose_n_patches\" type=\"button\" class=\"action-button badge\">Number of<br>patches<br><h3>1<\/h3><\/button>\n<\/div>",
+      "html": "<div>\n  <script>$(function () {\n          $('[data-toggle=tooltip]').tooltip()\n        })<\/script>\n  <button id=\"patch-patch_selector-choose_n_patches\" type=\"button\" class=\"btn-default action-button badge\">Number of<br>patches<br><h3>1<\/h3><\/button>\n<\/div>",
       "deps": [
 
       ]
     },
-    "patch-patchattr-nmimage": {
-      "src": "[image data sha1: 973f16c34d0d34126a28af055c5fbc98c86df9c2]",
-      "alt": "An image of noisy miners",
-      "height": "100px"
+    "patch-patchattr-latlonerror": "",
+    "patch-patchattr-leaflet-mymap": {
+      "x": {
+        "options": {
+          "crs": {
+            "crsClass": "L.CRS.EPSG3857",
+            "code": null,
+            "proj4def": null,
+            "projectedBounds": null,
+            "options": {
+
+            }
+          }
+        },
+        "calls": [
+          {
+            "method": "addProviderTiles",
+            "args": [
+              "Esri.WorldImagery",
+              null,
+              "Imagery Powered by Esri",
+              {
+                "errorTileUrl": "",
+                "noWrap": false,
+                "detectRetina": false
+              }
+            ]
+          },
+          {
+            "method": "addTiles",
+            "args": [
+              "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              null,
+              "Map",
+              {
+                "minZoom": 0,
+                "maxZoom": 18,
+                "tileSize": 256,
+                "subdomains": "abc",
+                "errorTileUrl": "",
+                "tms": false,
+                "noWrap": false,
+                "zoomOffset": 0,
+                "zoomReverse": false,
+                "opacity": 1,
+                "zIndex": 1,
+                "detectRetina": false,
+                "attribution": "&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"
+              }
+            ]
+          },
+          {
+            "method": "addLayersControl",
+            "args": [
+              [
+                "Map",
+                "Imagery powered by Esri"
+              ],
+              [
+
+              ],
+              {
+                "collapsed": true,
+                "autoZIndex": true,
+                "position": "topright"
+              }
+            ]
+          }
+        ],
+        "fitBounds": [
+          -35.1127810049999,
+          149.002840156,
+          -33.8878283879999,
+          150.333530073,
+          [
+
+          ]
+        ]
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "leaflet-providers",
+          "version": "1.9.0",
+          "src": {
+            "href": "leaflet-providers-1.9.0"
+          },
+          "meta": null,
+          "script": "leaflet-providers_1.9.0.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "package": null,
+          "all_files": false
+        },
+        {
+          "name": "leaflet-providers-plugin",
+          "version": "2.0.4.1",
+          "src": {
+            "href": "leaflet-providers-plugin-2.0.4.1"
+          },
+          "meta": null,
+          "script": "leaflet-providers-plugin.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "package": null,
+          "all_files": true
+        }
+      ]
     },
     "pred-common_species": {
       "x": {
@@ -1951,7 +2077,7 @@
       ]
     },
     "pred-species_richness": {
-      "src": "[image data sha1: 47fec8da365baee6c34cd56ed355727fcb68f333]",
+      "src": "[image data sha1: 70a60b50e99635917ee5d8c4797856aed53ac74a]",
       "width": 481,
       "height": 250,
       "alt": "Plot object",
@@ -1976,9 +2102,9 @@
               "discrete_limits": {
                 "y": [
                   "Reference estimate",
-                  "More woody canopy nearby",
+                  "Nearby woody cover = 20%",
                   "Your estimate",
-                  "Less woody canopy nearby"
+                  "Nearby woody cover = 2%"
                 ]
               }
             },
@@ -1989,7 +2115,7 @@
             },
             "range": {
               "left": 5.47945205479452,
-              "right": 321.58904109589,
+              "right": 322.58904109589,
               "bottom": 230.58904109589,
               "top": 5.47945205479452
             }

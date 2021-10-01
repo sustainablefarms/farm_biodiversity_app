@@ -10,6 +10,7 @@ app$findElement('button[data-dismiss]')$click() #closes the modal
 app$setInputs(`patch-patch_number_1` = "click")
 Sys.sleep(1)
 app$snapshot()
+app$setInputs(`patch-patchattr-showmap` = FALSE)
 app$setInputs(`patch-patchattr-pc_woody3000m` = 15.5)
 app$setInputs(`patch-patchattr-pc_woody500m` = 14)
 Sys.sleep(1)
