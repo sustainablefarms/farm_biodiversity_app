@@ -22,13 +22,14 @@ leaflet_Server <- function(id, refresh, selected_region){
     ymax = bbox_allregions[["ymax"]]
   )
   updatebbox <- reactive({
-    validate(need(selected_region(), ""))
-    roi <- region_polygons[region_polygons$SA2_NAME16 == selected_region(), ]
-    bboxtmp <- sf::st_bbox(roi)
-    bbox$xmin <- bboxtmp[["xmin"]]
-    bbox$xmax <- bboxtmp[["xmax"]]
-    bbox$ymin <- bboxtmp[["ymin"]]
-    bbox$ymax <- bboxtmp[["ymax"]]
+    if (isTruthy(selected_region())){
+      roi <- region_polygons[region_polygons$SA2_NAME16 == selected_region(), ]
+      bboxtmp <- sf::st_bbox(roi)
+      bbox$xmin <- bboxtmp[["xmin"]]
+      bbox$xmax <- bboxtmp[["xmax"]]
+      bbox$ymin <- bboxtmp[["ymin"]]
+      bbox$ymax <- bboxtmp[["ymax"]]
+    }
   })
   
   output$mymap <- renderLeaflet({
