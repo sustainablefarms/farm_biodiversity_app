@@ -63,6 +63,14 @@ leaflet_Server <- function(id, refresh, selected_region){
                       lat = input$mymap_click$lat,
                       layerId = "newpatch_marker")
   })
+  
+  setBookmarkExclude(c("mymap_click", 
+                       "mymap_bounds",
+                       "mymap_zoom",
+                       "mymap_center",
+                       "mymap_groups"
+                       ))
+  
   reactive(input$mymap_click)
 })}
 

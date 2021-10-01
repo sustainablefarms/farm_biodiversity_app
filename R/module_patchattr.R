@@ -210,6 +210,7 @@ patchattr_Server <- function(id, clicked_record, selected_region){
                            "getwoodycanopy",
                            "noisy_miner",
                            "yearforcanopy",
+                           "getwoodycanopy_waiter_hidden",
                            "lon",
                            "lat"))
       return(specifiedvals)
