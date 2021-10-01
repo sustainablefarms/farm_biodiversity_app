@@ -20,7 +20,7 @@ Sys.sleep(1) # waiting for notifications to end
 
 # make this reference
 app$setInputs(`pred-savetoreference` = "click")
-app$setInputs(`pred-usedefaultreference` = FALSE)
+#app$setInputs(`pred-usedefaultreference` = FALSE) #this happens automatically when savetoreference clicked
 app$snapshot()
 
 # compare to lower rainfall
