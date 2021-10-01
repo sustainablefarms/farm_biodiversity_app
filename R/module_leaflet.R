@@ -10,14 +10,33 @@ leaflet_UI <- function(id){
   fluidPage(leafletOutput(ns("mymap")))
 }
 
-leaflet_Server <- function(id, refresh){
+leaflet_Server <- function(id, refresh, selected_region){
   moduleServer(
     id,
     function(input, output, session){
   region_polygons <- readRDS("data/sa2_polygons.rds") 
   # polygons[region_polygons$SA2_NAME16 == outOfModule()$selected_region, ]
-  roi <- region_polygons %>% sf::st_transform(4326)
-  bbox <- sf::st_bbox(roi)
+  region_polygons <- region_polygons %>% sf::st_transform(4326)
+  bbox_allregions <- sf::st_bbox(region_polygons)
+  bbox <- reactiveValues(
+    xmin = bbox_allregions[["xmin"]],
+    xmax = bbox_allregions[["xmax"]],
+    ymin = bbox_allregions[["ymin"]],
+    ymax = bbox_allregions[["ymax"]]
+  )
+  observe({
+    showNotification(selected_region())
+  })
+  observe({
+    validate(need(selected_region(), ""))
+    roi <- region_polygons[region_polygons$SA2_NAME16 == selected_region(), ]
+    bboxtmp <- sf::st_bbox(roi)
+    bbox$xmin <- bboxtmp[["xmin"]]
+    bbox$xmax <- bboxtmp[["xmax"]]
+    bbox$ymin <- bboxtmp[["ymin"]]
+    bbox$ymax <- bboxtmp[["ymax"]]
+    showNotification(paste(reactiveValuesToList(bbox), collapse = " "))
+  })
   
   output$mymap <- renderLeaflet({
     # sensitivity to something that makes the map be regenerated

@@ -47,7 +47,7 @@ patch_modal <- function(
   )
 }
 
-selectpatchServer <- function(id){
+selectpatchServer <- function(id, selected_region){
   moduleServer(
     id,
     function(input, output, session){
@@ -178,7 +178,7 @@ selectpatchServer <- function(id){
     }
     clicked_record$patch_buttons <- click_now$patches$value
   })
-  out <- patchattr_Server("patchattr", clicked_record) #clicked_record used so that know to refresh when modal is being opened again
+  out <- patchattr_Server("patchattr", clicked_record, selected_region) #clicked_record used so that know to refresh when modal is being opened again
 
   # collect input values from modal
   observeEvent(input$choose_patch_attributes_execute, {
