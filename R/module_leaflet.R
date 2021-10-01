@@ -2,12 +2,9 @@
 # it appears that sufficient attribution is included as part of the map automatically
 # see:  https://github.com/leaflet-extras/leaflet-providers
 
-library(shiny)
-library(leaflet)
-
 leaflet_UI <- function(id){ 
   ns <- NS(id)
-  fluidPage(leafletOutput(ns("mymap")))
+  fluidPage(leaflet::leafletOutput(ns("mymap")))
 }
 
 leaflet_Server <- function(id, refresh, selected_region){
@@ -48,21 +45,21 @@ leaflet_Server <- function(id, refresh, selected_region){
     
     
     # showNotification("Leaflet generated")
-    leaflet() %>%
-      addProviderTiles("Esri.WorldImagery", group = "Imagery Powered by Esri") %>%
-      addTiles(group = "Map") %>%
-      addLayersControl(
+    leaflet::leaflet() %>%
+      leaflet::addProviderTiles("Esri.WorldImagery", group = "Imagery Powered by Esri") %>%
+      leaflet::addTiles(group = "Map") %>%
+      leaflet::addLayersControl(
         baseGroups = c("Map", "Imagery powered by Esri")) %>%
-      fitBounds(bbox[["xmin"]], bbox[["ymin"]],
+      leaflet::fitBounds(bbox[["xmin"]], bbox[["ymin"]],
                   bbox[["xmax"]], bbox[["ymax"]])
   })
   
   observe({
     validate(need(input$mymap_click, ""))
     # showNotification(paste(input$mymap_click, collapse = " "))
-    leafletProxy("mymap") %>%
-      removeMarker("newpatch_marker") %>%
-      addMarkers(lng = input$mymap_click$lng,
+    leaflet::leafletProxy("mymap") %>%
+      leaflet::removeMarker("newpatch_marker") %>%
+      leaflet::addMarkers(lng = input$mymap_click$lng,
                       lat = input$mymap_click$lat,
                       layerId = "newpatch_marker")
   })

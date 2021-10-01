@@ -22,7 +22,8 @@ Imports:
     geojsonsf,
     readr,
     shinyjs,
-    waiter
+    waiter,
+    leaflet
 Suggests:
     testthat
 Encoding: UTF-8
