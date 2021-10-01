@@ -59,15 +59,16 @@ patchattr_UI <- function(id, attributes){
 	
 	# WCF
 	fluidRow(
-	tags$div(class = "subheader", tags$h2("Woody Cover")),
+	tags$div(class = "subheader", tags$h2("Woody Cover Amounts")),
 	tags$div("Species occupancies depend heavily on the amount of 2m+ woody vegetation cover, or foliage cover,",
-	"inside the patch and in the surrounding landscape."),
+	"inside the patch and in the surrounding landscape.", infotooltip(WCFdesc_intro())),
   tags$div(HTML("<plottitle>Get from satellite</plottitle>")),
- tags$div("Get woody canopy amounts from satellite",
+ tags$div("Get woody cover amounts from satellite",
                    "(see ", linknewtab(href = 'http://anuwald.science/tree',
                                        "http://anuwald.science/tree"), 
                    "and ",linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
-                                   "Liao et al. (IJAEOG, 2020)"), ")"),
+                                   "Liao et al. (IJAEOG, 2020)"), ")",
+          infotooltip(WCFdesc_fromlatlon())),
 shinyWidgets::materialSwitch(ns("showmap"),
                              label = "Show map",
                              value = attributes$showmap,
@@ -94,8 +95,7 @@ shinyWidgets::materialSwitch(ns("showmap"),
 	tags$div(HTML("<plottitle>Manually Set or Modify</plottitle>")),
         # 500m WCF
         tags$div(
-          tags$html(tags$span("Nearby Woody Cover: inside patch and within 500m of patch centre (% area)"),
-                    infotooltip(title = WCFdesc2())),
+          tags$html(tags$span("Nearby Woody Cover: within 500m of patch centre (% area), including cover inside patch")),
           sliderInput(label = NULL,
             inputId = ns("pc_woody500m"),
             min = 2, max = 20, step = 0.5,
@@ -103,13 +103,7 @@ shinyWidgets::materialSwitch(ns("showmap"),
             value = attributes$woody500m)
           ),
         tags$div(
-          tags$html(tags$span("Regional Woody Canopy: Woody vegetation canopy within 3km of patch centre (% area)"),
-                    infotooltip(title = tags$div("This is the area of woody vegetation canopy, measured as a proportion of the total land area within 3km of the patch centre.",
-"Tree canopy inside the patch is included (but would have little effect due to the 3km scale).",
-               WCFdesc(),
-               tags$p("The values available for selection were chosen to cover 90% of our data.")),
-                                placement = "auto bottom")
-                    ),
+          tags$html(tags$span("Regional Woody Cover: within 3km of patch centre (% area)")),
           sliderInput(label = NULL,
             inputId = ns("pc_woody3000m"),
             min = 2, max = 20, step = 0.5,
@@ -230,6 +224,7 @@ app_patchattr <- function(){
     #patches = 1, # number of patches - obsolete as of patchnumselector_module
     patch_buttons = 1, #and number of times their buttons pressed
     selected_patch = 1)
+  selected_region <- reactive({"Dubbo Region"})
   shinyApp(    {fluidPage(
     tags$script("$(function () {
           $('[data-toggle=tooltip]').tooltip()
@@ -238,6 +233,6 @@ app_patchattr <- function(){
     patchattr_UI("patchattr", attributes),
     theme = bslib::bs_theme(version = 3, "lumen"))
   },
-           function(input, output, session){patchattr_Server("patchattr", clicked_record)}
+           function(input, output, session){patchattr_Server("patchattr", clicked_record, selected_region)}
   )
 }

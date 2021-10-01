@@ -10,32 +10,25 @@ WCFdesc <- function(){tags$p("The area of woody vegetation canopy changes over t
 
 # __Nearby Woody Cover: tall foliage cover within 500m of patch centre (% area)__
 
-WCFdesc2 <- function(){
-	tagList(
-tags$p("Here we regard woody cover, or foliage cover, as the % area covered by the vertical projection of foliage and branches",
-      "greater than 2m in height",
-      # "We use percentage woody cover within 500m and within 3km of the patch centre.",
-      # "Keep in mind that this includes open areas and that tree crowns rarely provide complete foliage cover (e.g. the the sky is often visible through tree canopies).",
-      linknewtab(href = "https://www.publish.csiro.au/book/5230",
-		"(Hnatiuk et al., 2010;"),
-      linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
-            "Liao et al. IJAEOG, 2020)."),
-"When building this app we used estimates of woody cover obtained from satellite photography by the",
-linknewtab(href = "http://wald.anu.edu.au/", "ANU Centre for Water and Landscape Dynamics."),
-tags$b("This same method is available to you - use the toggle below.")),
+WCFdesc_intro <- function(){tagList(
+  tags$p("This app uses percentage woody cover within 500m and within 3km of the patch centre.",
+         "Keep in mind that this includes open areas and that tree crowns rarely provide complete foliage cover (e.g. the the sky is often visible through tree canopies)."),
+  tags$p("Box Gum Grassy Woodland is a highly disturbed ecosystem and this tool is based on agricultural landscapes.",
+  "As such the cover estimates are capped at 20%, which encapsulates 90% of the data used to develop the model.",
+  "If your cover estimates are above this, treat the results with an extra degree of caution."),
+  tags$p("Typical foliage cover for Australian temperate woodlands is",
+         linknewtab(href = "https://www.publish.csiro.au/book/5230", "(Hnatiuk et al., 2010)"),
+         tags$ul(
+           tags$li("30% - 70% when crowns are slightly separate or just touching"),
+           tags$li("10% - 30% when crowns are clearly separate.")
+         )))
+}
 
-tags$p("Typical foliage cover for Australian temperate woodlands is",
-       linknewtab(href = "https://www.publish.csiro.au/book/5230", "(Hnatiuk et al., 2010)"),
-      tags$ul(
-	     tags$li("30% - 70% when crowns are slightly separate or just touching"),
-	     tags$li("10% - 30% when crowns are clearly separate.")
-	     )),
-
-tags$p("The estimates of foliage cover can differ between years due to water availability, and disturbances or management (such as fire or planting more trees)",
-      linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
-            "(Liao et al. IJAEOG, 2020).")),
-
-tags$p("The values available for selection were chosen to cover 90% of our data.")
-)
+WCFdesc_fromlatlon <- function(){
+  tags$p("The estimates of foliage cover can differ between years due to water availability,",
+  "and disturbances or management",
+  linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
+             "(Liao et al. IJAEOG, 2020),"),
+  "so try to pick a year that accurately represents your situation.") 
 }
 
