@@ -30,7 +30,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
 
 # UI
 ui <- function(request){
-  out <- navbarPage(title = "",
+  navbarsection <- navbarPage(title = "",
       tabPanel(title = "Intro",
                startpage()
       ),
@@ -55,36 +55,37 @@ ui <- function(request){
              shinyjs::hidden()
          )
       ),
-    theme = bslib::bs_theme(version = 5, "lumen"),
     collapsible = TRUE,
-    windowTitle = appname,
-    header = 
-      tagList(
-    waiter::use_waiter(), 
-    waiter::waiter_preloader(),
-    tags$head(includeHTML("./www/google-analytics.html")),
-    includeCSS("./www/base.css"),
-    # the following enables bootstrap 3's inbuilt tooltips
-    tags$script("$(function () {
+    footer = "Forward <-> back"
+  )
+  out <- bootstrapPage(
+      waiter::use_waiter(), 
+      waiter::waiter_preloader(),
+      tags$head(includeHTML("./www/google-analytics.html")),
+      includeCSS("./www/base.css"),
+      # the following enables bootstrap 3's inbuilt tooltips
+      tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
       })"
-    ),
-    shinyjs::useShinyjs(),
-    HTML("<div class='header'>"),
-    fluidRow(
-      column(width = 2,
-             linknewtab(href = "http://sustainablefarms.org.au/",
-                        tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px"))),    
-    column(width = 10, offset = 0, 
-      tags$span(class = 'main', appname),
-      tags$span(style = "white-space:nowrap;", class = 'subtitle', "By Kassel Hingee & Martin Westgate.",
-	       "Version", appversion),
-      tags$span(class = 'subtitle', HTML("<br>Birds you can expect to see in spring in your farm's Box Gum Grassy Woodland remnants and plantings.")),
-    actionButton2("intro", "Intro", class = "badge_tiny"),
-    actionButton2("overallhelp", "More Help", class = "badge_tiny"),
-           )),
-    HTML("</div>")),
-    footer = "Created by Kassel, Ange, Martin, Dan and others at Sustainable Farms"
+      ),
+      shinyjs::useShinyjs(),
+      HTML("<div class='header'>"),
+      fluidRow(
+        column(width = 2,
+               linknewtab(href = "http://sustainablefarms.org.au/",
+                          tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px"))),    
+        column(width = 10, offset = 0, 
+               tags$span(class = 'main', appname),
+               tags$span(style = "white-space:nowrap;", class = 'subtitle', "By Kassel Hingee & Martin Westgate.",
+                         "Version", appversion),
+               tags$span(class = 'subtitle', HTML("<br>Birds you can expect to see in spring in your farm's Box Gum Grassy Woodland remnants and plantings.")),
+               actionButton2("intro", "Intro", class = "badge_tiny"),
+               actionButton2("overallhelp", "More Help", class = "badge_tiny"),
+        )),
+      HTML("</div>"),
+      navbarsection,
+      title = "appname",
+      theme = bslib::bs_theme(version = 5, "lumen")
   )
 }
 
