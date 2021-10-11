@@ -24,6 +24,8 @@ Regular Priority:
 + onespecwords() -> onespec_occdesc()
 + patchincompletewarn() -> attrincomplete()
 + vulnerablespeciesUI() -> avulnerablespeciesUI()
++ wcf could be describes as 'proportion of vertical view that is blocked by foliage'
++ submit to shiny app contest
 
 + event tracking:
   + track more inputs 
