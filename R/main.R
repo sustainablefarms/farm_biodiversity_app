@@ -55,38 +55,31 @@ ui <- function(request){
     actionButton2("overallhelp", "More Help", class = "badge_tiny"),
            )),
     HTML("</div>"),
-    column(width = 1,
-	   tags$br(), tags$br(),
-	   tags$br(), tags$br(),
-      tags$div(tags$em("1. Set your region.")),
-	   tags$br(), tags$br(),
-      tags$div(tags$em("2. Set your woodland patches.")),
-	   tags$br(), tags$br(),
-      tags$div(tags$em("3. See your birds."))
-	   ),
-    column(width = 3,
-      fluidRow(selectlocationUI("location")),
-      # plotOutput("climate", height = "300px")
-      fluidRow(selectYfAUI("yfa")),
-      if (isTRUE(getOption("shiny.testmode"))){
-        downloadButton("downloadcvals", "Download Current Values", class = "download_badge")
-      },
-      if (isTRUE(getOption("shiny.testmode"))){
-        actionButton("viewcvals", "View Current Values", class = "download_badge")
-      },
-      
-    ),
-    column(width = 1),
-    column(width = 6,
-      fluidRow(
-        selectpatchUI("patch")
+    tabsetPanel(
+      tabPanel(title = "Intro",
+               startpage()
       ),
-      fluidRow(
-        HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
-        tags$div(id = "predpanel", predictionsUI("pred")) %>%
-          shinyjs::hidden()
-      )
-    ),
+      tabPanel(title = "The Land",
+         fluidRow(selectlocationUI("location")),
+         # plotOutput("climate", height = "300px")
+         fluidRow(selectYfAUI("yfa")),
+         fluidRow(
+           selectpatchUI("patch")
+         ),
+         if (isTRUE(getOption("shiny.testmode"))){
+           downloadButton("downloadcvals", "Download Current Values", class = "download_badge")
+         },
+         if (isTRUE(getOption("shiny.testmode"))){
+           actionButton("viewcvals", "View Current Values", class = "download_badge")
+         }
+      ),
+      tabPanel(title = "Estimates",
+         fluidRow(
+           HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
+           tags$div(id = "predpanel", predictionsUI("pred")) %>%
+             shinyjs::hidden()
+         )
+      )),
     title = appname,
     theme = bslib::bs_theme(version = 5, "lumen")
     # theme = shinytheme("lumen")

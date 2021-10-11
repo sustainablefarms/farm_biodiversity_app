@@ -110,8 +110,8 @@ selectlocationServer <- function(id){
             paper_bgcolor='transparent',
             plot_bgcolor = 'transparent'
           ) %>%
-            plotly::config(displayModeBar = FALSE)
-          # event_register(p, 'plotly_click')
+            plotly::config(displayModeBar = FALSE) %>%
+            plotly::event_register(event = 'plotly_click')
         })
         
         # observe clicks on the region plot

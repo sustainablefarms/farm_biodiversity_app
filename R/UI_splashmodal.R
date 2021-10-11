@@ -1,5 +1,14 @@
 splashmodal <- function(){
-out <- modalDialog(
+  modalDialog(startpage(),
+  title = appname,
+  size = "m",
+  easyClose = TRUE,
+  fade = TRUE
+)
+}
+
+startpage <- function(){
+	tagList(
   tags$p("This app estimates which bird species are likely to be in your farm's Box Gum Grassy Woodland (including plantings) in spring.",
 	 "It estimates occupancy for 60 woodland bird species, including five of conservation concern:",
 	"Brown Treecreeper, Diamond Firetail, Dusky Woodswallow, Grey-crowned Babbler, and Superb Parrot."),
@@ -47,12 +56,7 @@ out <- modalDialog(
   tags$p("Show this screen again by clicking",
     actionButton2("introfake", "Intro", class = "badge_tiny"),
     "at the top of the app."
-	 ),
-  title = appname,
-  size = "m",
-  easyClose = TRUE,
-  fade = TRUE
-)
-return(out)
+	 )
+  )
 }
  
