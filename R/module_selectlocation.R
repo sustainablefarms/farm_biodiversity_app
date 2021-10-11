@@ -49,6 +49,7 @@ selectlocationServer <- function(id){
     function(input, output, session){
       # set up reactive values
       selected_region <- reactiveVal("")
+      regionmapcreated <- reactiveVal(FALSE)
       data <- reactiveValues(
         climate = NULL,
         polygons = NULL,
@@ -69,10 +70,10 @@ selectlocationServer <- function(id){
         output$plot_points <- plotly::renderPlotly({
 	  wplotly$show()
           validate(
-            need(data$points, "")
+            need(data$points, message = "no data points yet")
           )
 	  on.exit(wplotly$hide())
-          plotly::plot_ly(
+          out <- plotly::plot_ly(
             data$points,
             x = ~longitude,
             y = ~latitude,
@@ -112,6 +113,8 @@ selectlocationServer <- function(id){
           ) %>%
             plotly::config(displayModeBar = FALSE) %>%
             plotly::event_register(event = 'plotly_click')
+          regionmapcreated(TRUE)
+          return(out)
         })
         
         # observe clicks on the region plot
@@ -120,6 +123,7 @@ selectlocationServer <- function(id){
         } else {
         observe({
           if(!is.null(data$points)){ # if data points supplied (currently they always are)
+            validate(need(regionmapcreated(), ""))
             click_region <- plotly::event_data(
               event = "plotly_click",
               source = "region_map"
