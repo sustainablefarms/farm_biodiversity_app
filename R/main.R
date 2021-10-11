@@ -88,7 +88,7 @@ ui <- function(request){
       )
     ),
     title = appname,
-    theme = bslib::bs_theme(version = 3, "lumen")
+    theme = bslib::bs_theme(version = 5, "lumen")
     # theme = shinytheme("lumen")
   )
 }
