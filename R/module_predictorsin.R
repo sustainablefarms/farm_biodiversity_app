@@ -3,7 +3,6 @@ predictors_UI <- function(id){
   ns <- NS(id)
   tagList(
          fluidRow(selectlocationUI(ns("location"))),
-         # plotOutput("climate", height = "300px")
          fluidRow(selectYfAUI(ns("yfa"))),
          fluidRow(
            selectpatchUI(ns("patch"))

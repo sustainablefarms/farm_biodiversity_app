@@ -25,7 +25,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   dir.create(paste0(apptempdir,"/www/"))
   stopifnot(file.copy("./www/Sustainable Farms logo RGB.png", paste0(apptempdir, "/www/"), overwrite = TRUE)) 
   stopifnot(file.copy(paste0("./www/", speciesinfo$imgfilename), paste0(apptempdir, "/www/"), overwrite = TRUE)) 
-  enableBookmarking(store = "url")
+  enableBookmarking(store = "disable")
 }
 
 # UI
@@ -43,6 +43,9 @@ ui <- function(request){
            tags$div(id = "predpanel", predictionsUI("pred")) %>%
              shinyjs::hidden()
          )
+      ),
+      tabPanel(title = "The Land 2",
+               predictors_UI("S2in")
       ),
     collapsible = TRUE,
     footer = "Forward <-> back"
@@ -91,6 +94,9 @@ server <- function(input, output, session) {
   )
   
   cval <- predictors_Server("S1_in")
+  # cval2 <- predictors_Server("S2_in")
+  # observeEvent(cval2(), {print("New cval2() evaluation")
+    # print(list2DF(cval()))})
   
   if (isTRUE(getOption("shiny.testmode"))){
     observeEvent(cval(), {print("New cval() evaluation")
