@@ -79,7 +79,7 @@ selectlocationServer <- function(id){
             y = ~latitude,
             type = "scatter",
             mode = "markers",
-            source = "region_map",
+            source = ns("region_map"),
             marker = list(
               size = 10,
               color = ~color
@@ -126,7 +126,7 @@ selectlocationServer <- function(id){
             validate(need(regionmapcreated(), ""))
             click_region <- plotly::event_data(
               event = "plotly_click",
-              source = "region_map"
+              source = ns("region_map")
             )$pointNumber + 1 # Note: plotly uses Python-style indexing, hence +1
             if (isTruthy(click_region)){
               if (is.numeric(click_region) && (click_region > 0)){ #if something is selected then update region
