@@ -24,6 +24,7 @@ NAMESPACE
 ./R/module_selectlocation.R
 ./R/module_selectpatch.R
 ./R/module_selectYFA.R
+./R/module_predictorsin.R
 ./R/plot_allspeciesprob.R
 ./R/plot_allspeciesrel.R
 ./R/plot_climate_plot.R

@@ -34,19 +34,8 @@ ui <- function(request){
       tabPanel(title = "Intro",
                startpage()
       ),
-      tabPanel(title = "The Land",
-         fluidRow(selectlocationUI("location")),
-         # plotOutput("climate", height = "300px")
-         fluidRow(selectYfAUI("yfa")),
-         fluidRow(
-           selectpatchUI("patch")
-         ),
-         if (isTRUE(getOption("shiny.testmode"))){
-           downloadButton("downloadcvals", "Download Current Values", class = "download_badge")
-         },
-         if (isTRUE(getOption("shiny.testmode"))){
-           actionButton("viewcvals", "View Current Values", class = "download_badge")
-         }
+      tabPanel(title = "The Land 1",
+               predictors_UI("S1_in")
       ),
       tabPanel(title = "Estimates",
          fluidRow(
@@ -93,12 +82,6 @@ ui <- function(request){
 server <- function(input, output, session) {
 
   # set up required data
-  # 1. from model
-  # 2. reactive values
-  # selected_region <- reactiveVal(value = NULL, label = "Selected region")
-  data <- reactiveValues(
-    selected_region = NULL,
-    species_predictions = NULL)
   ## SF logo
   output$sflogo <- renderImage(
     list(src = "Sustainable Farms logo RGB.png",
@@ -107,25 +90,8 @@ server <- function(input, output, session) {
        deleteFile = FALSE
   )
   
+  cval <- predictors_Server("S1_in")
   
-  ## PATCH (and year)
-  frompatch <- selectpatchServer("patch", selected_region)
-
-  ## REGION
-  fromlocation <- selectlocationServer("location")
-  selected_region <- reactive({fromlocation()$selected_region})
-  
-  ## YfA
-  fromyfa <- selectYfAServer("yfa", locationinfo = fromlocation)
-  
-  ## Combine!
-  cval <- eventReactive({c(fromyfa(),
-    reactiveValuesToList(frompatch))}, {
-    out <- c(fromlocation(),
-             fromyfa(),
-           reactiveValuesToList(frompatch))
-    out
-  })
   if (isTRUE(getOption("shiny.testmode"))){
     observeEvent(cval(), {print("New cval() evaluation")
                           print(list2DF(cval()))})
@@ -150,38 +116,6 @@ server <- function(input, output, session) {
     showModal(moreinfomodal())
     },
     ignoreNULL = TRUE)
-  if (isTRUE(getOption("shiny.testmode"))){
-    output$downloadcvals <- downloadHandler(
-      filename = "current_values.rds",
-      content = function(file) {
-        outdata <- cval()
-        saveRDS(outdata, file)
-      }
-    )
-    # modal more detail stuff
-    observeEvent(input$viewcvals, {
-      showModal(
-        modalDialog(
-          verbatimTextOutput("cvals"),
-          title = "Current Values for Prediction",
-          size = "l",
-          easyClose = TRUE,
-        )
-      )
-    })
-    output$cvals <- renderPrint({
-      cval()
-    })
-    
-    #species images
-    lapply(model_data$species, function(spec){
-      output[[paste0("img_", gsub(" ", "-", spec))]] <- renderImage({
-        list(src = speciesinfo[spec, "imgfilename"],
-             alt = speciesinfo[spec, "imgfilename"],
-             height = "200px")
-      }, deleteFile = FALSE, quoted = FALSE)
-    })
-  }
   
   setBookmarkExclude(c("overallhelpfake",
                        "moredetailfake",
