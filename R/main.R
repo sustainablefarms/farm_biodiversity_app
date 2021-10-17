@@ -34,10 +34,10 @@ ui <- function(request){
       tabPanel(title = "AccordTest",
                includeHTML("./www/accordiontest.html"),
                accordion(id = "t2", 
-                 accordion_item("t2i1title", id = "t2i1", parentaccordionid = "t2", "This is the content2")
+                 accordion_item("t2i1title", id = "t2i1", "This is the content2")
                ),
                accordion(id = "t1", 
-                 accordion_item("i1title", id = "i1", parentaccordionid = "t1", "This is the content")
+                 accordion_item("i1title", id = "i1", "This is the content")
                ),
                accordion(id = "t3", 
                          accordion_item("3i1title", id = "3i1", parentaccordionid = "t3", "This is the content3")
