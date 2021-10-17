@@ -2,10 +2,10 @@
 predictors_UI <- function(id){
   ns <- NS(id)
   tagList(
-         fluidRow(selectlocationUI(ns("location"))),
+         fluidRow(selectlocationUI(ns("loc"))),
          fluidRow(selectYfAUI(ns("yfa"))),
          fluidRow(
-           selectpatchUI(ns("patch"))
+           selectpatchUI(ns("ptch"))
          ),
          if (isTRUE(getOption("shiny.testmode"))){
            downloadButton(ns("downloadcvals"), "Download Current Values", class = "download_badge")
@@ -22,10 +22,10 @@ predictors_Server <- function(id){
     function(input, output, session){
       ns <- session$ns
       ## PATCH (and year)
-      frompatch <- selectpatchServer("patch", selected_region)
+      frompatch <- selectpatchServer("ptch", selected_region)
     
       ## REGION
-      fromlocation <- selectlocationServer("location")
+      fromlocation <- selectlocationServer("loc")
       selected_region <- reactive({fromlocation()$selected_region})
       
       ## YfA
