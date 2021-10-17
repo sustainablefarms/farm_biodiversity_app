@@ -49,12 +49,14 @@ ui <- function(request){
   out <- bootstrapPage(
       includeCSS("./www/base.css"),
       waiter::use_waiter(), 
-      waiter::waiter_show_on_load(
-        html = tagList(tags$div("test"),
-                       waiter::spin_1(),
-          uiOutput("startbuttonlocation"))
-        # color = "#ffffff"
-      ),
+      # waiter::waiter_show_on_load(
+      #   html = fluidPage(
+      #     tags$div("test"),
+      #     tags$div(tags$p("This app")),# estimates which bird species are likely to be in your farm's Box Gum Grassy Woodland (including plantings) in spring.")),
+      #     waiter::spin_1(),
+      #     uiOutput("startbuttonlocation"))
+      #   # color = "#ffffff"
+      # ),
       # the following enables bootstrap 3's inbuilt tooltips
       tags$head(includeHTML("./www/google-analytics.html")),
       tags$script("$(function () {
@@ -76,7 +78,11 @@ ui <- function(request){
                actionButton2("overallhelp", "More Help", class = "badge_tiny"),
         )),
       HTML("</div>"),
-      navbarsection,
+      conditionalPanel("input.hidestartpage <= 0",
+                       startpage(),
+                       actionButton("hidestartpage", "Start App")),
+      conditionalPanel("input.hidestartpage > 0",
+                       navbarsection),
       title = appname,
       theme = bslib::bs_theme(version = 5, "lumen")
   )
