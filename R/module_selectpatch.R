@@ -2,7 +2,6 @@ selectpatchUI <- function(id){
   ns <- NS(id)
   tagList(
       HTML("<div class='subheader'><h2>PATCHES ON FARM</h2></div>"),
-      verbatimTextOutput("text"),
       column(width = 3,
         patchnum_UI(ns("patch_selector")),
       ),
