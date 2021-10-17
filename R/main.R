@@ -40,7 +40,7 @@ ui <- function(request){
       tabPanel(title = "Estimates",
          fluidRow(
            HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
-           tags$div(id = "predpanel", predictionsUI("pred")) %>%
+           tags$div(id = "predpanel1", predictionsUI("pred1")) %>%
              shinyjs::hidden()
          )
       ),
@@ -93,27 +93,27 @@ server <- function(input, output, session) {
        deleteFile = FALSE
   )
   
-  cval <- predictors_Server("S1in")
+  cval1 <- predictors_Server("S1in")
   cval2 <- predictors_Server("S2in")
-  # observeEvent(cval2(), {print("New cval2() evaluation")
-    # print(list2DF(cval()))})
   
   if (isTRUE(getOption("shiny.testmode"))){
-    observeEvent(cval(), {print("New cval() evaluation")
-                          print(list2DF(cval()))})
+    observeEvent(cval1(), {print("New cval1() evaluation")
+                          print(list2DF(cval1()))})
+    observeEvent(cval2(), {print("New cval2() evaluation")
+      print(list2DF(cval2()))})
     # cval(readRDS("./tests/testthat/current_values_1patch.rds"))
   }
   
   ## PREDICTIONS
   # reveal predictions panel
-  observeEvent(cval(), {
-    if (cval()$locationcomplete & cval()$allpatchcomplete){
-      shinyjs::show("predpanel")
+  observeEvent(cval1(), {
+    if (cval1()$locationcomplete & cval1()$allpatchcomplete){
+      shinyjs::show("predpanel1")
     } else {
-      shinyjs::hide("predpanel")
+      shinyjs::hide("predpanel1")
     }
   })
-  predictionsServer("pred", cval,
+  predictionsServer("pred1", cval1,
                     model_data,
                     report_path) 
   
