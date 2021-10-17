@@ -35,7 +35,7 @@ ui <- function(request){
                startpage()
       ),
       tabPanel(title = "The Land 1",
-               predictors_UI("S1_in")
+               predictors_UI("S1in")
       ),
       tabPanel(title = "Estimates",
          fluidRow(
@@ -93,8 +93,8 @@ server <- function(input, output, session) {
        deleteFile = FALSE
   )
   
-  cval <- predictors_Server("S1_in")
-  # cval2 <- predictors_Server("S2_in")
+  cval <- predictors_Server("S1in")
+  cval2 <- predictors_Server("S2in")
   # observeEvent(cval2(), {print("New cval2() evaluation")
     # print(list2DF(cval()))})
   
