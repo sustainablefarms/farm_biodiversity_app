@@ -78,9 +78,12 @@ ui <- function(request){
                actionButton2("overallhelp", "More Help", class = "badge_tiny"),
         )),
       HTML("</div>"),
-      conditionalPanel("input.hidestartpage <= 0",
+      conditionalPanel("!(input.hidestartpage > 0)",
                        startpage(),
-                       actionButton("hidestartpage", "Start App")),
+                       # actionButton("hidestartpage", "Start App"),
+                       uiOutput("startbuttonlocation"),
+                       # waiter::triggerWaiter(el = "temp", id = "startbuttonlocation", on = "onload")
+                       ),
       conditionalPanel("input.hidestartpage > 0",
                        navbarsection),
       title = appname,
@@ -92,7 +95,7 @@ ui <- function(request){
 server <- function(input, output, session) {
   Sys.sleep("5")
   output$startbuttonlocation <- renderUI({
-    actionButton("start", "Start App")
+    actionButton("hidestartpage", "Start App")
   })
   observeEvent(input$start, {
     waiter::waiter_hide()
