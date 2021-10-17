@@ -31,9 +31,6 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
 # UI
 ui <- function(request){
   navbarsection <- navbarPage(title = "",
-      tabPanel(title = "Intro",
-               startpage()
-      ),
       tabPanel(title = "The Land 1",
                predictors_UI("S1in")
       ),
@@ -50,11 +47,16 @@ ui <- function(request){
     footer = "Forward <-> back"
   )
   out <- bootstrapPage(
-      waiter::use_waiter(), 
-      waiter::waiter_preloader(),
-      tags$head(includeHTML("./www/google-analytics.html")),
       includeCSS("./www/base.css"),
+      waiter::use_waiter(), 
+      waiter::waiter_show_on_load(
+        html = tagList(tags$div("test"),
+                       waiter::spin_1(),
+          uiOutput("startbuttonlocation"))
+        # color = "#ffffff"
+      ),
       # the following enables bootstrap 3's inbuilt tooltips
+      tags$head(includeHTML("./www/google-analytics.html")),
       tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
       })"
@@ -82,6 +84,14 @@ ui <- function(request){
 
 # SERVER
 server <- function(input, output, session) {
+  Sys.sleep("5")
+  output$startbuttonlocation <- renderUI({
+    actionButton("start", "Start App")
+  })
+  observeEvent(input$start, {
+    waiter::waiter_hide()
+    showNotification("start pressed")
+  })
 
   # set up required data
   ## SF logo
