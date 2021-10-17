@@ -65,14 +65,7 @@ predictionsUI <- function(id){
                                    tags$p(tags$em("Use Default,"), "when checked, overides the saved estimates with the default estimates.",
                                    "Uncheck", tags$em("Use Default"), "to use the saved reference."),
 				   tags$p(tags$em("Warning: refreshing the web browser removes the saved reference."))),
-		      HTML = TRUE),
-            actionButton2(ns("savetoreference"), label = "Update", class = "badge_tiny", width = "80px"),
-				  shinyWidgets::materialSwitch(ns("usedefaultreference"),
-				                               label = "Default in Use",
-				                               value = TRUE,
-				                               status = "primary",
-				                               right = TRUE,
-				                               inline = TRUE)
+		      HTML = TRUE)
                )
       )
   ))
@@ -88,7 +81,6 @@ predictionsServer <- function(id,
     function(input, output, session){
       data <- reactiveValues(
         Xocc = NULL,
-        reference = NULL,
         species_prob_current = NULL,
         species_richness = NULL,
         toptennames = NULL,
@@ -106,22 +98,6 @@ predictionsServer <- function(id,
         }
       })
       
-      # Set up reference situations
-      modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
-                                                                                                     model_data$XoccProcess$scale,
-                                                                                                     model_data$XoccColNames)})
-      species_prob_mean <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwmeanXocc)
-      reference_user <- reactiveValues(
-        Xocc = new_data_mean,
-        region = NULL,
-        predictions = species_prob_mean
-      )
-      reference_mean = list(
-        Xocc = new_data_mean,
-        region = NULL,
-        predictions = species_prob_mean
-      )
-      
       # compute predictions below
       datar <- reactive({
         if(
@@ -133,11 +109,6 @@ predictionsServer <- function(id,
                                                                                model_data$XoccProcess$scale,
                                                                                model_data$XoccColNames)})
           print(modwXocc$data$Xocc)
-          if (!isTRUE(input$usedefaultreference)){
-            data$reference <- reactiveValuesToList(reference_user)
-          } else {
-            data$reference <- reference_mean
-          }
           data$species_prob_current <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwXocc)
           data$spec_different <- todifferent(data$species_prob_current, refpredictions())
           species_richness_raw <- rbind(compute_richness(model_data, data$Xocc),
@@ -164,20 +135,9 @@ predictionsServer <- function(id,
           # data <- lapply(data, function(x) NULL)
           data$Xocc <- NULL
           data$species_prob_current <- NULL
-          data$reference <- NULL
           data$species_richness <- NULL
         }
         data
-      })
-      
-      # reference prediction saving
-      shinyjs::disable("usedefaultreference") #disable turning off default reference
-      observeEvent(input$savetoreference, {
-        shinyjs::enable("usedefaultreference")#enabling turning off default reference now that a reference is set
-	shinyWidgets::updateMaterialSwitch(session = session, inputId = "usedefaultreference", value = FALSE)
-        reference_user$Xocc <- datar()$Xocc
-        reference_user$region <- current_values()$selected_region
-        reference_user$predictions <- datar()$species_prob_current
       })
       
       # draw species plots
@@ -270,31 +230,7 @@ predictionsServer <- function(id,
       }
       
       # bookmarking settings
-      setBookmarkExclude(c("savetoreference",
-                           "moredetail",
-                           "usedefaultreference"))
-      observe({
-        input$savetoreference
-        input$usedefaultreference
-        session$doBookmark()
-      })
-      onBookmark(function(state) {
-        if (isTruthy(reference_user$region)){
-          state$values$userreferencesaved <- TRUE
-        } else {
-          state$values$userreferencesaved <- FALSE
-        }
-      })
-      onRestored(function(state) {
-        if (isTruthy(state$values$userreferencesaved)){
-          showNotification("Sorry. Did not load user defined reference values: not supported by server.", 
-                           type = "warning")
-          shinyWidgets::updateMaterialSwitch(session = session,
-                                             inputId = "usedefaultreference",
-                                             value = TRUE)
-        }
-      })
-      
+      setBookmarkExclude(c("moredetail"))
       reactive(datar()$species_prob_current)
     })
 }
