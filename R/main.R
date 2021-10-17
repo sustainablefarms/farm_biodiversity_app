@@ -34,7 +34,8 @@ ui <- function(request){
       tabPanel(title = "AccordTest",
                includeHTML("./www/accordiontest.html"),
                accordion(id = "t2", 
-                 accordion_item("t2i1title", id = "t2i1", "This is the content2")
+                 accordion_item("t2i1title", id = "t2i1", "This is the content2"),
+                 accordion_item("t2i2title", id = "t2i2", "This is the content2b")
                ),
                accordion(id = "t1", 
                  accordion_item("i1title", id = "i1", "This is the content")

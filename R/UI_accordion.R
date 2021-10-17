@@ -8,7 +8,7 @@
 #' )
 accordion <- function(id, ...) {
   # following modifies data-bs-parent to be #id
-  modded <- htmltools::tagQuery(...)$children(".accordion-collapse")$removeAttrs("data-bs-parent")$addAttrs(`data-bs-parent`= paste0("#", id))$allTags()
+  modded <- htmltools::tagQuery(tagList(...))$children(".accordion-collapse")$removeAttrs("data-bs-parent")$addAttrs(`data-bs-parent`= paste0("#", id))$allTags()
   # modded <- gsub("#placeholderparentid", paste0("#", id), ...) #can't use gsub easily at it stuffs up the escaping
   tags$div(class = "accordion", id = id, modded)
 }

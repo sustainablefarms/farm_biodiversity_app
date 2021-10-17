@@ -2,11 +2,11 @@
 predictors_UI <- function(id){
   ns <- NS(id)
   tagList(
-         fluidRow(selectlocationUI(ns("loc"))),
-         fluidRow(selectYfAUI(ns("yfa"))),
-         fluidRow(
-           selectpatchUI(ns("ptch"))
-         ),
+    accordion(id = ns("acc"), 
+      accordion_item("Select Location", id = ns("acc-loc"), selectlocationUI(ns("loc"))),
+      accordion_item("Rainfall Since Last August", id = ns("acc-yfa"), selectYfAUI(ns("yfa"))),
+      accordion_item("Patches", id = ns("acc-ptch"), selectpatchUI(ns("ptch")))
+    ),
          if (isTRUE(getOption("shiny.testmode"))){
            downloadButton(ns("downloadcvals"), "Download Current Values", class = "download_badge")
          },
