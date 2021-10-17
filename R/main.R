@@ -101,7 +101,7 @@ server <- function(input, output, session) {
                           print(list2DF(cval1()))})
     observeEvent(cval2(), {print("New cval2() evaluation")
       print(list2DF(cval2()))})
-    # cval(readRDS("./tests/testthat/current_values_1patch.rds"))
+    # cval1(readRDS("./tests/testthat/current_values_1patch.rds"))
   }
   
   ## PREDICTIONS
