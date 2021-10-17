@@ -44,11 +44,7 @@ ui <- function(request){
                predictors_UI("S2in")
       ),
       tabPanel(title = "Estimates 2",
-               fluidRow(
-                 HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
-                 tags$div(id = "predpanel2", predictionsUI("pred2")) %>%
-                   shinyjs::hidden()
-               )
+           predictionsUI("pred2")
       ),
     collapsible = TRUE,
     footer = "Forward <-> back"
