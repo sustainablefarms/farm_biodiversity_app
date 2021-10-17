@@ -1,7 +1,7 @@
 # predictions module
 predictionsUI <- function(id){
   ns <- NS(id)
-  tagList(
+  shinyjs::hidden(tags$div(id = ns("predpanel"),
     # the following enables bootstrap 3's inbuilt tooltips
     tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
@@ -75,7 +75,7 @@ predictionsUI <- function(id){
 				                               inline = TRUE)
                )
       )
-  )
+  ))
 }
 
 predictionsServer <- function(id, 
@@ -95,6 +95,15 @@ predictionsServer <- function(id,
         speciesinfo_botten = NULL)
       moredetailopens <- reactiveVal(value = 0, label = "moredetailopens")
       ns <- session$ns
+  
+      # reveal predictions panel
+      observeEvent(current_values(), {
+        if (current_values()$locationcomplete & current_values()$allpatchcomplete){
+          shinyjs::show("predpanel")
+        } else {
+          shinyjs::hide("predpanel")
+        }
+      })
       
       # Set up reference situations
       modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,

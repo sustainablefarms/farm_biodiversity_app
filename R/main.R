@@ -37,15 +37,18 @@ ui <- function(request){
       tabPanel(title = "The Land 1",
                predictors_UI("S1in")
       ),
-      tabPanel(title = "Estimates",
-         fluidRow(
-           HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
-           tags$div(id = "predpanel1", predictionsUI("pred1")) %>%
-             shinyjs::hidden()
-         )
+      tabPanel(title = "Estimates 1",
+           predictionsUI("pred1")
       ),
       tabPanel(title = "The Land 2",
                predictors_UI("S2in")
+      ),
+      tabPanel(title = "Estimates 2",
+               fluidRow(
+                 HTML("<div class='subheader'><h2>BIRD BIODIVERSITY</h2></div>"),
+                 tags$div(id = "predpanel2", predictionsUI("pred2")) %>%
+                   shinyjs::hidden()
+               )
       ),
     collapsible = TRUE,
     footer = "Forward <-> back"
@@ -76,7 +79,7 @@ ui <- function(request){
         )),
       HTML("</div>"),
       navbarsection,
-      title = "appname",
+      title = appname,
       theme = bslib::bs_theme(version = 5, "lumen")
   )
 }
@@ -105,15 +108,10 @@ server <- function(input, output, session) {
   }
   
   ## PREDICTIONS
-  # reveal predictions panel
-  observeEvent(cval1(), {
-    if (cval1()$locationcomplete & cval1()$allpatchcomplete){
-      shinyjs::show("predpanel1")
-    } else {
-      shinyjs::hide("predpanel1")
-    }
-  })
   predictionsServer("pred1", cval1,
+                    model_data,
+                    report_path) 
+  predictionsServer("pred2", cval1,
                     model_data,
                     report_path) 
   
