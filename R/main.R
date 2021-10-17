@@ -31,6 +31,15 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
 # UI
 ui <- function(request){
   navbarsection <- navbarPage(title = "",
+      tabPanel(title = "AccordTest",
+               # includeHTML("./www/accordiontest.html")
+               accordion(id = "taccordion", 
+                 accordion_item("i1title", id = "i1", parentaccordionid = "taccordion", "This is the content")
+               ),
+               accordion(id = "t2accordion", 
+                         accordion_item("2i1title", id = "2i1", parentaccordionid = "t2accordion", "This is the content2")
+               )
+      ),
       tabPanel(title = "Intro",
                startpage()
       ),
