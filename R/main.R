@@ -125,7 +125,6 @@ server <- function(input, output, session) {
   
   setBookmarkExclude(c("overallhelpfake",
                        "moredetailfake",
-                       "viewcvals",
                        "overallhelp",
                        "waiter_shown",
                        "introfake",

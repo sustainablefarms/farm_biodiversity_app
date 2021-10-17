@@ -64,7 +64,8 @@ predictors_Server <- function(id){
       cval()
     })
   }
-    
+      
+  setBookmarkExclude(c("viewcvals", "downloadcvals"))
     ## out!
       cval
     })
