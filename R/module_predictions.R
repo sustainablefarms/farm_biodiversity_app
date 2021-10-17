@@ -80,6 +80,7 @@ predictionsUI <- function(id){
 
 predictionsServer <- function(id, 
                               current_values,
+                              refpredictions,
                               model_data,
                               report_path){
   moduleServer(
@@ -138,9 +139,9 @@ predictionsServer <- function(id,
             data$reference <- reference_mean
           }
           data$species_prob_current <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwXocc)
-          data$spec_different <- todifferent(data$species_prob_current, data$reference$predictions)
+          data$spec_different <- todifferent(data$species_prob_current, refpredictions())
           species_richness_raw <- rbind(compute_richness(model_data, data$Xocc),
-                                         reference = sum(data$reference$predictions[, "median"]))           # add in reference
+                                         reference = sum(refpredictions()[, "median"]))           # add in reference
           species_richness_raw$category <- factor(1:4, levels = 4:1,
                  labels = c(
                             "Reference estimate",
@@ -294,7 +295,7 @@ predictionsServer <- function(id,
         }
       })
       
-      reactive(input$usedefaultreference)
+      reactive(datar()$species_prob_current)
     })
 }
 

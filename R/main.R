@@ -92,6 +92,7 @@ server <- function(input, output, session) {
        deleteFile = FALSE
   )
   
+  ## Predictors Input
   cval1 <- predictors_Server("S1in")
   cval2 <- predictors_Server("S2in")
   
@@ -103,11 +104,20 @@ server <- function(input, output, session) {
     # cval1(readRDS("./tests/testthat/current_values_1patch.rds"))
   }
   
+  ## Set up average situation -- could be performed offline
+  modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
+                                                                                                  model_data$XoccProcess$scale,
+                                                                                                  model_data$XoccColNames)})
+  species_prob_mean <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwmeanXocc)
+  species_prob_mean_r <- reactive({species_prob_mean})
+  
   ## PREDICTIONS
-  predictionsServer("pred1", cval1,
+  pred1arr <- predictionsServer("pred1", cval1,
+                    species_prob_mean_r,
                     model_data,
                     report_path) 
-  predictionsServer("pred2", cval1,
+  predictionsServer("pred2", cval2,
+                    pred1arr,
                     model_data,
                     report_path) 
   
