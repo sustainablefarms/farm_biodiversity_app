@@ -80,9 +80,9 @@ ui <- function(request){
       HTML("</div>"),
       conditionalPanel("!(input.hidestartpage > 0)",
                        startpage(),
-                       # actionButton("hidestartpage", "Start App"),
-                       uiOutput("startbuttonlocation"),
-                       # waiter::triggerWaiter(el = "temp", id = "startbuttonlocation", on = "onload")
+                       div(id = "startbuttonlocation",
+                           actionButton("start_disabled", "App is loading...",
+                                        style = "color:#808080;"))
                        ),
       conditionalPanel("input.hidestartpage > 0",
                        navbarsection),
@@ -93,15 +93,12 @@ ui <- function(request){
 
 # SERVER
 server <- function(input, output, session) {
-  Sys.sleep("5")
-  output$startbuttonlocation <- renderUI({
-    actionButton("hidestartpage", "Start App")
-  })
-  observeEvent(input$start, {
-    waiter::waiter_hide()
-    showNotification("start pressed")
-  })
-
+  ## Stuff to do with the opening page of the app
+  insertUI(selector = "#startbuttonlocation",
+           where = "afterBegin",
+           ui = actionButton("hidestartpage", "Start App"))
+  removeUI(selector = "#start_disabled", immediate = FALSE)
+  
   # set up required data
   ## SF logo
   output$sflogo <- renderImage(
