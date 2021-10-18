@@ -324,12 +324,13 @@ selectlocationServer <- function(id){
 
 app_selectlocation <- function(){
   main_app_prep()
+  enableBookmarking(store = "disable")
   
   shinyApp(
     {fluidPage(
       includeCSS("./www/base.css"),
       fluidRow(selectlocationUI("location")),
-      theme = bslib::bs_theme(version = 3, "lumen"))
+      theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
       selectlocationServer("location")

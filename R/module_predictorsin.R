@@ -69,4 +69,20 @@ predictors_Server <- function(id){
     ## out!
       cval
     })
-  }
+}
+
+app_predictorsin <- function(){
+  main_app_prep()
+  enableBookmarking(store = "disable")
+  
+  shinyApp(
+    {bootstrapPage(
+      includeCSS("./www/base.css"),
+      predictors_UI("S1in"),
+      theme = bslib::bs_theme(version = 5, "lumen"))
+    },
+    function(input, output, session){
+      predictors_Server("S1in")
+      # observe(print(data.frame(reactiveValuesToList(cval1()))))
+    })
+}
