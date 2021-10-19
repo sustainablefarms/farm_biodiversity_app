@@ -9,7 +9,7 @@ selectpatch2UI <- function(id){
   tagList(
   # accordion_item("Patch 1", id = ns("patch1"), patchattr_UI(ns("p1"), defaultpatchvalues)),
   div(id = ns("placeholder")),
-  actionButton(ns("addpatch"), "Add a patch"),
+  actionButton(ns("addpatch"), "Add a patch")
   )
 }
 
@@ -33,7 +33,7 @@ selectpatch2Server <- function(id, selected_region){
       patchchangeevent <- reactiveVal(0) #  increment whenever the patch number of patch complete changes
       
       patchnumshown <- reactiveVal(0)
-      patchnumwanted <- reactiveVal(2)
+      patchnumwanted <- reactiveVal(1)
       patchidsinuse <- reactiveVal(vector())
       
   observeEvent(input$addpatch, {
@@ -58,7 +58,7 @@ selectpatch2Server <- function(id, selected_region){
                                           actionButton(ns(paste0("p", newid,"delete")), "Delete"),
                                           ),
                    id = ns(paste0("pacc", newid)),
-                   patchattr_UI(paste0("p", newid), defaultpatchvalues),
+                   patchattr_UI(ns(paste0("p", newid)), defaultpatchvalues),
                    )
              )
     patchidsinuse(c(patchidsinuse(), newid))
@@ -77,26 +77,32 @@ selectpatch2Server <- function(id, selected_region){
     )})
 
   # have servers running already, similar to the patch deleters
+  clicked_record <- reactiveValues( #record of
+    #patches = 1, # number of patches - obsolete as of patchnumselector_module
+    patch_buttons = 1, #and number of times their buttons pressed
+    selected_patch = 1)
   attr_out <- lapply(1:maxpatchnum, function(pid){
     out <- patchattr_Server(paste0("p", pid), clicked_record, selected_region) #clicked_record used so that know to refresh when modal is being opened again
     return(out)
     })
-  observe({
-    print(attr_out[[1]]())
-  })
+
   out <- reactive({
     outinfo <- list()
     outinfo$patches <- length(patchidsinuse())
-    validate(need(outinfo$patches > 0, ""))
+    validate(need(outinfo$patches > 0, "No patches"))
     # patches <- sort(patchidsinuse())
     attr_out_list <- lapply(patchidsinuse(), function(pid){
       if (!(pid %in% patchidsinuse())){return(NULL)}
-        attr_out[[pid]]()
+        attr_pid <- attr_out[[pid]]()
+        # when patch is initialised it has NULL attributes briefly, hence the following
+        empty <- sum(unlist(lapply(attr_pid, function(x) !is.null(x))), na.rm = TRUE) == 0
+        if (isTruthy(empty)){return(NULL)}
+        return(attr_pid)
       })
-    # stop here if the first patch has all null values, this is useful because vapply errors
-    # validate(need(length(attr_out_list) > 0, ""))
-    validate(need(sum(unlist(lapply(attr_out_list[[1]], function(x) !is.null(x))), na.rm = TRUE) > 0, ""))
-             
+    # keep only the non-null values, often at start of app attr_out_list <- list(NULL)
+    attr_out_list <- attr_out_list[!vapply(attr_out_list, is.null, FUN.VALUE = TRUE)]
+    validate(need(length(attr_out_list) > 0, ""))
+    
     outinfo$woody500m = vapply(attr_out_list, function(x) x[["woody500m"]], FUN.VALUE = 3.5)
     outinfo$woody3000m = vapply(attr_out_list, function(x) x[["woody3000m"]], FUN.VALUE = 3.5)
     outinfo$noisy_miner = vapply(attr_out_list, function(x) x[["noisy_miner"]], FUN.VALUE  = 0)
@@ -104,24 +110,24 @@ selectpatch2Server <- function(id, selected_region){
     outinfo$year = 2018
     outinfo$allpatchcomplete = TRUE #obsolete
     outinfo
-  })
+  }) 
   out
 }
 )
 }
 
-app_selectpatch <- function(){
+app_selectpatch2 <- function(){
   main_app_prep()
   enableBookmarking(store = "disable")
   
   shinyApp(
     {fluidPage(
       includeCSS("./www/base.css"),
-      fluidRow(selectpatchUI("patch")),
-      theme = bslib::bs_theme(version = 3, "lumen"))
+      fluidRow(selectpatch2UI("patch")),
+      theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
-      output <- selectpatchServer("patch")
-      observe(print(data.frame(reactiveValuesToList(output))))
+      output <- selectpatch2Server("patch")
+      observe(print(data.frame(output())))
     })
 }

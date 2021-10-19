@@ -197,7 +197,7 @@ patchattr_Server <- function(id, clicked_record, selected_region){
         observeEvent(specifiedvals(),
                      {
                        showNotification(paste(names(specifiedvals()), specifiedvals(),
-                                              sep = " = ", collapse = ", "), duration = 0.5)
+                                              sep = " = ", collapse = ", "), duration = 3)
                      })
       }
       
