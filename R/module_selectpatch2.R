@@ -2,7 +2,7 @@ defaultpatchvalues <- list(woody500m = round(new_data_mean$WCF_500/0.5) * 0.5,
                               woody3000m = round(new_data_mean$WCF_3000/0.5) * 0.5,
                               noisy_miner = TRUE,
                               IsRemnant = TRUE,
-                              showmap = TRUE)
+                              showmap = FALSE)
 
 selectpatch2UI <- function(id){
   ns <- NS(id)
@@ -35,13 +35,13 @@ selectpatch2Server <- function(id, selected_region){
       patchchangeevent <- reactiveVal(0) #  increment whenever the patch number of patch complete changes
       
       patchnumshown <- reactiveVal(0)
-      patchnumwanted <- reactiveVal(1)
+      patchnumwanted <- reactiveVal(2)
       
   observeEvent(input$addpatch, {
     patchnumwanted(patchnumwanted() + 1)
   }, ignoreInit = TRUE, ignoreNULL = TRUE)
 
-  # add 'patch' buttons
+  # add patches
   observeEvent(patchnumwanted(), {
     validate(need(patchnumwanted() - patchnumshown() > 0, ""))
     while  (patchnumshown() < patchnumwanted()){
@@ -49,13 +49,42 @@ selectpatch2Server <- function(id, selected_region){
     insertUI(paste0("#", ns("placeholder")),
              where = "beforeBegin",
              ui = 
-               accordion_item(title = paste("Patch", patchnumshown() + 1),
-                   id = ns(paste0("pacc", patchnumshown())),
-                   patchattr_UI(paste0("p", patchnumshown()), defaultpatchvalues))
+               accordion_item(title = 
+                                tags$span(paste("Patch", patchnumshown() + 1),
+                                          actionButton(ns(paste0("p", patchnumshown() + 1,"delete")), "Delete"),
+                                          ),
+                   id = ns(paste0("pacc", patchnumshown() + 1)),
+                   patchattr_UI(paste0("p", patchnumshown() + 1), defaultpatchvalues),
+                   )
              )
+
     patchnumshown(patchnumshown() + 1)
     }
   }, ignoreInit = FALSE, ignoreNULL = FALSE)
+  
+  # remove a patch  # I couldn't get this observer created for interactively.
+    observeEvent(input[[paste0("p", 1,"delete")]],
+                 {
+                   # removeUI
+                   showNotification(paste("Deleting patch", 1))
+                 }
+                 # ignoreInit = TRUE, once = TRUE
+                 )
+    observeEvent(input[[paste0("p", 2,"delete")]],
+                 {
+                   showNotification(paste("Deleting patch", 2))
+                   removeUI(paste0("#", ns(paste0("pacc", 2))))
+                 }
+                 # ignoreInit = TRUE, once = TRUE
+    )
+  # observeEvent(input[[paste0("p", 1,"delete")]],
+  #              {
+  #                # removeUI
+  #                showNotification(paste("Deleting patch", 1))
+  #              }
+  #              # ignoreInit = TRUE, once = TRUE
+  #              )
+  
 
   # have servers running already, or launch a server?
   # out1 <- patchattr_Server("p1", clicked_record, selected_region) #clicked_record used so that know to refresh when modal is being opened again

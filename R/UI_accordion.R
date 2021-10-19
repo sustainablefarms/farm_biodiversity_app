@@ -18,7 +18,7 @@ accordion_item <- function(title, id = NULL, ...){
   if (is.null(id)){ id <- paste0(sample(LETTERS, 5, replace = TRUE), collapse = "")}
   bodyid <- paste0(id, "_collapse")
   headerid <- paste0(id, "_header")
-  tags$div(class = "accordion-item",
+  tags$div(class = "accordion-item", id = id,
     accordion_item_header(id = headerid, title = title, bodyid = bodyid),
     accordion_item_body(..., id = bodyid, aria_labelledby = headerid,
                         data_bs_parent = "#placeholderparentid")
