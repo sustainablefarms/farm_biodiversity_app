@@ -36,55 +36,50 @@ selectpatch2Server <- function(id, selected_region){
       
       patchnumshown <- reactiveVal(0)
       patchnumwanted <- reactiveVal(2)
+      patchidsinuse <- reactiveVal(vector())
       
   observeEvent(input$addpatch, {
-    patchnumwanted(patchnumwanted() + 1)
+    if (patchnumwanted() >= maxpatchnum){
+      showNotification(paste("Please use ", maxpatchnum, "or fewer patches."),
+                       type = "warning")
+    } else {
+      patchnumwanted(patchnumwanted() + 1)
+    }
   }, ignoreInit = TRUE, ignoreNULL = TRUE)
 
   # add patches
   observeEvent(patchnumwanted(), {
     validate(need(patchnumwanted() - patchnumshown() > 0, ""))
     while  (patchnumshown() < patchnumwanted()){
-    showNotification(paste("Adding patch", patchnumshown() + 1))
+    newid <- min(sort(setdiff(1:maxpatchnum, patchidsinuse())))
+    showNotification(paste("Adding patch", newid))
     insertUI(paste0("#", ns("placeholder")),
              where = "beforeBegin",
              ui = 
                accordion_item(title = 
-                                tags$span(paste("Patch", patchnumshown() + 1),
-                                          actionButton(ns(paste0("p", patchnumshown() + 1,"delete")), "Delete"),
+                                tags$span(paste("Patch", newid),
+                                          actionButton(ns(paste0("p", newid,"delete")), "Delete"),
                                           ),
-                   id = ns(paste0("pacc", patchnumshown() + 1)),
-                   patchattr_UI(paste0("p", patchnumshown() + 1), defaultpatchvalues),
+                   id = ns(paste0("pacc", newid)),
+                   patchattr_UI(paste0("p", newid), defaultpatchvalues),
                    )
              )
-
+    patchidsinuse(c(patchidsinuse(), newid))
+    print(patchidsinuse())
     patchnumshown(patchnumshown() + 1)
     }
   }, ignoreInit = FALSE, ignoreNULL = FALSE)
   
   # remove a patch  # I couldn't get this observer created for interactively.
-    # observeEvent(input[[paste0("p", 1,"delete")]],
-    #              {
-    #                # removeUI
-    #                showNotification(paste("Deleting patch", 1))
-    #              }
-    #              # ignoreInit = TRUE, once = TRUE
-    #              )
-    # observeEvent(input[[paste0("p", 2,"delete")]],
-    #              {
-    #                showNotification(paste("Deleting patch", 2))
-    #                removeUI(paste0("#", ns(paste0("pacc", 2))))
-    #              }
-    #              # ignoreInit = TRUE, once = TRUE
-    # )
-    patchdeleters <- lapply(1:maxpatchnum, function(pid){
-      observeEvent(input[[paste0("p", pid,"delete")]],
-                   {
-                     showNotification(paste("Deleting patch", pid))
-                     removeUI(paste0("#", ns(paste0("pacc", pid))))
-                   }
-                   # ignoreInit = TRUE, once = TRUE
-      )})
+  patchdeleters <- lapply(1:maxpatchnum, function(pid){
+    observeEvent(input[[paste0("p", pid,"delete")]],
+                 {
+                   showNotification(paste("Deleting patch", pid))
+                   removeUI(paste0("#", ns(paste0("pacc", pid))))
+                   patchidsinuse(setdiff(patchidsinuse(), pid))
+                 }
+                 # ignoreInit = TRUE, once = TRUE
+    )})
   # observeEvent(input[[paste0("p", 1,"delete")]],
   #              {
   #                # removeUI
