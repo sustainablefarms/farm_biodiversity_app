@@ -3,9 +3,9 @@ predictors_UI <- function(id){
   ns <- NS(id)
   tagList(
     accordion(id = ns("acc"), 
-      accordion_item("Select Location", id = ns("acc-loc"), selectlocationUI(ns("loc"))),
-      accordion_item("Rainfall Since Last August", id = ns("acc-yfa"), selectYfAUI(ns("yfa"))),
-      accordion_item("Patches", id = ns("acc-ptch"), selectpatchUI(ns("ptch")))
+      # accordion_item("Select Location", id = ns("acc-loc"), selectlocationUI(ns("loc"))),
+      # accordion_item("Rainfall Since Last August", id = ns("acc-yfa"), selectYfAUI(ns("yfa"))),
+      selectpatch2UI(ns("ptch"))
     ),
          if (isTRUE(getOption("shiny.testmode"))){
            downloadButton(ns("downloadcvals"), "Download Current Values", class = "download_badge")
@@ -22,7 +22,7 @@ predictors_Server <- function(id){
     function(input, output, session){
       ns <- session$ns
       ## PATCH (and year)
-      frompatch <- selectpatchServer("ptch", selected_region)
+      frompatch <- selectpatch2Server("ptch", selected_region)
     
       ## REGION
       fromlocation <- selectlocationServer("loc")
