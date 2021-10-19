@@ -3,8 +3,8 @@ predictors_UI <- function(id){
   ns <- NS(id)
   tagList(
     accordion(id = ns("acc"), 
-      # accordion_item("Select Location", id = ns("acc-loc"), selectlocationUI(ns("loc"))),
-      # accordion_item("Rainfall Since Last August", id = ns("acc-yfa"), selectYfAUI(ns("yfa"))),
+      accordion_item("Select Location", id = ns("acc-loc"), selectlocationUI(ns("loc"))),
+      accordion_item("Rainfall Since Last August", id = ns("acc-yfa"), selectYfAUI(ns("yfa"))),
       selectpatch2UI(ns("ptch"))
     ),
          if (isTRUE(getOption("shiny.testmode"))){
@@ -53,7 +53,7 @@ predictors_Server <- function(id){
     observeEvent(input$viewcvals, {
       showModal(
         modalDialog(
-          verbatimTextOutput("cvals"),
+          verbatimTextOutput(ns("cvals")),
           title = "Current Values for Prediction",
           size = "l",
           easyClose = TRUE,

@@ -327,7 +327,7 @@ app_selectlocation <- function(){
   enableBookmarking(store = "disable")
   
   shinyApp(
-    {fluidPage(
+    {bootstrapPage(
       includeCSS("./www/base.css"),
       fluidRow(selectlocationUI("location")),
       theme = bslib::bs_theme(version = 5, "lumen"))
