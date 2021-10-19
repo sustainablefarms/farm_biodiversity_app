@@ -21,17 +21,15 @@ selectpatch2Server <- function(id, selected_region){
       maxpatchnum <- 6
       # set up reactive values
       # store patch attributes
-      click_now <- reactiveValues( # for clicks now - opening patch modals
-        patches = NULL)
-      outinfo <- reactiveValues( #to send out of this module
-        allpatchcomplete = FALSE,
-        patches = 1,
-        woody500m = NA,
-        woody3000m = NA,
-        noisy_miner = NA,
-        IsRemnant = NA,
-        year = NA
-      )
+      # outinfo <- reactiveValues( #to send out of this module
+      #   allpatchcomplete = FALSE,
+      #   patches = 1,
+      #   woody500m = NA,
+      #   woody3000m = NA,
+      #   noisy_miner = NA,
+      #   IsRemnant = NA,
+      #   year = NA
+      # )
       patchchangeevent <- reactiveVal(0) #  increment whenever the patch number of patch complete changes
       
       patchnumshown <- reactiveVal(0)
@@ -52,7 +50,6 @@ selectpatch2Server <- function(id, selected_region){
     validate(need(patchnumwanted() - patchnumshown() > 0, ""))
     while  (patchnumshown() < patchnumwanted()){
     newid <- min(sort(setdiff(1:maxpatchnum, patchidsinuse())))
-    showNotification(paste("Adding patch", newid))
     insertUI(paste0("#", ns("placeholder")),
              where = "beforeBegin",
              ui = 
@@ -65,7 +62,6 @@ selectpatch2Server <- function(id, selected_region){
                    )
              )
     patchidsinuse(c(patchidsinuse(), newid))
-    print(patchidsinuse())
     patchnumshown(patchnumshown() + 1)
     }
   }, ignoreInit = FALSE, ignoreNULL = FALSE)
@@ -74,26 +70,43 @@ selectpatch2Server <- function(id, selected_region){
   patchdeleters <- lapply(1:maxpatchnum, function(pid){
     observeEvent(input[[paste0("p", pid,"delete")]],
                  {
-                   showNotification(paste("Deleting patch", pid))
                    removeUI(paste0("#", ns(paste0("pacc", pid))))
                    patchidsinuse(setdiff(patchidsinuse(), pid))
                  }
                  # ignoreInit = TRUE, once = TRUE
     )})
-  # observeEvent(input[[paste0("p", 1,"delete")]],
-  #              {
-  #                # removeUI
-  #                showNotification(paste("Deleting patch", 1))
-  #              }
-  #              # ignoreInit = TRUE, once = TRUE
-  #              )
-  
 
-  # have servers running already, or launch a server?
-  # out1 <- patchattr_Server("p1", clicked_record, selected_region) #clicked_record used so that know to refresh when modal is being opened again
-
-  # out1 #return value of the server
-  }
+  # have servers running already, similar to the patch deleters
+  attr_out <- lapply(1:maxpatchnum, function(pid){
+    out <- patchattr_Server(paste0("p", pid), clicked_record, selected_region) #clicked_record used so that know to refresh when modal is being opened again
+    return(out)
+    })
+  observe({
+    print(attr_out[[1]]())
+  })
+  out <- reactive({
+    outinfo <- list()
+    outinfo$patches <- length(patchidsinuse())
+    validate(need(outinfo$patches > 0, ""))
+    # patches <- sort(patchidsinuse())
+    attr_out_list <- lapply(patchidsinuse(), function(pid){
+      if (!(pid %in% patchidsinuse())){return(NULL)}
+        attr_out[[pid]]()
+      })
+    # stop here if the first patch has all null values, this is useful because vapply errors
+    # validate(need(length(attr_out_list) > 0, ""))
+    validate(need(sum(unlist(lapply(attr_out_list[[1]], function(x) !is.null(x))), na.rm = TRUE) > 0, ""))
+             
+    outinfo$woody500m = vapply(attr_out_list, function(x) x[["woody500m"]], FUN.VALUE = 3.5)
+    outinfo$woody3000m = vapply(attr_out_list, function(x) x[["woody3000m"]], FUN.VALUE = 3.5)
+    outinfo$noisy_miner = vapply(attr_out_list, function(x) x[["noisy_miner"]], FUN.VALUE  = 0)
+    outinfo$IsRemnant = vapply(attr_out_list, function(x) x[["IsRemnant"]], FUN.VALUE = 0)
+    outinfo$year = 2018
+    outinfo$allpatchcomplete = TRUE #obsolete
+    outinfo
+  })
+  out
+}
 )
 }
 

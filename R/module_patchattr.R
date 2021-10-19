@@ -117,7 +117,6 @@ patchattr_Server <- function(id, clicked_record, selected_region){
   moduleServer(
     id,
     function(input, output, session){
-      print(input)
       ns <- session$ns
       
       # from lat lon work

@@ -33,10 +33,10 @@ predictors_Server <- function(id){
       
       ## Combine!
       cval <- eventReactive({c(fromyfa(),
-        reactiveValuesToList(frompatch))}, {
+        frompatch())}, {
         out <- c(fromlocation(),
                  fromyfa(),
-               reactiveValuesToList(frompatch))
+                 frompatch())
         out
       })
   
