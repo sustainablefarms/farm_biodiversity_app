@@ -113,14 +113,14 @@ shinyWidgets::materialSwitch(ns("showmap"),
 ))
 }
 
-patchattr_Server <- function(id, clicked_record, selected_region){
+patchattr_Server <- function(id, selected_region){
   moduleServer(
     id,
     function(input, output, session){
       ns <- session$ns
       
       # from lat lon work
-      leafletout <- leaflet_Server("leaflet", clicked_record, selected_region)
+      leafletout <- leaflet_Server("leaflet", selected_region)
       observe({
         validate(need(leafletout(), ""))
         updateTextInput(inputId = "lon", value = leafletout()$lng)
@@ -220,10 +220,6 @@ patchattr_Server <- function(id, clicked_record, selected_region){
 
 app_patchattr <- function(){
   attributes <- list(IsRemnant = TRUE, noisy_miner = FALSE, woody500m = 3.5, woody3000m = 8.2, showmap = FALSE)
-  clicked_record <- reactiveValues( #record of
-    #patches = 1, # number of patches - obsolete as of patchnumselector_module
-    patch_buttons = 1, #and number of times their buttons pressed
-    selected_patch = 1)
   selected_region <- reactive({"Dubbo Region"})
   shinyApp(    {fluidPage(
     tags$script("$(function () {
@@ -233,6 +229,6 @@ app_patchattr <- function(){
     patchattr_UI("patchattr", attributes),
     theme = bslib::bs_theme(version = 3, "lumen"))
   },
-           function(input, output, session){patchattr_Server("patchattr", clicked_record, selected_region)}
+           function(input, output, session){patchattr_Server("patchattr", selected_region)}
   )
 }

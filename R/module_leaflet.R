@@ -7,7 +7,7 @@ leaflet_UI <- function(id){
   fluidPage(leaflet::leafletOutput(ns("mymap")))
 }
 
-leaflet_Server <- function(id, refresh, selected_region){
+leaflet_Server <- function(id, selected_region){
   moduleServer(
     id,
     function(input, output, session){
@@ -34,18 +34,7 @@ leaflet_Server <- function(id, refresh, selected_region){
   
   output$mymap <- leaflet::renderLeaflet({
     updatebbox()
-    # sensitivity to something that makes the map be regenerated
-    if (is.reactivevalues(refresh)){
-      vals <- reactiveValuesToList(refresh) 
-    } else if (is.reactive(refresh)) {
-      vals <- refresh()
-    } else {
-      vals <- refresh
-    }
-    # for some reason refreshing is needed for map clicks to be noticed.
-    
-    
-    # showNotification("Leaflet generated")
+    showNotification("Leaflet generated")
     leaflet::leaflet() %>%
       leaflet::addProviderTiles("Esri.WorldImagery", group = "Imagery Powered by Esri") %>%
       leaflet::addTiles(group = "Map") %>%
