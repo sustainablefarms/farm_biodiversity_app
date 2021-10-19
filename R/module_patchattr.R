@@ -113,14 +113,14 @@ shinyWidgets::materialSwitch(ns("showmap"),
 ))
 }
 
-patchattr_Server <- function(id, selected_region){
+patchattr_Server <- function(id, bbox){
   moduleServer(
     id,
     function(input, output, session){
       ns <- session$ns
       
       # from lat lon work
-      leafletout <- leaflet_Server("leaflet", selected_region)
+      leafletout <- leaflet_Server("leaflet", bbox)
       observe({
         validate(need(leafletout(), ""))
         updateTextInput(inputId = "lon", value = leafletout()$lng)

@@ -7,41 +7,28 @@ leaflet_UI <- function(id){
   fluidPage(leaflet::leafletOutput(ns("mymap")))
 }
 
-leaflet_Server <- function(id, selected_region){
+leaflet_Server <- function(id, bbox){
   moduleServer(
     id,
     function(input, output, session){
-  region_polygons <- readRDS("data/sa2_polygons.rds") 
-  # polygons[region_polygons$SA2_NAME16 == outOfModule()$selected_region, ]
-  region_polygons <- region_polygons %>% sf::st_transform(4326)
-  bbox_allregions <- sf::st_bbox(region_polygons)
-  bbox <- reactiveValues(
-    xmin = bbox_allregions[["xmin"]],
-    xmax = bbox_allregions[["xmax"]],
-    ymin = bbox_allregions[["ymin"]],
-    ymax = bbox_allregions[["ymax"]]
-  )
-  updatebbox <- reactive({
-    if (isTruthy(selected_region())){
-      roi <- region_polygons[region_polygons$SA2_NAME16 == selected_region(), ]
-      bboxtmp <- sf::st_bbox(roi)
-      bbox$xmin <- bboxtmp[["xmin"]]
-      bbox$xmax <- bboxtmp[["xmax"]]
-      bbox$ymin <- bboxtmp[["ymin"]]
-      bbox$ymax <- bboxtmp[["ymax"]]
-    }
-  })
+
   
   output$mymap <- leaflet::renderLeaflet({
-    updatebbox()
     showNotification("Leaflet generated")
     leaflet::leaflet() %>%
       leaflet::addProviderTiles("Esri.WorldImagery", group = "Imagery Powered by Esri") %>%
       leaflet::addTiles(group = "Map") %>%
-      leaflet::addLayersControl(
-        baseGroups = c("Map", "Imagery powered by Esri")) %>%
-      leaflet::fitBounds(bbox[["xmin"]], bbox[["ymin"]],
-                  bbox[["xmax"]], bbox[["ymax"]])
+      leaflet::addLayersControl( 
+        baseGroups = c("Map", "Imagery powered by Esri"))   %>%
+      leaflet::fitBounds(bbox_allregions[["xmin"]], bbox_allregions[["ymin"]],
+                         bbox_allregions[["xmax"]], bbox_allregions[["ymax"]])
+    })
+  
+  observe({
+    showNotification("Leaflet bounds updated")
+    leaflet::leafletProxy("mymap") %>%
+      leaflet::fitBounds(bbox()[["xmin"]], bbox()[["ymin"]],
+                         bbox()[["xmax"]], bbox()[["ymax"]])
   })
   
   observe({

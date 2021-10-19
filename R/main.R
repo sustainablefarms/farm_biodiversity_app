@@ -12,6 +12,8 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   # preptraits(model_data)
   loadtraits2global()
   load_birdinfotable()
+  bbox_allregions <<- readRDS("./data/sa2_polygons_bboxtotal.rds")
+  bbox_regions <<- readRDS("./data/sa2_polygons_bbox.rds")
   consstatus <<- load_constatus()
   appname <<- "Bird Checker: A Bird Occupancy Estimator"
   if (!isTRUE(getOption("shiny.testmode"))){
