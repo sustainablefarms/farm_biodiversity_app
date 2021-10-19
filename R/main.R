@@ -14,6 +14,12 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   load_birdinfotable()
   bbox_allregions <<- readRDS("./data/sa2_polygons_bboxtotal.rds")
   bbox_regions <<- readRDS("./data/sa2_polygons_bbox.rds")
+  defaultpatchvalues <<- list(woody500m = round(new_data_mean$WCF_500/0.5) * 0.5,
+                              woody3000m = round(new_data_mean$WCF_3000/0.5) * 0.5,
+                              noisy_miner = TRUE,
+                              IsRemnant = TRUE,
+                              showmap = FALSE)
+  
   consstatus <<- load_constatus()
   appname <<- "Bird Checker: A Bird Occupancy Estimator"
   if (!isTRUE(getOption("shiny.testmode"))){

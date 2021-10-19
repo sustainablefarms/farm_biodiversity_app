@@ -219,16 +219,18 @@ patchattr_Server <- function(id, bbox){
 
 
 app_patchattr <- function(){
+  main_app_prep()
+  enableBookmarking(store = "disable")
   attributes <- list(IsRemnant = TRUE, noisy_miner = FALSE, woody500m = 3.5, woody3000m = 8.2, showmap = FALSE)
-  selected_region <- reactive({"Dubbo Region"})
+  bbox <- reactive({bbox_allregions})
   shinyApp(    {fluidPage(
     tags$script("$(function () {
           $('[data-toggle=tooltip]').tooltip()
         })"),
     includeCSS("./www/base.css"),
     patchattr_UI("patchattr", attributes),
-    theme = bslib::bs_theme(version = 3, "lumen"))
+    theme = bslib::bs_theme(version = 5, "lumen"))
   },
-           function(input, output, session){patchattr_Server("patchattr", selected_region)}
+           function(input, output, session){patchattr_Server("patchattr", bbox)}
   )
 }
