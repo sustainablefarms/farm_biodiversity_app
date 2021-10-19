@@ -63,20 +63,28 @@ selectpatch2Server <- function(id, selected_region){
   }, ignoreInit = FALSE, ignoreNULL = FALSE)
   
   # remove a patch  # I couldn't get this observer created for interactively.
-    observeEvent(input[[paste0("p", 1,"delete")]],
-                 {
-                   # removeUI
-                   showNotification(paste("Deleting patch", 1))
-                 }
-                 # ignoreInit = TRUE, once = TRUE
-                 )
-    observeEvent(input[[paste0("p", 2,"delete")]],
-                 {
-                   showNotification(paste("Deleting patch", 2))
-                   removeUI(paste0("#", ns(paste0("pacc", 2))))
-                 }
-                 # ignoreInit = TRUE, once = TRUE
-    )
+    # observeEvent(input[[paste0("p", 1,"delete")]],
+    #              {
+    #                # removeUI
+    #                showNotification(paste("Deleting patch", 1))
+    #              }
+    #              # ignoreInit = TRUE, once = TRUE
+    #              )
+    # observeEvent(input[[paste0("p", 2,"delete")]],
+    #              {
+    #                showNotification(paste("Deleting patch", 2))
+    #                removeUI(paste0("#", ns(paste0("pacc", 2))))
+    #              }
+    #              # ignoreInit = TRUE, once = TRUE
+    # )
+    patchdeleters <- lapply(1:maxpatchnum, function(pid){
+      observeEvent(input[[paste0("p", pid,"delete")]],
+                   {
+                     showNotification(paste("Deleting patch", pid))
+                     removeUI(paste0("#", ns(paste0("pacc", pid))))
+                   }
+                   # ignoreInit = TRUE, once = TRUE
+      )})
   # observeEvent(input[[paste0("p", 1,"delete")]],
   #              {
   #                # removeUI
