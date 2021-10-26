@@ -23,7 +23,21 @@ predictors_Server <- function(id){
       selected_region <- reactiveVal("")
       ns <- session$ns
       ## PATCH (and year)
-      frompatch <- selectpatch_Server("ptch", selected_region)
+      patchattr_tbl <- selectpatch_Server("ptch", selected_region)
+      frompatch  <- reactive({
+        outinfo <- list()
+        validate(need(patchattr_tbl(), "No attributes"))
+        outinfo$patches <- nrow(patchattr_tbl())
+        
+        outinfo$woody500m = patchattr_tbl()$woody500m
+        outinfo$woody3000m = patchattr_tbl()$woody3000m
+        outinfo$noisy_miner = patchattr_tbl()$noisy_miner
+        outinfo$IsRemnant = patchattr_tbl()$IsRemnant
+    
+        outinfo$year = 2018
+        outinfo$allpatchcomplete = TRUE #obsolete
+        outinfo
+      }) 
     
       ## REGION
       fromlocation <- selectlocationServer("loc", selected_region)

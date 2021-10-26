@@ -114,21 +114,8 @@ selectpatch_Server <- function(id, selected_region){
     bbox_r
   })
 
-  out <- reactive({
-    outinfo <- list()
-    validate(need(attr_table(), "No attributes"))
-    outinfo$patches <- length(patchidsinuse())
-    
-    outinfo$woody500m = attr_table()$woody500m
-    outinfo$woody3000m = attr_table()$woody3000m
-    outinfo$noisy_miner = attr_table()$noisy_miner
-    outinfo$IsRemnant = attr_table()$IsRemnant
 
-    outinfo$year = 2018
-    outinfo$allpatchcomplete = TRUE #obsolete
-    outinfo
-  }) 
-  out
+  attr_table
 }
 )
 }
