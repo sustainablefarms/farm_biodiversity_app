@@ -43,12 +43,11 @@ selectlocationUI <- function(id){
          )
 }
 
-selectlocationServer <- function(id){
+selectlocationServer <- function(id, selected_region){
   moduleServer(
     id,
     function(input, output, session){
       # set up reactive values
-      selected_region <- reactiveVal("")
       regionmapcreated <- reactiveVal(FALSE)
       data <- reactiveValues(
         climate = NULL,
@@ -333,6 +332,7 @@ app_selectlocation <- function(){
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
-      selectlocationServer("location")
+      selected_region <- reactiveVal("Yass Region")
+      selectlocationServer("location", selected_region)
     })
 }

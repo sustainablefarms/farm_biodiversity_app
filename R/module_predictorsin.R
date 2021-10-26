@@ -20,13 +20,13 @@ predictors_Server <- function(id){
   moduleServer(
     id,
     function(input, output, session){
+      selected_region <- reactiveVal("")
       ns <- session$ns
       ## PATCH (and year)
       frompatch <- selectpatch_Server("ptch", selected_region)
     
       ## REGION
-      fromlocation <- selectlocationServer("loc")
-      selected_region <- reactive({fromlocation()$selected_region})
+      fromlocation <- selectlocationServer("loc", selected_region)
       
       ## YfA
       fromyfa <- selectYfAServer("yfa", locationinfo = fromlocation)
