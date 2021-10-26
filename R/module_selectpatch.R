@@ -13,9 +13,26 @@ selectpatch_Server <- function(id, selected_region){
       ns <- session$ns
       maxpatchnum <- 6
       patchnumshown <- reactiveVal(0)
-      patchnumwanted <- reactiveVal(1)
+      patchnumwanted <- reactiveVal(0)
       patchidsinuse <- reactiveVal(vector())
       
+  # clearout existing and refresh if new attributes updated
+  # don't want it to react to internals though - eg when patchidsinuse changes
+  # observe({
+  #   if (length(patchidsinuse()) > 0){# remove patch items
+  #     lapply(patchidsinuse(), function(pid){
+  #       removeUI(paste0("#", ns(paste0("pacc", pid))))
+  #     })
+  #     patchidsinuse(vector())
+  #   }
+  #   
+  #   # make new patch items
+  #   attr_table(newinattr())
+  #   patchnumwanted(nrow(newinattr))
+  #   
+  # }, ignoreNULL = FALSE, ignoreInit = TRUE)
+      
+  # react to button pressing
   observeEvent(input$addpatch, {
     if (patchnumwanted() >= maxpatchnum){
       showNotification(paste("Please use ", maxpatchnum, "or fewer patches."),
@@ -30,6 +47,13 @@ selectpatch_Server <- function(id, selected_region){
     validate(need(patchnumwanted() - patchnumshown() > 0, ""))
     while  (patchnumshown() < patchnumwanted()){
     newid <- min(sort(setdiff(1:maxpatchnum, patchidsinuse())))
+    # get starting patch attribute
+    pattr <- defaultpatchvalues
+    # if (is.data.frame(attr_table())){
+    #   rowintable <- which(attr_table()$pid == newid)
+    #   if (isTruthy(rowintable)){pattr <- attr_table()[rowintable, ]}
+    # }
+    # insertUI
     insertUI(paste0("#", ns("placeholder")),
              where = "beforeBegin",
              ui = 
@@ -74,6 +98,7 @@ selectpatch_Server <- function(id, selected_region){
       # when patch is initialised it has NULL attributes briefly, hence the following
       empty <- sum(unlist(lapply(attr_pid, function(x) !is.null(x))), na.rm = TRUE) == 0
       if (isTruthy(empty)){return(NULL)}
+      attr_pid$pid <- pid
       return(attr_pid)
     })
     # keep only the non-null values, often at start of app attr_out_list <- list(NULL)
@@ -81,6 +106,7 @@ selectpatch_Server <- function(id, selected_region){
     validate(need(length(attr_out_list) > 0, ""))
     
     data.frame(
+      pid = vapply(attr_out_list, function(x) x[["pid"]], FUN.VALUE = 3),
       woody500m = vapply(attr_out_list, function(x) x[["woody500m"]], FUN.VALUE = 3.5),
       woody3000m = vapply(attr_out_list, function(x) x[["woody3000m"]], FUN.VALUE = 3.5),
       noisy_miner = vapply(attr_out_list, function(x) x[["noisy_miner"]], FUN.VALUE  = 0),
@@ -127,11 +153,12 @@ app_selectpatch <- function(){
   shinyApp(
     {fluidPage(
       includeCSS("./www/base.css"),
-      fluidRow(selectpatch2UI("patch")),
+      fluidRow(selectpatch_UI("patch")),
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
-      output <- selectpatch2Server("patch")
+      selected_region <- reactiveVal("")
+      output <- selectpatch_Server("patch", selected_region)
       observe(print(data.frame(output())))
     })
 }
