@@ -132,9 +132,9 @@ server <- function(input, output, session) {
   
   if (isTRUE(getOption("shiny.testmode"))){
     observeEvent(cval1(), {print("New cval1() evaluation")
-                          print(list2DF(cval1()))})
+                          print(cval1())})
     observeEvent(cval2(), {print("New cval2() evaluation")
-      print(list2DF(cval2()))})
+      print(cval2())})
     # cval1(readRDS("./tests/testthat/current_values_1patch.rds"))
   }
   

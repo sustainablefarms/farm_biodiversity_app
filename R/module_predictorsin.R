@@ -26,12 +26,7 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
       frompatch  <- reactive({
         outinfo <- list()
         validate(need(patchattr_tbl(), "No attributes"))
-        outinfo$patches <- nrow(patchattr_tbl())
-        
         outinfo$patchattr_tbl = patchattr_tbl()
-    
-        outinfo$year = 2018
-        outinfo$allpatchcomplete = TRUE #obsolete
         outinfo
       }) 
     
@@ -43,10 +38,10 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
       
       ## Combine!
       cval <- eventReactive({c(fromyfa(),
-        frompatch())}, {
+                               patchattr_tbl())}, {
         out <- c(fromlocation(),
                  fromyfa(),
-                 frompatch())
+                 list(patchattr_tbl = patchattr_tbl()))
         out
       })
   
