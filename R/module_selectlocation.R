@@ -1,5 +1,10 @@
 # select location
 selectlocationUI <- function(id){
+  climate.lt <- readRDS("data/sa2_points_climate.rds")
+  choices = list("Choose region" = "",
+                 Victoria = climate.lt[climate.lt$state == "Victoria", "label"],
+                 `New South Wales` = climate.lt[climate.lt$state == "New South Wales", "label"])
+  
   ns <- NS(id)
   tagList(
 	 waiter::use_waiter(),
@@ -13,11 +18,10 @@ selectlocationUI <- function(id){
          #   width = "100%"),
          fluidRow(
            column(width = 8,
-             if (FALSE & isTRUE(getOption("shiny.testmode"))){
-               actionButton(ns("fake_region_number"), label = "Next Region")
-             } else {
-               plotly::plotlyOutput(ns("plot_points"), height = "350px")
-             }
+             selectInput(ns("selectbox"), label = NULL, 
+                         choices = choices,
+                         multiple = FALSE),
+             plotly::plotlyOutput(ns("plot_points"), height = "350px")
              ),
            column(width = 4, 
              # style = "
@@ -134,6 +138,9 @@ selectlocationServer <- function(id, selected_region){
           }
         })
         }
+       observeEvent(input$selectbox, {
+         selected_region(input$selectbox)
+       })
         outOfModule <- reactive({
           locinfo <- list()
             locinfo$selected_region <- selected_region()
