@@ -53,3 +53,29 @@ selectYfAServer <- function(id, locationinfo){
     }
   )
 }
+
+app_selectYfA <- function(){
+  main_app_prep()
+  enableBookmarking(store = "disable")
+  
+  shinyApp(
+    {bootstrapPage(
+      includeCSS("./www/base.css"),
+      selectYfAUI("yfa"),
+      theme = bslib::bs_theme(version = 5, "lumen"))
+    },
+    function(input, output, session){
+      locationinfo = reactiveVal(list(
+        selected_region = "Goulburn",
+        AnnPrec.lt = 600
+      ))
+      refresh <- reactiveTimer(1000 * 10)
+      observeEvent(refresh(), {
+        locinfo <- locationinfo()
+        locinfo$AnnPrec.lt <- locinfo$AnnPrec.lt * 1.1
+        locationinfo(locinfo)
+      })
+      selectYfAServer("yfa", locationinfo)
+    }
+  )
+}
