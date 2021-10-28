@@ -8,7 +8,7 @@ predictionsUI <- function(id){
       })"
     ),
     tags$p(class = "alignleft",
-           HTML("<plottitle>Expected Number of Species</plottitle>"),
+           HTML("<h4>Expected Number of Species</h4>"),
            infotooltip(title = paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
                                      "<br><br>",
                                      "The top bar is the number of species we expect if there is 2% (1.5ha) nearby woody cover for every patch.",
@@ -22,16 +22,24 @@ predictionsUI <- function(id){
            tags$em(uiOutput(ns("warn"), inline = TRUE))),
     tags$div(style="clear: both;"),
     plotOutput(ns("species_richness"), height = "250px"),
+    accordion(ns("predacc"),
+              accordion_item(title = "Most likely species", id = ns("mostlikely"),
+                             fluidRow(
+                               column(width = 4,
+                                      tags$html(tags$p("The 10 most likely species to live in your farm's Box Gum Grassy Woodland according to our model."),
+                                                proboccplotdescription)
+                                      ),
+                               column(width = 8,
+                                      plotly::plotlyOutput(ns("common_species"), height = "300px")
+                               )
+                             )
+                             )
+              ),
+    
+    
     fluidRow(
-      column(width = 6, 
-             tags$div(HTML("<plottitle>Most Likely Species</plottitle>"),
-                  infotooltip(title = tags$html(tags$p("The 10 most likely species to live in your farm's Box Gum Grassy Woodland according to our model."),
-					   proboccplotdescription))
-          ),
-          plotly::plotlyOutput(ns("common_species"), height = "300px")
-        ),
         column(width = 6,
-          tags$span(HTML("<plottitle>Relative Probability (Ratio to Reference)</plottitle>"),
+          tags$span(HTML("<h4>Relative Probability (Ratio to Reference)</h4>"),
                   infotooltip(HTML("This is the ratio of each species' estimated occupancy probability to the reference occupancy probability.",
 				   "For example, if the Superb Parrot has a ratio of '2', then it is estimated that the Superb Parrot is twice as likely to live in your farm's woodland than in the reference farm.",
                                    "The species with the 10 biggest ratios are shown.",
@@ -200,7 +208,7 @@ app_predictions <- function(){
     {fluidPage(
       includeCSS("./www/base.css"),
       fluidRow(predictionsUI("pred")),
-      theme = bslib::bs_theme(version = 3, "lumen"))
+      theme = bslib::bs_theme(version = 5, "lumen"))
       },
            function(input, output, session){
              predictionsServer("pred", 

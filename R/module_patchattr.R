@@ -62,7 +62,7 @@ patchattr_UI <- function(id, attributes){
 	tags$div(class = "subheader", tags$h2("Woody Cover Amounts")),
 	tags$div("Species occupancies depend heavily on the amount of 2m+ woody vegetation cover, or foliage cover,",
 	"inside the patch and in the surrounding landscape.", infotooltip(WCFdesc_intro())),
-  tags$div(HTML("<plottitle>Get from satellite</plottitle>")),
+  tags$div(HTML("<h4>Get from satellite</h4>")),
  tags$div("Get woody cover amounts from satellite",
                    "(see ", linknewtab(href = 'http://anuwald.science/tree',
                                        "http://anuwald.science/tree"), 
@@ -92,7 +92,7 @@ shinyWidgets::materialSwitch(ns("showmap"),
 	
 	
 #################################
-	tags$div(HTML("<plottitle>Manually Set or Modify</plottitle>")),
+	tags$div(HTML("<h4>Manually Set or Modify</h4>")),
         # 500m WCF
         tags$div(
           tags$html(tags$span("Nearby Woody Cover: within 500m of patch centre (% area), including cover inside patch")),
