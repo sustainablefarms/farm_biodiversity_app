@@ -16,14 +16,13 @@ predictors_UI <- function(id){
   )
 }
 
-predictors_Server <- function(id){
+predictors_Server <- function(id, selected_region, newinattr){
   moduleServer(
     id,
     function(input, output, session){
-      selected_region <- reactiveVal("")
       ns <- session$ns
       ## PATCH (and year)
-      patchattr_tbl <- selectpatch_Server("ptch", selected_region)
+      patchattr_tbl <- selectpatch_Server("ptch", selected_region, newinattr)
       frompatch  <- reactive({
         outinfo <- list()
         validate(need(patchattr_tbl(), "No attributes"))
@@ -96,7 +95,21 @@ app_predictorsin <- function(){
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
-      predictors_Server("S1in")
+      selected_region <- reactiveVal("")
+      newinattr <- reactiveVal(data.frame(pid = 1, 
+                                          woody500m = 2.5,
+                                          woody3000m = 3,
+                                          noisy_miner = 1,
+                                          IsRemnant = 1))
+      refresh <- reactiveTimer(1000 * 10)
+      observeEvent(refresh(),{
+        attr <- newinattr()
+        attr <- rbind(attr, attr[1, ])
+        attr[1, "pid"] <- 3
+        attr$woody500m <- 1.3 * attr$woody500m
+        newinattr(attr)
+      })
+      predictors_Server("S1in", selected_region, newinattr)
       # observe(print(data.frame(reactiveValuesToList(cval1()))))
     })
 }
