@@ -42,7 +42,7 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
       fromlocation <- selectlocationServer("loc", selected_region)
       
       ## YfA
-      fromyfa <- selectYfAServer("yfa", locationinfo = fromlocation, inAnnPrec.YfA)
+      fromyfa <- selectYfAServer("yfa", selected_region, inAnnPrec.YfA)
       
       ## Combine!
       cval <- eventReactive({c(fromyfa(),
@@ -102,17 +102,17 @@ app_predictorsin <- function(){
                                           noisy_miner = 1,
                                           IsRemnant = 1))
       refresh <- reactiveTimer(1000 * 10)
-      observeEvent(refresh(),{
-        attr <- newinattr()
-        attr <- rbind(attr, attr[1, ])
-        attr[1, "pid"] <- 3
-        attr$woody500m <- 1.3 * attr$woody500m
-        newinattr(attr)
-      })
+      # observeEvent(refresh(),{
+      #   attr <- newinattr()
+      #   attr <- rbind(attr, attr[1, ])
+      #   attr[1, "pid"] <- 3
+      #   attr$woody500m <- 1.3 * attr$woody500m
+      #   newinattr(attr)
+      # })
       inAnnPrec.YfA <- reactiveVal(400)
-      refresh <- reactiveTimer(1000 * 10)
       observeEvent(refresh(), {
-        inAnnPrec.YfA(inAnnPrec.YfA() * 1.1)
+        inAnnPrec.YfA(inAnnPrec.YfA() + 50)
+        selected_region("Euroa")
       })
       predictors_Server("S1in", selected_region, newinattr, inAnnPrec.YfA)
       # observe(print(data.frame(reactiveValuesToList(cval1()))))

@@ -16,20 +16,22 @@ selectYfAUI <- function(id){
 
 
 
-selectYfAServer <- function(id, locationinfo, inAnnPrec.YfA){
+selectYfAServer <- function(id, selected_region, inAnnPrec.YfA){
   moduleServer(
     id,
     function(input, output, session){
-      stopifnot(is.reactive(locationinfo))
+      stopifnot(is.reactive(selected_region))
       yfabookmark <- reactiveValues(# for making sure the yfa bookmarked value get update rather than the long-term value
         usebookmark = FALSE,
         value = NULL
       )
+      climate.lt <- readRDS("data/sa2_points_climate.rds")
   # update YfA based on new location info
-      observeEvent(locationinfo()$AnnPrec.lt, {
-	validate(need(locationinfo()$AnnPrec.lt, ""))
+      observeEvent(selected_region(), {
+      	validate(need(selected_region(), ""))
+        climate_row <- which(climate.lt$label == selected_region())
 	updateSliderInput(inputId = "AnnPrec.YfA",
-			  value = locationinfo()$AnnPrec.lt)
+			  value = climate.lt$AnnPrec[climate_row])
       }, priority = 100, ignoreInit = TRUE, ignoreNULL = TRUE)
   # whenever both inputs change at the same time, do an update from inAnnPrec.YfA *last*
   observeEvent(inAnnPrec.YfA(), {
@@ -45,9 +47,11 @@ selectYfAServer <- function(id, locationinfo, inAnnPrec.YfA){
       }) %>% throttle(1000)
       
       output$annprec.lt.region <- renderText({
-        validate(need(locationinfo()$selected_region, ""))
-        paste0("(long term average for ", locationinfo()$selected_region, ": ", locationinfo()$AnnPrec.lt , "mm",
-                ")")
+        validate(need(selected_region(), ""))
+        climate_row <- which(climate.lt$label == selected_region())
+        sprintf("(long term average for %s: %i)",
+                selected_region(),
+                climate.lt$AnnPrec[climate_row])
       })
       
       # bookmarking
@@ -72,16 +76,13 @@ app_selectYfA <- function(){
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
-      locationinfo = reactiveVal(list(
-        selected_region = "Goulburn",
-        AnnPrec.lt = 600
-      ))
+      selected_region <- reactiveVal("Albury Region")
       inAnnPrec.YfA <- reactiveVal(400)
       refresh <- reactiveTimer(1000 * 10)
       observeEvent(refresh(), {
         inAnnPrec.YfA(inAnnPrec.YfA() * 1.1)
       })
-      selectYfAServer("yfa", locationinfo, inAnnPrec.YfA)
+      selectYfAServer("yfa", selected_region, inAnnPrec.YfA)
     }
   )
 }
