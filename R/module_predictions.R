@@ -1,7 +1,7 @@
 # predictions module
 predictionsUI <- function(id){
   ns <- NS(id)
-  shinyjs::hidden(tags$div(id = ns("predpanel"),
+  tagList(
     # the following enables bootstrap 3's inbuilt tooltips
     tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
@@ -68,7 +68,7 @@ predictionsUI <- function(id){
 		      HTML = TRUE)
                )
       )
-  ))
+  )
 }
 
 predictionsServer <- function(id, 
@@ -89,20 +89,8 @@ predictionsServer <- function(id,
       moredetailopens <- reactiveVal(value = 0, label = "moredetailopens")
       ns <- session$ns
   
-      # reveal predictions panel
-      observeEvent(current_values(), {
-        if (current_values()$locationcomplete & current_values()$allpatchcomplete){
-          shinyjs::show("predpanel")
-        } else {
-          shinyjs::hide("predpanel")
-        }
-      })
-      
       # compute predictions below
       datar <- reactive({
-        if(
-          isTRUE(current_values()$locationcomplete & current_values()$allpatchcomplete)
-        ){
           # saveRDS(isolate(current_values()), file = "current_values.rds"); stop("Saving current values - app is in debug mode and will end")
           data$Xocc <- newXocc_fromselected(current_values())
           modwXocc <- msod::supplant_new_data(model_data, data$Xocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
@@ -130,13 +118,7 @@ predictionsServer <- function(id,
           data$speciesinfo_topten <- speciesinfo[row.names(data$species_prob_current)[topten], ]
           data$speciesinfo_botten <- speciesinfo[row.names(data$species_prob_current)[botten], ]
           # saveRDS(isolate(reactiveValuesToList(data)), file = "data.rds"); stop("Saving data - app will end now")
-          session$sendCustomMessage("predictionsmade", "nothing")
-        } else {
-          # data <- lapply(data, function(x) NULL)
-          data$Xocc <- NULL
-          data$species_prob_current <- NULL
-          data$species_richness <- NULL
-        }
+          session$sendCustomMessage("predictionsmade", "nothing") #for usage tracking
         data
       })
       
