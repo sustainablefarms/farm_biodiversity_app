@@ -1,5 +1,5 @@
-current_values <- readRDS("./current_values.rds")
-refpredictions <- species_prob_mean
+# current_values <- readRDS("./current_values.rds")
+# refpredictions <- species_prob_mean
 compile_predictions <- function(current_values, refpredictions){
   data <- list()
   data$Xocc <- newXocc_fromselected(current_values)
