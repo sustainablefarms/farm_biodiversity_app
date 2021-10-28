@@ -138,13 +138,19 @@ selectlocationServer <- function(id, selected_region){
           }
         })
         }
+        
+       # create observers (reactive end points) for refactoring the inputs
        observeEvent(input$selectbox, {
+         validate(need(input$selectbox, ""))
          selected_region(input$selectbox)
        })
        observeEvent(selected_region(),{
+                validate(need(selected_region(), ""))
                 updateSelectInput(inputId = "selectbox",
                                   selected = selected_region())
-       })
+       }, ignoreInit = FALSE)
+       
+       # obtain actual climate if required by later work
         outOfModule <- reactive({
           locinfo <- list()
             locinfo$selected_region <- selected_region()
@@ -344,6 +350,10 @@ app_selectlocation <- function(){
     },
     function(input, output, session){
       selected_region <- reactiveVal("Nagambie")
+      refresh <- reactiveTimer(1000 * 30)
+      observeEvent(refresh(), {
+        selected_region("Temora")
+      })
       selectlocationServer("location", selected_region)
     })
 }
