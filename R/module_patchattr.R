@@ -193,7 +193,7 @@ patchattr_Server <- function(id, bbox){
           )
         out
       })
-      if (isTRUE(getOption("shiny.testmode"))){
+      if (FALSE & isTRUE(getOption("shiny.testmode"))){
         observeEvent(specifiedvals(),
                      {
                        showNotification(paste(names(specifiedvals()), specifiedvals(),

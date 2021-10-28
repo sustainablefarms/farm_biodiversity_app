@@ -14,7 +14,6 @@ leaflet_Server <- function(id, bbox){
 
   
   output$mymap <- leaflet::renderLeaflet({
-    showNotification("Leaflet generated")
     leaflet::leaflet() %>%
       leaflet::addProviderTiles("Esri.WorldImagery", group = "Imagery Powered by Esri") %>%
       leaflet::addTiles(group = "Map") %>%
@@ -25,7 +24,6 @@ leaflet_Server <- function(id, bbox){
     })
   
   observe({
-    showNotification("Leaflet bounds updated")
     leaflet::leafletProxy("mymap") %>%
       leaflet::fitBounds(bbox()[["xmin"]], bbox()[["ymin"]],
                          bbox()[["xmax"]], bbox()[["ymax"]])
