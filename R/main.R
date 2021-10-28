@@ -7,7 +7,12 @@ myapp <- function(){
 main_app_prep <- function(){  # loads things into global environment, prepares report file
   # Data Preparations
   model_data <<- load_model_data()
-  new_data_mean <<- get_new_data_mean(model_data)
+  new_data_mean <<- get_new_data_mean(model_data)  
+  ## Set up average situation -- could be performed offline
+  modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
+                                                                                                  model_data$XoccProcess$scale,
+                                                                                                  model_data$XoccColNames)})
+  species_prob_mean <<- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwmeanXocc)
   
   # preptraits(model_data)
   loadtraits2global()
@@ -43,7 +48,8 @@ ui <- function(request){
                predictors_UI("S1in")
       ),
       tabPanel(title = "Estimates 1",
-           predictionsUI("pred1")
+           predictionsUI("pred1"),
+           actionButton("toS2", "Compare")
       ),
       tabPanel(title = "The Land 2",
                predictors_UI("S2in")
@@ -108,6 +114,10 @@ server <- function(input, output, session) {
   removeUI(selector = "#start_disabled", immediate = FALSE)
   
   # set up required data
+  inregion <- reactiveVal()
+  inattr <- reactiveVal()
+  inAnnPrec.YfA <- reactiveVal() 
+  
   ## SF logo
   output$sflogo <- renderImage(
     list(src = "Sustainable Farms logo RGB.png",
@@ -117,8 +127,8 @@ server <- function(input, output, session) {
   )
   
   ## Predictors Input
-  cval1 <- predictors_Server("S1in")
-  cval2 <- predictors_Server("S2in")
+  cval1 <- predictors_Server("S1in", reactiveVal(),  reactiveVal(),  reactiveVal())
+  cval2 <- predictors_Server("S2in",  inregion,  inattr,  inAnnPrec.YfA)
   
   if (isTRUE(getOption("shiny.testmode"))){
     observeEvent(cval1(), {print("New cval1() evaluation")
@@ -128,12 +138,13 @@ server <- function(input, output, session) {
     # cval1(readRDS("./tests/testthat/current_values_1patch.rds"))
   }
   
-  ## Set up average situation -- could be performed offline
-  modwmeanXocc <- msod::supplant_new_data(model_data, new_data_mean, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
-                                                                                                  model_data$XoccProcess$scale,
-                                                                                                  model_data$XoccColNames)})
-  species_prob_mean <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwmeanXocc)
-  species_prob_mean_r <- reactive({species_prob_mean})
+  # populating Scenario 2
+  observeEvent(input$toS2, {
+    inregion(cval1()$selected_region)
+    inAnnPrec.YfA(cval1()$AnnPrec.YfA)
+  })
+  
+
   
   ## PREDICTIONS
   pred1arr <- predictionsServer("pred1", cval1,

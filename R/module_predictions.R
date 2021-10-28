@@ -238,8 +238,7 @@ predictionsServer <- function(id,
 # for running predictions module standalone (I think reference will not work though)
 app_predictions <- function(){
   main_app_prep()
-  current_values <- reactiveVal(value = readRDS("./data/test-current_values_2patches.rds")) #isolate(current_values())
-  # current_values <- do.call(reactiveValues, readRDS("tests/testthat/current_values_2patches.rds"))
+  current_values <- reactiveVal(value = readRDS("./current_values.rds")) 
   
   shinyApp(
     {fluidPage(
@@ -248,7 +247,9 @@ app_predictions <- function(){
       theme = bslib::bs_theme(version = 3, "lumen"))
       },
            function(input, output, session){
-             predictionsServer("pred", current_values,
+             predictionsServer("pred", 
+                               current_values,
+                               reactiveVal(species_prob_mean),
                                model_data, 
                                report_path)
            })

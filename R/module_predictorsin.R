@@ -28,10 +28,7 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
         validate(need(patchattr_tbl(), "No attributes"))
         outinfo$patches <- nrow(patchattr_tbl())
         
-        outinfo$woody500m = patchattr_tbl()$woody500m
-        outinfo$woody3000m = patchattr_tbl()$woody3000m
-        outinfo$noisy_miner = patchattr_tbl()$noisy_miner
-        outinfo$IsRemnant = patchattr_tbl()$IsRemnant
+        outinfo$patchattr_tbl = patchattr_tbl()
     
         outinfo$year = 2018
         outinfo$allpatchcomplete = TRUE #obsolete
