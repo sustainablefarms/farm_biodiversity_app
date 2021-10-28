@@ -6,7 +6,7 @@ selectpatch_UI <- function(id){
   )
 }
 
-selectpatch_Server <- function(id, selected_region){
+selectpatch_Server <- function(id, selected_region, newinattr){
   moduleServer(
     id,
     function(input, output, session){
@@ -18,19 +18,20 @@ selectpatch_Server <- function(id, selected_region){
       
   # clearout existing and refresh if new attributes updated
   # don't want it to react to internals though - eg when patchidsinuse changes
-  # observe({
-  #   if (length(patchidsinuse()) > 0){# remove patch items
-  #     lapply(patchidsinuse(), function(pid){
-  #       removeUI(paste0("#", ns(paste0("pacc", pid))))
-  #     })
-  #     patchidsinuse(vector())
-  #   }
-  #   
-  #   # make new patch items
-  #   attr_table(newinattr())
-  #   patchnumwanted(nrow(newinattr))
-  #   
-  # }, ignoreNULL = FALSE, ignoreInit = TRUE)
+  observeEvent( newinattr(), {
+    if (length(patchidsinuse()) > 0){# remove patch items
+      lapply(patchidsinuse(), function(pid){
+        removeUI(paste0("#", ns(paste0("pacc", pid))))
+      })
+      patchnumshown(0)
+      patchnumwanted(0)
+      patchidsinuse(vector())
+    }
+
+    # make new patch items
+    patchnumwanted(nrow(newinattr()))
+
+  })
       
   # react to button pressing
   observeEvent(input$addpatch, {
@@ -49,10 +50,10 @@ selectpatch_Server <- function(id, selected_region){
     newid <- min(sort(setdiff(1:maxpatchnum, patchidsinuse())))
     # get starting patch attribute
     pattr <- defaultpatchvalues
-    # if (is.data.frame(attr_table())){
-    #   rowintable <- which(attr_table()$pid == newid)
-    #   if (isTruthy(rowintable)){pattr <- attr_table()[rowintable, ]}
-    # }
+    if (is.data.frame(newinattr())){
+      rowintable <- which(newinattr()$pid == newid)
+      if (isTruthy(rowintable)){pattr <- newinattr()[rowintable, ]}
+    }
     # insertUI
     insertUI(paste0("#", ns("placeholder")),
              where = "beforeBegin",
@@ -62,7 +63,7 @@ selectpatch_Server <- function(id, selected_region){
                                           actionButton(ns(paste0("p", newid,"delete")), "Delete"),
                                           ),
                    id = ns(paste0("pacc", newid)),
-                   patchattr_UI(ns(paste0("p", newid)), defaultpatchvalues),
+                   patchattr_UI(ns(paste0("p", newid)), pattr),
                    )
              )
     patchidsinuse(c(patchidsinuse(), newid))
@@ -158,7 +159,21 @@ app_selectpatch <- function(){
     },
     function(input, output, session){
       selected_region <- reactiveVal("")
-      output <- selectpatch_Server("patch", selected_region)
+      
+
+      # newinattr <- reactiveVal(cbind(pid = 1, defaultpatchvalues))
+      newinattr <- reactiveVal(data.frame(pid = 1, 
+                                          woody500m = 2.5,
+                                          woody3000m = 3,
+                                          noisy_miner = 1,
+                                          IsRemnant = 1))
+      refresh <- reactiveTimer(1000 * 10)
+      observeEvent(refresh(),{
+        attr <- newinattr()
+        attr$woody500m <- 1.3 * attr$woody500m
+        newinattr(attr)
+      })
+      output <- selectpatch_Server("patch", selected_region, newinattr)
       observe(print(data.frame(output())))
     })
 }
