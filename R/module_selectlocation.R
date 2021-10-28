@@ -141,6 +141,10 @@ selectlocationServer <- function(id, selected_region){
        observeEvent(input$selectbox, {
          selected_region(input$selectbox)
        })
+       observeEvent(selected_region(),{
+                updateSelectInput(inputId = "selectbox",
+                                  selected = selected_region())
+       })
         outOfModule <- reactive({
           locinfo <- list()
             locinfo$selected_region <- selected_region()
@@ -339,7 +343,7 @@ app_selectlocation <- function(){
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
-      selected_region <- reactiveVal("Yass Region")
+      selected_region <- reactiveVal("Nagambie")
       selectlocationServer("location", selected_region)
     })
 }
