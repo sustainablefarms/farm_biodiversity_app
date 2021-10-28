@@ -19,6 +19,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
   # clearout existing and refresh if new attributes updated
   # don't want it to react to internals though - eg when patchidsinuse changes
   observeEvent( newinattr(), {
+    print(newinattr())
     if (length(patchidsinuse()) > 0){# remove patch items
       lapply(patchidsinuse(), function(pid){
         removeUI(paste0("#", ns(paste0("pacc", pid))))
@@ -29,8 +30,12 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     }
 
     # make new patch items
-    patchnumwanted(nrow(newinattr()))
 
+    # make sure pids are 1, 2....
+    attr <- newinattr()
+    attr$pid <- 1:nrow(attr)
+    newinattr(attr)
+    patchnumwanted(nrow(attr))
   })
       
   # react to button pressing
@@ -49,10 +54,12 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     while  (patchnumshown() < patchnumwanted()){
     newid <- min(sort(setdiff(1:maxpatchnum, patchidsinuse())))
     # get starting patch attribute
+    # during regular use the pids could be anything
+    # when the page is set by an existing scenario then pids are consecutive 1...
     pattr <- defaultpatchvalues
     if (is.data.frame(newinattr())){
       rowintable <- which(newinattr()$pid == newid)
-      if (isTruthy(rowintable)){pattr <- newinattr()[rowintable, ]}
+      if (isTruthy(rowintable)){pattr <- newinattr()[rowintable[[1]], ]}
     }
     # insertUI
     insertUI(paste0("#", ns("placeholder")),
@@ -170,6 +177,8 @@ app_selectpatch <- function(){
       refresh <- reactiveTimer(1000 * 10)
       observeEvent(refresh(),{
         attr <- newinattr()
+        attr <- rbind(attr, attr[1, ])
+        attr[1, "pid"] <- 3
         attr$woody500m <- 1.3 * attr$woody500m
         newinattr(attr)
       })
