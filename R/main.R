@@ -142,13 +142,14 @@ server <- function(input, output, session) {
   observeEvent(input$toS2, {
     inregion(cval1()$selected_region)
     inAnnPrec.YfA(cval1()$AnnPrec.YfA)
+    inattr(cval1()$patchattr_tbl)
   })
   
 
   
   ## PREDICTIONS
   pred1arr <- predictionsServer("pred1", cval1,
-                    species_prob_mean_r,
+                    reactiveVal(species_prob_mean),
                     model_data,
                     report_path) 
   predictionsServer("pred2", cval2,
