@@ -16,7 +16,7 @@ selectYfAUI <- function(id){
 
 
 
-selectYfAServer <- function(id, locationinfo){
+selectYfAServer <- function(id, locationinfo, inAnnPrec.YfA){
   moduleServer(
     id,
     function(input, output, session){
@@ -25,11 +25,18 @@ selectYfAServer <- function(id, locationinfo){
         usebookmark = FALSE,
         value = NULL
       )
+  # update YfA based on new location info
       observeEvent(locationinfo()$AnnPrec.lt, {
 	validate(need(locationinfo()$AnnPrec.lt, ""))
 	updateSliderInput(inputId = "AnnPrec.YfA",
 			  value = locationinfo()$AnnPrec.lt)
       }, priority = 100, ignoreInit = TRUE, ignoreNULL = TRUE)
+  # whenever both inputs change at the same time, do an update from inAnnPrec.YfA *last*
+  observeEvent(inAnnPrec.YfA(), {
+    validate(need(inAnnPrec.YfA(), ""))
+    updateSliderInput(inputId = "AnnPrec.YfA",
+                        value = inAnnPrec.YfA())
+    }, priority = 80, ignoreInit = TRUE, ignoreNULL = TRUE)
       
       outOfModule <- reactive({
         out <- list()
@@ -69,13 +76,12 @@ app_selectYfA <- function(){
         selected_region = "Goulburn",
         AnnPrec.lt = 600
       ))
+      inAnnPrec.YfA <- reactiveVal(400)
       refresh <- reactiveTimer(1000 * 10)
       observeEvent(refresh(), {
-        locinfo <- locationinfo()
-        locinfo$AnnPrec.lt <- locinfo$AnnPrec.lt * 1.1
-        locationinfo(locinfo)
+        inAnnPrec.YfA(inAnnPrec.YfA() * 1.1)
       })
-      selectYfAServer("yfa", locationinfo)
+      selectYfAServer("yfa", locationinfo, inAnnPrec.YfA)
     }
   )
 }
