@@ -24,15 +24,9 @@ predictionsUI <- function(id){
     plotOutput(ns("species_richness"), height = "250px"),
     accordion(ns("predacc"),
               accordion_item(title = "Most likely species", id = ns("mostlikely"),
-                             fluidRow(
-                               column(width = 4,
-                                      tags$html(tags$p("The 10 most likely species to live in your farm's Box Gum Grassy Woodland according to our model."),
-                                                proboccplotdescription)
-                                      ),
-                               column(width = 8,
-                                      plotly::plotlyOutput(ns("common_species"), height = "300px")
-                               )
-                             )
+               twocolumns(heading = "The 10 most likely species to live in your farm's Box Gum Grassy Woodland.",
+                          left = proboccplotdescription,
+                          right = plotly::plotlyOutput(ns("common_species"), height = "300px"))
                              )
               ),
     
