@@ -7,27 +7,32 @@ predictionsUI <- function(id){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
-    tags$p(class = "alignleft",
-           HTML("<h4>Expected Number of Species</h4>"),
-           infotooltip(title = paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
-                                     "<br><br>",
-                                     "The top bar is the number of species we expect if there is 2% (1.5ha) nearby woody cover for every patch.",
-                                     "The third bar is the number of species we expect if there is 20% (15ha) nearby woody cover for every patch.",
-                                     "The final bar is the number of species we expect from your reference estimates.",
-                                     "<br><br>Each species was assigned an occupancy probability equal to the maximum of all patches (we use the maximum as we expect occupancy between patches to be highly correlated)."
-           ),
-           placement = "bottom")
+    tags$h4("Expected Number of Species"),
+    twocolumns(heading = NULL,
+               left = tagList(paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
+                            "<br><br>",
+                            "The top bar is the number of species we expect if there is 2% (1.5ha) nearby woody cover for every patch.",
+                            "The third bar is the number of species we expect if there is 20% (15ha) nearby woody cover for every patch.",
+                            "The final bar is the number of species we expect from your reference estimates.",
+                            "<br><br>Each species was assigned an occupancy probability equal to the maximum of all patches (we use the maximum as we expect occupancy between patches to be highly correlated)."),
+                            tags$em(uiOutput(ns("warn"), inline = TRUE))),
+               right = plotOutput(ns("species_richness"), height = "250px")
     ),
-    tags$p(class =  "alignright",
-           tags$em(uiOutput(ns("warn"), inline = TRUE))),
-    tags$div(style="clear: both;"),
-    plotOutput(ns("species_richness"), height = "250px"),
     accordion(ns("predacc"),
               accordion_item(title = "Most likely species", id = ns("mostlikely"),
                twocolumns(heading = "The 10 most likely species to live in your farm's Box Gum Grassy Woodland.",
                           left = proboccplotdescription,
                           right = plotly::plotlyOutput(ns("common_species"), height = "300px"))
-                             )
+                             ),
+              accordion_item(title = "Least likely species", id = ns("leastlikely"),
+                twocolumns(heading = "The 10 least likely species to live in your farm's Box Gum Grassy Woodland.",
+                           left = tags$p("Of the species in", appname, "these species are least likely. This doesn't include rare birds not in", appname, "."),
+                           right = tags$div(
+                             style="text-align: center",
+                             uiOutput(ns("leastlikespecimages"))
+                           )
+                )
+              )
               ),
     
     
@@ -116,6 +121,12 @@ predictionsServer <- function(id,
         richness_plot(datar()$species_richness)
       })
       
+      # species images
+      output$leastlikespecimages <- renderUI({
+        validate(need(datar()$speciesinfo_botten, ""))
+        lapply(10:1, function(idx) specimageOut(datar()$speciesinfo_botten[idx, ],
+                                                height = "100px"))
+      })
       # modal more detail stuff
       observeEvent(input$moredetail, {
         moredetailopens(moredetailopens() + 1)
