@@ -1,7 +1,8 @@
 #' Create radio button groups
 #'
 #' Create a set of radio button groups used to select an item from a list.
-#' Credit to the authors of `shiny` for much of the code of this function
+#' Credit to the authors of `shiny` for much of the code of this function. 
+#' WARNING: this code has been edited without much knowledge and is likely to be messy
 #'
 #' @param choices List of values to select from (if elements of the list are
 #'   named then that name rather than the value is displayed to the user). If
@@ -104,11 +105,11 @@ generateOptions_radiobuttongroup <- function(inputId, selected, type = 'checkbox
       
       # in case, the options include UI code other than text
       # (arbitrary HTML using the tags() function or equivalent)
-      # pd <- shiny:::processDeps(name, session) #KLH uncomment later
+      pd <- shiny:::processDeps(name, session) 
       labelTag <- tags$label(
         class="btn btn-outline-primary",
         `for` = paste0(inputId,radioid),
-        name# tags$span(pd$html, pd$deps) #KLH uncomment later
+        tags$span(pd$html, pd$deps) 
       )
       tagList(inputTag, labelTag)
     },
