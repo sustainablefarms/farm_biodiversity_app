@@ -30,34 +30,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                twocolumns(heading = "The 10 most likely species to live in your farm's Box Gum Grassy Woodland.",
                           left = proboccplotdescription,
                           right = tagList(
-                            tags$div(class = "clearfix",
-                              tags$div(class = "float-start", 
-                                shinyWidgets::radioGroupButtons(
-                                  inputId = ns("mostlikely_showcurrscenario"),
-                                  label = NULL,
-                                  choiceValues = c("current", "ref"),
-                                  choiceNames = if (refisaverage){
-                                    c("Scenario 1", "Average")
-                                  } else {
-                                    c("Scenario 2", "Scenario 1")
-                                  },
-                                  selected = "current",
-                                  checkIcon = list()
-                                )
-                                       ),
-                              tags$div(class =  "float-end", 
-                                shinyWidgets::materialSwitch(ns("mostlikely_showerror"),
-                                               label = "Margin of error",
-                                               value = FALSE,
-                                               status = "primary",
-                                               right = FALSE,
-                                               inline = TRUE))
-                            ),
-                            tabsetPanel(
-                              tabPanel("current", plotly::plotlyOutput(ns("common_species"), height = "300px")),
-                              tabPanel("ref", plotly::plotlyOutput(ns("common_species_ref"), height = "300px")),
-                              id = ns("mostlikelytabs"),
-                              type = "hidden"),
+                            mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage),
                             tags$div(style="text-align: center",
                                      uiOutput(ns("mostlikelyspecimages")))
                             )
@@ -154,23 +127,10 @@ predictionsServer <- function(id,
       })
       
       # draw species plots
-        # req(data$species_prob_current)
-        output$common_species <- plotly::renderPlotly({
-          validate(need(datar()$species_prob_current, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          species_plotly_common(tocommon(datar()$species_prob_current), 
-                                showerrorbars = input$mostlikely_showerror)
-        })
-        
-        output$common_species_ref <- plotly::renderPlotly({
-          validate(need(datar()$species_prob_current, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          species_plotly_common(tocommon(refpredictions()), 
-                                showerrorbars = input$mostlikely_showerror)
-        })
-        
-        observeEvent(input$mostlikely_showcurrscenario, {
-          updateTabsetPanel(inputId = "mostlikelytabs",
-                            selected = input$mostlikely_showcurrscenario)
-        })
+      mostlikely_plot_Server("mlp", 
+                             reactive({datar()$species_prob_current}),
+                             refpredictions
+                             )
         
       
       # draw species richness
