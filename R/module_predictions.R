@@ -31,7 +31,20 @@ predictionsUI <- function(id, refisaverage = TRUE){
                           left = proboccplotdescription,
                           right = tagList(
                             tags$div(class = "clearfix",
-                              tags$div(class = "float-start", "test"),
+                              tags$div(class = "float-start", 
+                                shinyWidgets::radioGroupButtons(
+                                  inputId = ns("mostlikely_showcurrscenario"),
+                                  label = NULL,
+                                  choiceValues = c("current", "ref"),
+                                  choiceNames = if (refisaverage){
+                                    c("Scenario 1", "Average")
+                                  } else {
+                                    c("Scenario 2", "Scenario 1")
+                                  },
+                                  selected = "current",
+                                  checkIcon = list()
+                                )
+                                       ),
                               tags$div(class =  "float-end", 
                                 shinyWidgets::materialSwitch(ns("mostlikely_showerror"),
                                                label = "Margin of error",
@@ -40,8 +53,11 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                                right = FALSE,
                                                inline = TRUE))
                             ),
-
-                            plotly::plotlyOutput(ns("common_species"), height = "300px"),
+                            tabsetPanel(
+                              tabPanel("current", plotly::plotlyOutput(ns("common_species"), height = "300px")),
+                              tabPanel("ref", plotly::plotlyOutput(ns("common_species_ref"), height = "300px")),
+                              id = ns("mostlikelytabs"),
+                              type = "hidden"),
                             tags$div(style="text-align: center",
                                      uiOutput(ns("mostlikelyspecimages")))
                             )
@@ -144,6 +160,18 @@ predictionsServer <- function(id,
           species_plotly_common(tocommon(datar()$species_prob_current), 
                                 showerrorbars = input$mostlikely_showerror)
         })
+        
+        output$common_species_ref <- plotly::renderPlotly({
+          validate(need(datar()$species_prob_current, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
+          species_plotly_common(tocommon(refpredictions()), 
+                                showerrorbars = input$mostlikely_showerror)
+        })
+        
+        observeEvent(input$mostlikely_showcurrscenario, {
+          updateTabsetPanel(inputId = "mostlikelytabs",
+                            selected = input$mostlikely_showcurrscenario)
+        })
+        
       
       # draw species richness
       output$species_richness <- renderPlot({
