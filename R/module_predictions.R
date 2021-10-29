@@ -223,8 +223,9 @@ predictionsServer <- function(id,
         output$downloaddataverbose <- downloadHandler(
           filename = "predictions.rds",
           content = function(file) {
-            saveRDS(reactiveValuesToList(datar()), file)
-          })
+            saveRDS(datar(), file)
+          },
+          contentType = "rds")
       }
       
       # bookmarking settings
