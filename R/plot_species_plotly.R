@@ -48,21 +48,27 @@ plot_ly_specroot <- function(df){
   return(plt)
 }
 
-species_plotly_common <- function(df){
+species_plotly_common <- function(df, showerrorbars = TRUE){
   set.seed(1)
   df <- topnrows(df, 10, "value")
   df$label <- paste0("", round(df$value * 100, 0), "%")
   df$tooltip <- speciesinfo[df$species, "shortstory"]
-  plot_ly_specroot(df) %>%
-    # add error bars
-    style(error_x = list(visible = TRUE,
-                         type = 'data',
-                         array = df$upper - df$value,
-                         arrayminus = df$value - df$lower,
-                         symmetric = FALSE,
-                         color = '#000000')) %>%
-    # add the values onto the bars
-    add_annotations(x  = ~lower, 
+  root <- plot_ly_specroot(df) %>%
+    # alter order
+    plotly::layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed"))
+  #despite the descriptions, the above line actually seems to order things as they are given in df
+  if (showerrorbars){ # add error bars
+    root <- root %>%
+      style(error_x = list(visible = TRUE,
+                           type = 'data',
+                           array = df$upper - df$value,
+                           arrayminus = df$value - df$lower,
+                           symmetric = FALSE,
+                           color = '#000000'))
+  }
+  # add the values onto the bars
+  root <- root %>%  
+    add_annotations(x  = ~if(showerrorbars){lower} else{value}, 
                     y = ~species, 
                     text = df$label,
                     xanchor = "right",
@@ -70,10 +76,8 @@ species_plotly_common <- function(df){
                     font = list(color = "rgba(0,0,0,1)"),
                     bgcolor = "rgba(255,255,255,1)",
                     showarrow = FALSE,
-                    showlegend = FALSE) %>%
-  # alter order
-  plotly::layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed"))
-  #despite the descriptions, the above line actually seems to order things as they are given in df
+                    showlegend = FALSE) 
+  root
 }
 
 species_plotly_different <- function(df){

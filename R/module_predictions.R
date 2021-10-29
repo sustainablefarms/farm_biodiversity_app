@@ -30,6 +30,17 @@ predictionsUI <- function(id, refisaverage = TRUE){
                twocolumns(heading = "The 10 most likely species to live in your farm's Box Gum Grassy Woodland.",
                           left = proboccplotdescription,
                           right = tagList(
+                            tags$div(class = "clearfix",
+                              tags$div(class = "float-start", "test"),
+                              tags$div(class =  "float-end", 
+                                shinyWidgets::materialSwitch(ns("mostlikely_showerror"),
+                                               label = "Margin of error",
+                                               value = FALSE,
+                                               status = "primary",
+                                               right = FALSE,
+                                               inline = TRUE))
+                            ),
+
                             plotly::plotlyOutput(ns("common_species"), height = "300px"),
                             tags$div(style="text-align: center",
                                      uiOutput(ns("mostlikelyspecimages")))
@@ -130,7 +141,8 @@ predictionsServer <- function(id,
         # req(data$species_prob_current)
         output$common_species <- plotly::renderPlotly({
           validate(need(datar()$species_prob_current, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          species_plotly_common(tocommon(datar()$species_prob_current))
+          species_plotly_common(tocommon(datar()$species_prob_current), 
+                                showerrorbars = input$mostlikely_showerror)
         })
       
       # draw species richness
