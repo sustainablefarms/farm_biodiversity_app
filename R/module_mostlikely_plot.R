@@ -5,7 +5,7 @@ mostlikely_plot_UI <- function(id, refisaverage = TRUE){
     tags$div(class = "clearfix",
       tags$div(class = "float-start", 
         shinyWidgets::radioGroupButtons(
-          inputId = ns("mostlikely_showcurrscenario"),
+          inputId = ns("scenarioswitch"),
           label = NULL,
           choiceValues = c("current", "ref"),
           choiceNames = if (refisaverage){
@@ -54,9 +54,9 @@ mostlikely_plot_Server <- function(id,
                                 showerrorbars = input$mostlikely_showerror)
         })
         
-        observeEvent(input$mostlikely_showcurrscenario, {
+        observeEvent(input$scenarioswitch, {
           updateTabsetPanel(inputId = "mostlikelytabs",
-                            selected = input$mostlikely_showcurrscenario)
+                            selected = input$scenarioswitch)
         })
   })
 }
@@ -71,7 +71,7 @@ app_mostlikely_plot <- function(){
       includeCSS("./www/base.css"),
       plotly::plotlyOutput("plotlybug", height = "0px"),
       mostlikely_plot_UI("mlp", refisaverage = FALSE),
-      theme = bslib::bs_theme(version = 5, "lumen"))
+      theme = bslib::bs_theme(version = 3, "lumen"))
     },
     function(input, output, session){
       mostlikely_plot_Server("mlp", 
