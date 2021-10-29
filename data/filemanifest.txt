@@ -8,6 +8,8 @@ NAMESPACE
 ./data/state_borders.rds
 ./data/sa2_polygons.rds
 ./data/sa2_points.rds
+./data/sa2_polygons_bbox.rds
+./data/sa2_polygons_bboxtotal.rds
 ./data/species_birdlifeimgs.csv
 ./data/species_shortstory.csv
 ./data/birdinfotable.rds
