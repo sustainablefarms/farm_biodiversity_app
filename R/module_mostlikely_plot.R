@@ -25,8 +25,10 @@ mostlikely_plot_UI <- function(id, refisaverage = TRUE){
                        inline = TRUE))
     ),
     tabsetPanel(
-      tabPanel("current", plotly::plotlyOutput(ns("common_species"), height = "300px")),
-      tabPanel("ref", plotly::plotlyOutput(ns("common_species_ref"), height = "300px")),
+      tabPanelBody("current", plotly::plotlyOutput(ns("common_species"), height = "300px")),
+      tabPanelBody("current_err", plotly::plotlyOutput(ns("common_species_err"), height = "300px")),
+      tabPanelBody("ref", plotly::plotlyOutput(ns("common_species_ref"), height = "300px")),
+      tabPanelBody("ref_err", plotly::plotlyOutput(ns("common_species_ref_err"), height = "300px")),
       id = ns("mostlikelytabs"),
       type = "hidden")
   )
@@ -44,18 +46,37 @@ mostlikely_plot_Server <- function(id,
         output$common_species <- plotly::renderPlotly({
           validate(need(species_prob_current(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
           species_plotly_common(tocommon(species_prob_current()), 
-                                showerrorbars = input$mostlikely_showerror)
+                                showerrorbars = FALSE)
+        })
+        
+        output$common_species_err <- plotly::renderPlotly({
+          validate(need(species_prob_current(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
+          species_plotly_common(tocommon(species_prob_current()), 
+                                showerrorbars = TRUE)
         })
         
         output$common_species_ref <- plotly::renderPlotly({
           validate(need(refpredictions(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
           species_plotly_common(tocommon(refpredictions()), 
-                                showerrorbars = input$mostlikely_showerror)
+                                showerrorbars = FALSE)
         })
         
-        observeEvent(input$scenarioswitch, {
+        output$common_species_ref_err <- plotly::renderPlotly({
+          validate(need(refpredictions(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
+          species_plotly_common(tocommon(refpredictions()), 
+                                showerrorbars = TRUE)
+        })
+        
+        observeEvent({
+          input$scenarioswitch
+          input$mostlikely_showerror
+          }, {
+          selected <- input$scenarioswitch
+          if (isTruthy(input$mostlikely_showerror)){
+            selected <- paste0(selected, "_err")
+          }
           updateTabsetPanel(inputId = "mostlikelytabs",
-                            selected = input$scenarioswitch)
+                            selected = selected)
         })
   })
 }
