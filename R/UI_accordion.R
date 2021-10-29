@@ -39,7 +39,7 @@ accordion_item_header <- function(id, title, data_bs_toggle = "collapse",
 
 accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headingOne",
 			       	data_bs_parent="#accordionExample"){
-  tags$div(id=id, class="accordion-collapse collapse show", `aria-labelledby`= aria_labelledby,
+  tags$div(id=id, class="accordion-collapse collapse", `aria-labelledby`= aria_labelledby,
            `data-bs-parent`= data_bs_parent,
            style = "",
     tags$div(class = "accordion-body", ...)
