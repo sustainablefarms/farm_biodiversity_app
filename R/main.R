@@ -48,14 +48,14 @@ ui <- function(request){
                predictors_UI("S1in")
       ),
       tabPanel(title = "Estimates 1",
-           predictionsUI("pred1"),
+           predictionsUI("pred1", refisaverage = TRUE),
            actionButton("toS2", "Compare")
       ),
       tabPanel(title = "The Land 2",
                predictors_UI("S2in")
       ),
       tabPanel(title = "Estimates 2",
-           predictionsUI("pred2")
+           predictionsUI("pred2", refisaverage = FALSE)
       ),
     collapsible = TRUE,
     footer = "Forward <-> back"
@@ -151,11 +151,13 @@ server <- function(input, output, session) {
   pred1arr <- predictionsServer("pred1", cval1,
                     reactiveVal(species_prob_mean),
                     model_data,
-                    report_path) 
+                    report_path,
+                    refisaverage = TRUE) 
   predictionsServer("pred2", cval2,
                     pred1arr,
                     model_data,
-                    report_path) 
+                    report_path,
+                    refisaverage = FALSE) 
   
   ## Help
   observeEvent(input$overallhelp, {
