@@ -1,14 +1,8 @@
-#' Create radio buttons
+#' Create radio button groups
 #'
-#' Create a set of radio buttons used to select an item from a list.
+#' Create a set of radio button groups used to select an item from a list.
+#' Credit to the authors of `shiny` for much of the code of this function
 #'
-#' If you need to represent a "None selected" state, it's possible to default
-#' the radio buttons to have no options selected by using `selected =
-#' character(0)`. However, this is not recommended, as it gives the user no way
-#' to return to that state once they've made a selection. Instead, consider
-#' having the first of your choices be `c("None selected" = "")`.
-#'
-#' @inheritParams textInput
 #' @param choices List of values to select from (if elements of the list are
 #'   named then that name rather than the value is displayed to the user). If
 #'   this argument is provided, then `choiceNames` and `choiceValues` must not
@@ -17,7 +11,6 @@
 #' @param selected The initially selected value. If not specified, then it
 #'   defaults to the first item in `choices`. To start with no items selected,
 #'   use `character(0)`.
-#' @param inline If `TRUE`, render the choices inline (i.e. horizontally)
 #' @return A set of radio buttons that can be added to a UI definition.
 #' @param choiceNames,choiceValues List of names and values, respectively, that
 #'   are displayed to the user in the app and correspond to the each choice (for
@@ -58,41 +51,14 @@
 #' }
 #'
 #' shinyApp(ui, server)
-#'
-#' ui <- fluidPage(
-#'   radioButtons("rb", "Choose one:",
-#'                choiceNames = list(
-#'                  icon("calendar"),
-#'                  HTML("<p style='color:red;'>Red Text</p>"),
-#'                  "Normal text"
-#'                ),
-#'                choiceValues = list(
-#'                  "icon", "html", "text"
-#'                )),
-#'   textOutput("txt")
-#' )
-#'
-#' server <- function(input, output) {
-#'   output$txt <- renderText({
-#'     paste("You chose", input$rb)
-#'   })
-#' }
-#'
-#' shinyApp(ui, server)
-#' }
-#' inputId = "dist"
-#' label = "Distribution"
-#' choices = c("Normal" = "norm",
-#'                  "Uniform" = "unif",
-#'                  "Log-normal" = "lnorm",
-#'                  "Exponential" = "exp")
+
 #' @section Server value:
 #'
 #'   A character string containing the value of the selected button.
 #'
 #' @export
-radioButtons2 <- function(inputId, label, choices = NULL, selected = NULL,
-                         inline = FALSE, width = NULL, choiceNames = NULL, choiceValues = NULL) {
+radioButtonsGroup <- function(inputId, label, choices = NULL, selected = NULL,
+                         width = NULL, choiceNames = NULL, choiceValues = NULL) {
   
   args <- shiny:::normalizeChoicesArgs(choices, choiceNames, choiceValues)
   
@@ -103,17 +69,15 @@ radioButtons2 <- function(inputId, label, choices = NULL, selected = NULL,
   
   if (length(selected) > 1) stop("The 'selected' argument must be of length 1")
   
-  options <- generateOptions(inputId, selected, inline,
+  options <- generateOptions_radiobuttongroup(inputId, selected, 
                              'radio', args$choiceNames, args$choiceValues)
   
   divClass <- "form-group shiny-input-radiogroup shiny-input-container"
-  if (inline) divClass <- paste(divClass, "shiny-input-container-inline")
   
   inputLabel <- shiny:::shinyInputLabel(inputId, label)
   tags$div(id = inputId,
            style = htmltools::css(width = validateCssUnit(width)),
            class = divClass,
-           # https://www.w3.org/TR/2017/WD-wai-aria-practices-1.1-20170628/examples/radio/radio-1/radio-1.html
            role = "radiogroup",
            `aria-labelledby` = inputLabel$attribs$id,
            inputLabel,
@@ -122,14 +86,7 @@ radioButtons2 <- function(inputId, label, choices = NULL, selected = NULL,
 }
 
 
-# options <- shiny:::generateOptions(inputId, selected, inline,
-#                                    'radio', args$choiceNames, args$choiceValues)
-# choiceNames <- args$choiceNames
-# choiceValues <- args$choiceValues
-# type = 'radio'
-# generate options for radio buttons and checkbox groups (type = 'checkbox' or
-# 'radio')
-generateOptions <- function(inputId, selected, inline, type = 'checkbox',
+generateOptions_radiobuttongroup <- function(inputId, selected, type = 'checkbox',
                             choiceNames, choiceValues,
                             session = getDefaultReactiveDomain()) {
   # generate a list of <input type=? [checked] />

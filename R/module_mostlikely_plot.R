@@ -4,7 +4,7 @@ mostlikely_plot_UI <- function(id, refisaverage = TRUE){
   tagList(
     tags$div(class = "clearfix",
       tags$div(class = "float-start", 
-        radioButtons2(
+        radioButtonsGroup(
           inputId = ns("scenarioswitch"),
           label = NULL,
           choiceValues = c("current", "ref"),
@@ -13,8 +13,7 @@ mostlikely_plot_UI <- function(id, refisaverage = TRUE){
           } else {
             c("Scenario 2", "Scenario 1")
           },
-          selected = "current",
-          inline = TRUE
+          selected = "current"
         )
                ),
       tags$div(class =  "float-end", 
