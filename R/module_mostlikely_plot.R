@@ -4,7 +4,7 @@ mostlikely_plot_UI <- function(id, refisaverage = TRUE){
   tagList(
     tags$div(class = "clearfix",
       tags$div(class = "float-start", 
-        shinyWidgets::radioGroupButtons(
+        radioButtons2(
           inputId = ns("scenarioswitch"),
           label = NULL,
           choiceValues = c("current", "ref"),
@@ -14,7 +14,7 @@ mostlikely_plot_UI <- function(id, refisaverage = TRUE){
             c("Scenario 2", "Scenario 1")
           },
           selected = "current",
-          checkIcon = list()
+          inline = TRUE
         )
                ),
       tags$div(class =  "float-end", 
@@ -71,7 +71,7 @@ app_mostlikely_plot <- function(){
       includeCSS("./www/base.css"),
       plotly::plotlyOutput("plotlybug", height = "0px"),
       mostlikely_plot_UI("mlp", refisaverage = FALSE),
-      theme = bslib::bs_theme(version = 3, "lumen"))
+      theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
       mostlikely_plot_Server("mlp", 
