@@ -1,5 +1,5 @@
 # predictions module
-predictionsUI <- function(id){
+predictionsUI <- function(id, refisaverage = TRUE){
   ns <- NS(id)
   tagList(
     # the following enables bootstrap 3's inbuilt tooltips
@@ -13,7 +13,7 @@ predictionsUI <- function(id){
        $('.specimg').each(function(index){$( this ).attr('src', $( this ).attr('data-src'))});
       });
     "),
-    plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
+    # plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
                left = tagList(paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
@@ -104,7 +104,8 @@ predictionsServer <- function(id,
                               current_values,
                               refpredictions,
                               model_data,
-                              report_path){
+                              report_path,
+                              refisaverage = TRUE){
   moduleServer(
     id,
     function(input, output, session){
@@ -120,7 +121,7 @@ predictionsServer <- function(id,
   
       # compute predictions below
       datar <- reactive({
-        data <- compile_predictions(current_values(), refpredictions())
+        data <- compile_predictions(current_values(), refpredictions(), refisaverage = refisaverage)
         session$sendCustomMessage("predictionsmade", "nothing") #for usage tracking
         data
       })
@@ -243,7 +244,7 @@ app_predictions <- function(){
   shinyApp(
     {fluidPage(
       includeCSS("./www/base.css"),
-      fluidRow(predictionsUI("pred")),
+      predictionsUI("pred", refisaverage = FALSE),
       theme = bslib::bs_theme(version = 5, "lumen"))
       },
            function(input, output, session){
@@ -251,6 +252,7 @@ app_predictions <- function(){
                                current_values,
                                reactiveVal(species_prob_mean),
                                model_data, 
-                               report_path)
+                               report_path,
+                               refisaverage = FALSE)
            })
 }

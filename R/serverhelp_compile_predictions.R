@@ -1,6 +1,6 @@
 # current_values <- readRDS("./current_values.rds")
 # refpredictions <- species_prob_mean
-compile_predictions <- function(current_values, refpredictions){
+compile_predictions <- function(current_values, refpredictions, refisaverage = TRUE){
   data <- list()
   data$Xocc <- newXocc_fromselected(current_values)
   modwXocc <- msod::supplant_new_data(model_data, data$Xocc, toXocc = function(x){stdXocc(x, model_data$XoccProcess$center,
@@ -13,9 +13,9 @@ compile_predictions <- function(current_values, refpredictions){
                                  reference = sum(refpredictions[, "median"]))           # add in reference
   species_richness_raw$category <- factor(1:4, levels = 4:1,
          labels = c(
-                    "Reference estimate",
+                    if (refisaverage){"Average"} else {"Scenario 1"},
                     "Nearby woody cover = 20%",
-                    "Your estimate",
+                    if (refisaverage){"Scenario 1"} else {"Scenario 2"},
            "Nearby woody cover = 2%"
            ),
          ordered = TRUE
