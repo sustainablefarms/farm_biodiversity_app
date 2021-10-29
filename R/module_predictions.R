@@ -7,6 +7,12 @@ predictionsUI <- function(id){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
+    # update species images after plots finished
+    tags$script("
+      Shiny.addCustomMessageHandler('plotfinished', function(state){
+       $('.specimg').each(function(index){$( this ).attr('src', $( this ).attr('data-src'))});
+      });
+    "),
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
                left = tagList(paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
@@ -22,8 +28,13 @@ predictionsUI <- function(id){
               accordion_item(title = "Most likely species", id = ns("mostlikely"),
                twocolumns(heading = "The 10 most likely species to live in your farm's Box Gum Grassy Woodland.",
                           left = proboccplotdescription,
-                          right = plotly::plotlyOutput(ns("common_species"), height = "300px"))
-                             ),
+                          right = tagList(
+                            plotly::plotlyOutput(ns("common_species"), height = "300px"),
+                            tags$div(style="text-align: center",
+                                     uiOutput(ns("mostlikelyspecimages")))
+                            )
+                         )
+                ),
               accordion_item(title = "Least likely species", id = ns("leastlikely"),
                 twocolumns(heading = "The 10 least likely species to live in your farm's Box Gum Grassy Woodland.",
                            left = tags$p("Of the species in", appname, "these species are least likely. This doesn't include rare birds not in", appname, "."),
@@ -31,32 +42,42 @@ predictionsUI <- function(id){
                              style="text-align: center",
                              uiOutput(ns("leastlikespecimages"))
                            )
-                )
+                 )
+                ),
+              accordion_item(title = "Vulnerable species", id = ns("vulspec"),
+                twocolumns(heading = "Heading",
+                           left = "about",
+                           right = lapply(consstatus$CommonName, function(specname) vulnerablespecUI(ns, specname)))
+                ),
+              accordion_item(title = "Occupancy Probability of All Species", id = ns("occall"),
+                twocolumns(heading = "Estimates of the occupancy probability for every species",
+                           left = tagList(proboccplotdescription,
+                                          tags$p("Body length data from",
+                                                 linknewtab(href = "https://www.nature.com/articles/sdata201561", "Garnett et al. (Scientific Data 2, 2015)."))),
+                           right = plotOutput(ns("allspecies"), height = "800px")
+                           )
+                ),
+              accordion_item(title = "Relative Occupancy Probability", id = ns("occallrel"),
+                             twocolumns(heading = "Estimates of occupancy probability relative to S1 for every species.",
+                                        left = tags$div(tags$p("This is the ratio of each species' estimated occupancy probability to the reference occupancy probability.",
+                                                               "For example, if the Superb Parrot has a ratio of '2', then it is estimated that the Superb Parrot is twice as likely to live in your farm's woodland than in the reference farm."),
+                                                        tags$p(
+                                                          "A ratio of '1' means the species is", tags$em("equally"), "as likely to occupy your farm's woodland as the reference farm.",
+                                                          "A ratio smaller than 1 means the species is", tags$em("less"), "likely to occupy your farm's woodland than the reference farm."),
+                                                        tags$p("Body length data from",
+                                                               linknewtab(href = "https://www.nature.com/articles/sdata201561", "Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015)."))
+                                                      ),
+                                        right = plotOutput(ns("allspeciesrel"), height = "800px")
+                             )
               )
               ),
     
     
-    fluidRow(
-        column(width = 6,
-          tags$span(HTML("<h4>Relative Probability (Ratio to Reference)</h4>"),
-                  infotooltip(HTML("This is the ratio of each species' estimated occupancy probability to the reference occupancy probability.",
-				   "For example, if the Superb Parrot has a ratio of '2', then it is estimated that the Superb Parrot is twice as likely to live in your farm's woodland than in the reference farm.",
-                                   "The species with the 10 biggest ratios are shown.",
-				   "<br><br>",
-				   "Each row is a species. The ratio is given in the white box. The length and colours of the bars also represent the ratio.",
-				   "Hover over a bar to get more information about that species.",
-                                   "<br><br>The reference can be set using the 'Update' button and 'Use default' checkbox below this figure.",
-                                   "<br><br>The ratios of all species can be seen by clicking 'View More Detail' or downloading a report."))
-          ),
-          plotly::plotlyOutput(ns("diff_species"), height = "300px")
-        )
-        ),
       fluidRow(
         column(width = 6,
           if (isTRUE(getOption("shiny.testmode"))){
             downloadButton(ns("downloaddataverbose"), "Verbose Prediction Data", class = "download_badge")
           },
-          actionButton(ns("moredetail"), "View More Detail", class = "download_badge"),
           downloadButton(ns("downloaddata"), "Table", class = "download_badge"),
           downloadButton(ns("downloadreport"), "Report", class = "download_badge")
                ),
@@ -109,11 +130,6 @@ predictionsServer <- function(id,
           validate(need(datar()$species_prob_current, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
           species_plotly_common(tocommon(datar()$species_prob_current))
         })
-        output$diff_species <- plotly::renderPlotly({
-          validate(need(datar()$spec_different, label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          species_plotly_different(datar()$spec_different)
-        })
-
       
       # draw species richness
       output$species_richness <- renderPlot({
@@ -127,27 +143,40 @@ predictionsServer <- function(id,
         lapply(10:1, function(idx) specimageOut(datar()$speciesinfo_botten[idx, ],
                                                 height = "100px"))
       })
-      # modal more detail stuff
-      observeEvent(input$moredetail, {
-        moredetailopens(moredetailopens() + 1)
-        showModal(
-          modalDialog(
-            predictionsdetailUI(ns("detail"), isolate(datar()$speciesinfo_topten), isolate(datar()$speciesinfo_botten)),
-            title = "More Detail on Predictions",
-            size = "l",
-      easyClose = TRUE,
-            footer = tagList(
-              actionButton(ns("hide"), "Hide"),
-            )
-          )
-        )
+      
+      output$mostlikelyspecimages <- renderUI({
+        validate(need(datar()$speciesinfo_topten, ""))
+        lapply(1:10, function(idx) specimageOut(datar()$speciesinfo_topten[idx, ],
+                              height = "100px"))
       })
       
-      observeEvent(input$hide, 
-                   removeModal()
-      )
+      #vulnerable species
+      lapply(consstatus$CommonName, function(specname){
+        output[[gsub("(-| )", "", specname)]] <- renderText({
+          validate(need(datar()$species_prob_current, ""))
+          c("The", specname, consstatus[specname, "statussummary"],
+            onespecwords(specname, datar()$species_prob_current),
+            onespecwords(specname, refpredictions())
+            )
+        })
+      })
       
-      predictionsdetailServer("detail", datar(), moredetailopens)
+      # All species plots
+      wprob <- waiter::Waiter$new(id = ns("allspecies"))
+      output$allspecies <- renderPlot({
+        wprob$show()
+        on.exit(wprob$hide())
+        on.exit(session$sendCustomMessage("plotfinished", TRUE))
+        plot_allspeciesprob(datar()$species_prob_current)
+      })
+      
+      wrel <- waiter::Waiter$new(id = ns("allspeciesrel"))
+      output$allspeciesrel <- renderPlot({
+        wrel$show()
+        on.exit(wrel$hide())
+        on.exit(session$sendCustomMessage("plotfinished", TRUE))
+        plot_allspeciesrel(datar()$spec_different)
+      })
       
       output$downloaddata <- downloadHandler(
         filename = "predictions.csv",
