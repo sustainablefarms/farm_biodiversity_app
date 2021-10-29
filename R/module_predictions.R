@@ -13,7 +13,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
        $('.specimg').each(function(index){$( this ).attr('src', $( this ).attr('data-src'))});
       });
     "),
-    # plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
+    plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
                left = tagList(paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
