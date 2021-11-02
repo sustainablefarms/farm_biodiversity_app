@@ -6,9 +6,9 @@ regionpolygons <- readRDS("data/sa2_polygons.rds") %>%
                   dTolerance = 1000)
 regionpolygons_4326 <- readRDS("data/sa2_polygons.rds") %>%
   dplyr::filter(SA2_NAME16 %in% regionpts$label) %>%
-  sf::st_transform(4326) %>%
-  sf::st_simplify(preserveTopology = TRUE,
-                  dTolerance = 1000)
+  sf::st_transform(4326) # %>%
+  # sf::st_simplify(preserveTopology = TRUE,
+  #                 dTolerance = 1000)
   
   
 # ns = function(x)x
