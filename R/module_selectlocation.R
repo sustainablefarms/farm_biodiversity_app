@@ -119,9 +119,15 @@ selectlocationServer <- function(id, selected_region){
           lftproxy <- leaflet::leafletProxy("regionsleaflet") %>%
             leaflet::removeShape("selectedpolygon")
             if (isTruthy(selected_region())){
-              lftproxy %>%
-              leaflet::addPolygons(data = regionpolygons_4326[regionpolygons_4326$SA2_NAME16 == selected_region(), ],
-                                   color = "red", layerId = "selectedpolygon")
+              regionpolygon <- regionpolygons_4326[regionpolygons_4326$SA2_NAME16 == selected_region(), ]
+              regionpt <- regionpts[regionpts$label == selected_region(), ]
+              lftproxy %>% 
+              leaflet::addPolygons(data = regionpolygon,
+                                   color = "red", layerId = "selectedpolygon") %>%
+              leaflet::addPopups(lng = regionpt$longitude, 
+                                   lat = regionpt$latitude,
+                                   popup = regionpt$label,
+                                 layerId = "selectedpolygon")
             }
       }, priority = 101)
         
