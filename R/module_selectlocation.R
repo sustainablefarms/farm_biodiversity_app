@@ -172,10 +172,9 @@ selectlocationServer <- function(id, selected_region){
         # draw a map
         output$map <- renderPlot({
           validate(need(outOfModule()$selected_region, "Please select your region"))
-          data$polygons <- readRDS("data/sa2_polygons.rds")
           # map_text <- data$points[data$points$label == outOfModule()$selected_region, ]
           # map_text$label <- paste(strsplit(map_text$label, " ")[[1]], collapse = "\n")
-          ggplot(data$polygons[data$polygons$SA2_NAME16 == outOfModule()$selected_region, ]) +
+          ggplot(regionpolygons_4326[regionpolygons_4326$SA2_NAME16 == outOfModule()$selected_region, ]) +
             geom_sf(fill = "grey90", color = "grey10") +
             # geom_text(data = map_text,
             #           mapping = aes(x = longitude, y = latitude, label = label),
