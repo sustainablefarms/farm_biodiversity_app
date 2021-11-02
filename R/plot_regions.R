@@ -127,10 +127,10 @@ regionplot_leaflet <- function(){
   leaflet::leaflet(regionpolygons_4326) %>%
     leaflet::addTiles() %>%
     leaflet::addPolygons(
-      # popup = ~SA2_NAME16,
+      popup = ~SA2_NAME16,
       label = ~SA2_NAME16,
       highlightOptions = leaflet::highlightOptions(color = "red")
-    ) 
+    )
 }
 
 lonlat2region <- function(lon, lat){

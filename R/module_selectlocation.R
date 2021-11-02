@@ -9,7 +9,6 @@ selectlocationUI <- function(id){
   tagList(
 	 waiter::use_waiter(),
          HTML("<div class='subheader'><h2>REGION</h2></div>"),
-             leaflet::leafletOutput(ns("regionsleaflet")),
          # selectInput(
          #   inputId = ns("spatial_type"),
          #   label = NULL,
@@ -22,7 +21,7 @@ selectlocationUI <- function(id){
              selectInput(ns("selectbox"), label = NULL, 
                          choices = choices,
                          multiple = FALSE),
-             plotly::plotlyOutput(ns("plot_points"), height = "350px")
+             leaflet::leafletOutput(ns("regionsleaflet"))
              ),
            column(width = 4, 
              # style = "
@@ -100,10 +99,11 @@ selectlocationServer <- function(id, selected_region){
         })
         }
         
+      # leaflet map operations
       output$regionsleaflet <- leaflet::renderLeaflet({
-        showNotification("Rendering leaflet")
         regionplot_leaflet()
       })
+      # update selected_region 'input'
       observe({
         p <- input$regionsleaflet_shape_click
         validate(need(p, ""))
@@ -112,12 +112,18 @@ selectlocationServer <- function(id, selected_region){
           showNotification("Please click in the interior of the region")
         } else {
           selected_region(containing_region)
-          leaflet::leafletProxy("regionsleaflet") %>%
-            leaflet::removeShape("selectedpolygon") %>%
-            leaflet::addPolygons(data = regionpolygons_4326[regionpolygons_4326$SA2_NAME16 == containing_region, ],
-                                 color = "red", layerId = "selectedpolygon")
         }
       })
+      #update map to show selected region if selected another way
+      observeEvent(selected_region(), {
+          lftproxy <- leaflet::leafletProxy("regionsleaflet") %>%
+            leaflet::removeShape("selectedpolygon")
+            if (isTruthy(selected_region())){
+              lftproxy %>%
+              leaflet::addPolygons(data = regionpolygons_4326[regionpolygons_4326$SA2_NAME16 == selected_region(), ],
+                                   color = "red", layerId = "selectedpolygon")
+            }
+      }, priority = 101)
         
        # create observers (reactive end points) for refactoring the inputs
        observeEvent(input$selectbox, {
