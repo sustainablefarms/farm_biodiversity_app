@@ -5,14 +5,14 @@ regionpolygons <- readRDS("data/sa2_polygons.rds") %>%
 # ns = function(x)x
 # regionplot_borders(ns)
 
-regionplot_dots <- function(ns){
+regionplot_dots <- function(source = "region_map"){
   out <- plotly::plot_ly(
     regionpts,
     x = ~longitude,
     y = ~latitude,
     type = "scatter",
     mode = "markers",
-    source = ns("region_map"),
+    source = source,
     marker = list(
       size = 10,
       color = ~color
@@ -50,8 +50,8 @@ dragmode = FALSE,
 }
 
 
-regionplot_borders <- function(ns){
-  out <- plot_ly(source = ns("region_map")) %>% 
+regionplot_borders <- function(source = "region_map"){
+  out <- plot_ly(source = source) %>% 
     add_sf(data = state_borders,
            type = "scatter",
            mode = "lines",
@@ -86,17 +86,20 @@ regionplot_borders <- function(ns){
              inherit = FALSE
     ) %>%
     plotly::layout(
-      xaxis = list(title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = TRUE),
-      yaxis = list(scaleanchor = "x",
-                   title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = TRUE),
+      xaxis = list(title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = FALSE),
+      yaxis = list(#scaleanchor = "x",
+                   title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = FALSE),
       margin = list(l = 0, r = 0, b = 0, t = 0, pad = 0),
-      dragmode = FALSE,
+      # clickmode = "event+select", #so polygons will be both event clicked and 'selected'
+      dragmode = "pan",
       paper_bgcolor='transparent',
       plot_bgcolor = 'transparent'
     ) %>%
-    plotly::config(displayModeBar = FALSE) %>%
+    plotly::config(displayModeBar = FALSE,
+                   scrollZoom = TRUE,
+                   doubleClick = FALSE) %>%
     plotly::event_register(event = 'plotly_click')
-  out %>%
+  out %>% #the below prints info to the 'inspect element, console panel
     htmlwidgets::onRender("
     function(el) {
       el.on('plotly_hover', function(d) {

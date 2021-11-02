@@ -76,7 +76,7 @@ selectlocationServer <- function(id, selected_region){
             need(data$points, message = "no data points yet")
           )
 	  on.exit(wplotly$hide())
-	    out <- regionplot_borders(ns)
+	    out <- regionplot_borders(ns("region_map"))
           regionmapcreated(TRUE)
           return(out)
         })
