@@ -2,7 +2,6 @@ state_borders <- readRDS("./data/state_borders.rds")
 regionpts <- readRDS("data/sa2_points_climate.rds")
 regionpolygons <- readRDS("data/sa2_polygons.rds") %>%
   dplyr::filter(SA2_NAME16 %in% regionpts$label)
-# regionplot_dots(function(x)x)
 # ns = function(x)x
 # regionplot_borders(ns)
 
@@ -72,6 +71,8 @@ regionplot_borders <- function(ns){
           stroke = I("black"),
           text = ~SA2_NAME16,
           hoverinfo = 'text',
+          hoveron='points+fills',
+          key = ~SA2_NAME16,
           hovertemplate = paste('%{text}<extra></extra>'),
           # strokes = RColorBrewer::brewer.pal(4, "Blues"),
           showlegend = FALSE
@@ -95,5 +96,19 @@ regionplot_borders <- function(ns){
     ) %>%
     plotly::config(displayModeBar = FALSE) %>%
     plotly::event_register(event = 'plotly_click')
+  out %>%
+    htmlwidgets::onRender("
+    function(el) {
+      el.on('plotly_hover', function(d) {
+        console.log('Hover: ', d);
+      });
+      el.on('plotly_click', function(d) {
+        console.log('Click: ', d);
+      });
+      el.on('plotly_selected', function(d) {
+        console.log('Select: ', d);
+      });
+    }
+  ")
   return(out)
 }

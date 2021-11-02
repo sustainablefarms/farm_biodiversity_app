@@ -76,7 +76,7 @@ selectlocationServer <- function(id, selected_region){
             need(data$points, message = "no data points yet")
           )
 	  on.exit(wplotly$hide())
-	    out <- regionplot_dots(ns)
+	    out <- regionplot_borders(ns)
           regionmapcreated(TRUE)
           return(out)
         })
@@ -91,11 +91,10 @@ selectlocationServer <- function(id, selected_region){
             click_region <- plotly::event_data(
               event = "plotly_click",
               source = ns("region_map")
-            )$pointNumber + 1 # Note: plotly uses Python-style indexing, hence +1
+            )$key %>% unlist() #key is more reliable than pointNumber, and also works on the polygon version
             if (isTruthy(click_region)){
-              if (is.numeric(click_region) && (click_region > 0)){ #if something is selected then update region
-                selected_region(data$points$label[click_region])
-            }}
+              selected_region(click_region)
+            }
           }
         })
         }
