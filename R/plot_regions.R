@@ -1,9 +1,9 @@
 state_borders <- readRDS("./data/state_borders.rds")
 regionpts <- readRDS("data/sa2_points_climate.rds")
 regionpolygons <- readRDS("data/sa2_polygons.rds") %>%
-  dplyr::filter(SA2_NAME16 %in% regionpts$label) #   %>%
-  # sf::st_simplify(preserveTopology = TRUE,
-                  # dTolerance = 5000)
+  dplyr::filter(SA2_NAME16 %in% regionpts$label) %>%
+  sf::st_simplify(preserveTopology = TRUE,
+                  dTolerance = 1000)
 # ns = function(x)x
 # regionplot_borders(ns)
 
@@ -50,7 +50,6 @@ dragmode = FALSE,
     plotly::event_register(event = 'plotly_click')
   return(out)
 }
-
 
 regionplot_borders <- function(source = "region_map"){
   out <- plot_ly(source = source) %>% 
@@ -115,4 +114,9 @@ regionplot_borders <- function(source = "region_map"){
   #   }
   # ")
   out %>% partial_bundle() #partial bundle partly speeds up plotting
+}
+
+regionplot_leaflet <- function(){
+  leaflet::leaflet(regionpolygons) %>%
+    leaflet::addPolygons()
 }
