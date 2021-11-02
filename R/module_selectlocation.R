@@ -76,46 +76,7 @@ selectlocationServer <- function(id, selected_region){
             need(data$points, message = "no data points yet")
           )
 	  on.exit(wplotly$hide())
-          out <- plotly::plot_ly(
-            data$points,
-            x = ~longitude,
-            y = ~latitude,
-            type = "scatter",
-            mode = "markers",
-            source = ns("region_map"),
-            marker = list(
-              size = 10,
-              color = ~color
-            ),
-            hoverinfo = "text",
-            text = ~label
-          ) %>%
-            add_sf(data = readRDS("./data/state_borders.rds"), 
-                   type = "scatter", 
-                   mode = "lines",
-                   inherit = FALSE,
-                   showlegend = FALSE,
-                   hoverinfo = 'none',
-                   line = list(color = "gray")
-          ) %>% 
-  add_text(x = min(data$points$longitude)+1, 
-           y = c(max(data$points$latitude)-1, min(data$points$latitude) - 0.5),
-           text = c("NSW", "VIC"), 
-           textfont = list(size = 20),
-           showlegend = FALSE,
-           inherit = FALSE
-           ) %>%
-            plotly::layout(
-            xaxis = list(title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = TRUE),
-            yaxis = list(scaleanchor = "x",
-                         title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = TRUE),
-            margin = list(l = 0, r = 0, b = 0, t = 0, pad = 0),
-	    dragmode = FALSE,
-            paper_bgcolor='transparent',
-            plot_bgcolor = 'transparent'
-          ) %>%
-            plotly::config(displayModeBar = FALSE) %>%
-            plotly::event_register(event = 'plotly_click')
+	    out <- regionplot_dots(ns)
           regionmapcreated(TRUE)
           return(out)
         })
