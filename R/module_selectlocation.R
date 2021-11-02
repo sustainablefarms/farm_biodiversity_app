@@ -9,6 +9,7 @@ selectlocationUI <- function(id){
   tagList(
 	 waiter::use_waiter(),
          HTML("<div class='subheader'><h2>REGION</h2></div>"),
+             leaflet::leafletOutput(ns("regionsleaflet")),
          # selectInput(
          #   inputId = ns("spatial_type"),
          #   label = NULL,
@@ -98,6 +99,21 @@ selectlocationServer <- function(id, selected_region){
           }
         })
         }
+        
+      output$regionsleaflet <- leaflet::renderLeaflet({
+        showNotification("Rendering leaflet")
+        regionplot_leaflet()
+      })
+      observe({
+        p <- input$regionsleaflet_shape_click
+        validate(need(p, ""))
+        containing_region <- lonlat2region(p$lng,p$lat)
+        if (length(containing_region) > 1){
+          showNotification("Please click in the interior of the region")
+        } else {
+          selected_region(containing_region)
+        }
+      })
         
        # create observers (reactive end points) for refactoring the inputs
        observeEvent(input$selectbox, {

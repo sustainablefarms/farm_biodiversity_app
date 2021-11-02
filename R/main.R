@@ -78,6 +78,8 @@ ui <- function(request){
       })"
       ),
       shinyjs::useShinyjs(),
+      leaflet::leafletOutput("loadleaflet", height = "0px", width = "0px"), #so leaflet scripts are loaded
+      plotly::plotlyOutput("loadplotly", height = "0px", width = "0px"), #so plotly is loaded
       HTML("<div class='header'>"),
       fluidRow(
         column(width = 2,

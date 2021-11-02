@@ -4,6 +4,13 @@ regionpolygons <- readRDS("data/sa2_polygons.rds") %>%
   dplyr::filter(SA2_NAME16 %in% regionpts$label) %>%
   sf::st_simplify(preserveTopology = TRUE,
                   dTolerance = 1000)
+regionpolygons_4326 <- readRDS("data/sa2_polygons.rds") %>%
+  dplyr::filter(SA2_NAME16 %in% regionpts$label) %>%
+  sf::st_transform(4326) %>%
+  sf::st_simplify(preserveTopology = TRUE,
+                  dTolerance = 1000)
+  
+  
 # ns = function(x)x
 # regionplot_borders(ns)
 
@@ -117,6 +124,22 @@ regionplot_borders <- function(source = "region_map"){
 }
 
 regionplot_leaflet <- function(){
-  leaflet::leaflet(regionpolygons) %>%
-    leaflet::addPolygons()
+  leaflet::leaflet(regionpolygons_4326) %>%
+    leaflet::addTiles() %>%
+    leaflet::addPolygons(
+      # popup = ~SA2_NAME16,
+      label = ~SA2_NAME16
+    )
+}
+# lat = -35.73224
+# lon = 147.041
+lonlat2region <- function(lon, lat){
+  print(lon)
+  print(lat)
+  pt <- sf::st_point(x = c(lon, lat), dim = "XY")
+  pt_sfc <- sf::st_sfc(pt, crs = 4326)
+  containingregions <- sf::st_contains(regionpolygons_4326, pt_sfc, sparse = FALSE)
+  idx <- which(containingregions) #integer(0) when no matches
+  selected_region <- regionpolygons_4326$SA2_NAME16[idx]
+  return(selected_region)
 }
