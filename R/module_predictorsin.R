@@ -3,8 +3,10 @@ predictors_UI <- function(id){
   ns <- NS(id)
   tagList(
     accordion(id = ns("acc"), 
-      accordion_item("Select Location", id = ns("acc-loc"), selectlocationUI(ns("loc"))),
-      accordion_item("Rainfall Since Last August", id = ns("acc-yfa"), selectYfAUI(ns("yfa"))),
+      accordion_item("Select Location", id = ns("acc-loc"), 
+                     selectlocationUI(ns("loc")),
+                     div(id = ns("yfa_wrap"), selectYfAUI(ns("yfa")))
+                     ),
       selectpatch_UI(ns("ptch"))
     ),
          if (isTRUE(getOption("shiny.testmode"))){
@@ -35,6 +37,10 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
       
       ## YfA
       fromyfa <- selectYfAServer("yfa", selected_region, inAnnPrec.YfA)
+      observeEvent(selected_region(), {
+        shinyjs::toggleElement(id = "yfa_wrap",
+                        condition = isTruthy(selected_region()))
+      })
       
       ## Combine!
       cval <- eventReactive({c(fromyfa(),
