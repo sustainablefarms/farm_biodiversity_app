@@ -127,6 +127,10 @@ selectlocationServer <- function(id, selected_region){
               leaflet::addPopups(lng = regionpt$longitude, 
                                    lat = regionpt$latitude,
                                    popup = regionpt$label,
+                                 options = leaflet::popupOptions(closeOnClick = FALSE,
+                                                        closeOnEscapeKey = FALSE,
+                                                        autoclose = FALSE,
+                                                        closeButton = FALSE),
                                  layerId = "selectedpolygon")
             }
       }, priority = 101)
