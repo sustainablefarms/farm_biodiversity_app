@@ -1,7 +1,9 @@
 state_borders <- readRDS("./data/state_borders.rds")
 regionpts <- readRDS("data/sa2_points_climate.rds")
 regionpolygons <- readRDS("data/sa2_polygons.rds") %>%
-  dplyr::filter(SA2_NAME16 %in% regionpts$label)
+  dplyr::filter(SA2_NAME16 %in% regionpts$label) #   %>%
+  # sf::st_simplify(preserveTopology = TRUE,
+                  # dTolerance = 5000)
 # ns = function(x)x
 # regionplot_borders(ns)
 
@@ -90,28 +92,27 @@ regionplot_borders <- function(source = "region_map"){
       yaxis = list(#scaleanchor = "x",
                    title = "", showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange = FALSE),
       margin = list(l = 0, r = 0, b = 0, t = 0, pad = 0),
-      # clickmode = "event+select", #so polygons will be both event clicked and 'selected'
-      dragmode = "pan",
+      dragmode = FALSE,
       paper_bgcolor='transparent',
       plot_bgcolor = 'transparent'
     ) %>%
     plotly::config(displayModeBar = FALSE,
                    scrollZoom = TRUE,
-                   doubleClick = FALSE) %>%
+                   doubleClick = "reset") %>%
     plotly::event_register(event = 'plotly_click')
-  out %>% #the below prints info to the 'inspect element, console panel
-    htmlwidgets::onRender("
-    function(el) {
-      el.on('plotly_hover', function(d) {
-        console.log('Hover: ', d);
-      });
-      el.on('plotly_click', function(d) {
-        console.log('Click: ', d);
-      });
-      el.on('plotly_selected', function(d) {
-        console.log('Select: ', d);
-      });
-    }
-  ")
-  return(out)
+  # out %>% #the below prints info to the 'inspect element, console panel
+  #   htmlwidgets::onRender("
+  #   function(el) {
+  #     el.on('plotly_hover', function(d) {
+  #       console.log('Hover: ', d);
+  #     });
+  #     el.on('plotly_click', function(d) {
+  #       console.log('Click: ', d);
+  #     });
+  #     el.on('plotly_selected', function(d) {
+  #       console.log('Select: ', d);
+  #     });
+  #   }
+  # ")
+  out %>% partial_bundle() #partial bundle partly speeds up plotting
 }
