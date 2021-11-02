@@ -128,14 +128,12 @@ regionplot_leaflet <- function(){
     leaflet::addTiles() %>%
     leaflet::addPolygons(
       # popup = ~SA2_NAME16,
-      label = ~SA2_NAME16
-    )
+      label = ~SA2_NAME16,
+      highlightOptions = leaflet::highlightOptions(color = "red")
+    ) 
 }
-# lat = -35.73224
-# lon = 147.041
+
 lonlat2region <- function(lon, lat){
-  print(lon)
-  print(lat)
   pt <- sf::st_point(x = c(lon, lat), dim = "XY")
   pt_sfc <- sf::st_sfc(pt, crs = 4326)
   containingregions <- sf::st_contains(regionpolygons_4326, pt_sfc, sparse = FALSE)

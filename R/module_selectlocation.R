@@ -112,6 +112,10 @@ selectlocationServer <- function(id, selected_region){
           showNotification("Please click in the interior of the region")
         } else {
           selected_region(containing_region)
+          leaflet::leafletProxy("regionsleaflet") %>%
+            leaflet::removeShape("selectedpolygon") %>%
+            leaflet::addPolygons(data = regionpolygons_4326[regionpolygons_4326$SA2_NAME16 == containing_region, ],
+                                 color = "red", layerId = "selectedpolygon")
         }
       })
         
