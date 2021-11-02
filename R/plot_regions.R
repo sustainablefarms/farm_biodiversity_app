@@ -113,7 +113,7 @@ regionplot_borders <- function(source = "region_map"){
   #     });
   #   }
   # ")
-  out %>% partial_bundle() #partial bundle partly speeds up plotting
+  out 
 }
 
 regionplot_leaflet <- function(){
