@@ -6,7 +6,7 @@ carousel <- function(id,
   stopifnot(nslides >= 2)
 tags$div(id = id, class = "carousel carousel-dark slide", `data-bs-ride`="carousel",
   tags$div(class = "carousel-indicators",
-    tags$button(type = "button", `data-bs-target` = paste0("#", inid),
+    tags$button(type = "button", `data-bs-target` = paste0("#", id),
                 `data-bs-slide-to`="0", class = "active", `aria-current`="true",
                 `aria-label`="Slide 0"),
     lapply(2:nslides, function(idx){
@@ -32,3 +32,33 @@ tags$div(id = id, class = "carousel carousel-dark slide", `data-bs-ride`="carous
               tags$span(class = "carousel-control-next-icon", `aria-hidden`="true"),
               tags$span(class = "visually-hidden", "Next"))
 )}
+
+bird_gallery <- function(id, specinfotable){
+  specinfolist <- split(specinfotable, 1:nrow(specinfotable))
+  specinfoslides <- lapply(specinfolist, function(info){
+    components <- specinfocomponents(info)
+    specslide(title = info$species,
+              heading = info$shortstory,
+              img = components$img,
+              cpyrht = components$cpyrht,
+              story = info$story)
+  })
+  
+  carousel(id = id,
+           slidecontents = specinfoslides)
+}
+
+specslide <- function(title, heading, img, cpyrht, story){
+  tagList(
+    tags$h2(title),
+    fluidRow(
+      column(3,
+             img,
+             cpyrht),
+      column(9,
+        tags$body(heading),
+        bodysmall(story)
+      )
+    )
+  )
+}

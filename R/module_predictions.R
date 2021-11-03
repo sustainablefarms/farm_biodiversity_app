@@ -14,10 +14,8 @@ predictionsUI <- function(id, refisaverage = TRUE){
       });
     "),
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
-    carousel(id = "blash", 
-             lapply(1:3, function(idx) specimageOut(speciesinfo[idx, ],
-                                                     height = "100px"))
-    ),
+    bird_gallery(id = "blash", 
+             speciesinfo[1:5, ]),
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
                left = tagList(paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
@@ -159,10 +157,8 @@ predictionsServer <- function(id,
       
       observeEvent(input$showcarousel, {
         showModal(modalDialog(
-          carousel(id = "carouselmostlikely", 
-                   lapply(1:3, function(idx) specimageOut(speciesinfo[idx, ],
-                                                          height = "100px"))
-          )
+          bird_gallery(id = "carouselmostlikely", 
+            datar()$speciesinfo_topten[1:10, ])
         ))
       })
       
