@@ -2,25 +2,26 @@
 # from https://getbootstrap.com/docs/5.0/components/carousel/
 carousel <- function(id,
                      slidecontents){
+  nslides <- length(slidecontents)
+  stopifnot(nslides >= 2)
 tags$div(id = id, class = "carousel carousel-dark slide", `data-bs-ride`="carousel",
   tags$div(class = "carousel-indicators",
     tags$button(type = "button", `data-bs-target` = paste0("#", inid),
                 `data-bs-slide-to`="0", class = "active", `aria-current`="true",
-                `aria-label`="Slide 1"),
-    tags$button(type = "button", `data-bs-target` = paste0("#", id),
-                `data-bs-slide-to`="1",
-                `aria-label`="Slide 2"),
-    tags$button(type = "button", `data-bs-target` = paste0("#", id),
-                `data-bs-slide-to`="2",
-                `aria-label`="Slide 3"),
+                `aria-label`="Slide 0"),
+    lapply(2:nslides, function(idx){
+      tags$button(type = "button", `data-bs-target` = paste0("#", id),
+                  `data-bs-slide-to`=as.character(idx - 1),
+                  `aria-label`=paste("Slide", idx - 1))
+    })
                 ),
   tags$div(class = "carousel-inner",
            tags$div(class = "carousel-item active",
                     slidecontents[[1]]),
-           tags$div(class = "carousel-item",
-                    slidecontents[[2]]),
-           tags$div(class = "carousel-item",
-                    slidecontents[[3]])
+           lapply(2:nslides, function(idx){
+             tags$div(class = "carousel-item",
+                      slidecontents[[idx]])
+           })
            ),
   tags$button(class = "carousel-control-prev", type = "button",
               `data-bs-target`=paste0("#", id), `data-bs-slide` = "prev",
