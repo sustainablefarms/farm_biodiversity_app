@@ -15,8 +15,9 @@ predictionsUI <- function(id, refisaverage = TRUE){
     "),
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
     carousel(id = "blash", 
-             imgs = speciesinfo$imgfilename[1:3],
-             alt = speciesinfo$species[1:3]),
+             lapply(1:3, function(idx) specimageOut(speciesinfo[idx, ],
+                                                     height = "100px"))
+    ),
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
                left = tagList(paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
@@ -35,7 +36,8 @@ predictionsUI <- function(id, refisaverage = TRUE){
                           right = tagList(
                             mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage),
                             tags$div(style="text-align: center",
-                                     uiOutput(ns("mostlikelyspecimages")))
+                                     uiOutput(ns("mostlikelyspecimages"))),
+                            actionButton(ns("showcarousel"), label = "Open Carousel")
                             )
                          )
                 ),
@@ -153,6 +155,15 @@ predictionsServer <- function(id,
         validate(need(datar()$speciesinfo_topten, ""))
         lapply(1:10, function(idx) specimageOut(datar()$speciesinfo_topten[idx, ],
                               height = "100px"))
+      })
+      
+      observeEvent(input$showcarousel, {
+        showModal(modalDialog(
+          carousel(id = "carouselmostlikely", 
+                   lapply(1:3, function(idx) specimageOut(speciesinfo[idx, ],
+                                                          height = "100px"))
+          )
+        ))
       })
       
       #vulnerable species
