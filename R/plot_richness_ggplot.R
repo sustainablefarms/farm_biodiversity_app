@@ -1,4 +1,9 @@
-# richness plot
+#' @title ggplot richness plot
+#' @examples
+#' datar <- compile_predictions(readRDS("./current_values.rds"),
+#'                     species_prob_mean,
+#'                     refisaverage = TRUE)
+#' richness_plot(datar$species_richness)
 
 richness_plot <- function(species_richness){
   plot <- ggplot(species_richness, aes(x = category, y = E, fill = E)) +
@@ -6,7 +11,7 @@ richness_plot <- function(species_richness){
   scale_y_continuous(expand = c(0, 0)) +
   expand_limits(
     y = c(0, max(25, species_richness$E * 1.1))) +
-  scale_x_discrete(position = "top") +
+  scale_x_discrete(position = "bottom") +
   scale_fill_gradient(aesthetics = "fill",
                       low = "#d0e7f4",
                       high = "#178BCA") +
@@ -15,7 +20,7 @@ richness_plot <- function(species_richness){
   ggtitle(NULL) +
   theme(legend.position = "none",
         axis.title = element_blank(),
-        axis.text.y = element_text(size = 12),
+        axis.text.y = element_text(size = 12, hjust = 0), #hjust arranges labels to be left justified
         axis.ticks.y = element_blank(),
         panel.grid.minor.x = element_line(color = "grey80"),
         panel.grid.major.x = element_line(color = "grey90"),
