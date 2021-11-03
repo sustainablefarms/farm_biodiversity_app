@@ -14,6 +14,9 @@ predictionsUI <- function(id, refisaverage = TRUE){
       });
     "),
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
+    carousel(id = "blash", 
+             imgs = speciesinfo$imgfilename[1:3],
+             alt = speciesinfo$species[1:3]),
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
                left = tagList(paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
