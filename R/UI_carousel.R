@@ -40,7 +40,7 @@ bird_gallery <- function(id, specinfotable){
   specinfoslides <- lapply(specinfolist, function(info){
     components <- specinfocomponents(info)
     specslide(title = info$species,
-              heading = info$shortstory,
+              heading = HTML(info$shortstory),
               img = components$img,
               cpyrht = components$cpyrht,
               story = info$story)
@@ -59,7 +59,7 @@ specslide <- function(title, heading, img, cpyrht, story){
              cpyrht),
       column(9,
         tags$body(heading),
-        bodysmall(story)
+        tags$div(bodysmall(story))
       )
     )
   )

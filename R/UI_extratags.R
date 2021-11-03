@@ -1,4 +1,4 @@
 # new tags
 bodysmall <- function(...){
-  htmltools::tag("bodysmall", varArgs = as.list(...))
+  htmltools::tag("bodysmall", varArgs = ...)
 }
