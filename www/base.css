@@ -188,3 +188,11 @@ h4 {
 .modal-lg {
   width: 80%
 }
+
+.carousel-inner {
+ position:static;
+}
+
+.carousel-indicators {
+ position:static;
+}
