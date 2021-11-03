@@ -5,13 +5,26 @@
 #'                     refisaverage = TRUE)
 #' richness_plot(datar$species_richness)
 
-richness_plot <- function(species_richness){
+richness_plot <- function(species_richness, labeltextsize = 20, labelnudge = -1){
+  textcolours <- dplyr::case_when(
+    species_richness$E < mean(species_richness$E) ~ "#026666", 
+    TRUE ~ "#FFFFFF")
+  names(textcolours) <- species_richness$category
+  
   plot <- ggplot(species_richness, aes(x = category, y = E, fill = E)) +
   geom_bar(stat = "identity") +
+  geom_text(aes(x = category, y = E,
+                label = formatC(E, digits = 0, format = "f"),
+                colour = category),
+                hjust = 1,
+                nudge_y = labelnudge,
+                show.legend = FALSE,
+                size = labeltextsize) +
   scale_y_continuous(expand = c(0, 0)) +
   expand_limits(
     y = c(0, max(25, species_richness$E * 1.1))) +
   scale_x_discrete(position = "bottom") +
+  scale_color_discrete(type = textcolours) + 
   scale_fill_gradient(aesthetics = "fill",
                       low = "#d0e7f4",
                       high = "#178BCA") +
@@ -29,6 +42,5 @@ richness_plot <- function(species_richness){
         panel.background = element_rect(fill = NA, colour = NA),
         panel.border = element_rect(color = "grey90", fill = NA)
   )
-  # plot
   return(plot)
 }

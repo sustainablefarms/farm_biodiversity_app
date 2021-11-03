@@ -136,7 +136,7 @@ predictionsServer <- function(id,
       # draw species richness
       output$species_richness <- renderPlot({
         validate(need(datar()$species_richness, ""))
-        richness_plot(datar()$species_richness)
+        richness_plot(datar()$species_richness, labelnudge = -0.25)
       })
       
       # species images
