@@ -14,8 +14,6 @@ predictionsUI <- function(id, refisaverage = TRUE){
       });
     "),
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
-    bird_gallery(id = "blash", 
-             speciesinfo[1:5, ]),
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
                left = tagList(paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
@@ -151,8 +149,10 @@ predictionsServer <- function(id,
       
       output$mostlikelyspecimages <- renderUI({
         validate(need(datar()$speciesinfo_topten, ""))
-        lapply(1:10, function(idx) specimageOut(datar()$speciesinfo_topten[idx, ],
-                              height = "100px"))
+        tags$div(class="row row-cols-1 row-cols-md-5 g-4",
+          lapply(datar()$speciesinfo_topten$imgfilename, 
+                 function(url) tags$div(class = "col", card_imgoverlay(url)))
+        )
       })
       
       observeEvent(input$showcarousel, {

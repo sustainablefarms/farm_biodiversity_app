@@ -22,16 +22,9 @@ specinfocomponents <- function(specinfo, height = "200px"){
 
 specimageOut <- function(specinfo, height = "200px"){
   components <- specinfocomponents(specinfo, height = height)
-     out <- tags$div(specinfo$species,
-		     class = "birdlifeprofile",
-		 infotooltip(title = specinfo$story),
-                  style = "float: left; margin: 5px",
-                  tags$br(),
-        tags$div(components$imgobj,
-          `data-toggle` = "tooltip",
-          `data-placement` = 'auto top',
-          title = specinfo$story),
-	  components$cpyrht
+     out <- tags$div(
+        style = "float: left; margin: 5px",
+        components$imgobj,
         )
     return(out)
         }

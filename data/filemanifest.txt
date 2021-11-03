@@ -53,6 +53,9 @@ NAMESPACE
 ./R/UI_add_patch_button.R
 ./R/UI_attrincomplete.R
 ./R/UI_avulnerablespecies.R
+./R/UI_cards.R
+./R/UI_carousel.R
+./R/UI_extratags.R
 ./R/UI_infopopover.R
 ./R/UI_inlinecheckboxInput.R
 ./R/UI_linknewtab.R
