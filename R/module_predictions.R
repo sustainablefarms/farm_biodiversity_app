@@ -47,10 +47,17 @@ predictionsUI <- function(id, refisaverage = TRUE){
               accordion_item(title = "Least likely species", id = ns("leastlikely"),
                 twocolumns(heading = "The 10 least likely species to live in your farm's Box Gum Grassy Woodland.",
                            left = tags$p("Of the species in", appname, "these species are least likely. This doesn't include rare birds not in", appname, "."),
-                           right = tags$div(
-                             style="text-align: center",
-                             uiOutput(ns("leastlikespecimages"))
-                           )
+                           right = 
+                             tags$div(style="text-align: center",
+                                      tags$div(class="row row-cols-1 row-cols-md-5 g-4",
+                                               lapply(1:10, function(idx) {
+                                                 tags$div(class = "col", 
+                                                          actionLink(ns(paste0("ll_gallery_", idx)),
+                                                                     uiOutput(ns(paste0("ll_", idx)))
+                                                          )
+                                                 )
+                                               })
+                                      ))
                  )
                 ),
               accordion_item(title = "Vulnerable species", id = ns("vulspec"),
@@ -147,11 +154,26 @@ predictionsServer <- function(id,
         richness_plot(datar()$species_richness, labelnudge = -0.25)
       })
       
-      # species images
-      output$leastlikespecimages <- renderUI({
-        validate(need(datar()$speciesinfo_botten, ""))
-        lapply(10:1, function(idx) specimageOut(datar()$speciesinfo_botten[idx, ],
-                                                height = "100px"))
+      # ll images
+      lapply(1:10, function(idx){
+        output[[paste0("ll_", idx)]] <- renderUI({
+          validate(need(datar()$speciesinfo_botten, ""))
+          specinfo <- datar()$speciesinfo_botten
+          card_imgoverlay(specinfo$url[idx],
+                          height = "100px",
+                          overlaytxt = specinfo$species[idx])
+        })
+      })
+      # ll gallery
+      lapply(10:1, function(idx){
+        observeEvent(input[[paste0("ll_gallery_", idx)]], {
+          showModal(modalDialog(
+            bird_gallery(id = "carousel_ll", 
+                         datar()$speciesinfo_botten[1:10, ]),
+            size = "l",
+            easyClose = TRUE
+          ))
+        })
       })
       
       # ml images
