@@ -149,9 +149,14 @@ predictionsServer <- function(id,
       
       output$mostlikelyspecimages <- renderUI({
         validate(need(datar()$speciesinfo_topten, ""))
+        specinfo <- datar()$speciesinfo_topten
         tags$div(class="row row-cols-1 row-cols-md-5 g-4",
-          lapply(datar()$speciesinfo_topten$imgfilename, 
-                 function(url) tags$div(class = "col", card_imgoverlay(url, height = "100px")))
+          lapply(1:10, function(idx) {
+            tags$div(class = "col", 
+              card_imgoverlay(specinfo$url[idx],
+                              height = "100px",
+                              overlaytxt = specinfo$species[idx]))
+          })
         )
       })
       

@@ -199,6 +199,7 @@ h4 {
 }
 
 .card-img-overlay {
+  background-color: #026666;
   opacity:0;
   transition: opacity 0.5s ease;
 }
