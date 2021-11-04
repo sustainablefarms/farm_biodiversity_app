@@ -159,8 +159,7 @@ predictionsServer <- function(id,
         output[[paste0("ll_", idx)]] <- renderUI({
           validate(need(datar()$speciesinfo_botten, ""))
           specinfo <- datar()$speciesinfo_botten
-          card_imgoverlay(specinfo$url[idx],
-                          height = "100px",
+          card_imgoverlay(specinfo$imgfilename[idx],
                           overlaytxt = specinfo$species[idx])
         })
       })
@@ -181,8 +180,7 @@ predictionsServer <- function(id,
         output[[paste0("ml_", idx)]] <- renderUI({
           validate(need(datar()$speciesinfo_topten, ""))
           specinfo <- datar()$speciesinfo_topten
-          card_imgoverlay(specinfo$url[idx],
-                          height = "100px",
+          card_imgoverlay(specinfo$imgfilename[idx],
                           overlaytxt = specinfo$species[idx])
         })
       })
@@ -206,6 +204,16 @@ predictionsServer <- function(id,
             onespecwords(specname, datar()$species_prob_current),
             onespecwords(specname, refpredictions())
             )
+        })
+      })
+      lapply(consstatus$CommonName, function(specname){
+        observeEvent(input[[paste0("v_gallery_", gsub("(-| )", "", specname))]], {
+          showModal(modalDialog(
+            bird_gallery(id = "carousel_v", 
+                         speciesinfo[consstatus$CommonName, ]),
+            size = "l",
+            easyClose = TRUE
+          ))
         })
       })
       
