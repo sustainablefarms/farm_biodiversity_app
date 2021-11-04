@@ -32,8 +32,15 @@ predictionsUI <- function(id, refisaverage = TRUE){
                           right = tagList(
                             mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage),
                             tags$div(style="text-align: center",
-                                     uiOutput(ns("mostlikelyspecimages"))),
-                            actionButton(ns("showcarousel"), label = "Open Carousel")
+                                     tags$div(class="row row-cols-1 row-cols-md-5 g-4",
+                                              lapply(1:10, function(idx) {
+                                                tags$div(class = "col", 
+                                                  actionLink(ns(paste0("ml_gallery_", idx)),
+                                                    uiOutput(ns(paste0("ml_", idx)))
+                                                  )
+                                                )
+                                              })
+                                     ))
                             )
                          )
                 ),
@@ -147,24 +154,26 @@ predictionsServer <- function(id,
                                                 height = "100px"))
       })
       
-      output$mostlikelyspecimages <- renderUI({
-        validate(need(datar()$speciesinfo_topten, ""))
-        specinfo <- datar()$speciesinfo_topten
-        tags$div(class="row row-cols-1 row-cols-md-5 g-4",
-          lapply(1:10, function(idx) {
-            tags$div(class = "col", 
-              card_imgoverlay(specinfo$url[idx],
-                              height = "100px",
-                              overlaytxt = specinfo$species[idx]))
-          })
-        )
+      # ml images
+      lapply(1:10, function(idx){
+        output[[paste0("ml_", idx)]] <- renderUI({
+          validate(need(datar()$speciesinfo_topten, ""))
+          specinfo <- datar()$speciesinfo_topten
+          card_imgoverlay(specinfo$url[idx],
+                          height = "100px",
+                          overlaytxt = specinfo$species[idx])
+        })
       })
-      
-      observeEvent(input$showcarousel, {
-        showModal(modalDialog(
-          bird_gallery(id = "carouselmostlikely", 
-            datar()$speciesinfo_topten[1:10, ])
-        ))
+      # ml gallery
+      lapply(1:10, function(idx){
+        observeEvent(input[[paste0("ml_gallery_", idx)]], {
+          showModal(modalDialog(
+            bird_gallery(id = "carouselmostlikely", 
+                         datar()$speciesinfo_topten[1:10, ]),
+            size = "l",
+            easyClose = TRUE
+          ))
+        })
       })
       
       #vulnerable species
