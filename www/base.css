@@ -197,3 +197,11 @@ h4 {
 .carousel-indicators {
  position:static;
 }
+
+.card-img-overlay {
+  opacity:0;
+  transition: opacity 0.5s ease;
+}
+.card-img-overlay:hover {
+  opacity: 1;
+}

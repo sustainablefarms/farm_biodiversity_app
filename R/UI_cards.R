@@ -3,7 +3,7 @@
 card_imgoverlay <- function(src, height = NULL, width = NULL, overlaytxt = "Card title"){
   tags$div(class ="card bg-dark text-white h-100",
            style=if (is.null(width)){NULL} else {paste0("width: ", width, ";")},
-    tags$img(src = src, class="card-img", alt="..."),# height = height),
+    tags$img(src = src, class="card-img", alt="Unavailable", height = height),
     tags$div(class="card-img-overlay",
       tags$h3(overlaytxt)
     )

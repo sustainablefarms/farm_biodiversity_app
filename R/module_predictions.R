@@ -151,7 +151,7 @@ predictionsServer <- function(id,
         validate(need(datar()$speciesinfo_topten, ""))
         tags$div(class="row row-cols-1 row-cols-md-5 g-4",
           lapply(datar()$speciesinfo_topten$imgfilename, 
-                 function(url) tags$div(class = "col", card_imgoverlay(url)))
+                 function(url) tags$div(class = "col", card_imgoverlay(url, height = "100px")))
         )
       })
       
