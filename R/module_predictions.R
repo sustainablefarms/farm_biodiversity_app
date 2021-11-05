@@ -70,7 +70,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                            left = tagList(proboccplotdescription,
                                           tags$p("Body length data from",
                                                  linknewtab(href = "https://www.nature.com/articles/sdata201561", "Garnett et al. (Scientific Data 2, 2015)."))),
-                           right = plotOutput(ns("allspecies"), height = "800px")
+                           right = allprob_plot_UI(ns("allprob"), refisaverage = refisaverage)
                            )
                 ),
               accordion_item(title = "Relative Occupancy Probability", id = ns("occallrel"),
@@ -83,7 +83,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                                         tags$p("Body length data from",
                                                                linknewtab(href = "https://www.nature.com/articles/sdata201561", "Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015)."))
                                                       ),
-                                        right = plotOutput(ns("allspeciesrel"), height = "800px")
+                                        right = allrel_plot_UI(ns("allrel"))
                              )
               )
               ),
@@ -146,6 +146,8 @@ predictionsServer <- function(id,
                              reactive({datar()$species_prob_current}),
                              refpredictions
                              )
+      allprob_plot_Server("allprob", reactive(datar()$species_prob_current))
+      allrel_plot_Server("allrel", reactive(datar()$spec_different))
         
       
       # draw species richness

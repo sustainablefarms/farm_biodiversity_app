@@ -1,4 +1,4 @@
-allspec_rel_plot_UI <- function(id){
+allrel_plot_UI <- function(id){
   ns <- NS(id)
   yorder_choices <- c("Length" = "Body Length",#values corresponds to column names in df
                       "Weight" = "Body Mass",
@@ -20,7 +20,7 @@ allspec_rel_plot_UI <- function(id){
   )
 }
 
-allspec_rel_plot_Server <- function(id, 
+allrel_plot_Server <- function(id, 
                     spec_different){
   moduleServer(
     id,
@@ -48,7 +48,7 @@ allspec_rel_plot_Server <- function(id,
   })
 }
 
-app_allspec_rel_plot <- function(){
+app_allrel_plot <- function(){
   main_app_prep()
   spec_different <- reactiveVal(readRDS("./predictions.rds")$spec_different)
   
@@ -56,11 +56,11 @@ app_allspec_rel_plot <- function(){
     {fluidPage(
       includeCSS("./www/base.css"),
       plotly::plotlyOutput("plotlybug", height = "0px"),
-      allspec_rel_plot_UI("allspec"),
+      allrel_plot_UI("allspec"),
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
-      allspec_rel_plot_Server("allspec", 
+      allrel_plot_Server("allspec", 
                                spec_different)
     })
 }

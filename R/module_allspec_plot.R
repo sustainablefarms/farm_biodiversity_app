@@ -1,13 +1,9 @@
-allspec_prob_plot_UI <- function(id, refisaverage = TRUE, relativeprob = TRUE){
+allprob_plot_UI <- function(id, refisaverage = TRUE){
   ns <- NS(id)
   yorder_choices <- c("Length" = "Body Length",#values corresponds to column names in df
                       "Weight" = "Body Mass",
-                      "Alphabetical" = "species")
-  if (relativeprob){
-    yorder_choices <- c(yorder_choices, "Relative Occupancy Probability" = "value")
-  } else {
-    yorder_choices <- c(yorder_choices, "Occupancy Probability" = "value")
-  }
+                      "Alphabetical" = "species",
+                      "Occupancy Probability" = "value")
   tagList(
     tags$div(class = "clearfix",
       tags$div(class = "float-start", 
@@ -32,7 +28,7 @@ allspec_prob_plot_UI <- function(id, refisaverage = TRUE, relativeprob = TRUE){
   )
 }
 
-allspec_prob_plot_Server <- function(id, 
+allprob_plot_Server <- function(id, 
                     species_prob_current,
                     refpredictions,
                     refisaverage = TRUE){
@@ -66,7 +62,7 @@ allspec_prob_plot_Server <- function(id,
   })
 }
 
-app_allspec_prob_plot <- function(){
+app_allprob_plot <- function(){
   main_app_prep()
   species_prob_current <- reactiveVal(readRDS("./predictions.rds")$species_prob_current)
   
@@ -74,11 +70,11 @@ app_allspec_prob_plot <- function(){
     {fluidPage(
       includeCSS("./www/base.css"),
       plotly::plotlyOutput("plotlybug", height = "0px"),
-      allspec_prob_plot_UI("allspec"),
+      allprob_plot_UI("allspec"),
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
-      allspec_prob_plot_Server("allspec", 
+      allprob_plot_Server("allspec", 
                         species_prob_current)
     })
 }
