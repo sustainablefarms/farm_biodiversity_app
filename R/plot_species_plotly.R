@@ -31,7 +31,7 @@ plot_ly_specroot <- function(df){
           hovertemplate = paste('%{hovertext}<extra></extra>')) %>% #the <extra></extra> removes the 'trace 0' extra information
   # alter layout
   plotly::layout(xaxis = list(visible = FALSE, fixedrange = TRUE),
-         yaxis = list(visible = FALSE, fixedrange = TRUE),
+         yaxis = list(visible = FALSE, fixedrange = TRUE, type = "category"),
 	 dragmode = FALSE,
          margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
   hide_colorbar()  %>%
@@ -48,6 +48,53 @@ plot_ly_specroot <- function(df){
   return(plt)
 }
 
+add_error <- function(p){
+  df <- plotly_data(p)
+  p %>% 
+    style(error_x = list(visible = TRUE,
+                         type = 'data',
+                         array = df$upper - df$value,
+                         arrayminus = df$value - df$lower,
+                         symmetric = FALSE,
+                         color = '#000000'))
+}
+
+add_label_onleft <- function(p){
+  errorbarsshown <- isTRUE(p$x$data[[1]]$error_x$visible)
+  x <- p$x$data[[1]]$x
+  if (errorbarsshown){
+    x <- x - p$x$data[[1]]$error_x$arrayminus
+  }
+  p %>%
+    add_annotations(x  = x, 
+                  y = ~species, 
+                  text = ~label,
+                  xanchor = "right",
+                  xshift = -3,
+                  font = list(color = "rgba(0,0,0,1)"),
+                  bgcolor = "rgba(255,255,255,1)",
+                  showarrow = FALSE,
+                  showlegend = FALSE) 
+}
+
+add_label_onright <- function(p){
+  errorbarsshown <- isTRUE(p$x$data[[1]]$error_x$visible)
+  x <- p$x$data[[1]]$x
+  if (errorbarsshown){
+    x <- x + p$x$data[[1]]$error_x$array
+  }
+  p %>%
+    add_annotations(x  = x, 
+                    y = ~species, 
+                    text = ~label,
+                    xanchor = "left",
+                    xshift = 3,
+                    font = list(color = "rgba(0,0,0,1)"),
+                    bgcolor = "rgba(255,255,255,1)",
+                    showarrow = FALSE,
+                    showlegend = FALSE) 
+}
+
 species_plotly_common <- function(df, showerrorbars = TRUE){
   set.seed(1)
   df <- topnrows(df, 10, "value")
@@ -58,25 +105,10 @@ species_plotly_common <- function(df, showerrorbars = TRUE){
     plotly::layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed"))
   #despite the descriptions, the above line actually seems to order things as they are given in df
   if (showerrorbars){ # add error bars
-    root <- root %>%
-      style(error_x = list(visible = TRUE,
-                           type = 'data',
-                           array = df$upper - df$value,
-                           arrayminus = df$value - df$lower,
-                           symmetric = FALSE,
-                           color = '#000000'))
+    root <- root %>% add_error()
   }
   # add the values onto the bars
-  root <- root %>%  
-    add_annotations(x  = ~if(showerrorbars){lower} else{value}, 
-                    y = ~species, 
-                    text = df$label,
-                    xanchor = "right",
-                    xshift = -3,
-                    font = list(color = "rgba(0,0,0,1)"),
-                    bgcolor = "rgba(255,255,255,1)",
-                    showarrow = FALSE,
-                    showlegend = FALSE) 
+  root <- root %>% add_label_onleft()
   root
 }
 
