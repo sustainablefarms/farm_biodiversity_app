@@ -1,14 +1,19 @@
 # Functions for creating Bootstrap 5's accordions
 #' @param id id for the accordion
 #' @param ... accordion items created using accordion item
+#' @param allstayopen If TRUE showing one item in the accordion doesn't collapse the other items
 #' @description Creates a div of class accordion. Code boilerplate taken from https://getbootstrap.com/docs/5.0/components/accordion
 #' @examples 
 #' accordion(id = "t1", 
 #'           accordion_item("i1title", id = "i1", "This is the content")
 #' )
-accordion <- function(id, ...) {
-  # following modifies data-bs-parent to be #id
-  modded <- htmltools::tagQuery(tagList(...))$children(".accordion-collapse")$removeAttrs("data-bs-parent")$addAttrs(`data-bs-parent`= paste0("#", id))$allTags()
+accordion <- function(id, ..., allstayopen = TRUE) {
+  # first remove any existing data-bs-parent
+  tagstructure <- htmltools::tagQuery(tagList(...))$children(".accordion-collapse")$removeAttrs("data-bs-parent")
+  if (!allstayopen){ #if not allstayopen then add in the id of the parent
+    tagstructure <- tagstructure$addAttrs(`data-bs-parent`= paste0("#", id))
+  }
+  modded <- tagstructure$allTags()
   # modded <- gsub("#placeholderparentid", paste0("#", id), ...) #can't use gsub easily at it stuffs up the escaping
   tags$div(class = "accordion", id = id, modded)
 }
