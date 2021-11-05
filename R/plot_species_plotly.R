@@ -28,7 +28,15 @@ plot_ly_yinside <- function(df){
     )
 }
 
-plot_ly_youtside <- function(df){
+plot_ly_youtside <- function(df, log2 = FALSE){
+  df$tooltip <- speciesinfo[df$species, "shortstory"]
+  if (log2){
+    df$label <- paste0(round((df$value - 1) * 100, 0), "%")
+    df$value <- log2(df$value)
+  } else {
+    df$label <- paste0("", round(df$value * 100, 0), "%")
+  }
+  
   pal <- scales::col_numeric(c("#d0e7f4", "#178BCA"),
                              domain = df$value)
   palopp <- function(values){
@@ -122,6 +130,30 @@ add_label_onright <- function(p){
                     showlegend = FALSE) 
 }
 
+add_label_onsignside <- function(p){
+  errorbarsshown <- isTRUE(p$x$data[[1]]$error_x$visible)
+  x <- p$x$data[[1]]$x
+  if (errorbarsshown){
+    x <- dplyr::case_when(
+      x >= 0 ~ x + p$x$data[[1]]$error_x$array,
+      x - p$x$data[[1]]$error_x$arrayminus)
+  }
+  xanchor <- dplyr::case_when(
+      x > 0 ~ "left",
+      TRUE ~ "right"
+    )
+  p %>%
+    add_annotations(x  = x, 
+                    y = ~species, 
+                    text = ~label,
+                    xanchor = xanchor,
+                    xshift = 3,
+                    font = list(color = "rgba(0,0,0,1)"),
+                    bgcolor = "rgba(255,255,255,1)",
+                    showarrow = FALSE,
+                    showlegend = FALSE) 
+}
+
 order_y <- function(p, orderby){ # orderby uses tidyselect
   df <- plotly_data(p)
   ord <- arrange(df, {{ orderby }}) %>% dplyr::select(species) %>% unlist()
@@ -156,8 +188,19 @@ species_plotly_all_root <- function(df){
   df$tooltip <- speciesinfo[df$species, "shortstory"]
   p <- plot_ly_youtside(df) %>%
     fixed_layout() %>%
+    add_tooltips() 
+  p
+}
+
+species_plotly_rel_all_root <- function(df){
+  traits <- get("traits", envir = globalenv())
+  df <- dplyr::left_join(df, traits, by = c(species = "Common Name"))
+  df$label <- paste0("", round(df$value * 100, 0), "%")
+  df$tooltip <- speciesinfo[df$species, "shortstory"]
+  p <- plot_ly_youtside(df, log2 = TRUE) %>%
+    fixed_layout() %>%
     add_tooltips() %>%
-    order_y(value)
+    add_label_onsignside()
   p
 }
 
