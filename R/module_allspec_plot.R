@@ -1,4 +1,4 @@
-allspec_plot_UI <- function(id, refisaverage = TRUE, relativeprob = TRUE){
+allspec_prob_plot_UI <- function(id, refisaverage = TRUE, relativeprob = TRUE){
   ns <- NS(id)
   yorder_choices <- c("Length" = "Body Length",#values corresponds to column names in df
                       "Weight" = "Body Mass",
@@ -32,7 +32,7 @@ allspec_plot_UI <- function(id, refisaverage = TRUE, relativeprob = TRUE){
   )
 }
 
-allspec_plot_Server <- function(id, 
+allspec_prob_plot_Server <- function(id, 
                     species_prob_current,
                     refpredictions,
                     refisaverage = TRUE){
@@ -66,22 +66,19 @@ allspec_plot_Server <- function(id,
   })
 }
 
-app_allspec_plot <- function(){
+app_allspec_prob_plot <- function(){
   main_app_prep()
   species_prob_current <- reactiveVal(readRDS("./predictions.rds")$species_prob_current)
-  refpredictions <- reactiveVal(value = species_prob_mean)
   
   shinyApp(
     {fluidPage(
       includeCSS("./www/base.css"),
       plotly::plotlyOutput("plotlybug", height = "0px"),
-      allspec_plot_UI("allspec", refisaverage = FALSE, relativeprob = TRUE),
+      allspec_prob_plot_UI("allspec"),
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
-      allspec_plot_Server("allspec", 
-                        species_prob_current,
-                        refpredictions,
-                        refisaverage = FALSE)
+      allspec_prob_plot_Server("allspec", 
+                        species_prob_current)
     })
 }
