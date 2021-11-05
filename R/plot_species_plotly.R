@@ -28,6 +28,32 @@ plot_ly_yinside <- function(df){
     )
 }
 
+plot_ly_youtside <- function(df){
+  pal <- scales::col_numeric(c("#d0e7f4", "#178BCA"),
+                             domain = df$value)
+  palopp <- function(values){
+    cols <- pal(values)
+    rgbs <- col2rgb(cols)/255
+    Luvs <- convertColor(t(rgbs), from = "sRGB", to = "Luv")
+    lvls <- Luvs[, "L"]
+    lvls[Luvs[, "L"] < 70] <- 100 - lvls[Luvs[, "L"] < 70] / 8
+    lvls[Luvs[, "L"] >= 70] <- (100 - lvls[Luvs[, "L"] >= 70]) / 4
+    greys <- grey(lvls/100)
+    return(greys)
+  }
+  plt <- plot_ly(data = df) %>% #initiate plot
+    add_trace(type = "bar",  #make a bar plot
+              y = ~species,
+              x = ~value,
+              marker = list(color = ~pal(value)),
+              showlegend = FALSE
+    )
+  plt %>%
+    plotly::layout(
+      yaxis = list(title = "", visible = TRUE, type = "category")
+    )
+}
+
 fixed_layout <- function(p){
   p %>%
   plotly::layout(xaxis = list(visible = FALSE, fixedrange = TRUE),
@@ -104,7 +130,7 @@ order_y <- function(p, orderby){ # orderby uses tidyselect
                         categoryarray = ~ord))
 }
 
-species_plotly_common <- function(df, showerrorbars = TRUE){
+species_plotly_top10 <- function(df, showerrorbars = TRUE){
   set.seed(1)
   df <- topnrows(df, 10, "value")
   df$label <- paste0("", round(df$value * 100, 0), "%")
@@ -121,6 +147,24 @@ species_plotly_common <- function(df, showerrorbars = TRUE){
   p <- p %>% add_label_onleft()
   p
 }
+species_plotly_common <- species_plotly_top10
+
+species_plotly_all_root <- function(df){
+  traits <- get("traits", envir = globalenv())
+  df <- dplyr::left_join(df, traits, by = c(species = "Common Name"))
+  df$label <- paste0("", round(df$value * 100, 0), "%")
+  df$tooltip <- speciesinfo[df$species, "shortstory"]
+  p <- plot_ly_youtside(df) %>%
+    fixed_layout() %>%
+    add_tooltips() %>%
+    order_y(value)
+  p
+}
+
+# species_plotly_all_root(df) %>%
+#   order_y(upper) %>%
+#   add_error() %>%
+#   add_label_onright()
 
 species_plotly_different <- function(df){
   set.seed(1)

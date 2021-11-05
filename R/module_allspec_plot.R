@@ -1,6 +1,8 @@
 allspec_plot_UI <- function(id, refisaverage = TRUE, relativeprob = TRUE){
   ns <- NS(id)
-  yorder_choices <- c("Size", "Alphabetical")
+  yorder_choices <- c("Length" = "Body Length",#values corresponds to column names in df
+                      "Weight" = "Body Mass",
+                      "Alphabetical" = "species")
   if (relativeprob){
     yorder_choices <- c(yorder_choices, "Relative Occupancy Probability" = "value")
   } else {
@@ -16,7 +18,7 @@ allspec_plot_UI <- function(id, refisaverage = TRUE, relativeprob = TRUE){
                     )
         ),
       tags$div(class =  "float-end", 
-        shinyWidgets::materialSwitch(ns("mostlikely_showerror"),
+        shinyWidgets::materialSwitch(ns("showerror"),
                        label = "Margin of error",
                        value = FALSE,
                        status = "primary",
@@ -24,11 +26,8 @@ allspec_plot_UI <- function(id, refisaverage = TRUE, relativeprob = TRUE){
                        inline = TRUE))
     ),
     tabsetPanel(
-      tabPanelBody("current", plotly::plotlyOutput(ns("common_species"), height = "300px")),
-      tabPanelBody("current_err", plotly::plotlyOutput(ns("common_species_err"), height = "300px")),
-      tabPanelBody("ref", plotly::plotlyOutput(ns("common_species_ref"), height = "300px")),
-      tabPanelBody("ref_err", plotly::plotlyOutput(ns("common_species_ref_err"), height = "300px")),
-      id = ns("mostlikelytabs"),
+      tabPanelBody("size", plotly::plotlyOutput(ns("size"), height = "1000px")),
+      id = ns("tabs"),
       type = "hidden")
   )
 }
@@ -42,40 +41,27 @@ allspec_plot_Server <- function(id,
     function(input, output, session){
         ns <- session$ns
         # req(data$species_prob_current)
-        output$common_species <- plotly::renderPlotly({
+        rootplt <- reactive({
+          validate(need(species_prob_current(), label = ""))
+          species_plotly_all_root(tocommon(species_prob_current()))
+        })
+        
+        output$size <- plotly::renderPlotly({
           validate(need(species_prob_current(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          species_plotly_common(tocommon(species_prob_current()), 
-                                showerrorbars = FALSE)
-        })
-        
-        output$common_species_err <- plotly::renderPlotly({
-          validate(need(species_prob_current(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          species_plotly_common(tocommon(species_prob_current()), 
-                                showerrorbars = TRUE)
-        })
-        
-        output$common_species_ref <- plotly::renderPlotly({
-          validate(need(refpredictions(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          species_plotly_common(tocommon(refpredictions()), 
-                                showerrorbars = FALSE)
-        })
-        
-        output$common_species_ref_err <- plotly::renderPlotly({
-          validate(need(refpredictions(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          species_plotly_common(tocommon(refpredictions()), 
-                                showerrorbars = TRUE)
-        })
-        
-        observeEvent({
-          input$scenarioswitch
-          input$mostlikely_showerror
-          }, {
-          selected <- input$scenarioswitch
-          if (isTruthy(input$mostlikely_showerror)){
-            selected <- paste0(selected, "_err")
+          validate(need(input$yorder, ""))
+          out <- rootplt()
+          if (input$showerror){
+            out <- out %>% add_error()
           }
-          updateTabsetPanel(inputId = "mostlikelytabs",
-                            selected = selected)
+          out <- out %>% add_label_onright()
+          if (input$yorder %in% c("species")){# these need descending
+            out <- out %>%
+              order_y(dplyr::desc(.data[[input$yorder]])) #this .data is a dplyr data masking thing
+          } else {
+            out <- out %>%
+              order_y(.data[[input$yorder]])
+          }
+          out
         })
   })
 }
