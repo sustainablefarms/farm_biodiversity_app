@@ -65,6 +65,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                            left = "about",
                            right = lapply(consstatus$CommonName, function(specname) vulnerablespecUI(ns, specname)))
                 ),
+              if (refisaverage){
               accordion_item(title = "Occupancy Probability of All Species", id = ns("occall"),
                 twocolumns(heading = "Estimates of the occupancy probability for every species",
                            left = tagList(proboccplotdescription,
@@ -72,7 +73,8 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                                  linknewtab(href = "https://www.nature.com/articles/sdata201561", "Garnett et al. (Scientific Data 2, 2015)."))),
                            right = allprob_plot_UI(ns("allprob"), refisaverage = refisaverage)
                            )
-                ),
+                )
+              } else {
               accordion_item(title = "Relative Occupancy Probability", id = ns("occallrel"),
                              twocolumns(heading = "Estimates of occupancy probability relative to S1 for every species.",
                                         left = tags$div(tags$p("This is the ratio of each species' estimated occupancy probability to the reference occupancy probability.",
@@ -86,6 +88,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                         right = allrel_plot_UI(ns("allrel"))
                              )
               )
+              }
               ),
     
     
