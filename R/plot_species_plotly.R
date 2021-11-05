@@ -1,6 +1,6 @@
-plot_ly_specroot <- function(df){
+plot_ly_yinside <- function(df){
   pal <- scales::col_numeric(c("#d0e7f4", "#178BCA"),
-                      domain = df$value)
+                             domain = df$value)
   palopp <- function(values){
     cols <- pal(values)
     rgbs <- col2rgb(cols)/255
@@ -21,31 +21,32 @@ plot_ly_specroot <- function(df){
               textposition = "inside",
               insidetextanchor = "start",
               insidetextfont = list(color = ~palopp(value))
-    ) %>%
-    # tooltips
-    style(hoverinfo = TRUE,
-          hovertext = df$tooltip,
-          hoverlabel = list(bgcolor = "white",
-                            font = list(color = "black",
-                                        size = 12)),
-          hovertemplate = paste('%{hovertext}<extra></extra>')) %>% #the <extra></extra> removes the 'trace 0' extra information
-  # alter layout
+    )
+  plt %>%
+    plotly::layout(
+      yaxis = list(visible = FALSE, type = "category")
+    )
+}
+
+fixed_layout <- function(p){
+  p %>%
   plotly::layout(xaxis = list(visible = FALSE, fixedrange = TRUE),
-         yaxis = list(visible = FALSE, fixedrange = TRUE, type = "category"),
-	 dragmode = FALSE,
-         margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
-  hide_colorbar()  %>%
+                 yaxis = list(fixedrange = TRUE),
+                 dragmode = FALSE,
+                 margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
+    hide_colorbar()  %>%
     plotly::config(displayModeBar = FALSE)
-  # add the species names
-    # add_annotations(x  = 0,
-    #                 y = ~species,
-    #                 text = ~species,
-    #                 xanchor = "left",
-    #                 xshift = 3,
-    #                 bgcolor = ~palopp(value),
-    #                 textfont = list(color = ~palopp(value)),
-    #                 showarrow = FALSE) %>%
-  return(plt)
+}
+
+add_tooltips <- function(p){
+  df <- plotly_data(p)
+  p %>%
+    style(hoverinfo = TRUE,
+        hovertext = df$tooltip,
+        hoverlabel = list(bgcolor = "white",
+                          font = list(color = "black",
+                                      size = 12)),
+        hovertemplate = paste('%{hovertext}<extra></extra>'))
 }
 
 add_error <- function(p){
@@ -95,21 +96,30 @@ add_label_onright <- function(p){
                     showlegend = FALSE) 
 }
 
+order_y <- function(p, orderby){ # orderby uses tidyselect
+  df <- plotly_data(p)
+  ord <- arrange(df, {{ orderby }}) %>% dplyr::select(species) %>% unlist()
+  p %>%
+    layout(yaxis = list(categoryorder = "array", 
+                        categoryarray = ~ord))
+}
+
 species_plotly_common <- function(df, showerrorbars = TRUE){
   set.seed(1)
   df <- topnrows(df, 10, "value")
   df$label <- paste0("", round(df$value * 100, 0), "%")
   df$tooltip <- speciesinfo[df$species, "shortstory"]
-  root <- plot_ly_specroot(df) %>%
-    # alter order
-    plotly::layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed"))
-  #despite the descriptions, the above line actually seems to order things as they are given in df
+  ord <- arrange(df, value) %>% dplyr::select(species) %>% unlist()
+  p <- plot_ly_yinside(df) %>%
+    fixed_layout() %>%
+    add_tooltips() %>%
+    order_y(value)
   if (showerrorbars){ # add error bars
-    root <- root %>% add_error()
+    p <- p %>% add_error()
   }
   # add the values onto the bars
-  root <- root %>% add_label_onleft()
-  root
+  p <- p %>% add_label_onleft()
+  p
 }
 
 species_plotly_different <- function(df){
