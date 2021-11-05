@@ -7,12 +7,6 @@ predictionsUI <- function(id, refisaverage = TRUE){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
-    # update species images after plots finished
-    tags$script("
-      Shiny.addCustomMessageHandler('plotfinished', function(state){
-       $('.specimg').each(function(index){$( this ).attr('src', $( this ).attr('data-src'))});
-      });
-    "),
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,

@@ -9,8 +9,7 @@ specinfocomponents <- function(specinfo, height = "200px"){
     href = specinfo$url,
     class = "imglink",
     style="text-align: center",
-    tags$img(`data-src` = gsub(".*/data/birdlifeimgs/", "", specinfo$imgfilename),
-             src = "",
+    tags$img(src = gsub(".*/data/birdlifeimgs/", "", specinfo$imgfilename),
              id = specinfo$species,
              class = "specimg",
              alt = specinfo$species, height = height))
@@ -19,14 +18,4 @@ specinfocomponents <- function(specinfo, height = "200px"){
     img = imgobj
   ))
 }
-
-specimageOut <- function(specinfo, height = "200px"){
-  components <- specinfocomponents(specinfo, height = height)
-     out <- tags$div(
-        style = "float: left; margin: 5px",
-        components$imgobj,
-        )
-    return(out)
-        }
-
 
