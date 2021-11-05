@@ -21,7 +21,7 @@ allprob_plot_UI <- function(id, refisaverage = TRUE){
                        right = FALSE,
                        inline = TRUE))
     ),
-      plotly::plotlyOutput(ns("size"), height = "1000px")
+      plotly::plotlyOutput(ns("plot"), height = "1000px")
   )
 }
 
@@ -33,13 +33,12 @@ allprob_plot_Server <- function(id,
     id,
     function(input, output, session){
         ns <- session$ns
-        # req(data$species_prob_current)
         rootplt <- reactive({
           validate(need(species_prob_current(), label = ""))
           species_plotly_all_root(tocommon(species_prob_current()))
         })
         
-        output$size <- plotly::renderPlotly({
+        output$plot <- plotly::renderPlotly({
           validate(need(species_prob_current(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
           validate(need(input$yorder, ""))
           out <- rootplt()
