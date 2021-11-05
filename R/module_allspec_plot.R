@@ -35,7 +35,7 @@ allprob_plot_Server <- function(id,
         ns <- session$ns
         rootplt <- reactive({
           validate(need(species_prob_current(), label = ""))
-          species_plotly_all_root(tocommon(species_prob_current()))
+          all_prob(tocommon(species_prob_current()))
         })
         
         output$plot <- plotly::renderPlotly({

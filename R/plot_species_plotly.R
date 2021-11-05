@@ -166,7 +166,7 @@ order_y <- function(p, orderby){ # orderby uses tidyselect
                         categoryarray = ~ord))
 }
 
-species_plotly_top10 <- function(df, showerrorbars = TRUE){
+prob_top10 <- function(df, showerrorbars = TRUE){
   set.seed(1)
   df <- topnrows(df, 10, "value")
   df$label <- paste0("", round(df$value * 100, 0), "%")
@@ -183,9 +183,8 @@ species_plotly_top10 <- function(df, showerrorbars = TRUE){
   p <- p %>% add_label_onleft()
   p
 }
-species_plotly_common <- species_plotly_top10
 
-species_plotly_all_root <- function(df){
+all_prob <- function(df){
   traits <- get("traits", envir = globalenv())
   df <- dplyr::left_join(df, traits, by = c(species = "Common Name"))
   df$label <- paste0("", round(df$value * 100, 0), "%")
@@ -196,7 +195,7 @@ species_plotly_all_root <- function(df){
   p
 }
 
-species_plotly_rel_all_root <- function(df){
+all_rel <- function(df){
   traits <- get("traits", envir = globalenv())
   df <- dplyr::left_join(df, traits, by = c(species = "Common Name"))
   df$label <- paste0(formatC(df$value, format = "fg", 2))

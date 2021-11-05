@@ -29,7 +29,7 @@ allrel_plot_Server <- function(id,
         # req(data$species_prob_current)
         rootplt <- reactive({
           validate(need(spec_different(), label = ""))
-          species_plotly_rel_all_root(spec_different())
+          all_rel(spec_different())
         })
         
         output$plot <- plotly::renderPlotly({

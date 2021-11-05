@@ -18,6 +18,8 @@ NAMESPACE
 ./data/traits.rds
 ./R/_disable_autoload.R
 ./R/main.R
+./R/module_allspec_plot.R
+./R/module_allspec_rel_plot.R
 ./R/module_leaflet.R
 ./R/module_mostlikely_plot.R
 ./R/module_patchattr.R
@@ -28,8 +30,6 @@ NAMESPACE
 ./R/module_selectlocation.R
 ./R/module_selectpatch.R
 ./R/module_selectYFA.R
-./R/plot_allspeciesprob.R
-./R/plot_allspeciesrel.R
 ./R/plot_climate_plot.R
 ./R/plot_regions.R
 ./R/plot_richness_ggplot.R
