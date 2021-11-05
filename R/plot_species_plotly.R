@@ -129,7 +129,7 @@ add_label_onright <- function(p){
                     xanchor = "left",
                     xshift = 3,
                     font = list(color = "rgba(0,0,0,1)"),
-                    bgcolor = "rgba(255,255,255,1)",
+                    bgcolor = "rgba(255,255,255,0)",
                     showarrow = FALSE,
                     showlegend = FALSE) 
 }
@@ -153,7 +153,7 @@ add_label_onsignside <- function(p){
                     xanchor = xanchor,
                     xshift = 3,
                     font = list(color = "rgba(0,0,0,1)"),
-                    bgcolor = "rgba(255,255,255,1)",
+                    bgcolor = "rgba(255,255,255,0)",
                     showarrow = FALSE,
                     showlegend = FALSE) 
 }
@@ -206,70 +206,4 @@ species_plotly_rel_all_root <- function(df){
     add_tooltips() %>%
     add_label_onsignside()
   p
-}
-
-# species_plotly_all_root(df) %>%
-#   order_y(upper) %>%
-#   add_error() %>%
-#   add_label_onright()
-
-species_plotly_different <- function(df){
-  set.seed(1)
-  df <- topnrows(df, 10, "value")
-  df$label <- paste0("x ", round(df$value, 2))
-  df$tooltip <- speciesinfo[df$species, "shortstory"]
-  plot_ly_specroot(df) %>%
-  # add the values onto the bars
-  add_annotations(x  = ~log10(value), 
-                  y = ~species, 
-                  text = df$label,
-                  xanchor = "right",
-                  xshift = -3,
-                  bgcolor = "rgba(255,255,255,1)",
-                  showarrow = FALSE,
-                  showlegend = FALSE) %>%
-  # alter order
-  plotly::layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = "reversed"),
-                 xaxis = list(type = "log")) 
-}
-
-species_plotly_both <- function(species_prob_current, spec_different){
-  cmn <- species_plotly_common(tocommon(species_prob_current))
-  dft <- species_plotly_different(spec_different)
-  subplot(cmn, dft) %>%
-    plotly::config(displayModeBar = FALSE)
-}
-
-species_plotly_modal <- function(species_prob_current, spec_different){
-  species_prob_current <- data.frame(species = rownames(species_prob_current), species_prob_current)
-  
-  df_both <- dplyr::full_join(species_prob_current, spec_different, by = "species", suffix = c(".cur", ".ref"))
-  
-  traits <- get("traits", envir = globalenv())
-  df_both <- dplyr::left_join(df_both, traits, by = c(species = "Common Name"))
-  
-  # arrange input data frames
-  df_both <- df_both %>% dplyr::arrange(- `Body Length`)
-  
-  df_probs <- df_both[, c("species", "lower", "upper", "value.cur", "bestsite", "Body Length", "Body Mass")]
-  colnames(df_probs)[4] <- "value"
-  
-
-  probsplt <- plot_ly_specroot(df_probs) %>%
-    # add error bars
-    style(error_x = list(visible = TRUE,
-                         type = 'data',
-                         array = df_probs$upper - df_probs$value,
-                         arrayminus = df_probs$value - df_probs$lower,
-                         symmetric = FALSE,
-                         color = '#000000')) %>%
-    layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = TRUE))
-  
-  df_ratio <- df_both[, c("species", "lower", "upper", "value", "bestsite", "Body Length", "Body Mass")]
-  colnames(df_ratio)[4] <- "value"
-  ratioplt <- plot_ly_specroot(df_ratio) %>%
-    layout(yaxis = ~list(categoryorder = "array", categoryarray = value, autorange = TRUE))
-  
-  subplot(probsplt, ratioplt, shareY = TRUE) %>%
-    plotly::config(displayModeBar = FALSE) 
 }
