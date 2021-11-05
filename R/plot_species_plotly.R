@@ -31,13 +31,11 @@ plot_ly_yinside <- function(df){
 plot_ly_youtside <- function(df, log2 = FALSE){
   df$tooltip <- speciesinfo[df$species, "shortstory"]
   if (log2){
-    df$label <- paste0(round((df$value - 1) * 100, 0), "%")
     df$value <- log2(df$value)
     df$pattern_shape <- dplyr::case_when(
       df$value >= 0 ~ "",
       TRUE ~ "x")
   } else {
-    df$label <- paste0("", round(df$value * 100, 0), "%")
     df$pattern_shape = ""
   }
   
@@ -58,7 +56,8 @@ plot_ly_youtside <- function(df, log2 = FALSE){
               y = ~species,
               x = ~value,
               marker = list(color = ~pal(value),
-                            pattern = list(shape = ~pattern_shape)),
+                            pattern = list(shape = ~pattern_shape,
+                                           fillmode = "overlay")),
               showlegend = FALSE
     )
   plt %>%
@@ -200,7 +199,7 @@ species_plotly_all_root <- function(df){
 species_plotly_rel_all_root <- function(df){
   traits <- get("traits", envir = globalenv())
   df <- dplyr::left_join(df, traits, by = c(species = "Common Name"))
-  df$label <- paste0("", round(df$value * 100, 0), "%")
+  df$label <- paste0(formatC(df$value * 100, format = "fg", 2), "%")
   df$tooltip <- speciesinfo[df$species, "shortstory"]
   p <- plot_ly_youtside(df, log2 = TRUE) %>%
     fixed_layout() %>%
