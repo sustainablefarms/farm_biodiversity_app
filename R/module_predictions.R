@@ -19,6 +19,8 @@ predictionsUI <- function(id, refisaverage = TRUE){
                             tags$em(uiOutput(ns("warn"), inline = TRUE))),
                right = plotOutput(ns("species_richness"), height = "250px")
     ),
+    accordion_showall(ns("predacc"), "Show all"),
+    accordion_toggleall(ns("predacc"), "Toggle all"),
     accordion(ns("predacc"),
               accordion_item(title = "Most likely species", id = ns("mostlikely"),
                twocolumns(heading = "The 10 most likely species to live in your farm's Box Gum Grassy Woodland.",

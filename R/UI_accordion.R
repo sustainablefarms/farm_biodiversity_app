@@ -4,6 +4,8 @@
 #' @param allstayopen If TRUE showing one item in the accordion doesn't collapse the other items
 #' @description Creates a div of class accordion. Code boilerplate taken from https://getbootstrap.com/docs/5.0/components/accordion
 #' @examples 
+#' accordion_toggleall("t1", "Toggle All")
+#' accordion_showall("t1", "Show all")
 #' accordion(id = "t1", 
 #'           accordion_item("i1title", id = "i1", "This is the content")
 #' )
@@ -52,4 +54,22 @@ accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headin
 }
 
 
+# toggle all button
+#' @param accordid is the id of the accordion (or id of an element wrapping the accordion - if more accordions inside element then all are toggled)
+accordion_toggleall <- function(accordid, label, ...){
+  tags$button(class="btn btn-primary collapsed",
+              type="button",
+              `data-bs-toggle`="collapse",
+              `data-bs-target`=paste0("#", accordid, " .accordion-collapse"),
+              label,
+              ...)
+}
 
+# show all link-like button
+accordion_showall <- function(accordid, label, ...){
+  tags$a(href="",
+         onclick = sprintf("$('#%s .accordion-collapse').collapse('show');", accordid),
+         label,
+         ...
+         )
+}
