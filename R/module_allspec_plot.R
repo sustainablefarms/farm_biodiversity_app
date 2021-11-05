@@ -10,7 +10,7 @@ allprob_plot_UI <- function(id, refisaverage = TRUE){
         selectInput(ns("yorder"),
                     label = "",
                     choices = yorder_choices,
-                    selected = "Size"
+                    selected = "Length"
                     )
         ),
       tags$div(class =  "float-end", 
@@ -21,10 +21,7 @@ allprob_plot_UI <- function(id, refisaverage = TRUE){
                        right = FALSE,
                        inline = TRUE))
     ),
-    tabsetPanel(
-      tabPanelBody("size", plotly::plotlyOutput(ns("size"), height = "1000px")),
-      id = ns("tabs"),
-      type = "hidden")
+      plotly::plotlyOutput(ns("size"), height = "1000px")
   )
 }
 
