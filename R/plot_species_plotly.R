@@ -33,8 +33,12 @@ plot_ly_youtside <- function(df, log2 = FALSE){
   if (log2){
     df$label <- paste0(round((df$value - 1) * 100, 0), "%")
     df$value <- log2(df$value)
+    df$pattern_shape <- dplyr::case_when(
+      df$value >= 0 ~ "",
+      TRUE ~ "x")
   } else {
     df$label <- paste0("", round(df$value * 100, 0), "%")
+    df$pattern_shape = ""
   }
   
   pal <- scales::col_numeric(c("#d0e7f4", "#178BCA"),
@@ -53,7 +57,8 @@ plot_ly_youtside <- function(df, log2 = FALSE){
     add_trace(type = "bar",  #make a bar plot
               y = ~species,
               x = ~value,
-              marker = list(color = ~pal(value)),
+              marker = list(color = ~pal(value),
+                            pattern = list(shape = ~pattern_shape)),
               showlegend = FALSE
     )
   plt %>%
