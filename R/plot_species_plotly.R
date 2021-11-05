@@ -199,7 +199,7 @@ species_plotly_all_root <- function(df){
 species_plotly_rel_all_root <- function(df){
   traits <- get("traits", envir = globalenv())
   df <- dplyr::left_join(df, traits, by = c(species = "Common Name"))
-  df$label <- paste0(formatC(df$value * 100, format = "fg", 2), "%")
+  df$label <- paste0(formatC(df$value, format = "fg", 2))
   df$tooltip <- speciesinfo[df$species, "shortstory"]
   p <- plot_ly_youtside(df, log2 = TRUE) %>%
     fixed_layout() %>%
