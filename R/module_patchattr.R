@@ -7,7 +7,7 @@ patchattr_UI <- function(id, attributes){
    fluidRow(
      column(6, 
       fluidRow(
-        inlinecheckBoxInput(ns("IsRemnant"),
+        checkboxInput(ns("IsRemnant"),
             value = if (attributes$IsRemnant){TRUE} else {NULL},
             label = tags$span("Is this patch remnant woodland?")
           ),
@@ -18,7 +18,7 @@ patchattr_UI <- function(id, attributes){
 	                  plantedpatchdefn))
 			    
         ),
-      fluidRow(inlinecheckBoxInput(ns("noisy_miner"),
+      fluidRow(checkboxInput(ns("noisy_miner"),
                               value = if (attributes$noisy_miner){TRUE} else {NULL},
                               tags$span("Noisy Miners present?")
           ),
@@ -202,11 +202,29 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
                      })
       }
       
+      
+      # saving and cancelling
       observeEvent(savebutton(),{ showNotification("patch saved")})
       observeEvent(cancelbutton(),{ showNotification("patch reset")})
       observeEvent(savebutton(), {
         savedvals(specifiedvals())
       }, ignoreNULL = FALSE, ignoreInit = FALSE)
+      observeEvent(cancelbutton(), {
+        validate(need(savedvals(), ""))
+        updateSliderInput(inputId = "pc_woody500m",
+                          value = savedvals()$woody500m)
+        updateSliderInput(inputId = "pc_woody3000m",
+                          value = savedvals()$woody3000m)
+        updateCheckboxInput(inputId = "noisy_miner", value = savedvals()$noisy_miner)
+        updateCheckboxInput(inputId = "IsRemnant", value = savedvals()$IsRemnant)
+        if (isTruthy(savedvals()$usedlon)){
+          updateTextInput(inputId = "lon", value = savedvals()$usedlon)
+          updateTextInput(inputId = "lat", value = savedvals()$usedlat)
+          updateTextInput(inputId = "yearforcanopy", value = savedvals()$usedyear)
+        }
+      }, ignoreNULL = FALSE, ignoreInit = FALSE)
+      
+      
       
       setBookmarkExclude(c("IsRemnant", 
                            "showmap",
