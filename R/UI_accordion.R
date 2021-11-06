@@ -21,35 +21,60 @@ accordion <- function(id, ..., allstayopen = TRUE) {
 }
 
 #' @param title Title of accordion item
-accordion_item <- function(title, id = NULL, ...){
+accordion_item <- function(title, id = NULL, ..., footer = NULL, footerdflt = "backnclose"){
   if (is.null(id)){ id <- paste0(sample(LETTERS, 5, replace = TRUE), collapse = "")}
   bodyid <- paste0(id, "_collapse")
   headerid <- paste0(id, "_header")
   tags$div(class = "accordion-item", id = id,
     accordion_item_header(id = headerid, title = title, bodyid = bodyid),
     accordion_item_body(..., id = bodyid, aria_labelledby = headerid,
-                        data_bs_parent = "#placeholderparentid")
+                        data_bs_parent = "#placeholderparentid", 
+                        footer = footer, footerdflt = footerdflt)
   )
 }
 
-accordion_item_header <- function(id, title, data_bs_toggle = "collapse", 
+toggle_attr <- function(bodyid){
+  list(
+  `data-bs-toggle` = "collapse", 
+  `data-bs-target`= paste0("#", bodyid),
+  `aria-controls`= bodyid
+  )
+}
+
+accordion_item_header <- function(id, title, 
                                   bodyid = "collapseOne",
                                   aria_expanded = "true"){
   data_bs_target = paste0("#", bodyid)
   aria_controls = bodyid
    tags$h2(class = "accordion-header", id = id,
-	   tags$button(class = "accordion-button", type = "button", `data-bs-toggle` = data_bs_toggle, 
-	     `data-bs-target`= data_bs_target, `aria-expanded`= aria_expanded, `aria-controls`= aria_controls, 
-	     title)
+     do.call(tags$button, 
+      args = c(list(class = "accordion-button", type = "button",
+	     `aria-expanded`= aria_expanded),
+	     toggle_attr(bodyid),
+	     title))
 	  )
 }
 
 accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headingOne",
-			       	data_bs_parent="#accordionExample"){
+			       	data_bs_parent="#accordionExample",
+			       	footer = NULL, footerdflt = "backnclose"){
+
   tags$div(id=id, class="accordion-collapse collapse", `aria-labelledby`= aria_labelledby,
            `data-bs-parent`= data_bs_parent,
            style = "",
-    tags$div(class = "accordion-body", ...)
+    tags$div(class = "accordion-body", ...,
+        tags$div(class = "clearfix", tags$div(class =  "float-end", 
+          footer = footer,
+          tags$a(href=paste0("#", id), 
+                 class = "btn btn-secondary",
+                 "Back to top"),
+          do.call(tags$button, 
+                  args = c(list(class = "btn btn-primary",
+                                type = "button"),
+                           toggle_attr(id),
+                           "Close"))
+        ))
+    )
   )
 }
 
