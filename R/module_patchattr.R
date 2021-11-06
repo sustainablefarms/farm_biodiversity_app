@@ -118,9 +118,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
     id,
     function(input, output, session){
       ns <- session$ns
-      
-      observeEvent(savebutton(),{ showNotification("patch saved")})
-      observeEvent(cancelbutton(),{ showNotification("patch reset")})
+      savedvals <- reactiveVal()
       
       # from lat lon work
       leafletout <- leaflet_Server("leaflet", bbox)
@@ -204,6 +202,11 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
                      })
       }
       
+      observeEvent(savebutton(),{ showNotification("patch saved")})
+      observeEvent(cancelbutton(),{ showNotification("patch reset")})
+      observeEvent(savebutton(), {
+        savedvals(specifiedvals())
+      }, ignoreNULL = FALSE, ignoreInit = FALSE, priority = -100)
       
       setBookmarkExclude(c("IsRemnant", 
                            "showmap",
@@ -215,7 +218,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
                            "getwoodycanopy_waiter_hidden",
                            "lon",
                            "lat"))
-      return(specifiedvals)
+      return(savedvals)
     })
   }
 
