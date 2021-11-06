@@ -77,7 +77,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
                             toggle_attr(paste0(ns(paste0("pacc", newid)), "_body"))
                             )),
                      do.call(actionButton,
-                             args = c(list(ns(paste0("save_p", newid)), "Save", class = "btn-primary"),
+                             args = c(list(ns(paste0("save_p", newid)), "Save and Close", class = "btn-primary"),
                                       toggle_attr(paste0(ns(paste0("pacc", newid)), "_body"))
                              ))
                      ),
@@ -103,7 +103,10 @@ selectpatch_Server <- function(id, selected_region, newinattr){
 
   # have servers running already, similar to the patch deleters
   attr_out_r <- lapply(1:maxpatchnum, function(pid){
-    out <- patchattr_Server(paste0("p", pid), bbox) 
+    out <- patchattr_Server(paste0("p", pid), bbox = bbox,
+                            savebutton = reactive(input[[paste0("save_p", pid)]]),
+                            cancelbutton = reactive(input[[paste0("cancel_p", pid)]])
+                            ) 
     return(out)
     })
   

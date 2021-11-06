@@ -113,11 +113,14 @@ shinyWidgets::materialSwitch(ns("showmap"),
 ))
 }
 
-patchattr_Server <- function(id, bbox){
+patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
   moduleServer(
     id,
     function(input, output, session){
       ns <- session$ns
+      
+      observeEvent(savebutton(),{ showNotification("patch saved")})
+      observeEvent(cancelbutton(),{ showNotification("patch reset")})
       
       # from lat lon work
       leafletout <- leaflet_Server("leaflet", bbox)
