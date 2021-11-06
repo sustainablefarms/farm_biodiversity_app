@@ -70,7 +70,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
                                           actionButton(ns(paste0("p", newid,"delete")), "Delete"),
                                           ),
                    id = ns(paste0("pacc", newid)),
-                   patchattr_UI(ns(paste0("p", newid)), pattr),
+                   patchattr_UI(ns(paste0("p", newid)), pattr)
                    )
              )
     patchidsinuse(c(patchidsinuse(), newid))
