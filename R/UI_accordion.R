@@ -96,7 +96,7 @@ accordion_toggleall <- function(accordid, ...){
 # show all link-like button
 accordion_showall <- function(accordid, ...){
   tags$a(href="javascript:;", #something about an empty href caused the page to error in firefox. This or "#" appear to work ok.
-         onclick = sprintf("toggleexpand(this);", accordid),
+         onclick = sprintf("toggleexpand(this, '%s');", accordid),
          "Expand all",
          ...
          )

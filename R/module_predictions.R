@@ -7,16 +7,11 @@ predictionsUI <- function(id, refisaverage = TRUE){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
-    tags$script(
-      'function toggleexpand(el){
-      if (el.getAttribute("expanded") == "true"){
-        el.setAttribute("expanded", false);
-        el.innerHTML = "Expand all";
-      } else {
-        el.setAttribute("expanded", true);
-        el.innerHTML = "Collapse all";
-      }
-    }'),
+    tags$script('
+      function bgyellow(item){
+        item.style.backgroundColor = "yellow";
+      }'),
+
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
@@ -29,8 +24,9 @@ predictionsUI <- function(id, refisaverage = TRUE){
                             tags$em(uiOutput(ns("warn"), inline = TRUE))),
                right = plotOutput(ns("species_richness"), height = "250px")
     ),
+    includeHTML("./www/extra.html"),
+    accordion_toggleall_button(ns("predacc"), "Toggle all"),
     accordion_showall(ns("predacc")),
-    # accordion_toggleall(ns("predacc"), "Toggle all"),
     accordion(ns("predacc"),
               accordion_item(title = "Most likely species", id = ns("mostlikely"),
                twocolumns(heading = "The 10 most likely species to live in your farm's Box Gum Grassy Woodland.",
