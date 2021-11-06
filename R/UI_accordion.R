@@ -56,7 +56,7 @@ accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headin
 
 # toggle all button
 #' @param accordid is the id of the accordion (or id of an element wrapping the accordion - if more accordions inside element then all are toggled)
-accordion_toggleall <- function(accordid, label, ...){
+accordion_toggleall_button <- function(accordid, label, ...){
   tags$button(class="btn btn-primary collapsed",
               type="button",
               `data-bs-toggle`="collapse",
@@ -65,11 +65,42 @@ accordion_toggleall <- function(accordid, label, ...){
               ...)
 }
 
-# show all link-like button
-accordion_showall <- function(accordid, label, ...){
+# toggle all
+accordion_toggleall <- function(accordid, ...){
+    # $(".A1").click(function() {
+    #   var $this = $(this);
+    #   $(".P1").toggle("slow")
+    #   
+    #   $this.toggleClass("expanded");
+    #   
+    #   if ($this.hasClass("expanded")) {
+    #     $this.html("-");
+    #   } else {
+    #     $this.html("+");
+    #   }
+    # })
   tags$a(href="javascript:;", #something about an empty href caused the page to error in firefox. This or "#" appear to work ok.
-         onclick = sprintf("$('#%s .accordion-collapse').collapse('show');", accordid),
-         label,
+         `data-bs-toggle`="collapse",
+         `data-bs-target`=paste0("#", accordid, " .accordion-collapse"),
+         onclick = "toggleexpand()",
+         # onclick =  '$this.toggleClass("expanded");
+         # if ($this.getAttribute("aria-expanded")) {
+         #   $this.html("Collapse all");
+         # } else {
+         #   $this.html("Expand all");
+         # }',
+         ...
+  )
+}
+
+# show all link-like button
+accordion_showall <- function(accordid, ...){
+  tags$a(href="javascript:;", #something about an empty href caused the page to error in firefox. This or "#" appear to work ok.
+         onclick = sprintf("toggleexpand(this);", accordid),
+         "Expand all",
          ...
          )
 }
+
+# paste(sprintf("$('#%s .accordion-collapse').collapse('show');", accordid),
+#       "$this.innerHTML = 'Collapse all';"),

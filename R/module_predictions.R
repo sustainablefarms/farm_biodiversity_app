@@ -7,6 +7,16 @@ predictionsUI <- function(id, refisaverage = TRUE){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
+    tags$script(
+      'function toggleexpand(el){
+      if (el.getAttribute("expanded") == "true"){
+        el.setAttribute("expanded", false);
+        el.innerHTML = "Expand all";
+      } else {
+        el.setAttribute("expanded", true);
+        el.innerHTML = "Collapse all";
+      }
+    }'),
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
@@ -19,7 +29,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                             tags$em(uiOutput(ns("warn"), inline = TRUE))),
                right = plotOutput(ns("species_richness"), height = "250px")
     ),
-    accordion_showall(ns("predacc"), "Show all"),
+    accordion_showall(ns("predacc")),
     # accordion_toggleall(ns("predacc"), "Toggle all"),
     accordion(ns("predacc"),
               accordion_item(title = "Most likely species", id = ns("mostlikely"),
