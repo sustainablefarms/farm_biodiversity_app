@@ -65,13 +65,12 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     insertUI(paste0("#", ns("placeholder")),
              where = "beforeBegin",
              ui = 
-               accordion_item(title = 
-                                tags$span(paste("Patch", newid),
-                                          actionButton(ns(paste0("p", newid,"delete")), "Delete"),
-                                          ),
+               accordion_item(title = paste("Patch", newid),
                    id = ns(paste0("pacc", newid)),
                    patchattr_UI(ns(paste0("p", newid)), pattr),
                    footer = tagList(
+                     actionButton(ns(paste0("p", newid,"delete")), "Delete Patch", icon = icon("trash"),
+                                  class = "btn-danger"),
                      do.call(actionButton,
                        args = c(list(ns(paste0("cancel_p", newid)), "Cancel", class = "btn-secondary"),
                             toggle_attr(paste0(ns(paste0("pacc", newid)), "_body"))
