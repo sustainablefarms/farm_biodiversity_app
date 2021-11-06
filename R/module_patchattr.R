@@ -206,7 +206,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       observeEvent(cancelbutton(),{ showNotification("patch reset")})
       observeEvent(savebutton(), {
         savedvals(specifiedvals())
-      }, ignoreNULL = FALSE, ignoreInit = FALSE, priority = -100)
+      }, ignoreNULL = FALSE, ignoreInit = FALSE)
       
       setBookmarkExclude(c("IsRemnant", 
                            "showmap",
