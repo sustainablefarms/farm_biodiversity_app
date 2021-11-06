@@ -66,19 +66,7 @@ accordion_toggleall_button <- function(accordid, label, ...){
 }
 
 # toggle all
-accordion_toggleall <- function(accordid, ...){
-    # $(".A1").click(function() {
-    #   var $this = $(this);
-    #   $(".P1").toggle("slow")
-    #   
-    #   $this.toggleClass("expanded");
-    #   
-    #   if ($this.hasClass("expanded")) {
-    #     $this.html("-");
-    #   } else {
-    #     $this.html("+");
-    #   }
-    # })
+accordion_toggleall_link <- function(accordid, ...){
   tags$a(href="javascript:;", #something about an empty href caused the page to error in firefox. This or "#" appear to work ok.
          `data-bs-toggle`="collapse",
          `data-bs-target`=paste0("#", accordid, " .accordion-collapse"),
@@ -93,8 +81,8 @@ accordion_toggleall <- function(accordid, ...){
   )
 }
 
-# show all link-like button
-accordion_showall <- function(accordid, ...){
+# show all or hide all link-like button
+accordion_showhideall <- function(accordid, ...){
   tags$a(href="javascript:;", #something about an empty href caused the page to error in firefox. This or "#" appear to work ok.
          onclick = sprintf("toggleexpand(this, '%s');", accordid),
          "Expand all",

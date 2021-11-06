@@ -2,6 +2,7 @@
 predictionsUI <- function(id, refisaverage = TRUE){
   ns <- NS(id)
   tagList(
+    includeHTML("./www/extra.html"),
     # the following enables bootstrap 3's inbuilt tooltips
     tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
@@ -24,9 +25,9 @@ predictionsUI <- function(id, refisaverage = TRUE){
                             tags$em(uiOutput(ns("warn"), inline = TRUE))),
                right = plotOutput(ns("species_richness"), height = "250px")
     ),
-    includeHTML("./www/extra.html"),
-    accordion_toggleall_button(ns("predacc"), "Toggle all"),
-    accordion_showall(ns("predacc")),
+    tags$div(class = "clearfix", tags$div(class =  "float-end", 
+       accordion_showhideall(ns("predacc"))
+    )),
     accordion(ns("predacc"),
               accordion_item(title = "Most likely species", id = ns("mostlikely"),
                twocolumns(heading = "The 10 most likely species to live in your farm's Box Gum Grassy Woodland.",
