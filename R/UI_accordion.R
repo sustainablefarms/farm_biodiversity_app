@@ -58,22 +58,39 @@ accordion_item_header <- function(id, title,
 accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headingOne",
 			       	data_bs_parent="#accordionExample",
 			       	footer = NULL, footerdflt = "backnclose"){
+  if (footerdflt == "backnclose"){
+    footerpart <- tagList(
+      tags$a(href=paste0("#", id), 
+        class = "btn btn-secondary",
+        "Back to top"),
+      do.call(tags$button, args = c(
+        list(class = "btn btn-primary",
+             type = "button"),
+        toggle_attr(id),
+         "Close"))
+    )
+  }
+  if (footerdflt == "cannsave"){
+    footerpart <- tagList(
+      actionButton(paste0("#", id, "_cancel"),
+                   class = "btn btn-secondary",
+                   "Cancel"),
+      actionButton(paste0("#", id, "_save"),
+                   class = "btn btn-primary",
+                   "Save and Close")
+    )
+  }
+  footerhtml <- tags$div(class = "clearfix", tags$div(class =  "float-end", 
+    footer = footer,
+    footerpart                                                  
+  ))
 
   tags$div(id=id, class="accordion-collapse collapse", `aria-labelledby`= aria_labelledby,
            `data-bs-parent`= data_bs_parent,
            style = "",
-    tags$div(class = "accordion-body", ...,
-        tags$div(class = "clearfix", tags$div(class =  "float-end", 
-          footer = footer,
-          tags$a(href=paste0("#", id), 
-                 class = "btn btn-secondary",
-                 "Back to top"),
-          do.call(tags$button, 
-                  args = c(list(class = "btn btn-primary",
-                                type = "button"),
-                           toggle_attr(id),
-                           "Close"))
-        ))
+    tags$div(class = "accordion-body",
+      ...,
+      footerhtml
     )
   )
 }
