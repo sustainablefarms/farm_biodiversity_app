@@ -23,7 +23,7 @@ accordion <- function(id, ..., allstayopen = TRUE) {
 #' @param title Title of accordion item
 accordion_item <- function(title, id = NULL, ..., footer = NULL, footerdflt = "backnclose"){
   if (is.null(id)){ id <- paste0(sample(LETTERS, 5, replace = TRUE), collapse = "")}
-  bodyid <- paste0(id, "_collapse")
+  bodyid <- paste0(id, "_body")
   headerid <- paste0(id, "_header")
   tags$div(class = "accordion-item", id = id,
     accordion_item_header(id = headerid, title = title, bodyid = bodyid),
@@ -70,24 +70,16 @@ accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headin
         toggle_attr(id),
          "Close"))
     )
+    footerhtml <- tags$div(class = "clearfix", tags$div(class =  "float-end", 
+                                                        footer,
+                                                        footerpart                                                  
+    ))
   }
-  if (footerdflt == "cannsave"){
-    footerpart <- tagList(
-      do.call(actionButton, args = c(list(paste0("#", id, "_cancel"),
-                   class = "btn btn-secondary",
-                   "Cancel"),
-                   toggle_attr(id))),
-      do.call(actionButton, args = c(paste0("#", id, "_save"),
-                   class = "btn btn-primary",
-                   toggle_attr(id),
-                   "Save and Close"))
-    )
+  if (footerdflt == "none"){
+    footerhtml <- tags$div(class = "clearfix", tags$div(class =  "float-end", 
+                                                        footer                                                 
+    ))
   }
-  footerhtml <- tags$div(class = "clearfix", tags$div(class =  "float-end", 
-    footer,
-    footerpart                                                  
-  ))
-  
 
   tags$div(id=id, class="accordion-collapse collapse", `aria-labelledby`= aria_labelledby,
            `data-bs-parent`= data_bs_parent,
@@ -134,14 +126,6 @@ accordion_showhideall <- function(accordid, ...){
          "Expand all",
          ...
          )
-}
-
-# little functions based on above that recalculate the cancel and save button ids
-cancel_button_id <- function(accorditemid){
-  paste0(accorditemid, "_collapse", "_cancel")
-}
-save_button_id <- function(accorditemid){
-  paste0(accorditemid, "_collapse", "_save")
 }
 
 # paste(sprintf("$('#%s .accordion-collapse').collapse('show');", accordid),

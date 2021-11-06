@@ -71,21 +71,23 @@ selectpatch_Server <- function(id, selected_region, newinattr){
                                           ),
                    id = ns(paste0("pacc", newid)),
                    patchattr_UI(ns(paste0("p", newid)), pattr),
-                   footer = do.call(actionButton,
-                                    args = c(list(ns("cancel"), "Cancel Outer", `aria-expanded`="true"),
-                                         toggle_attr(paste0(ns(paste0("pacc", newid)), "_collapse"))
-                                         )),
-                   footerdflt = "cannsave"
+                   footer = tagList(
+                     do.call(actionButton,
+                       args = c(list(ns(paste0("cancel_p", newid)), "Cancel", class = "btn-secondary"),
+                            toggle_attr(paste0(ns(paste0("pacc", newid)), "_body"))
+                            )),
+                     do.call(actionButton,
+                             args = c(list(ns(paste0("save_p", newid)), "Save", class = "btn-primary"),
+                                      toggle_attr(paste0(ns(paste0("pacc", newid)), "_body"))
+                             ))
+                     ),
+                   footerdflt = "none"
                    )
              )
     patchidsinuse(c(patchidsinuse(), newid))
     patchnumshown(patchnumshown() + 1)
     }
   }, ignoreInit = FALSE, ignoreNULL = FALSE)
-  
-  observeEvent(input[[ns(cancel_button_id(paste0("pacc", 1)))]],{
-    showNotification(paste("Cancelling id", 1))
-  })
   
   # remove a patch  # I couldn't get this observer created for interactively.
   patchdeleters <- lapply(1:maxpatchnum, function(pid){
