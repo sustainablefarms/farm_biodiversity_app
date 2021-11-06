@@ -51,7 +51,9 @@ accordion_item_header <- function(id, title,
       args = c(list(class = "accordion-button", type = "button",
 	     `aria-expanded`= aria_expanded),
 	     toggle_attr(bodyid),
-	     title))
+	     title,
+	     tags$a(href="a test", "testing"),
+	     "PatchIs!"))
 	  )
 }
 
