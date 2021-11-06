@@ -3,7 +3,22 @@ output:
   pdf_document: default
   html_document: default
 ---
-High Priority:
+# Refactoring
++ functionality
+  + accordions 1d
+  + hidden tabs 1d
+  + reset 0.5d
+  + new plots 0.5d
+
++ styling 1d
++ words
++ report 1d
++ polishing (days)
+  + bookmarking
+  + google analytics
+
+
+# High Priority:
 + Cleaner use and description for references
 + types of farms in More Information. Could get from the 2010 Lindenmayer book? Talks about wheat sheep belt, and more
 + a notification when reference is updated, and when things change.
@@ -34,6 +49,10 @@ Regular Priority:
 
 + prettier reference to the tree cover page
 + when calling use_waiter specify the spinner(s) used
+
++ call plotly functions with plotly:: rather than a full imports
++ extra.html is imported for each predictions module
++ mostlikely plotly is over building itself
 
 # Inputs
 + woody canopy in raw areas, not percentages
