@@ -58,6 +58,7 @@ accordion_item_header <- function(id, title,
 accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headingOne",
 			       	data_bs_parent="#accordionExample",
 			       	footer = NULL, footerdflt = "backnclose"){
+  # prepare footer
   if (footerdflt == "backnclose"){
     footerpart <- tagList(
       tags$a(href=paste0("#", id), 
@@ -72,18 +73,21 @@ accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headin
   }
   if (footerdflt == "cannsave"){
     footerpart <- tagList(
-      actionButton(paste0("#", id, "_cancel"),
+      do.call(actionButton, args = c(paste0("#", id, "_cancel"),
                    class = "btn btn-secondary",
-                   "Cancel"),
-      actionButton(paste0("#", id, "_save"),
+                   toggle_attr(id),
+                   "Cancel")),
+      do.call(actionButton, args = c(paste0("#", id, "_save"),
                    class = "btn btn-primary",
-                   "Save and Close")
+                   toggle_attr(id),
+                   "Save and Close"))
     )
   }
   footerhtml <- tags$div(class = "clearfix", tags$div(class =  "float-end", 
     footer = footer,
     footerpart                                                  
   ))
+  
 
   tags$div(id=id, class="accordion-collapse collapse", `aria-labelledby`= aria_labelledby,
            `data-bs-parent`= data_bs_parent,
