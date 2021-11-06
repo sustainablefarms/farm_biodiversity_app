@@ -71,6 +71,10 @@ selectpatch_Server <- function(id, selected_region, newinattr){
                                           ),
                    id = ns(paste0("pacc", newid)),
                    patchattr_UI(ns(paste0("p", newid)), pattr),
+                   footer = do.call(actionButton,
+                                    args = c(list(ns("cancel"), "Cancel Outer", `aria-expanded`="true"),
+                                         toggle_attr(paste0(ns(paste0("pacc", newid)), "_collapse"))
+                                         )),
                    footerdflt = "cannsave"
                    )
              )
@@ -78,6 +82,10 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     patchnumshown(patchnumshown() + 1)
     }
   }, ignoreInit = FALSE, ignoreNULL = FALSE)
+  
+  observeEvent(input[[ns(cancel_button_id(paste0("pacc", 1)))]],{
+    showNotification(paste("Cancelling id", 1))
+  })
   
   # remove a patch  # I couldn't get this observer created for interactively.
   patchdeleters <- lapply(1:maxpatchnum, function(pid){
@@ -99,6 +107,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
   
   # create a table of attributes
   attr_table <- reactive({
+    print(names(reactiveValuesToList(input)))
     validate(need(length(patchidsinuse()) > 0, "No patches"))
     # patches <- sort(patchidsinuse())
     attr_out_list <- lapply(patchidsinuse(), function(pid){
@@ -175,14 +184,14 @@ app_selectpatch <- function(){
                                           woody3000m = 3,
                                           noisy_miner = 1,
                                           IsRemnant = 1))
-      refresh <- reactiveTimer(1000 * 10)
-      observeEvent(refresh(),{
-        attr <- newinattr()
-        attr <- rbind(attr, attr[1, ])
-        attr[1, "pid"] <- 3
-        attr$woody500m <- 1.3 * attr$woody500m
-        newinattr(attr)
-      })
+      # refresh <- reactiveTimer(1000 * 10)
+      # observeEvent(refresh(),{
+      #   attr <- newinattr()
+      #   attr <- rbind(attr, attr[1, ])
+      #   attr[1, "pid"] <- 3
+      #   attr$woody500m <- 1.3 * attr$woody500m
+      #   newinattr(attr)
+      # })
       output <- selectpatch_Server("patch", selected_region, newinattr)
       observe(print(data.frame(output())))
     })

@@ -73,10 +73,10 @@ accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headin
   }
   if (footerdflt == "cannsave"){
     footerpart <- tagList(
-      do.call(actionButton, args = c(paste0("#", id, "_cancel"),
+      do.call(actionButton, args = c(list(paste0("#", id, "_cancel"),
                    class = "btn btn-secondary",
-                   toggle_attr(id),
-                   "Cancel")),
+                   "Cancel"),
+                   toggle_attr(id))),
       do.call(actionButton, args = c(paste0("#", id, "_save"),
                    class = "btn btn-primary",
                    toggle_attr(id),
@@ -84,7 +84,7 @@ accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headin
     )
   }
   footerhtml <- tags$div(class = "clearfix", tags$div(class =  "float-end", 
-    footer = footer,
+    footer,
     footerpart                                                  
   ))
   
@@ -134,6 +134,14 @@ accordion_showhideall <- function(accordid, ...){
          "Expand all",
          ...
          )
+}
+
+# little functions based on above that recalculate the cancel and save button ids
+cancel_button_id <- function(accorditemid){
+  paste0(accorditemid, "_collapse", "_cancel")
+}
+save_button_id <- function(accorditemid){
+  paste0(accorditemid, "_collapse", "_save")
 }
 
 # paste(sprintf("$('#%s .accordion-collapse').collapse('show');", accordid),
