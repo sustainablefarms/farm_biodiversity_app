@@ -1,15 +1,12 @@
 <script>
   function toggleexpand(el, accordid){
       var bodies = document.getElementById(accordid).getElementsByClassName("accordion-collapse");
-      console.log(bodies.length);
-      for (let i = 0; i < bodies.length; i++) {
-        bodies[i].style.backgroundColor = "red";
-        $(bodies[i]).collapse("show");
-      }
       if (el.getAttribute("expanded") == "true"){
+        $(bodies).collapse("hide");
         el.setAttribute("expanded", false);
-        el.innerHTML = "Expand all" + " " + accordid;
+        el.innerHTML = "Expand all";
       } else {
+        $(bodies).collapse("show");
         el.setAttribute("expanded", true);
         el.innerHTML = "Collapse all";
       }
