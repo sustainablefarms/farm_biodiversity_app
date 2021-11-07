@@ -24,3 +24,26 @@
 
 }
 
+.accordion-button.plus {
+  &:not(.collapsed) {
+    &::after {
+      background-image: none;
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  // Accordion icon
+  &::after {
+    flex-shrink: 0;
+    margin-left: auto;
+    opacity: 1;
+    transition: opacity 1s ease;
+    font-family: 'FontAwesome 5 Free';
+    content: "\f067";
+    text-color: $primary;
+    background-image: none;
+    background-repeat: none;
+  }
+
+}

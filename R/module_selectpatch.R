@@ -2,7 +2,10 @@ selectpatch_UI <- function(id){
   ns <- NS(id)
   tagList(
   div(id = ns("placeholder")),
-  actionButton(ns("addpatch"), "Add a patch")
+  actionButton(ns("addpatch"), "Add a woodland area",
+               class = "accordion-button plus",
+               style = "border-style: dashed; border-width: medium; border-color: #80B2B3; background-color: #FFFFFF;",
+               style = "margin-top: 1rem;")
   )
 }
 
@@ -65,11 +68,11 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     insertUI(paste0("#", ns("placeholder")),
              where = "beforeBegin",
              ui = 
-               accordion_item(title = paste("Patch", newid),
+               accordion_item(title = paste("Woodland area", newid),
                    id = ns(paste0("pacc", newid)),
                    patchattr_UI(ns(paste0("p", newid)), pattr),
                    footer = tagList(
-                     actionButton(ns(paste0("p", newid,"delete")), "Delete Patch", icon = icon("trash"),
+                     actionButton(ns(paste0("p", newid,"delete")), "Delete woodland area", icon = icon("trash"),
                                   class = "btn-danger"),
                      do.call(actionButton,
                        args = c(list(ns(paste0("cancel_p", newid)), "Cancel", class = "btn-secondary"),
