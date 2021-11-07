@@ -213,6 +213,14 @@ h4 {
 .infotext {
   background-color: #c5e2f2; /* an approx 85% lighter form of #399cd3 */
 }
+.infotext:before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f05a";
+  display: inline-block;
+  padding-right: 3px;
+  vertical-align: middle;
+  font-weight: 900;
+}
 
 bodysmall {
   font-size: 14px;
