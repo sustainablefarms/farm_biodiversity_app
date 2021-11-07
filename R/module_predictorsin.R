@@ -54,16 +54,12 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
       }) 
     
       ## REGION
-      fromlocation <- selectlocationServer("loc", selected_region,
+      fromlocation <- selectlocationServer("loc",
+                                           selected_region,
+                                           inAnnPrec.YfA,
                                            reactive(input$save_region),
                                            reactive(input$cancel_region))
       
-      ## YfA
-      fromyfa <- selectYfAServer("yfa", selected_region, inAnnPrec.YfA)
-      observeEvent(selected_region(), {
-        shinyjs::toggleElement(id = "yfa_wrap",
-                        condition = isTruthy(selected_region()))
-      })
       
       ## Combine!
       cval <- eventReactive({c(fromyfa(),
@@ -132,10 +128,10 @@ app_predictorsin <- function(){
       #   newinattr(attr)
       # })
       inAnnPrec.YfA <- reactiveVal(400)
-      # observeEvent(refresh(), {
-      #   inAnnPrec.YfA(inAnnPrec.YfA() + 50)
-      #   selected_region("Euroa")
-      # })
+      observeEvent(refresh(), {
+        inAnnPrec.YfA(inAnnPrec.YfA() + 50)
+        selected_region("Euroa")
+      })
       predictors_Server("S1in", selected_region, newinattr, inAnnPrec.YfA)
       # observe(print(data.frame(reactiveValuesToList(cval1()))))
     })

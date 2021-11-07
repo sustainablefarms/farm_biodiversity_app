@@ -34,16 +34,18 @@ selectlocationUI <- function(id){
               uiOutput(ns("show_precip_warm")),
               uiOutput(ns("show_precip_cold"))
             )
-         )
+         ),
+   div(id = ns("yfa_wrap"), selectYfAUI(ns("yfa"))),
          )
 }
 
-selectlocationServer <- function(id, selected_region_outer, savebutton, cancelbutton){
+selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, savebutton, cancelbutton){
   moduleServer(
     id,
     function(input, output, session){
       # set up reactive values
       selected_region <- reactiveVal()
+      outofmodule <- reactiveVal()
       data <- reactiveValues(
         climate = NULL,
         polygons = NULL,
@@ -60,6 +62,7 @@ selectlocationServer <- function(id, selected_region_outer, savebutton, cancelbu
       })
       observeEvent(savebutton(), {
         selected_region_outer(selected_region())
+        outofmodule(c(ltcliminfo(), fromyfa()))
       })
       observeEvent(cancelbutton(), {
         selected_region(selected_region_outer())
@@ -123,9 +126,9 @@ selectlocationServer <- function(id, selected_region_outer, savebutton, cancelbu
        }, ignoreInit = FALSE)
        
        # obtain actual climate if required by later work
-        outOfModule <- reactive({
+       ltcliminfo <- reactive({
           locinfo <- list()
-            locinfo$selected_region <- selected_region_outer()
+            locinfo$selected_region <- selected_region()
             # add climate data
             climate_row <- which(data$points$label == locinfo$selected_region)
             locinfo$MaxTWarmMonth.lt <- data$points$MaxTWarmMonth[climate_row]
@@ -146,8 +149,6 @@ selectlocationServer <- function(id, selected_region_outer, savebutton, cancelbu
             } else {
               locinfo$locationcomplete <- FALSE
             }
-            
-            locinfo
         }) %>% throttle(1000)
         
         # insert region name
@@ -229,7 +230,14 @@ selectlocationServer <- function(id, selected_region_outer, savebutton, cancelbu
       )
     }
   })
-
+  
+  ## YfA
+  fromyfa <- selectYfAServer("yfa", selected_region, inAnnPrec.YfA)
+  observeEvent(selected_region(), {
+   shinyjs::toggleElement(id = "yfa_wrap",
+                   condition = isTruthy(selected_region()))
+  })
+  
   setBookmarkExclude(c("show_maxtemp_modal",
                        "plot_points_waiter_hidden",
                        "show_precip_warm_modal",
@@ -238,7 +246,7 @@ selectlocationServer <- function(id, selected_region_outer, savebutton, cancelbu
   
   
   observe({
-    outOfModule()
+    outofmodule()
     session$doBookmark()
   })
   # Save extra values in state$values when we bookmark
@@ -261,7 +269,7 @@ selectlocationServer <- function(id, selected_region_outer, savebutton, cancelbu
     }
   })
       
-      outOfModule
+  outofmodule
     }
   )
 }
