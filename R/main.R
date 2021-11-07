@@ -61,6 +61,7 @@ ui <- function(request){
     footer = "Forward <-> back"
   )
   out <- bootstrapPage(
+      shinyjs::useShinyjs(),
       includeCSS("./www/base.css"),
       includeCSS("./www/accordion.css"),
       waiter::use_waiter(), 

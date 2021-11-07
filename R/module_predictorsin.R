@@ -14,7 +14,6 @@ predictors_UI <- function(id){
     accordion(id = ns("acc"), 
       accordion_item("Your region", id = ns("acc-loc"), 
                      selectlocationUI(ns("loc")),
-                     div(id = ns("yfa_wrap"), selectYfAUI(ns("yfa"))),
                      footer = tagList(
                        do.call(actionButton,
                                args = c(list(ns(paste0("cancel_region")), "Cancel", class = "btn-secondary"),
@@ -62,14 +61,12 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
       
       
       ## Combine!
-      cval <- eventReactive({c(fromyfa(),
-                               patchattr_tbl())}, {
+      cval <- reactive({
         out <- c(fromlocation(),
-                 fromyfa(),
                  list(patchattr_tbl = patchattr_tbl()))
         out
       })
-  
+
   ## Other!
   if (isTRUE(getOption("shiny.testmode"))){
     output$downloadcvals <- downloadHandler(

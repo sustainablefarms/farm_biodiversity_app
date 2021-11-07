@@ -222,9 +222,10 @@ selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, saveb
   ## YfA
   fromyfa <- selectYfAServer("yfa", selected_region, inAnnPrec.YfA)
   observeEvent(selected_region(), {
+   showNotification(paste("Selected region is", selected_region()))
    shinyjs::toggleElement(id = "hide_until_region",
                    condition = isTruthy(selected_region()))
-  })
+  }, ignoreNULL = FALSE, ignoreInit = FALSE)
   
   setBookmarkExclude(c("show_maxtemp_modal",
                        "plot_points_waiter_hidden",
