@@ -8,31 +8,21 @@ selectlocationUI <- function(id){
   ns <- NS(id)
   tagList(
 	 waiter::use_waiter(),
-         HTML("<div class='subheader'><h2>REGION</h2></div>"),
-         # selectInput(
-         #   inputId = ns("spatial_type"),
-         #   label = NULL,
-         #   choices = list(
-         #     "ABS SA2 regions" = "abs_sa2",
-         #     "Federal Electorates" = "electorates_federal"),
-         #   width = "100%"),
-         fluidRow(
-           column(width = 8,
-             selectInput(ns("selectbox"), label = NULL, 
-                         choices = choices,
-                         multiple = FALSE),
-             leaflet::leafletOutput(ns("regionsleaflet"))
-             ),
-           column(width = 4, 
-             # style = "
-             # position: absolute;
-             # top: 50%;
-             # -ms-transform: translateY(-50%);
-             # transform: translateY(-50%);",
-             tags$div(style = "align: center;", textOutput(ns("regionname"), inline = TRUE)),
-             plotOutput(ns("map"), height = "200px")
-             )
-         ),
+	 twocolumns(
+	   heading = "Select your region",
+	   left = tagList(tags$p("Lorem ipsum..."),
+	                  infotext("Click map or select from list")),
+	   right = 
+	     tagList(
+	       selectInput(ns("selectbox"), label = NULL, 
+	                   choices = choices,
+	                   multiple = FALSE,
+	                   width = "100%"),
+	       column(width = 8, leaflet::leafletOutput(ns("regionsleaflet"))),
+	       column(width = 4, tags$div(style = "align: center;", textOutput(ns("regionname"), inline = TRUE)),
+	              plotOutput(ns("map"), height = "200px"))
+	     )
+	 ),
          HTML("<div class='subheader'><h2>LONG-TERM AVERAGE</h2></div>"),
          fluidRow(
            column(width = 6,
