@@ -41,6 +41,7 @@ h3 {
 }
 
 h4 {
+  margin-top: 0; /* overrides bootstrap default for headings */
   text-align: left;
   font-size: 150%;
   color: black;
