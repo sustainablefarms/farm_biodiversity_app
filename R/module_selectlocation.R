@@ -66,7 +66,7 @@ selectlocationServer <- function(id, selected_region, savebutton, cancelbutton){
 	      on.exit(wleaflet$hide())
         regionplot_leaflet()
       })
-      # update selected_region 'input'
+      # update selected_region based on leaflet click
       observe({
         p <- input$regionsleaflet_shape_click
         validate(need(p, ""))
@@ -217,49 +217,6 @@ selectlocationServer <- function(id, selected_region, savebutton, cancelbutton){
     }
   })
 
-  output$climate_plot <- renderPlot({
-    if(!is.null(click_values$climate)){
-      climate_plot(
-        data = data$points,
-        variable = click_values$climate,
-        region = outOfModule()$selected_region,
-        title = click_values$climate_title)
-    }
-  })
-  # run a different modal for each climate variable
-  observeEvent(input$show_maxtemp_modal, {
-    validate(need(outOfModule()$selected_region, ""))
-    click_values$climate <- "MaxTWarmMonth"
-    click_values$climate_title <- "Annual Maximum temperature (Celsius)"
-    climate_modal(ns, 
-		  "The average annual maximum temperature from 1960 - 1990 was estimated by",
-                  linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
-  })
-  observeEvent(input$show_mintemp_modal, {
-    validate(need(outOfModule()$selected_region, ""))
-    click_values$climate <- "MinTColdMonth"
-    click_values$climate_title <- "Average Minimum Temperature (Celsius)"
-    climate_modal(ns,
-		  "The average annual minimum temperature from 1960 - 1990 was estimated by",
-                  linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
-  })
-  observeEvent(input$show_precip_warm_modal, {
-    validate(need(outOfModule()$selected_region, ""))
-    click_values$climate <- "PrecWarmQ"
-    click_values$climate_title <- "Summer Precipitation (mm)"
-    climate_modal(ns,
-		  "The summer precipitation is the average precipitation of the warmest quarter from 1960 - 1990 estimated by",
-                  linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
-  })
-  observeEvent(input$show_precip_cold_modal, {
-    validate(need(outOfModule()$selected_region, ""))
-    click_values$climate <- "PrecColdQ"
-    click_values$climate_title <- "Winter Precipitation (mm)"
-    climate_modal(ns,
-		  "The winter precipitation is the average precipitation of the coldest quarter from 1960 - 1990 estimated by",
-                  linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
-  })
-  
   setBookmarkExclude(c("show_maxtemp_modal",
                        "plot_points_waiter_hidden",
                        "show_precip_warm_modal",
