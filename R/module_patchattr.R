@@ -7,6 +7,13 @@ patchattr_UI <- function(id, attributes){
   } else {
     "planted"
   }
+  innm <- if (is.null(attributes$noisy_miner)){
+    character(0)
+  } else if (attributes$noisy_miner){
+    "yes"
+  } else {
+    "no"
+  }
   ns <- NS(id)
   tagList(
     waiter::use_waiter(spinners = 1),
@@ -26,49 +33,44 @@ patchattr_UI <- function(id, attributes){
           tags$h4("What is a Woodland Area?"),
           patchdefn,
           tags$div(tags$a("Learn more", href = "??")))),
-   # remnant and noisy miners first
-   fluidRow(
-     column(6, 
-      fluidRow(checkboxInput(ns("noisy_miner"),
-                              value = if (attributes$noisy_miner){TRUE} else {NULL},
-                              tags$span("Noisy Miners present?")
-          ),
-          infotooltip(
-            html = TRUE,
-            title = tags$html(
-                "Noisy Miners are easy to recognise by their bright yellow eyes and beak.",
+    
+    
+   # noisy miners
+   twocolumns(heading = "Presence of Noisy Miners",
+              left = tagList(
+                radioButtons(ns("nm"),
+                             label = "Are there Noisy Miners in this area...",
+                             choices = list("yes", "no")                            ),
+                             selected = innm
+                ),
+              right = tags$div(style = "background-color: #E6F0F0;",
+                               tags$h4("Why are Noisy Miners used in this modelling?"),
+                tags$p("Noisy Miners are easy to recognise by their bright yellow eyes and beak.",
 		"Noisy Miners are native, but typically have a detrimental effect on other small bird species.",
-	        "This is because Noisy Miners are often aggressive towards other birds, preventing them from living in their patch.",
-
-		tags$br(), tags$br(),
-		"Noisy Miners dislike habitat with high amounts of midstorey (woody plants 2m-10m in height).",
-		"You can discourage Noisy Miners by increasing the amount of midstorey in your patch, such as through underplanting with wattles, tea-trees, bottlebrushes, and other native shrubs.",
-                tags$br(),
-	       	tags$br(),
-                "Visit",
-               linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
+	        "This is because Noisy Miners are often aggressive towards other birds, preventing them from living in their patch."),
+		tags$p("Noisy Miners dislike habitat with high amounts of midstorey (woody plants 2m-10m in height).",
+		"You can discourage Noisy Miners by increasing the amount of midstorey in your patch, such as through underplanting with wattles, tea-trees, bottlebrushes, and other native shrubs."),
+    tags$p("Visit",
+               tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
                       "BirdLife Australia"),
                "for a profile of Noisy Miners." 
-              )
-            )
-          )),
-        column(6, #Noisy Miner photo
-	  # first the image 
-          linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
-                    style = "float: left",
-		    tags$img(src = "lowres-cb59057b0d4ef2a9ce75c19a128ca2ca.jpg",
-		             alt = "Noisy Miner photo",
-		             height = "100px",
-			     inline = TRUE)),
-	  tags$span("A Noisy Miner", tags$br()),
-          tags$span(style = "font-size: 60%",
-		    linknewtab(href = "https://birdlifephotography.org.au/index.php/show-image?return=search&single&id=19910",
-	                      HTML("&copy;Con Boekel 2016 birdlifephotography.org.au"))
-          )
-        )
-      ),
+              ),
+    tags$div(tags$a("Learn more", href = "??")),
+		linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
+		           style = "float: left",
+		           tags$img(src = "lowres-cb59057b0d4ef2a9ce75c19a128ca2ca.jpg",
+		                    alt = "Noisy Miner photo",
+		                    height = "100px",
+		                    inline = TRUE)),
+		tags$span("A Noisy Miner", tags$br()),
+		tags$span(style = "font-size: 60%",
+		          linknewtab(href = "https://birdlifephotography.org.au/index.php/show-image?return=search&single&id=19910",
+		                     HTML("&copy;Con Boekel 2016 birdlifephotography.org.au"))
+		)
+		)),
 	
-	# WCF
+   
+  # WCF
 	fluidRow(
 	tags$div(class = "subheader", tags$h2("Woody Cover Amounts")),
 	tags$div("Species occupancies depend heavily on the amount of 2m+ woody vegetation cover, or foliage cover,",
@@ -196,7 +198,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       specifiedvals <- reactive({
         out <- list(woody500m = input[["pc_woody500m"]],
           woody3000m = input[["pc_woody3000m"]],
-          noisy_miner = input[["noisy_miner"]],
+          nm = input[["nm"]],
           woodlandtype = input[["woodlandtype"]],
           showmap = input[["showmap"]],
           usedlon = usedlon(),
@@ -226,7 +228,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
                           value = savedvals()$woody500m)
         updateSliderInput(inputId = "pc_woody3000m",
                           value = savedvals()$woody3000m)
-        updateCheckboxInput(inputId = "noisy_miner", value = savedvals()$noisy_miner)
+        updateRadioButtons(inputId = "nm", selected = savedvals()$nm)
         updateRadioButtons(inputId = "woodlandtype", selected = savedvals()$woodlandtype)
         if (isTruthy(savedvals()$usedlon)){
           updateTextInput(inputId = "lon", value = savedvals()$usedlon)
@@ -242,7 +244,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
                            "pc_woody3000m",
                            "pc_woody500m",
                            "getwoodycanopy",
-                           "noisy_miner",
+                           "nm",
                            "yearforcanopy",
                            "getwoodycanopy_waiter_hidden",
                            "lon",
@@ -253,6 +255,8 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
         out <- savedvals()
         out$IsRemnant <- (out$woodlandtype == "remnant")
         out$woodlandtype <- NULL
+        out$noisy_miner <- (out$nm == "yes")
+        out$nm <- NULL
         out
       })
     })
