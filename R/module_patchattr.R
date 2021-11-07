@@ -1,23 +1,33 @@
 # patch attributes module
 patchattr_UI <- function(id, attributes){
+  inwoodlandtype <- if (is.null(attributes$IsRemnant)){
+    character(0)
+  } else if (attributes$IsRemnant){
+    "remnant"
+  } else {
+    "planted"
+  }
   ns <- NS(id)
   tagList(
-        waiter::use_waiter(spinners = 1),
+    waiter::use_waiter(spinners = 1),
+    #woodland type
+    twocolumns(heading = "Type of woody coverage",
+       left = tagList(
+         radioButtons(ns("woodlandtype"),
+                      label = "This woodland area is...",
+                      choices = list(
+                        "Remnant woodland" = "remnant",
+                        "Planted woodland" = "planted"
+                      ),
+                      selected = inwoodlandtype
+                      )
+       ),
+       right = tags$div(tags$h3("What is a Woodland Area?"),
+                        patchdefn,
+                        tags$div(tags$a("Learn more", href = "??")))),
    # remnant and noisy miners first
    fluidRow(
      column(6, 
-      fluidRow(
-        checkboxInput(ns("IsRemnant"),
-            value = if (attributes$IsRemnant){TRUE} else {NULL},
-            label = tags$span("Is this patch remnant woodland?")
-          ),
-	infotooltip(
-          html = TRUE,
-	  title = tags$div("If the patch is", tags$em("not"), "a remnant, then",
-			   "this app assumes that it is a", tags$em("planted patch"), 
-	                  plantedpatchdefn))
-			    
-        ),
       fluidRow(checkboxInput(ns("noisy_miner"),
                               value = if (attributes$noisy_miner){TRUE} else {NULL},
                               tags$span("Noisy Miners present?")
@@ -186,7 +196,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
         out <- list(woody500m = input[["pc_woody500m"]],
           woody3000m = input[["pc_woody3000m"]],
           noisy_miner = input[["noisy_miner"]],
-          IsRemnant = input[["IsRemnant"]],
+          woodlandtype = input[["woodlandtype"]],
           showmap = input[["showmap"]],
           usedlon = usedlon(),
           usedlat = usedlat(),
@@ -216,7 +226,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
         updateSliderInput(inputId = "pc_woody3000m",
                           value = savedvals()$woody3000m)
         updateCheckboxInput(inputId = "noisy_miner", value = savedvals()$noisy_miner)
-        updateCheckboxInput(inputId = "IsRemnant", value = savedvals()$IsRemnant)
+        updateRadioButtons(inputId = "woodlandtype", selected = savedvals()$woodlandtype)
         if (isTruthy(savedvals()$usedlon)){
           updateTextInput(inputId = "lon", value = savedvals()$usedlon)
           updateTextInput(inputId = "lat", value = savedvals()$usedlat)
@@ -226,7 +236,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       
       
       
-      setBookmarkExclude(c("IsRemnant", 
+      setBookmarkExclude(c("woodlandtype", 
                            "showmap",
                            "pc_woody3000m",
                            "pc_woody500m",
@@ -236,7 +246,14 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
                            "getwoodycanopy_waiter_hidden",
                            "lon",
                            "lat"))
-      return(savedvals)
+      
+      # convert out info
+      reactive({
+        out <- savedvals()
+        out$IsRemnant <- (out$woodlandtype == "remnant")
+        out$woodlandtype <- NULL
+        out
+      })
     })
   }
 
@@ -247,6 +264,8 @@ app_patchattr <- function(){
   enableBookmarking(store = "disable")
   attributes <- list(IsRemnant = TRUE, noisy_miner = FALSE, woody500m = 3.5, woody3000m = 8.2, showmap = FALSE)
   bbox <- reactive({bbox_allregions})
+  savebutton <- reactive(NULL)
+  cancelbutton <- reactive(NULL)
   shinyApp(    {fluidPage(
     tags$script("$(function () {
           $('[data-toggle=tooltip]').tooltip()
@@ -255,6 +274,9 @@ app_patchattr <- function(){
     patchattr_UI("patchattr", attributes),
     theme = bslib::bs_theme(version = 5, "lumen"))
   },
-           function(input, output, session){patchattr_Server("patchattr", bbox)}
+           function(input, output, session){patchattr_Server("patchattr",
+                                                             bbox,
+                                                             savebutton,
+                                                             cancelbutton)}
   )
 }
