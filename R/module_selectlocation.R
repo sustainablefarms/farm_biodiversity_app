@@ -25,16 +25,29 @@ selectlocationUI <- function(id){
 	     )
 	 ),
          HTML("<div class='subheader'><h2>LONG-TERM AVERAGE</h2></div>"),
-         fluidRow(
-           column(width = 6,
-              uiOutput(ns("show_maxtemp")),
-              uiOutput(ns("show_mintemp"))
-            ),
-            column(width = 6,
-              uiOutput(ns("show_precip_warm")),
-              uiOutput(ns("show_precip_cold"))
-            )
-         ),
+	 # climate values
+	 tags$div(class="row row-cols-1 row-cols-md-4 g-4",
+  	 tags$div(class = "card",
+  	   tags$div(class = "card-body",
+  	            HTML("Annual Minimum<br>Temperature"),
+  	            uiOutput(ns("mintemp"))
+  	            )),
+  	 tags$div(class = "card",
+  	          tags$div(class = "card-body",
+  	                   HTML("Annual Maximum<br>Temperature"),
+  	                   uiOutput(ns("maxtemp"))
+  	          )),
+  	 tags$div(class = "card",
+  	          tags$div(class = "card-body",
+  	                   HTML("Summer<br>Precipitation"),
+  	                   textOutput(ns("precip_warm"))
+  	          )),
+  	 tags$div(class = "card",
+  	          tags$div(class = "card-body",
+  	                   HTML("Winter<br>Precipitation"),
+  	                   textOutput(ns("precip_cold"))
+  	          ))
+  	 ),
    div(id = ns("yfa_wrap"), selectYfAUI(ns("yfa"))),
          )
 }
@@ -149,6 +162,7 @@ selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, saveb
             } else {
               locinfo$locationcomplete <- FALSE
             }
+            locinfo
         }) %>% throttle(1000)
         
         # insert region name
@@ -173,64 +187,31 @@ selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, saveb
         })
       # })
       
-  ## CLIMATE buttons and plots
-
-  output$show_maxtemp <- renderUI({
-    if(isTruthy(outOfModule()$locationcomplete)){
-      actionButton2(
-        inputId = ns("show_maxtemp_modal"),
-        label = HTML(paste0(
-          "Annual<br>Maximum<br>Temperature<h3>",
-          round(outOfModule()$MaxTWarmMonth.lt * 0.1, 1),
-          "&deg;C</h3>")),
-        class = "badge",
-        width = "100%"
-      )
-    }
-  })
-
-  output$show_mintemp <- renderUI({
-    if(isTruthy(outOfModule()$locationcomplete)){
-      actionButton2(
-        inputId = ns("show_mintemp_modal"),
-        label = HTML(paste0(
-          "Annual<br>Minimum<br>Temperature<h3>",
-          format(outOfModule()$MinTColdMonth.lt * 0.1, digits = 3, trim = TRUE),
-          "&deg;C</h3>")),
-        class = "badge",
-        width = "100%"
-      )
-    }
-  })
-
-  output$show_precip_warm <- renderUI({
-    if(isTruthy(outOfModule()$locationcomplete)){
-      actionButton2(
-        inputId = ns("show_precip_warm_modal"),
-        label = HTML(paste0(
-          "Summer<br>Precipitation<h3>",
-          outOfModule()$PrecWarmQ.lt,
-          "mm</h3>")),
-        class = "badge",
-        width = "100%"
-      )
-    }
-  })
-
-  output$show_precip_cold <- renderUI({
-    if(isTruthy(outOfModule()$locationcomplete)){
-      actionButton2(
-        inputId = ns("show_precip_cold_modal"),
-        label = HTML(paste0(
-          "Winter<br>Precipitation<h3>",
-          outOfModule()$PrecColdQ.lt,
-          "mm</h3>")),
-        class = "badge",
-        width = "100%"
-      )
-    }
+  ## CLIMATE values render output
+  output$maxtemp <- renderUI({
+    validate(need(ltcliminfo()$MaxTWarmMonth.lt, ""))
+    HTML(paste0(round(ltcliminfo()$MaxTWarmMonth.lt * 0.1, 1),
+                "&deg;C"))
   })
   
+  output$mintemp <- renderUI({
+    validate(need(ltcliminfo()$MinTColdMonth.lt, ""))
+    HTML(paste0(round(ltcliminfo()$MinTColdMonth.lt * 0.1, 1),
+                "&deg;C"))
+  })
+
+  output$precip_warm <- renderText({
+    validate(need(ltcliminfo()$PrecWarmQ.lt, ""))
+    HTML(paste0(round(ltcliminfo()$PrecWarmQ.lt * 0.1, 1),
+                "mm"))
+  })
+  
+  output$precip_cold <- renderText({
+    validate(need(ltcliminfo()$PrecColdQ.lt, ""))
+    HTML(paste0(round(ltcliminfo()$PrecColdQ.lt * 0.1, 1),
+                "mm"))
+  })
+    
   ## YfA
   fromyfa <- selectYfAServer("yfa", selected_region, inAnnPrec.YfA)
   observeEvent(selected_region(), {

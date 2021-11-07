@@ -52,7 +52,7 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
         outinfo$patchattr_tbl = patchattr_tbl()
         outinfo
       }) 
-    
+      
       ## REGION
       fromlocation <- selectlocationServer("loc",
                                            selected_region,
@@ -119,7 +119,7 @@ app_predictorsin <- function(){
                                           woody3000m = 3,
                                           noisy_miner = 1,
                                           IsRemnant = 1))
-      # refresh <- reactiveTimer(1000 * 10)
+      refresh <- reactiveTimer(1000 * 30)
       # observeEvent(refresh(),{
       #   attr <- newinattr()
       #   attr <- rbind(attr, attr[1, ])
