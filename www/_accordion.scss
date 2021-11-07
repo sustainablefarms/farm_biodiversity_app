@@ -2,7 +2,7 @@
 // Base styles
 //
 
-.accordion-button {
+.accordion-button.edit {
   &:not(.collapsed) {
     &::after {
       background-image: $accordion-button-active-icon;

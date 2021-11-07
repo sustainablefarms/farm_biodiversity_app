@@ -7,7 +7,8 @@ predictors_UI <- function(id){
                      selectlocationUI(ns("loc")),
                      div(id = ns("yfa_wrap"), selectYfAUI(ns("yfa")))
                      ),
-      selectpatch_UI(ns("ptch"))
+      selectpatch_UI(ns("ptch")),
+      opentype = "edit"
     ),
          if (isTRUE(getOption("shiny.testmode"))){
            downloadButton(ns("downloadcvals"), "Download Current Values", class = "download_badge")
@@ -89,6 +90,7 @@ app_predictorsin <- function(){
   shinyApp(
     {bootstrapPage(
       includeCSS("./www/base.css"),
+      includeCSS("./www/accordion.css"),
       predictors_UI("S1in"),
       theme = bslib::bs_theme(version = 5, "lumen"))
     },

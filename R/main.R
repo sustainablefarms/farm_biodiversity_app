@@ -62,6 +62,7 @@ ui <- function(request){
   )
   out <- bootstrapPage(
       includeCSS("./www/base.css"),
+      includeCSS("./www/accordion.css"),
       waiter::use_waiter(), 
       # waiter::waiter_show_on_load(
       #   html = fluidPage(

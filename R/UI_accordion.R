@@ -2,6 +2,7 @@
 #' @param id id for the accordion
 #' @param ... accordion items created using accordion item
 #' @param allstayopen If TRUE showing one item in the accordion doesn't collapse the other items
+#' @param opentype If "edit" the headers have an extra 'edit' class that replaces the default icon is replaced with a pencil
 #' @description Creates a div of class accordion. Code boilerplate taken from https://getbootstrap.com/docs/5.0/components/accordion
 #' @examples 
 #' accordion_toggleall("t1", "Toggle All")
@@ -9,11 +10,14 @@
 #' accordion(id = "t1", 
 #'           accordion_item("i1title", id = "i1", "This is the content")
 #' )
-accordion <- function(id, ..., allstayopen = TRUE) {
+accordion <- function(id, ..., allstayopen = TRUE, opentype = "none") {
   # first remove any existing data-bs-parent
   tagstructure <- htmltools::tagQuery(tagList(...))$children(".accordion-collapse")$removeAttrs("data-bs-parent")
   if (!allstayopen){ #if not allstayopen then add in the id of the parent
     tagstructure <- tagstructure$addAttrs(`data-bs-parent`= paste0("#", id))
+  }
+  if (opentype == "edit"){
+    tagstructure <- tagstructure$resetSelected()$children(".accordion-header")$children(".accordion-button")$addClass("edit")
   }
   modded <- tagstructure$allTags()
   # modded <- gsub("#placeholderparentid", paste0("#", id), ...) #can't use gsub easily at it stuffs up the escaping
@@ -21,12 +25,12 @@ accordion <- function(id, ..., allstayopen = TRUE) {
 }
 
 #' @param title Title of accordion item
-accordion_item <- function(title, id = NULL, ..., footer = NULL, footerdflt = "backnclose"){
+accordion_item <- function(title, id = NULL, ..., footer = NULL, footerdflt = "backnclose", opentype = NULL){
   if (is.null(id)){ id <- paste0(sample(LETTERS, 5, replace = TRUE), collapse = "")}
   bodyid <- paste0(id, "_body")
   headerid <- paste0(id, "_header")
   tags$div(class = "accordion-item", id = id,
-    accordion_item_header(id = headerid, title = title, bodyid = bodyid),
+    accordion_item_header(id = headerid, title = title, bodyid = bodyid, opentype = opentype),
     accordion_item_body(..., id = bodyid, aria_labelledby = headerid,
                         data_bs_parent = "#placeholderparentid", 
                         footer = footer, footerdflt = footerdflt)
@@ -43,17 +47,14 @@ toggle_attr <- function(bodyid){
 
 accordion_item_header <- function(id, title, 
                                   bodyid = "collapseOne",
-                                  aria_expanded = "true"){
-  data_bs_target = paste0("#", bodyid)
-  aria_controls = bodyid
+                                  aria_expanded = "true",
+                                  opentype = NULL){
    tags$h2(class = "accordion-header", id = id,
      do.call(tags$button, 
-      args = c(list(class = "accordion-button", type = "button",
+      args = c(list(class = "accordion-button", class = opentype, type = "button",
 	     `aria-expanded`= aria_expanded),
 	     toggle_attr(bodyid),
-	     title,
-	     tags$a(href="a test", "testing"),
-	     "PatchIs!"))
+	     title))
 	  )
 }
 

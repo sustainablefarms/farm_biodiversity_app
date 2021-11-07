@@ -80,7 +80,8 @@ selectpatch_Server <- function(id, selected_region, newinattr){
                                       toggle_attr(paste0(ns(paste0("pacc", newid)), "_body"))
                              ))
                      ),
-                   footerdflt = "none"
+                   footerdflt = "none",
+                   opentype = "edit"
                    )
              )
     patchidsinuse(c(patchidsinuse(), newid))
