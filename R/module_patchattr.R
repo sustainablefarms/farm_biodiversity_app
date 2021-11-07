@@ -22,9 +22,10 @@ patchattr_UI <- function(id, attributes){
                       selected = inwoodlandtype
                       )
        ),
-       right = tags$div(tags$h3("What is a Woodland Area?"),
-                        patchdefn,
-                        tags$div(tags$a("Learn more", href = "??")))),
+       right = tags$div(style = "background-color: #E6F0F0;",
+          tags$h4("What is a Woodland Area?"),
+          patchdefn,
+          tags$div(tags$a("Learn more", href = "??")))),
    # remnant and noisy miners first
    fluidRow(
      column(6, 
