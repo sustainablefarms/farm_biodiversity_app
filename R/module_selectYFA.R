@@ -5,7 +5,7 @@ selectYfAUI <- function(id){
              left = tagList(tags$p(class = "bodysmall",
              "Some species show a small sensitivity to the rainfall since the start of last spring.",
              "The sensitivity is small so only a rough estimate of rainfall is required.",
-             "It could be appropriate to use the average annual rainfall for your region."),
+             "Often using the average annual rainfall for your region will be good enough."),
              infotext("Drag to adjust rainfall amount")),
              right = tagList(
                sliderInput(
