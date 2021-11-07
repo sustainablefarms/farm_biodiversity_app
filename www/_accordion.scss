@@ -5,8 +5,9 @@
 .accordion-button {
   &:not(.collapsed) {
     &::after {
-      background-image: escape-svg($accordion-button-active-icon);
+      background-image: $accordion-button-active-icon;
       transform: $accordion-icon-transform;
+      opacity: 0.5;
     }
   }
 
@@ -15,10 +16,10 @@
     flex-shrink: 0;
     margin-left: auto;
     content: "";
-    background-image: escape-svg($accordion-button-icon);
+    opacity: 1;
+    transition: opacity 1s ease;
+    background-image: $accordion-button-icon;
     background-repeat: no-repeat;
-    background-size: $accordion-icon-width;
-    @include transition($accordion-icon-transition);
   }
 
 }
