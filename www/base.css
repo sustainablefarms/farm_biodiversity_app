@@ -220,6 +220,11 @@ bodysmall {
   margin: auto;
 }
 
+.datalabels {
+  font-size:10px;
+  line-height: 14px;
+}
+
 .btn {
   text-transform: none;
 }

@@ -40,34 +40,35 @@ patchattr_UI <- function(id, attributes){
               left = tagList(
                 radioButtons(ns("nm"),
                              label = "Are there Noisy Miners in this area...",
-                             choices = list("yes", "no")                            ),
-                             selected = innm
+                             choices = c("yes", "no"),
+                             selected = innm)
                 ),
-              right = tags$div(style = "background-color: #E6F0F0;",
-                               tags$h4("Why are Noisy Miners used in this modelling?"),
-                tags$p("Noisy Miners are easy to recognise by their bright yellow eyes and beak.",
+              right = fluidRow(style = "background-color: #E6F0F0;",
+column(9, 
+  tags$h4("Why are Noisy Miners used in this modelling?"),
+  tags$p("Noisy Miners are easy to recognise by their bright yellow eyes and beak.",
 		"Noisy Miners are native, but typically have a detrimental effect on other small bird species.",
-	        "This is because Noisy Miners are often aggressive towards other birds, preventing them from living in their patch."),
-		tags$p("Noisy Miners dislike habitat with high amounts of midstorey (woody plants 2m-10m in height).",
+	  "This is because Noisy Miners are often aggressive towards other birds, preventing them from living in their patch."),
+	tags$p("Noisy Miners dislike habitat with high amounts of midstorey (woody plants 2m-10m in height).",
 		"You can discourage Noisy Miners by increasing the amount of midstorey in your patch, such as through underplanting with wattles, tea-trees, bottlebrushes, and other native shrubs."),
-    tags$p("Visit",
-               tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
-                      "BirdLife Australia"),
-               "for a profile of Noisy Miners." 
-              ),
-    tags$div(tags$a("Learn more", href = "??")),
-		linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
-		           style = "float: left",
+  tags$p("Visit",
+    tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
+           "BirdLife Australia"),
+           "for a profile of Noisy Miners." 
+    ),
+  tags$div(tags$a("Learn more", href = "??"))
+  ),
+column(3, 
+	  tags$div(tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
 		           tags$img(src = "lowres-cb59057b0d4ef2a9ce75c19a128ca2ca.jpg",
 		                    alt = "Noisy Miner photo",
-		                    height = "100px",
-		                    inline = TRUE)),
-		tags$span("A Noisy Miner", tags$br()),
-		tags$span(style = "font-size: 60%",
-		          linknewtab(href = "https://birdlifephotography.org.au/index.php/show-image?return=search&single&id=19910",
-		                     HTML("&copy;Con Boekel 2016 birdlifephotography.org.au"))
+		                    width = "100%"))),
+		tags$a(href = "https://birdlifephotography.org.au/index.php/show-image?return=search&single&id=19910",
+		       class = "datalabels",
+		       HTML("&copy;Con Boekel 2016 BirdLife Photography"))
 		)
-		)),
+)
+),
 	
    
   # WCF
