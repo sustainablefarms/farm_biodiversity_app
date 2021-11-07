@@ -38,11 +38,12 @@ selectlocationUI <- function(id){
          )
 }
 
-selectlocationServer <- function(id, selected_region, savebutton, cancelbutton){
+selectlocationServer <- function(id, selected_region_outer, savebutton, cancelbutton){
   moduleServer(
     id,
     function(input, output, session){
       # set up reactive values
+      selected_region <- reactiveVal()
       data <- reactiveValues(
         climate = NULL,
         polygons = NULL,
@@ -52,6 +53,18 @@ selectlocationServer <- function(id, selected_region, savebutton, cancelbutton){
         climate = NULL,
         climate_title = NULL)
       ns <- session$ns
+      
+      # sync selected_region_outer with selected region here
+      observeEvent(selected_region_outer(), {
+        selected_region(selected_region_outer())
+      })
+      observeEvent(savebutton(), {
+        selected_region_outer(selected_region())
+      })
+      observeEvent(cancelbutton(), {
+        selected_region(selected_region_outer())
+      })
+      
 
       # observeEvent(input$spatial_type, {
         # if(input$spatial_type != "none"){
@@ -112,7 +125,7 @@ selectlocationServer <- function(id, selected_region, savebutton, cancelbutton){
        # obtain actual climate if required by later work
         outOfModule <- reactive({
           locinfo <- list()
-            locinfo$selected_region <- selected_region()
+            locinfo$selected_region <- selected_region_outer()
             # add climate data
             climate_row <- which(data$points$label == locinfo$selected_region)
             locinfo$MaxTWarmMonth.lt <- data$points$MaxTWarmMonth[climate_row]
@@ -139,15 +152,15 @@ selectlocationServer <- function(id, selected_region, savebutton, cancelbutton){
         
         # insert region name
         output$regionname <- renderText({
-          validate(need(outOfModule()$selected_region, ""))
-          outOfModule()$selected_region
+          validate(need(selected_region(), ""))
+          selected_region()
         })
         # draw a map
         output$map <- renderPlot({
-          validate(need(outOfModule()$selected_region, "Please select your region"))
+          validate(need(selected_region(), "Please select your region"))
           # map_text <- data$points[data$points$label == outOfModule()$selected_region, ]
           # map_text$label <- paste(strsplit(map_text$label, " ")[[1]], collapse = "\n")
-          ggplot(regionpolygons_4326[regionpolygons_4326$SA2_NAME16 == outOfModule()$selected_region, ]) +
+          ggplot(regionpolygons_4326[regionpolygons_4326$SA2_NAME16 == selected_region(), ]) +
             geom_sf(fill = "grey90", color = "grey10") +
             # geom_text(data = map_text,
             #           mapping = aes(x = longitude, y = latitude, label = label),
