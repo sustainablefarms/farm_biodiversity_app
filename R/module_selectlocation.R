@@ -18,9 +18,10 @@ selectlocationUI <- function(id){
 	                   choices = choices,
 	                   multiple = FALSE,
 	                   width = "100%"),
-	       column(width = 8, leaflet::leafletOutput(ns("regionsleaflet"))),
-	       column(width = 4, tags$div(style = "align: center;", textOutput(ns("regionname"), inline = TRUE)),
-	              plotOutput(ns("map"), height = "200px"))
+	       fluidRow(
+	       column(width = 6, leaflet::leafletOutput(ns("regionsleaflet"))),
+	       column(width = 6, tags$div(style = "align: center;", textOutput(ns("regionname"), inline = TRUE)),
+	              plotOutput(ns("map"), width = "100%")))
 	     )
 	 ),
          HTML("<div class='subheader'><h2>LONG-TERM AVERAGE</h2></div>"),
@@ -37,12 +38,11 @@ selectlocationUI <- function(id){
          )
 }
 
-selectlocationServer <- function(id, selected_region){
+selectlocationServer <- function(id, selected_region, savebutton, cancelbutton){
   moduleServer(
     id,
     function(input, output, session){
       # set up reactive values
-      regionmapcreated <- reactiveVal(FALSE)
       data <- reactiveValues(
         climate = NULL,
         polygons = NULL,
@@ -57,40 +57,13 @@ selectlocationServer <- function(id, selected_region){
         # if(input$spatial_type != "none"){
           data$points <- readRDS("data/sa2_points_climate.rds")
         # }
-        wplotly <- waiter::Waiter$new(id = ns("plot_points"))
+        wleaflet <- waiter::Waiter$new(id = ns("regionsleaflet"))
 
-        # draw a scatterplot of the centroids of selected zones
-        output$plot_points <- plotly::renderPlotly({
-	  wplotly$show()
-          validate(
-            need(data$points, message = "no data points yet")
-          )
-	  on.exit(wplotly$hide())
-	    out <- regionplot_borders(ns("region_map"))
-          regionmapcreated(TRUE)
-          return(out)
-        })
-        
-        # observe clicks on the region plot
-        if (FALSE & isTRUE(getOption("shiny.testmode"))){
-          selected_region(data$points$label[input$fake_region_number])
-        } else {
-        observe({
-          if(!is.null(data$points)){ # if data points supplied (currently they always are)
-            validate(need(regionmapcreated(), ""))
-            click_region <- plotly::event_data(
-              event = "plotly_click",
-              source = ns("region_map")
-            )$key %>% unlist() #key is more reliable than pointNumber, and also works on the polygon version
-            if (isTruthy(click_region)){
-              selected_region(click_region)
-            }
-          }
-        })
-        }
         
       # leaflet map operations
       output$regionsleaflet <- leaflet::renderLeaflet({
+        wleaflet$show()
+	      on.exit(wleaflet$hide())
         regionplot_leaflet()
       })
       # update selected_region 'input'
