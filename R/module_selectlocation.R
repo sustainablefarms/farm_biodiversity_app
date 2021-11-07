@@ -24,8 +24,12 @@ selectlocationUI <- function(id){
 	              plotOutput(ns("map"), width = "100%")))
 	     )
 	 ),
-         HTML("<div class='subheader'><h2>LONG-TERM AVERAGE</h2></div>"),
-	 # climate values
+	 tags$div(id = ns("hide_until_region"),
+	   # climate values
+	   twocolumns(
+	     heading = "View climate data",
+	     left = "The climate data shown here are the long-term averages for the centre of your region.",
+	     right = tagList(
 	 tags$div(class="row row-cols-1 row-cols-md-4 g-4",
   	 tags$div(class = "card",
   	   tags$div(class = "card-body",
@@ -48,8 +52,11 @@ selectlocationUI <- function(id){
   	                   textOutput(ns("precip_cold"))
   	          ))
   	 ),
-   div(id = ns("yfa_wrap"), selectYfAUI(ns("yfa"))),
-         )
+	 tags$div("Climate data estimated by",
+	          linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
+	     )),
+   selectYfAUI(ns("yfa")),
+         ))
 }
 
 selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, savebutton, cancelbutton){
@@ -215,7 +222,7 @@ selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, saveb
   ## YfA
   fromyfa <- selectYfAServer("yfa", selected_region, inAnnPrec.YfA)
   observeEvent(selected_region(), {
-   shinyjs::toggleElement(id = "yfa_wrap",
+   shinyjs::toggleElement(id = "hide_until_region",
                    condition = isTruthy(selected_region()))
   })
   

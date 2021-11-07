@@ -119,7 +119,7 @@ app_predictorsin <- function(){
                                           woody3000m = 3,
                                           noisy_miner = 1,
                                           IsRemnant = 1))
-      refresh <- reactiveTimer(1000 * 30)
+      # refresh <- reactiveTimer(1000 * 30)
       # observeEvent(refresh(),{
       #   attr <- newinattr()
       #   attr <- rbind(attr, attr[1, ])
@@ -128,10 +128,10 @@ app_predictorsin <- function(){
       #   newinattr(attr)
       # })
       inAnnPrec.YfA <- reactiveVal(400)
-      observeEvent(refresh(), {
-        inAnnPrec.YfA(inAnnPrec.YfA() + 50)
-        selected_region("Euroa")
-      })
+      # observeEvent(refresh(), {
+      #   inAnnPrec.YfA(inAnnPrec.YfA() + 50)
+      #   selected_region("Euroa")
+      # })
       predictors_Server("S1in", selected_region, newinattr, inAnnPrec.YfA)
       # observe(print(data.frame(reactiveValuesToList(cval1()))))
     })
