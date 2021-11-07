@@ -219,3 +219,7 @@ bodysmall {
   line-height: 18px;
   margin: auto;
 }
+
+.btn {
+  text-transform: none;
+}
