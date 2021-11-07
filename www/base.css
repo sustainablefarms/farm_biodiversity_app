@@ -223,3 +223,7 @@ bodysmall {
 .btn {
   text-transform: none;
 }
+
+a {
+  target: "_blank";
+}
