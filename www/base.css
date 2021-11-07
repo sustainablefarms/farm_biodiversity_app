@@ -25,6 +25,10 @@ div.subheader {
   color: #0e113c;
 }
 
+h1 {
+  text-align: center;
+}
+
 h2 {
   text-align: center;
   font-size: 150%;
@@ -34,10 +38,8 @@ h2 {
 h3 {
   text-align: center;
   font-size: 150%;
-  color: white;
 }
 
-bodysmall,
 h4 {
   text-align: left;
   font-size: 150%;
@@ -207,4 +209,12 @@ h4 {
   opacity: 1;
 }
 
+.infotext {
+  background-color: #c5e2f2; /* an approx 85% lighter form of #399cd3 */
+}
 
+bodysmall {
+  font-size: 14px;
+  line-height: 18px;
+  margin: auto;
+}
