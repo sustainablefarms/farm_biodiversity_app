@@ -2,8 +2,17 @@
 predictors_UI <- function(id){
   ns <- NS(id)
   tagList(
+    tags$div(
+      tags$h1("Your Farm"),
+      tags$h3("Step 1: Tell us about your farm"),
+      tags$div("Select your region,",
+                "then add the number of woodland areas found on your farm,",
+                "before defining the characteristics of each woodland area.",
+                "This information will become Scenario 1.",
+               style = "text-align: center; max-width: 552px; margin: auto;")
+    ),
     accordion(id = ns("acc"), 
-      accordion_item("Select Location", id = ns("acc-loc"), 
+      accordion_item("Your region", id = ns("acc-loc"), 
                      selectlocationUI(ns("loc")),
                      div(id = ns("yfa_wrap"), selectYfAUI(ns("yfa")))
                      ),
