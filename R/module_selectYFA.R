@@ -1,16 +1,21 @@
 # select YfA info# select location
 selectYfAUI <- function(id){
   ns <- NS(id)
-  tagList(
-         HTML("<div class='subheader'><h2>RAINFALL SINCE LAST AUGUST</h2></div>"),
-        tags$div("Approximate Rainfall Since Last August (mm)"),
-        sliderInput(
-          inputId = ns("AnnPrec.YfA"),
-          label = NULL,
-          min = 400, max = 1000, step = 20,
-	  width = "100%",
-          value = new_data_mean$AnnPrec.YfA),
-       tags$div(textOutput(ns("annprec.lt.region"), inline = TRUE))
+  twocolumns(heading = "Approximate recent rainfall",
+             left = tagList(tags$p(class = "bodysmall",
+             "Some species show a small sensitivity to the rainfall since the start of last spring.",
+             "The sensitivity is small so only a rough estimate of rainfall is required.",
+             "It could be appropriate to use the average annual rainfall for your region."),
+             infotext("Drag to adjust rainfall amount")),
+             right = tagList(
+               sliderInput(
+                 inputId = ns("AnnPrec.YfA"),
+                 label = NULL,
+                 min = 400, max = 1000, step = 20,
+                 width = "100%",
+                 value = new_data_mean$AnnPrec.YfA),
+               tags$div(textOutput(ns("annprec.lt.region"), inline = TRUE))
+             )
   )
 }
 
