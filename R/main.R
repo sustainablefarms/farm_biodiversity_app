@@ -23,7 +23,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
                               woody3000m = round(new_data_mean$WCF_3000/0.5) * 0.5)
   
   consstatus <<- load_constatus()
-  appname <<- "Bird Checker: A Bird Occupancy Estimator"
+  appname <<- "BirdCast"
   if (!isTRUE(getOption("shiny.testmode"))){
     appversion <<- as.character(packageVersion(packageName()))
   } else {appversion <<- "0.9"} #so that the same version number appears in all shinytest snapshot tests
@@ -35,42 +35,43 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   dir.create(paste0(apptempdir,"/www/"))
   stopifnot(file.copy("./www/Sustainable Farms logo RGB.png", paste0(apptempdir, "/www/"), overwrite = TRUE)) 
   stopifnot(file.copy(paste0("./www/", speciesinfo$imgfilename), paste0(apptempdir, "/www/"), overwrite = TRUE)) 
-  enableBookmarking(store = "url")
+  appcolors <<- c("Dark Green" = "#026666",
+              "Dark Gray" = "#3B4042")
+  enableBookmarking(store = "disable")
 }
 
 # UI
 ui <- function(request){
-  navbarsection <- navbarPage(title = "",
-      tabPanel(title = "The Land 1",
-               predictors_UI("S1in")
+  navbarsection <- tabsetPanel(
+      tabPanelBody(value = "in1",
+               predictors_UI("S1in"),
+               fluidRow(column(6, actionButton("in1_back", "Back", class = "btn-secondary", width = "100%")),
+                        column(6, actionButton("in1_next", "Next", class = "btn-primary", width = "100%")))
       ),
-      tabPanel(title = "Estimates 1",
+      tabPanelBody(value = "out1",
            predictionsUI("pred1", refisaverage = TRUE),
-           actionButton("toS2", "Compare")
+           fluidRow(column(4, actionButton("out1_back", "Back", class = "btn-secondary", width = "100%")),
+                    column(4, actionButton("out1_product", "Download Report", width = "100%")),
+                    column(4, actionButton("out1_next", "Next", class = "btn-primary", width = "100%")))
       ),
-      tabPanel(title = "The Land 2",
-               predictors_UI("S2in")
+      tabPanelBody(value = "in2",
+               predictors_UI("S2in"),
+               fluidRow(column(6, actionButton("in2_back", "Back", class = "btn-secondary", width = "100%")),
+                        column(6, actionButton("in2_next", "Next", class = "btn-primary", width = "100%")))
       ),
-      tabPanel(title = "Estimates 2",
-           predictionsUI("pred2", refisaverage = FALSE)
+      tabPanelBody(value = "out2",
+           predictionsUI("pred2", refisaverage = FALSE),
+           fluidRow(column(4, actionButton("out2_back", "Back", class = "btn-secondary", width = "100%")),
+                    column(4, actionButton("out2_product", "Download Report", width = "100%")),
+                    column(4, actionButton("out2_next", "Go to Sustainable Farms", class = "btn-primary", width = "100%")))
       ),
-    collapsible = TRUE,
-    footer = "Forward <-> back"
+    id = "maintabs",
+    type = "hidden"
   )
   out <- bootstrapPage(
-      shinyjs::useShinyjs(),
       includeCSS("./www/base.css"),
       includeCSS("./www/accordion.css"),
       waiter::use_waiter(), 
-      # waiter::waiter_show_on_load(
-      #   html = fluidPage(
-      #     tags$div("test"),
-      #     tags$div(tags$p("This app")),# estimates which bird species are likely to be in your farm's Box Gum Grassy Woodland (including plantings) in spring.")),
-      #     waiter::spin_1(),
-      #     uiOutput("startbuttonlocation"))
-      #   # color = "#ffffff"
-      # ),
-      # the following enables bootstrap 3's inbuilt tooltips
       tags$head(includeHTML("./www/google-analytics.html")),
       tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
@@ -79,20 +80,7 @@ ui <- function(request){
       shinyjs::useShinyjs(),
       leaflet::leafletOutput("loadleaflet", height = "0px", width = "0px"), #so leaflet scripts are loaded
       plotly::plotlyOutput("loadplotly", height = "0px", width = "0px"), #so plotly is loaded
-      HTML("<div class='header'>"),
-      fluidRow(
-        column(width = 2,
-               linknewtab(href = "http://sustainablefarms.org.au/",
-                          tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px"))),    
-        column(width = 10, offset = 0, 
-               tags$span(class = 'main', appname),
-               tags$span(style = "white-space:nowrap;", class = 'subtitle', "By Kassel Hingee & Martin Westgate.",
-                         "Version", appversion),
-               tags$span(class = 'subtitle', HTML("<br>Birds you can expect to see in spring in your farm's Box Gum Grassy Woodland remnants and plantings.")),
-               actionButton2("intro", "Intro", class = "badge_tiny"),
-               actionButton2("overallhelp", "More Help", class = "badge_tiny"),
-        )),
-      HTML("</div>"),
+      headercontent(),
       conditionalPanel("!(input.hidestartpage > 0)",
                        startpage(),
                        div(id = "startbuttonlocation",
@@ -101,8 +89,11 @@ ui <- function(request){
                        ),
       conditionalPanel("input.hidestartpage > 0",
                        navbarsection),
+      footercontent(),
       title = appname,
-      theme = bslib::bs_theme(version = 5, "lumen")
+      theme = bslib::bs_theme(version = 5, "lumen",
+                              "primary" = appcolors[["Dark Green"]],
+                              "dark" = appcolors[["Dark Gray"]])
   )
 }
 
@@ -140,7 +131,7 @@ server <- function(input, output, session) {
   }
   
   # populating Scenario 2
-  observeEvent(input$toS2, {
+  observeEvent(input$out1_next, {
     inregion(cval1()$selected_region)
     inAnnPrec.YfA(cval1()$AnnPrec.YfA)
     inattr(cval1()$patchattr_tbl)
@@ -165,6 +156,18 @@ server <- function(input, output, session) {
     showModal(moreinfomodal())
     },
     ignoreNULL = TRUE)
+  
+  ## tab navigation
+  observeEvent(input$in1_next, {updateTabsetPanel(session, inputId = "maintabs", "out1")}, ignoreInit = TRUE)
+  
+  observeEvent(input$out1_back, {updateTabsetPanel(session, inputId = "maintabs", "in1")}, ignoreInit = TRUE)
+  observeEvent(input$out1_next, {updateTabsetPanel(session, inputId = "maintabs", "in2")}, ignoreInit = TRUE)
+  
+  observeEvent(input$in2_back, {updateTabsetPanel(session, inputId = "maintabs", "out1")}, ignoreInit = TRUE)
+  observeEvent(input$in2_next, {updateTabsetPanel(session, inputId = "maintabs", "out2")}, ignoreInit = TRUE)
+  
+  observeEvent(input$out2_back, {updateTabsetPanel(session, inputId = "maintabs", "in2")}, ignoreInit = TRUE)
+  
   
   setBookmarkExclude(c("overallhelpfake",
                        "moredetailfake",
