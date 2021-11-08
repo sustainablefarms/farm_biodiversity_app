@@ -225,7 +225,6 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
           woody3000m = input[["pc_woody3000m"]],
           nm = input[["nm"]],
           woodlandtype = input[["woodlandtype"]],
-          showmap = input[["showmap"]],
           usedlon = usedlon(),
           usedlat = usedlat(),
           usedyear = usedyear()
@@ -265,7 +264,6 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       
       
       setBookmarkExclude(c("woodlandtype", 
-                           "showmap",
                            "pc_woody3000m",
                            "pc_woody500m",
                            "getwoodycanopy",
@@ -291,7 +289,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
 app_patchattr <- function(){
   main_app_prep()
   enableBookmarking(store = "disable")
-  attributes <- list(IsRemnant = TRUE, noisy_miner = FALSE, woody500m = 3.5, woody3000m = 8.2, showmap = FALSE)
+  attributes <- list(woody500m = 3.5, woody3000m = 8.2)
   bbox <- reactive({bbox_allregions})
   savebutton <- reactive(NULL)
   cancelbutton <- reactive(NULL)
