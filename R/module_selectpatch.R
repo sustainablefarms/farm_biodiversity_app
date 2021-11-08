@@ -116,7 +116,6 @@ selectpatch_Server <- function(id, selected_region, newinattr){
   
   # create a table of attributes
   attr_table <- reactive({
-    print(names(reactiveValuesToList(input)))
     validate(need(length(patchidsinuse()) > 0, "No patches"))
     # patches <- sort(patchidsinuse())
     attr_out_list <- lapply(patchidsinuse(), function(pid){
