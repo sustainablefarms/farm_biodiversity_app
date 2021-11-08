@@ -16,7 +16,6 @@ patchattr_UI <- function(id, attributes){
   }
   ns <- NS(id)
   tagList(
-    waiter::use_waiter(spinners = 1),
     #woodland type
     twocolumns(heading = "Type of woody coverage",
        left = tagList(
@@ -154,14 +153,15 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       latlonerror_short <- reactiveVal("", label = "latlonerror_short")
       getwoodycanopy_d <- reactive({
         validate(need(input$getwoodycanopy > 0, "")) #0 is the initial value ignore setting at this value (so ignoreInit works later)
-        removeUI(paste0("#", ns("tick")), immediate = TRUE)
+        removeUI(paste0("#", ns("tick")), immediate = TRUE, multiple = TRUE)
+        removeUI(paste0("#", ns("tickspinner")), immediate = TRUE, multiple = TRUE) #means multiple spinners won't ever be created
         insertUI(paste0("#", ns("tickplace")),
                  where = "afterBegin",
                  ui = tags$div(id = ns("tickspinner"), class = "spinner-border", role="status",
                                style="width: 2rem; height: 2rem; position: absolute; color: #168BCB"),
                  immediate = TRUE)
         input$getwoodycanopy
-        }) %>% debounce(1000) # to stop heaps of clicking doing things, but show waiter from first click
+        }) %>% debounce(5000) # to stop heaps of clicking doing things
       observeEvent(getwoodycanopy_d(), {
         session$sendCustomMessage("getwoodycanopyfromlatlon", "nothing")
         latlonerror("")
@@ -184,7 +184,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
           },
           warning = function(w) {latlonerror(w$message); return(wcfs)}
         )            
-        removeUI(paste0("#", ns("tickspinner")), immediate = TRUE)
+        removeUI(paste0("#", ns("tickspinner")), immediate = TRUE, multiple = TRUE)
         if (!is.null(wcfs[["500m"]])){
               usedlon(lon); usedlat(lat); usedyear(year)
               updateSliderInput(inputId = "pc_woody500m",
@@ -271,7 +271,6 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
                            "getwoodycanopy",
                            "nm",
                            "yearforcanopy",
-                           "getwoodycanopy_waiter_hidden",
                            "lon",
                            "lat"))
       
