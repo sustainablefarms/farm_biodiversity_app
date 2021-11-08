@@ -82,10 +82,7 @@ ui <- function(request){
       plotly::plotlyOutput("loadplotly", height = "0px", width = "0px"), #so plotly is loaded
       headercontent(),
       conditionalPanel("!(input.hidestartpage > 0)",
-                       startpage(),
-                       div(id = "startbuttonlocation",
-                           actionButton("start_disabled", "App is loading...",
-                                        style = "color:#808080;"))
+                       landingpage()
                        ),
       conditionalPanel("input.hidestartpage > 0",
                        navbarsection),
@@ -100,10 +97,10 @@ ui <- function(request){
 # SERVER
 server <- function(input, output, session) {
   ## Stuff to do with the opening page of the app
-  insertUI(selector = "#startbuttonlocation",
+  removeUI(selector = paste0("#", ns("startspinner")))
+  insertUI(selector = paste0("#", ns("startbuttonlocation")),
            where = "afterBegin",
-           ui = actionButton("hidestartpage", "Start App"))
-  removeUI(selector = "#start_disabled", immediate = FALSE)
+           ui = actionButton("hidestartpage", "Start", class = "position-absolute btn-primary translate-middle"))
   
   # set up required data
   inregion <- reactiveVal()
