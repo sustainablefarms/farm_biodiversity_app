@@ -18,6 +18,9 @@ newXocc_fromselected <- function(current_values){
   new_data <- cbind(new_data, current_values[grep(".lt$", names(current_values), value = TRUE)])
   new_data$AnnPrec.lt <- NULL
   
+  # convert all columns to numeric (just in case mistakenly integer)
+  new_data <- as.data.frame(lapply(new_data, as.numeric))
+  
   # check
   stopifnot(
     setequal(intersect(colnames(new_data), names(model_data$XoccProcess$scale)),
@@ -27,7 +30,7 @@ newXocc_fromselected <- function(current_values){
     setequal(setdiff(colnames(new_data), names(model_data$XoccProcess$scale)),
       c("WCF_500", "WCF_3000"))
   )
-  stopifnot(vapply(new_data, class, FUN.VALUE = "ASDA") == "numeric")
+  stopifnot(all(vapply(new_data, class, FUN.VALUE = "ASDA") == "numeric"))
   return(new_data)
 }
 
