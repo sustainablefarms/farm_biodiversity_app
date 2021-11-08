@@ -85,7 +85,7 @@ twocolumns(heading = "Woody cover amounts",
   ),
   right = tagList(fluidRow(
     column(4, 
-      tags$h4("Select location"),
+      tags$h3("Select location"),
       uiOutput(ns("latlonerror_short")),
       textInput(ns("lon"), "Longitude", value = attributes$usedlon, width = '100%',
                 placeholder = ""),
@@ -101,29 +101,29 @@ twocolumns(heading = "Woody cover amounts",
     ),
     column(8, leaflet_UI(ns("leaflet"))),
   tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE))
+  ),
+  tags$h3("Modify amounts"),
+  # 500m WCF
+  tags$div(
+    tags$html(tags$span("Nearby Woody Cover: within 500m of patch centre (% area), including cover inside patch")),
+    sliderInput(label = NULL,
+                inputId = ns("pc_woody500m"),
+                min = 2, max = 20, step = 0.5,
+                width = "100%",
+                value = attributes$woody500m)
+  ),
+  #3000m WCF
+  tags$div(
+    tags$html(tags$span("Regional Woody Cover: within 3km of patch centre (% area)")),
+    sliderInput(label = NULL,
+                inputId = ns("pc_woody3000m"),
+                min = 2, max = 20, step = 0.5,
+                width = "100%",
+                value = attributes$woody3000m)
   )
-  )),
-
-#################################
-	tags$div(HTML("<h4>Manually Set or Modify</h4>")),
-        # 500m WCF
-        tags$div(
-          tags$html(tags$span("Nearby Woody Cover: within 500m of patch centre (% area), including cover inside patch")),
-          sliderInput(label = NULL,
-            inputId = ns("pc_woody500m"),
-            min = 2, max = 20, step = 0.5,
-	    width = "100%",
-            value = attributes$woody500m)
-          ),
-        tags$div(
-          tags$html(tags$span("Regional Woody Cover: within 3km of patch centre (% area)")),
-          sliderInput(label = NULL,
-            inputId = ns("pc_woody3000m"),
-            min = 2, max = 20, step = 0.5,
-	    width = "100%",
-            value = attributes$woody3000m)
-
+  )
 ))
+
 }
 
 patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
