@@ -97,7 +97,12 @@ twocolumns(heading = "Woody cover amounts",
                 step = 1,
                 min = 1990,
                 max = 2019),
-      actionButton(ns("getwoodycanopy"), "Load woody cover", class = "btn-primary")
+      tags$div(
+        actionButton(ns("getwoodycanopy"), "Load woody cover", class = "btn-primary"),
+        tags$span(id = ns("tickplace"),
+            style = "width: 2rem; height: 2rem; background-color: #BBBBBB; vertical-align: middle;",
+            style = "margin-left: 1rem; position: relative")
+      )
     ),
     column(8, leaflet_UI(ns("leaflet"))),
   tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE))
@@ -140,9 +145,6 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
         updateTextInput(inputId = "lon", value = leafletout()$lng)
         updateTextInput(inputId = "lat", value = leafletout()$lat)
       })
-      wait <- waiter::Waiter$new(id = ns("getwoodycanopy"), 
-                                 html = waiter::spin_wave(),
-                                 color = "#178BCA")
       pc_woody500m_latlon <- reactiveVal(label = "woody500m from latlon")
       pc_woody3000m_latlon <- reactiveVal(label = "woody3000m from latlon")
       usedlon <- reactiveVal(NULL, label = "Longitude used for getting canopy")
@@ -152,8 +154,14 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       latlonerror_short <- reactiveVal("", label = "latlonerror_short")
       getwoodycanopy_d <- reactive({
         validate(need(input$getwoodycanopy > 0, "")) #0 is the initial value ignore setting at this value (so ignoreInit works later)
+        removeUI(paste0("#", ns("tick")), immediate = TRUE)
+        insertUI(paste0("#", ns("tickplace")),
+                 where = "afterBegin",
+                 ui = tags$div(id = ns("tickspinner"), class = "spinner-border", role="status",
+                               style="width: 2rem; height: 2rem; position: absolute; color: #168BCB"),
+                 immediate = TRUE)
         input$getwoodycanopy
-        wait$show()}) %>% debounce(1000) # to stop heaps of clicking doing things, but show waiter from first click
+        }) %>% debounce(1000) # to stop heaps of clicking doing things, but show waiter from first click
       observeEvent(getwoodycanopy_d(), {
         session$sendCustomMessage("getwoodycanopyfromlatlon", "nothing")
         latlonerror("")
@@ -176,6 +184,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
           },
           warning = function(w) {latlonerror(w$message); return(wcfs)}
         )            
+        removeUI(paste0("#", ns("tickspinner")), immediate = TRUE)
         if (!is.null(wcfs[["500m"]])){
               usedlon(lon); usedlat(lat); usedyear(year)
               updateSliderInput(inputId = "pc_woody500m",
@@ -184,15 +193,23 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
                                 value = wcfs$`3000m`)
               pc_woody500m_latlon(wcfs[[1]])
               pc_woody3000m_latlon(wcfs[[2]])
-          }
-        wait$hide()
+              insertUI(paste0("#", ns("tickplace")),
+                where = "afterBegin",
+                ui = tags$span(id = ns("tick"), 
+                              icon("check-circle", style = "font-size: 2rem; color: #168BCB; position: absolute;"),
+                              style = "position: absolute;"),
+                immediate = TRUE)
+        }
+
       },
         ignoreInit = FALSE)
       
       output$latlonerror <- renderText(latlonerror())
       output$latlonerror_short <- renderUI({
         validate(need(latlonerror_short(), ""))
-        tags$div(class = "warntext clearfix float-start", latlonerror_short())
+        tags$div(class = "clearfix",
+          tags$div(class = "warntext float-start", latlonerror_short())
+        )
       })
       
       output$pc_woody500m_latlon <- renderText({
