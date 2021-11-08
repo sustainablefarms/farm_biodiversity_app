@@ -37,11 +37,18 @@ landingpage <- function(id = NULL){
 	tags$div(class = "text-center", tags$h2("Indicating birdlife on farms")),
 	fluidRow(class = "justify-content-center",
 	 column(6, class = "text-center",
+	        tags$p(
 	         appname,
 	         "is a scenario planning tool for biodiversity on farms.",
 	         "Using decades of data on more than sixty birds,", appname,
-	         "indicates which birds may currently live on your farm",
-	         "and demonstrates the potential for biodiversity in a range of scenarios.",
+	         "indicates which birds may currently live in woodlands on your farm",
+	         "and demonstrates the potential for biodiversity in a range of scenarios."
+	        ),
+	        tags$p("The estimates created by", appname,
+	               "are most reliable for remnant Box Gum Grassy Woodland or Eucalypt plantings",
+	               "that are within wheat or sheep farms on the inland slopes of the Great Dividing Range,",
+	               "from Benalla in Victoria to Dubbo in NSW."),
+
 	        tags$div(style = "height: 4rem; width = 100%; position: relative",
 	         tags$div(id = ns("startbuttonlocation"),
 	           class = "position-absolute top-50 start-50 translate-middle",
