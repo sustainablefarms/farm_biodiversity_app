@@ -35,6 +35,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     # make new patch items
 
     # make sure pids are 1, 2....
+    validate(need(newinattr(), ""))
     attr <- newinattr()
     attr$pid <- 1:nrow(attr)
     newinattr(attr)

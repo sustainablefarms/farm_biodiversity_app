@@ -110,12 +110,8 @@ app_predictorsin <- function(){
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
-      selected_region <- reactiveVal("")
-      newinattr <- reactiveVal(data.frame(pid = 1, 
-                                          woody500m = 2.5,
-                                          woody3000m = 3,
-                                          noisy_miner = 1,
-                                          IsRemnant = 1))
+      selected_region <- reactiveVal()
+      newinattr <- reactiveVal()
       # refresh <- reactiveTimer(1000 * 30)
       # observeEvent(refresh(),{
       #   attr <- newinattr()
@@ -124,7 +120,7 @@ app_predictorsin <- function(){
       #   attr$woody500m <- 1.3 * attr$woody500m
       #   newinattr(attr)
       # })
-      inAnnPrec.YfA <- reactiveVal(400)
+      inAnnPrec.YfA <- reactiveVal()
       # observeEvent(refresh(), {
       #   inAnnPrec.YfA(inAnnPrec.YfA() + 50)
       #   selected_region("Euroa")
