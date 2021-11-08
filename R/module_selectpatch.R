@@ -132,23 +132,8 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     attr_out_list <- attr_out_list[!vapply(attr_out_list, is.null, FUN.VALUE = TRUE)]
     validate(need(length(attr_out_list) > 0, ""))
     
-    data.frame(
-      pid = vapply(attr_out_list, function(x) x[["pid"]], FUN.VALUE = 3),
-      woody500m = vapply(attr_out_list, function(x) x[["woody500m"]], FUN.VALUE = 3.5),
-      woody3000m = vapply(attr_out_list, function(x) x[["woody3000m"]], FUN.VALUE = 3.5),
-      noisy_miner = vapply(attr_out_list, function(x) x[["noisy_miner"]], FUN.VALUE  = 0),
-      IsRemnant = vapply(attr_out_list, function(x) x[["IsRemnant"]], FUN.VALUE = 0),
-      usedlon = vapply(attr_out_list, function(x) {
-        a <- x[["usedlon"]]
-        if (is.null(a)){return(NA_real_)}
-        else{return(a)}
-      }, FUN.VALUE = 1.1),
-      usedlat = vapply(attr_out_list, function(x) {
-        a <- x[["usedlat"]]
-        if (is.null(a)){return(NA_real_)}
-        else{return(a)}
-      }, FUN.VALUE = 1.1)
-    )
+    outtable <- jagged_2_df(attr_out_list)
+    outtable
   })   
   
   ## bbox for leaflet, here so that could possible update the bbox of other patches

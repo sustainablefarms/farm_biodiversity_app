@@ -275,9 +275,19 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       # convert out info
       reactive({
         out <- savedvals()
-        out$IsRemnant <- (out$woodlandtype == "remnant")
+        if (length(out$nm) == 0) { #includes NULL and character(0)
+          noisy_miner <- NULL
+        } else {
+          noisy_miner <- switch(out$nm, "yes" = TRUE, "no" = FALSE, NULL) #NULL if not yes or no
+        }
+        if (length(out$woodlandtype) == 0) { #includes NULL and character(0)
+          IsRemnant <- NULL
+        } else {
+          IsRemnant <- switch(out$woodlandtype, "remnant" = TRUE, "planted" = FALSE, NULL) #NULL if not yes or no
+        }
+        out$IsRemnant <- IsRemnant
         out$woodlandtype <- NULL
-        out$noisy_miner <- (out$nm == "yes")
+        out$noisy_miner <- noisy_miner
         out$nm <- NULL
         out
       })
