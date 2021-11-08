@@ -47,11 +47,11 @@ toggle_attr <- function(bodyid){
 
 accordion_item_header <- function(id, title, 
                                   bodyid = "collapseOne",
-                                  aria_expanded = "true",
+                                  aria_expanded = "false",
                                   opentype = NULL){
    tags$h2(class = "accordion-header", id = id,
      do.call(tags$button, 
-      args = c(list(class = "accordion-button", class = opentype, type = "button",
+      args = c(list(class = "accordion-button collapsed", class = opentype, type = "button",
 	     `aria-expanded`= aria_expanded),
 	     toggle_attr(bodyid),
 	     title))
@@ -129,6 +129,14 @@ accordion_showhideall <- function(accordid, ...){
          "Expand all",
          ...
          )
+}
+
+expanditem <- function(itemtags){
+  # first add show to the body
+  tagstr <- htmltools::tagQuery(itemtags)$find(".accordion-collapse.collapse")$addClass("show")$resetSelected()
+  # change the button
+  tagstr <- tagstr$find(".accordion-button")$removeAttrs("aria-expanded")$addAttrs("aria-expanded" = "true")$resetSelected()
+  return(tagstr$allTags())
 }
 
 # paste(sprintf("$('#%s .accordion-collapse').collapse('show');", accordid),

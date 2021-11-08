@@ -86,7 +86,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
                      ),
                    footerdflt = "none",
                    opentype = "edit"
-                   )
+                   ) %>% expanditem()
              )
     patchidsinuse(c(patchidsinuse(), newid))
     patchnumshown(patchnumshown() + 1)
