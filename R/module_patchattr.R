@@ -72,39 +72,38 @@ column(3,
 	
    
   # WCF
-	fluidRow(
-	tags$div(class = "subheader", tags$h2("Woody Cover Amounts")),
-	tags$div("Species occupancies depend heavily on the amount of 2m+ woody vegetation cover, or foliage cover,",
-	"inside the patch and in the surrounding landscape.", infotooltip(WCFdesc_intro())),
-  tags$div(HTML("<h4>Get from satellite</h4>")),
- tags$div("Get woody cover amounts from satellite",
-                   "(see ", linknewtab(href = 'http://anuwald.science/tree',
-                                       "http://anuwald.science/tree"), 
-                   "and ",linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
-                                   "Liao et al. (IJAEOG, 2020)"), ")",
-          infotooltip(WCFdesc_fromlatlon())),
-shinyWidgets::materialSwitch(ns("showmap"),
-                             label = "Show map",
-                             value = attributes$showmap,
-                             status = "primary",
-                             width = '100%'),
-  conditionalPanel("input.showmap",
-      leaflet_UI(ns("leaflet")),
-      ns = ns)),
- # from lat lon
-  fluidRow(
-    column(4, textInput(ns("lon"), "Longitude", value = attributes$usedlon, width = '100%',
-                        placeholder = "145.123456789")),
-    column(4, textInput(ns("lat"), "Latitude", value = attributes$usedlat, width = '100%',
-                        placeholder = "-35.123456789")),
-    column(2, textInput(ns("yearforcanopy"), "Year", value = attributes$usedyear, width = '100%',
-                        placeholder = "2018")),
-    column(2, actionButton(ns("getwoodycanopy"), "Get", class = "download_badge"))
+twocolumns(heading = "Woody cover amounts",
+  left = tagList(
+    tags$p("Species occupancies depend heavily on the amount of 2m+ woody vegetation cover, or foliage cover,",
+    "inside the patch and in the surrounding landscape."),
+    infotext("Click to place pin on the map or enter Latitude and Longitude",
+             "to load woody cover amounts for this woodland area.",
+             "(see the ANU Centre for Water and Landscape Dynamics",
+               tags$a(href = 'http://anuwald.science/tree', "Tree Change portal"), 
+             "and ", tags$a(href = "https://doi.org/10.1016/j.jag.2020.102209",
+                               "Liao et al. (IJAEOG, 2020)"), ")"),
   ),
-  tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE)),
+  right = tagList(fluidRow(
+    column(4, 
+      tags$h3("Select location"),
+      uiOutput(ns("latlonerror_short")),
+      textInput(ns("lon"), "Longitude", value = attributes$usedlon, width = '100%',
+                placeholder = ""),
+      textInput(ns("lat"), "Latitude", value = attributes$usedlat, width = '100%',
+                placeholder = ""),
+      numericInput(ns("yearforcanopy"), "Representative year", 
+                value = attributes$usedyear, 
+                width = '100%',
+                step = 1,
+                min = 1990,
+                max = 2019),
+      actionButton(ns("getwoodycanopy"), "Load woody cover", class = "btn-primary")
+    ),
+    column(8, leaflet_UI(ns("leaflet"))),
+  tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE))
+  )
+  )),
 
-	
-	
 #################################
 	tags$div(HTML("<h4>Manually Set or Modify</h4>")),
         # 500m WCF
@@ -150,6 +149,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       usedlat <- reactiveVal(NULL, label = "Latitude used for getting canopy")
       usedyear <- reactiveVal(NULL, label = "Year used for getting canopy")
       latlonerror <- reactiveVal("", label = "latlonerror")
+      latlonerror_short <- reactiveVal("", label = "latlonerror_short")
       getwoodycanopy_d <- reactive({
         validate(need(input$getwoodycanopy > 0, "")) #0 is the initial value ignore setting at this value (so ignoreInit works later)
         input$getwoodycanopy
@@ -157,6 +157,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       observeEvent(getwoodycanopy_d(), {
         session$sendCustomMessage("getwoodycanopyfromlatlon", "nothing")
         latlonerror("")
+        latlonerror_short("")
         wcfs <- tryCatch(
           {
             lat <- parsechar(input$lat, "Latitude")
@@ -168,6 +169,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
           },
           error = function(e) {
             latlonerror(e$message)
+            latlonerror_short("Please select a location")
             pc_woody500m_latlon(NULL)
             pc_woody3000m_latlon(NULL)
             return(e)
@@ -188,6 +190,11 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
         ignoreInit = FALSE)
       
       output$latlonerror <- renderText(latlonerror())
+      output$latlonerror_short <- renderUI({
+        validate(need(latlonerror_short(), ""))
+        tags$div(class = "warntext clearfix float-start", latlonerror_short())
+      })
+      
       output$pc_woody500m_latlon <- renderText({
         validate(need(pc_woody500m_latlon, label = "woody500m"))
         pc_woody500m_latlon()})

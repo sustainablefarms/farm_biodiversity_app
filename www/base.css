@@ -214,6 +214,16 @@ h4 {
   background-color: #c5e2f2; /* an approx 85% lighter form of #399cd3 */
 }
 
+.warntext {
+  background-color: #fbcabb; /* approx 85% tint of F4511E */
+}
+.warntext:before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f071";
+  color: #F4511E;
+}
+
+
 bodysmall {
   font-size: 14px;
   line-height: 18px;
