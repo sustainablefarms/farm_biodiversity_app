@@ -85,7 +85,7 @@ twocolumns(heading = "Woody cover amounts",
   ),
   right = tagList(fluidRow(
     column(4, 
-      tags$h3("Select location"),
+      tags$h4("Select location"),
       uiOutput(ns("latlonerror_short")),
       textInput(ns("lon"), "Longitude", value = attributes$usedlon, width = '100%',
                 placeholder = ""),
