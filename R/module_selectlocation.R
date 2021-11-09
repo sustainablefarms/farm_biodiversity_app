@@ -77,9 +77,12 @@ selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, saveb
         climate_title = NULL)
       ns <- session$ns
       
-      # sync selected_region_outer with selected region here
-      observeEvent(selected_region_outer(), {
+      # sync selected_region_outer with selected region here, its ok to sensitive to both, because they can only change at the same time
+      observeEvent(c(selected_region_outer(), inAnnPrec.YfA()), {
         selected_region(selected_region_outer())
+        ltcliminfo <- ltcliminfo_region(selected_region_outer(), climdatatbl = data$points)
+        yfainfo <- list(AnnPrec.YfA = inAnnPrec.YfA())
+        outofmodule(c(ltcliminfo, yfainfo))
       })
       observeEvent(savebutton(), {
         selected_region_outer(selected_region())
@@ -148,29 +151,8 @@ selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, saveb
        
        # obtain actual climate if required by later work
        ltcliminfo <- reactive({
-          locinfo <- list()
-            locinfo$selected_region <- selected_region()
-            # add climate data
-            climate_row <- which(data$points$label == locinfo$selected_region)
-            locinfo$MaxTWarmMonth.lt <- data$points$MaxTWarmMonth[climate_row]
-            locinfo$PrecWarmQ.lt <- data$points$PrecWarmQ[climate_row]
-            locinfo$MinTColdMonth.lt <- data$points$MinTColdMonth[climate_row]
-            locinfo$PrecColdQ.lt <- data$points$PrecColdQ[climate_row]
-            locinfo$PrecSeasonality.lt <- data$points$PrecSeasonality[climate_row]
-            
-            locinfo$AnnPrec.lt <- data$points$AnnPrec[climate_row]
-            locinfo$AnnMeanTemp.YfA <- data$points$AnnMeanTemp[climate_row]/10
-            locinfo$MaxTWarmMonth.YfA <- new_data_mean$MaxTWarmMonth.YfA
-            locinfo$PrecWarmQ.YfA <- new_data_mean$PrecWarmQ.YfA
-            locinfo$MinTColdMonth.YfA <- new_data_mean$MinTColdMonth.YfA
-            locinfo$PrecColdQ.YfA <- new_data_mean$PrecColdQ.YfA
-            locinfo$PrecSeasonality.YfA <- new_data_mean$PrecSeasonality.YfA
-            if (isTruthy(locinfo$selected_region)){
-              locinfo$locationcomplete <- TRUE
-            } else {
-              locinfo$locationcomplete <- FALSE
-            }
-            locinfo
+          locinfo <- ltcliminfo_region(selected_region(), climdatatbl = data$points)
+          locinfo
         }) %>% throttle(1000)
         
         # insert region name
