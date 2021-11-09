@@ -117,21 +117,10 @@ selectpatch_Server <- function(id, selected_region, newinattr){
   # create a table of attributes
   attr_table <- reactive({
     validate(need(length(patchidsinuse()) > 0, "No patches"))
-    # patches <- sort(patchidsinuse())
     attr_out_list <- lapply(patchidsinuse(), function(pid){
-      if (!(pid %in% patchidsinuse())){return(NULL)}
-      attr_pid <- attr_out_r[[pid]]()
-      # when patch is initialised it has NULL attributes briefly, hence the following
-      empty <- sum(unlist(lapply(attr_pid, function(x) !is.null(x))), na.rm = TRUE) == 0
-      if (isTruthy(empty)){return(NULL)}
-      attr_pid$pid <- pid
-      return(attr_pid)
-    })
-    # keep only the non-null values, often at start of app attr_out_list <- list(NULL)
-    attr_out_list <- attr_out_list[!vapply(attr_out_list, is.null, FUN.VALUE = TRUE)]
-    validate(need(length(attr_out_list) > 0, ""))
-    
-    outtable <- jagged_2_df(attr_out_list)
+      attr_out_r[[pid]]()})
+    validate(need(all(unlist(lapply(attr_out_list, isTruthy))), "Some NULL patches"))
+    outtable <- attrlist2attrtbl(attr_out_list)
     outtable
   })   
   
