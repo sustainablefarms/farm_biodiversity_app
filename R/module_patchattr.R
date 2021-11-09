@@ -171,12 +171,28 @@ if (inattrisdefault){acc_item <- expanditem(acc_item)}
 return(acc_item)
 }
 
-patchattr_Server <- function(id, pid, deleteexternal, bbox){
+patchattr_Server <- function(id, pid, selector, deleteexternal, insert, bbox){
   moduleServer(
     id,
     function(input, output, session){
       ns <- session$ns
       savedvals <- reactiveVal(NULL)
+      
+      observeEvent(insert(), {
+        print(insert())
+        if (isTruthy(insert())){
+          print(class(insert()))
+          if (is.numeric(insert())){
+              print("inserting")
+              pattr <- defaultpatchvalues
+              newUI <- patchattr_UI(ns(paste0("p", pid)), pid, defaultpatchvalues)
+              insertUI("#placeholder",
+                       where = "beforeBegin",
+                       ui = newUI
+              )
+          }
+        }
+      }, ignoreInit = TRUE, ignoreNULL = FALSE)
       
       # from lat lon work
       leafletout <- leaflet_Server("leaflet", bbox)
@@ -304,8 +320,8 @@ patchattr_Server <- function(id, pid, deleteexternal, bbox){
       }, ignoreNULL = FALSE, ignoreInit = FALSE)
       
       # output a delete trigger
-      observeEvent(input$delete, {
-        print("Delete button clicked")
+      observeEvent(c(input$delete, deleteexternal()), {
+        print("Delete initiated")
         removeUI(paste0("#", ns("accitem"))) 
         # # set slider somewhere strange, so when it is populated with the default the system notices
         # updateSliderInput(inputId = "pc_woody3000m",
@@ -313,13 +329,7 @@ patchattr_Server <- function(id, pid, deleteexternal, bbox){
         savedvals(NULL)
       }, ignoreInit = TRUE)
       
-      # autoupdate saved vals when woody3000m gets update from NULL saved vals - this is to make sure the patch output knows it is there
-      observeEvent(input[["pc_woody3000m"]], {
-        validate(need(!isTruthy(savedvals()), ""))
-        showNotification("New patch detected")
-        savedvals(list(woody3000m = input[["pc_woody3000m"]],
-                       pid = pid))
-      }, priority = 1)
+      # autoupdate saved vals when UI inserted
       
       setBookmarkExclude(c("woodlandtype", 
                            "pc_woody3000m",
@@ -359,20 +369,29 @@ app_patchattr <- function(){
   main_app_prep()
   enableBookmarking(store = "disable")
   attributes <- list(woody500m = 3.5, woody3000m = 8.2)
-  bbox <- reactive({bbox_allregions})
-  savebutton <- reactive(NULL)
-  cancelbutton <- reactive(NULL)
+
   shinyApp(    {fluidPage(
     tags$script("$(function () {
           $('[data-toggle=tooltip]').tooltip()
         })"),
     includeCSS("./www/base.css"),
-    patchattr_UI("patchattr", attributes),
+    tags$div(id = "placeholder"),
     theme = bslib::bs_theme(version = 5, "lumen"))
   },
-           function(input, output, session){patchattr_Server("patchattr",
-                                                             bbox,
-                                                             savebutton,
-                                                             cancelbutton)}
+           function(input, output, session){
+             deleteext <- reactiveVal(0)
+             insert <- reactiveVal(0)
+             bbox <- reactive({bbox_allregions})
+             refresh <- reactiveTimer(1000 * 5)
+             observeEvent(refresh(),{
+              insert(insert() + 1)
+              showNotification("insert switched")
+              })
+             patchattr_Server("patchattr",
+                              pid = 1,
+                              selector = paste("#", "placeholder"),
+                              deleteexternal = deleteext,
+                              insert = insert,
+                              bbox = bbox)}
   )
 }
