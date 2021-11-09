@@ -148,7 +148,7 @@ twocolumns(heading = "Woody cover amounts",
 ))
   
 
-accordion_item(title = paste("Woodland area", pid),
+acc_item <- accordion_item(title = paste("Woodland area", pid),
     id = ns("accitem"),
     internals,
     footer = tagList(
@@ -165,10 +165,13 @@ accordion_item(title = paste("Woodland area", pid),
       ),
     footerdflt = "none",
     opentype = "edit"
-    ) %>% expanditem()
+    )
+inattrisdefault <- patchequalsdefault(attributes)
+if (inattrisdefault){acc_item <- expanditem(acc_item)}
+return(acc_item)
 }
 
-patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
+patchattr_Server <- function(id, pid, bbox){
   moduleServer(
     id,
     function(input, output, session){
@@ -265,7 +268,9 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
           woodlandtype = input[["woodlandtype"]],
           usedlon = usedlon(),
           usedlat = usedlat(),
-          usedyear = usedyear()
+          usedyear = usedyear(),
+          delete = FALSE,
+          pid = pid
           )
         out
       })
@@ -279,12 +284,12 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       
       
       # saving and cancelling
-      observeEvent(savebutton(),{ showNotification("patch saved")})
-      observeEvent(cancelbutton(),{ showNotification("patch reset")})
-      observeEvent(savebutton(), {
+      observeEvent(input$save,{ showNotification("patch saved")})
+      observeEvent(input$cancel,{ showNotification("patch reset")})
+      observeEvent(input$save, {
         savedvals(specifiedvals())
       }, ignoreNULL = FALSE, ignoreInit = FALSE)
-      observeEvent(cancelbutton(), {
+      observeEvent(input$cancel, {
         validate(need(savedvals(), ""))
         updateSliderInput(inputId = "pc_woody500m",
                           value = savedvals()$woody500m)
@@ -299,6 +304,11 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
         }
       }, ignoreNULL = FALSE, ignoreInit = FALSE)
       
+      # output a delete trigger
+      observeEvent(input$delete, {
+        print("Delete button clicked")
+        savedvals(list("delete" = TRUE, pid = pid))
+      }, ignoreInit = TRUE)
       
       
       setBookmarkExclude(c("woodlandtype", 

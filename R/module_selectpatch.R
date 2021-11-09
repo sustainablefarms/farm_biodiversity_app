@@ -75,7 +75,17 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     }
   }, ignoreInit = FALSE, ignoreNULL = FALSE)
   
-  # remove a patch  # I couldn't get this observer created for interactively.
+  # remove patch when output requests it
+  observe({
+    validate(need(attr_table(), ""))
+    validate(need(isTruthy(any(attr_table()$delete)), ""))
+    print("removing patches")
+    rempids <- attr_table()$pid[attr_table()$delete]
+    lapply(rempids, function(pid){
+      removeUI(paste0("#", ns(paste0("p", pid, "-accitem")))) #the accitem is hardcoded into the patch attribute module
+    })
+    patchidsinuse(setdiff(patchidsinuse(), rempids))
+  }, priority = -1)
   patchdeleters <- lapply(1:maxpatchnum, function(pid){
     observeEvent(input[[paste0("p", pid,"delete")]],
                  {
@@ -89,10 +99,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
 
   # have servers running already, similar to the patch deleters
   attr_out_r <- lapply(1:maxpatchnum, function(pid){
-    out <- patchattr_Server(paste0("p", pid), bbox = bbox,
-                            savebutton = reactive(input[[paste0("save_p", pid)]]),
-                            cancelbutton = reactive(input[[paste0("cancel_p", pid)]])
-                            ) 
+    out <- patchattr_Server(paste0("p", pid), pid, bbox = bbox)
     return(out)
     })
   names(attr_out_r) <- as.character(1:maxpatchnum)
@@ -105,7 +112,6 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     attr_out_list <- lapply(patchidsinuse(), function(pid){
       attr_out_r[[pid]]()})
     print(attr_out_list)
-    validate(need(all(unlist(lapply(attr_out_list, isTruthy))), "Some NULL patches"))
     outtable <- attrlist2attrtbl(attr_out_list)
     outtable
   })   

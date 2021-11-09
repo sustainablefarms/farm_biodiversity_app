@@ -42,3 +42,10 @@ jagged_2_df <- function(attr_out_list){
   # )
   return(outtable)
 }
+
+patchequalsdefault <- function(specifiedvals){
+  if (!isTruthy(specifiedvals)){return(FALSE)}
+  valscut <- specifiedvals[!unlist(lapply(specifiedvals, is.null))]
+  out <- isTRUE(all.equal(unlist(valscut), unlist(defaultpatchvalues)[names(valscut)]))
+  return(out)
+}
