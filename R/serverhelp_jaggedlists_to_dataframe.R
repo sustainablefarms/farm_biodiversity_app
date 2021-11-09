@@ -24,20 +24,3 @@ jagged_2_df <- function(attr_out_list){
   # )
   return(outtable)
 }
-
-checkpatchattr <- function(specifiedvals){
-  checks <- c(
-    nm = isTruthy((nchar(specifiedvals$nm) > 0)),
-    woodlandtype = isTruthy(nchar(specifiedvals$woodlandtype) > 0),
-    woody500m <- isTruthy(specifiedvals$woody500m),
-    woody3000m <- isTruthy(specifiedvals$woody500m)
-  )
-  print(checks)
-  return(checks)
-}
-
-patchequalsdefault <- function(specifiedvals){
-  valscut <- specifiedvals[!unlist(lapply(specifiedvals, is.null))]
-  out <- isTRUE(all.equal(unlist(valscut), unlist(defaultpatchvalues)[names(valscut)]))
-  return(out)
-}
