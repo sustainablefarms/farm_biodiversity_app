@@ -155,6 +155,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
     function(input, output, session){
       ns <- session$ns
       savedvals <- reactiveVal()
+      checks <- reactiveVal(c())
       
       # from lat lon work
       leafletout <- leaflet_Server("leaflet", bbox)
@@ -263,8 +264,12 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       observeEvent(savebutton(),{ showNotification("patch saved")})
       observeEvent(cancelbutton(),{ showNotification("patch reset")})
       observeEvent(savebutton(), {
+        validate(need(specifiedvals(), ""))
+        validate(need(!patchequalsdefault(specifiedvals()), ""))
+        checks(checkpatchattr(specifiedvals()))
+        validate(need(all(checks), ""))
         savedvals(specifiedvals())
-      }, ignoreNULL = FALSE, ignoreInit = FALSE)
+      }, ignoreNULL = FALSE, ignoreInit = TRUE)
       observeEvent(cancelbutton(), {
         validate(need(savedvals(), ""))
         updateSliderInput(inputId = "pc_woody500m",
