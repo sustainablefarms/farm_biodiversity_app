@@ -183,7 +183,6 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
         # all changes involve first deleting the UI and savedvals
         removeUI(paste0("#", ns("accitem"))) 
         savedvals(NULL)
-        showNotification(sprintf("indicator for patch %i altered", pid))
         if (isTruthy(presentindicator())){
           if (is.numeric(presentindicator())){
               newUI <- patchattr_UI(ns, pid, defaultpatchvalues)
@@ -195,7 +194,6 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
           }
           if (is.list(presentindicator())){
             newattr <- presentindicator()
-            print("inserting novel patch")
             newUI <- patchattr_UI(ns, pid, newattr)
             insertUI(selector,
                      where = "beforeBegin",
@@ -334,7 +332,6 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
       
       # output a delete trigger
       observeEvent(input$delete, {
-        print("Delete initiated")
         presentindicator(NULL)
         savedvals(NULL)
       }, ignoreInit = TRUE)
@@ -353,7 +350,6 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
       # convert out info
       reactive({
         out <- savedvals()
-        print("Computing out list")
         if (length(out$nm) == 0) { #includes NULL and character(0)
           noisy_miner <- NULL
         } else {

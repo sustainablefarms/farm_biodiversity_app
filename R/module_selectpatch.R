@@ -19,22 +19,16 @@ selectpatch_Server <- function(id, selected_region, newinattr){
       
   # refresh patches whenever new newinattr
   observeEvent(newinattr(), {
-    print("Delete the attributes!")
     # signal to each patch to delete its UI and clear out saved values
     pidsinuse <- getinusepid(attr_table())
     if (length(pidsinuse) > 0){
       lapply(pidsinuse, function(pid){presentindicator[[pid]](NULL)})
     }
     # add in attributes
-    print("New attributes!")
     if (is.list(newinattr())){
       inattrtbl <- newinattr()
-      print(inattrtbl)
       pidstoadd <- inattrtbl$pid
-      print(pidstoadd)
       lapply(pidstoadd, function(pid){
-        print(inattrtbl[inattrtbl$pid == pid, ])
-        print(is.list(inattrtbl[inattrtbl$pid == pid, ]))
         presentindicator[[pid]](inattrtbl[inattrtbl$pid == pid, ])})
     }
   })
