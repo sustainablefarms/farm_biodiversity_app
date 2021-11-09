@@ -15,7 +15,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     function(input, output, session){
       ns <- session$ns
       maxpatchnum <- 6
-      # deleteincrementer <- lapply(1:maxpatchnum, reactiveVal(NULL))
+      presentindicator <- lapply(1:maxpatchnum, function(id) reactiveVal(NULL))
       
   # refresh patches whenever new newinattr
   # observeEvent(newinattr(), {
@@ -28,23 +28,24 @@ selectpatch_Server <- function(id, selected_region, newinattr){
       
   # react to button pressing
   observeEvent(input$addpatch, {
-    insertblankwoodlandarea(attr_table(), ns = ns, maxpatchnum = maxpatchnum)
+    pid <- getnextpid(attr_table(), maxpatchnum)
+    presentindicator[[pid]](runif(1)) #set it to any new numerical value
     }, ignoreInit = TRUE, ignoreNULL = TRUE)
   
   # have servers running already, similar to the patch deleters
   attr_out_r <- lapply(1:maxpatchnum, function(pid){
-    out <- patchattr_Server(paste0("p", pid), pid, delete = deleteincrementer[[pid]], bbox = bbox)
+    out <- patchattr_Server(paste0("p", pid), pid,
+                            selector <- paste0("#", ns("placeholder")),
+                            presentindicator = presentindicator[[pid]],
+                            bbox = bbox)
     return(out)
     })
   names(attr_out_r) <- as.character(1:maxpatchnum)
   
   # create a table of attributes
   attr_table <- reactive({
-    print("start of getting attr table")
-    print("getting attr list")
     attr_out_list <- lapply(1:maxpatchnum, function(pid){
       attr_out_r[[pid]]()})
-    print(attr_out_list)
     outtable <- attrlist2attrtbl(attr_out_list)
     outtable
   })   

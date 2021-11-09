@@ -174,6 +174,7 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
   moduleServer(
     id,
     function(input, output, session){
+      stopifnot(is.reactive(presentindicator))
       ns <- session$ns
       savedvals <- reactiveVal(NULL)
       
@@ -182,24 +183,25 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
         # all changes involve first deleting the UI and savedvals
         removeUI(paste0("#", ns("accitem"))) 
         savedvals(NULL)
+        showNotification(sprintf("indicator for patch %i altered", pid))
         if (isTruthy(presentindicator())){
           if (is.numeric(presentindicator())){
-              print("populating with default patch")
               newUI <- patchattr_UI(ns, pid, defaultpatchvalues)
-              insertUI("#placeholder",
+              insertUI(selector,
                        where = "beforeBegin",
                        ui = newUI
               )
-              savedvals(defaultpatchvalues)
+              savedvals(c(defaultpatchvalues, list(pid = pid)))
           }
           if (is.list(presentindicator())){
+            newattr <- presentindicator()
             print("inserting novel patch")
-            newUI <- patchattr_UI(ns, pid, presentindicator())
+            newUI <- patchattr_UI(ns, pid, newattr)
             insertUI("#placeholder",
                      where = "beforeBegin",
                      ui = newUI
             )
-            savedvals(as.list(presentindicator())) #as.list converts data frame to list of columns
+            savedvals(c(as.list(newattr), "pid" = pid)) #as.list converts data frame to list of columns
           }
         }
       }, ignoreInit = TRUE, ignoreNULL = FALSE)

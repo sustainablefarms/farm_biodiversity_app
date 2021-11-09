@@ -41,6 +41,12 @@ getinusepid <- function(attr_table){
   return(pidsinuse)
 }
 
+getnextpid <- function(attr_table, maxpatchnum){
+  pidsinuse <- getinusepid(attr_table)
+  newid <- min(setdiff(1:maxpatchnum, pidsinuse))
+  return(newid)
+}
+
 insertblankwoodlandarea <- function(attr_table, ns, maxpatchnum, session = getDefaultReactiveDomain()){
     pidsinuse <- getinusepid(attr_table)
     newid <- min(setdiff(1:maxpatchnum, pidsinuse))
