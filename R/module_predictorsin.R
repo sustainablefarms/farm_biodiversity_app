@@ -76,6 +76,7 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
       
       ## Combine!
       cval <- reactive({
+        print("New cval")
         out <- c(fromlocation(),
                  list(patchattr_tbl = patchattr_tbl()))
         out

@@ -294,6 +294,7 @@ patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
       # convert out info
       reactive({
         out <- savedvals()
+        print("Computing out list")
         if (length(out$nm) == 0) { #includes NULL and character(0)
           noisy_miner <- NULL
         } else {

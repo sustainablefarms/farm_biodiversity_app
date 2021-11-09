@@ -13,6 +13,7 @@ attrlist2attrtbl <- function(attr_out_list){
   # validate(need(length(attr_out_list) > 0, ""))
   
   outtable <- jagged_2_df(attr_out_list)
+  print(outtable)
   return(outtable)
 }
 

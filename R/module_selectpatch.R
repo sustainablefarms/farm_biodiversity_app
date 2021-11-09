@@ -113,12 +113,16 @@ selectpatch_Server <- function(id, selected_region, newinattr){
                             ) 
     return(out)
     })
+  names(attr_out_r) <- as.character(1:maxpatchnum)
   
   # create a table of attributes
   attr_table <- reactive({
+    print("start of getting attr table")
     validate(need(length(patchidsinuse()) > 0, "No patches"))
+    print("getting attr list")
     attr_out_list <- lapply(patchidsinuse(), function(pid){
-      attr_out_r[[pid]]()})
+      cbind(attr_out_r[[pid]](), "pid" = pid)})
+    print(attr_out_list)
     validate(need(all(unlist(lapply(attr_out_list, isTruthy))), "Some NULL patches"))
     outtable <- attrlist2attrtbl(attr_out_list)
     outtable
