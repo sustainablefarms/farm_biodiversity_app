@@ -46,6 +46,7 @@ NAMESPACE
 ./R/serverhelp_createXocc_from_selected.R
 ./R/serverhelp_getcanopyfromlatlon.R
 ./R/serverhelp_input_tracker.R
+./R/serverhelp_jaggedlists_to_dataframe.R
 ./R/serverhelp_onespecwords.R
 ./R/serverhelp_ordfactby.R
 ./R/UI_accordion.R
@@ -57,7 +58,9 @@ NAMESPACE
 ./R/UI_carousel.R
 ./R/UI_extratags.R
 ./R/UI_infopopover.R
+./R/UI_infotext.R
 ./R/UI_inlinecheckboxInput.R
+./R/UI_landingcontent.R
 ./R/UI_linknewtab.R
 ./R/UI_modal_climateplot.R
 ./R/UI_morehelpmodal.R
@@ -135,4 +138,6 @@ NAMESPACE
 ./www/lowres-efb5d00d8483530f1140d59a5ca05027.jpg
 ./www/Sustainable Farms logo RGB.png
 ./www/google-analytics.html
+./www/extra.html
+./www/accordion.css
 ./www/base.css

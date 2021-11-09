@@ -9,6 +9,8 @@ wwwfiles1 <- list.files("./www", pattern = "^lowres.*", full.names = TRUE) # bir
 wwwfiles2 <- paste0("./www/", c(
   "Sustainable Farms logo RGB.png",
   "google-analytics.html",
+  "extra.html",
+  "accordion.css",
   "base.css"))
 # setdiff(list.files("./www", full.names = TRUE), c(wwwfiles1, wwwfiles2))
 

@@ -3,5 +3,5 @@ options(
   shiny.launch.browser = FALSE,
   shiny.port = 7214
 )
-pkgload::load_all("."); app_predictorsin()
+pkgload::load_all("."); myapp()
 
