@@ -1,6 +1,5 @@
 # patch attributes module
-patchattr_UI <- function(id, pid, attributes){
-  ns <- NS(id)
+patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't want to add namespace since generating withing Server
   inwoodlandtype <- if (is.null(attributes$IsRemnant)){
     character(0)
   } else if (attributes$IsRemnant){
@@ -171,25 +170,36 @@ if (inattrisdefault){acc_item <- expanditem(acc_item)}
 return(acc_item)
 }
 
-patchattr_Server <- function(id, pid, selector, deleteexternal, insert, bbox){
+patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
   moduleServer(
     id,
     function(input, output, session){
       ns <- session$ns
       savedvals <- reactiveVal(NULL)
       
-      observeEvent(insert(), {
-        print(insert())
-        if (isTruthy(insert())){
-          print(class(insert()))
-          if (is.numeric(insert())){
-              print("inserting")
-              pattr <- defaultpatchvalues
-              newUI <- patchattr_UI(ns(paste0("p", pid)), pid, defaultpatchvalues)
+      # keep presence of UI and savedvals up to date with presentindicator
+      observeEvent(presentindicator(), {
+        # all changes involve first deleting the UI and savedvals
+        removeUI(paste0("#", ns("accitem"))) 
+        savedvals(NULL)
+        if (isTruthy(presentindicator())){
+          if (is.numeric(presentindicator())){
+              print("populating with default patch")
+              newUI <- patchattr_UI(ns, pid, defaultpatchvalues)
               insertUI("#placeholder",
                        where = "beforeBegin",
                        ui = newUI
               )
+              savedvals(defaultpatchvalues)
+          }
+          if (is.list(presentindicator())){
+            print("inserting novel patch")
+            newUI <- patchattr_UI(ns, pid, presentindicator())
+            insertUI("#placeholder",
+                     where = "beforeBegin",
+                     ui = newUI
+            )
+            savedvals(as.list(presentindicator())) #as.list converts data frame to list of columns
           }
         }
       }, ignoreInit = TRUE, ignoreNULL = FALSE)
@@ -320,12 +330,9 @@ patchattr_Server <- function(id, pid, selector, deleteexternal, insert, bbox){
       }, ignoreNULL = FALSE, ignoreInit = FALSE)
       
       # output a delete trigger
-      observeEvent(c(input$delete, deleteexternal()), {
+      observeEvent(input$delete, {
         print("Delete initiated")
-        removeUI(paste0("#", ns("accitem"))) 
-        # # set slider somewhere strange, so when it is populated with the default the system notices
-        # updateSliderInput(inputId = "pc_woody3000m",
-        #                   value = defaultpatchvalues$woody3000m+30)
+        presentindicator(NULL)
         savedvals(NULL)
       }, ignoreInit = TRUE)
       
@@ -379,19 +386,22 @@ app_patchattr <- function(){
     theme = bslib::bs_theme(version = 5, "lumen"))
   },
            function(input, output, session){
-             deleteext <- reactiveVal(0)
-             insert <- reactiveVal(0)
+             presentindicator <- reactiveVal(0)
              bbox <- reactive({bbox_allregions})
-             refresh <- reactiveTimer(1000 * 5)
+             refresh <- reactiveTimer(1000 * 7)
+             refresh2 <- reactiveTimer(1000 * 10)
              observeEvent(refresh(),{
-              insert(insert() + 1)
-              showNotification("insert switched")
+              presentindicator(runif(1))
+              showNotification("present altered")
               })
+             observeEvent(refresh2(),{
+               presentindicator(defaultpatchvalues * 2)
+               showNotification("present altered")
+             })
              patchattr_Server("patchattr",
                               pid = 1,
                               selector = paste("#", "placeholder"),
-                              deleteexternal = deleteext,
-                              insert = insert,
+                              presentindicator = presentindicator,
                               bbox = bbox)}
   )
 }
