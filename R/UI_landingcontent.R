@@ -41,12 +41,12 @@ landingpage <- function(id = NULL){
 	         appname,
 	         "is a scenario planning tool for biodiversity on farms.",
 	         "Using decades of data on more than sixty birds,", appname,
-	         "indicates which birds may currently live in woodlands on your farm",
+	         "indicates which birds may live in woodlands on your farm in spring",
 	         "and demonstrates the potential for biodiversity in a range of scenarios."
 	        ),
 	        tags$p("The estimates created by", appname,
 	               "are most reliable for remnant Box Gum Grassy Woodland or Eucalypt plantings",
-	               "that are within wheat or sheep farms on the inland slopes of the Great Dividing Range,",
+	               "that are within livestock grazing or mixed farms on the inland slopes of the Great Dividing Range,",
 	               "from Benalla in Victoria to Dubbo in NSW."),
 
 	        tags$div(style = "height: 4rem; width = 100%; position: relative",
@@ -57,7 +57,12 @@ landingpage <- function(id = NULL){
 	             tags$div(class = "text-center datalabels", "Loading")
 	           )
 	         )
-	        )
+	        ),
+	        tags$a(class = "text-center",
+	               href = "http://sustainablefarms.org.au/",
+	               tags$img(src = "Sustainable Farms logo RGB.png",
+	                        alt = "sflogo",
+	                        width = "100px"))
 	 ))
 	)
 }
