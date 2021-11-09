@@ -180,7 +180,7 @@ prob_top10 <- function(df, showerrorbars = TRUE){
     p <- p %>% add_error()
   }
   # add the values onto the bars
-  p <- p %>% add_label_onleft()
+  p <- p %>% add_label_onright()
   p
 }
 

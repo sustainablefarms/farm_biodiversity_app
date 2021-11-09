@@ -14,8 +14,8 @@ compile_predictions <- function(current_values, refpredictions, refisaverage = T
   category_name <- c(
     "high" = "Nearby woody cover = 20%",
     "low" = "Nearby woody cover = 2%",
-    "reference" = if (refisaverage){"Scenario 1"} else {"Scenario 2"},
-    "current" = if (refisaverage){"Average"} else {"Scenario 1"})
+    "reference" = if (refisaverage){"Average"} else {"Scenario 1"},
+    "current" = if (refisaverage){"Scenario 1"} else {"Scenario 2"})
                      
   category_name_f <- factor(category_name, levels = category_name, ordered = TRUE)
   species_richness_raw$category <- category_name_f[rownames(species_richness_raw)]

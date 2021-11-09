@@ -96,6 +96,7 @@ ui <- function(request){
 
 # SERVER
 server <- function(input, output, session) {
+  ns <- session$ns
   ## Stuff to do with the opening page of the app
   removeUI(selector = paste0("#", ns("startspinner")))
   insertUI(selector = paste0("#", ns("startbuttonlocation")),

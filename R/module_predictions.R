@@ -28,7 +28,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                left = tagList(
                  tags$p("These are estimates of the expected number of species that occupy at least one woodland area.",
                         "The lower two bars are estimates for",
-                        if (refisaverage){"Scenario 2"}else{"Scenario 1"},
+                        if (refisaverage){"Scenario 1"}else{"Scenario 2"},
                         "if all the woodland areas had minimal or a large amount of nearby woody cover."
                         )),
                right = plotOutput(ns("species_richness"), height = "250px")
@@ -38,8 +38,11 @@ predictionsUI <- function(id, refisaverage = TRUE){
     )),
     accordion(ns("predacc"),
               accordion_item(title = "Most likely species", id = ns("mostlikely"),
-               twocolumns(heading = "The 10 most likely species to live in your farm's Box Gum Grassy Woodland.",
-                          left = proboccplotdescription,
+               twocolumns(heading = "The 10 most likely species.",
+                          left = tags$div(class = "bodysmall",
+                            proboccplotdescription,
+                            infotext("Select a bird for more details")
+                          ),
                           right = tagList(
                             mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage),
                             tags$div(style="text-align: center",
@@ -51,13 +54,17 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                                   )
                                                 )
                                               })
-                                     ))
+                                     )),
+                            tags$div(class = "datalabels", "All photographs curtesty of",
+                              tags$a("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
+                              "Click on each photo to view attribution.")
                             )
                          )
                 ),
               accordion_item(title = "Least likely species", id = ns("leastlikely"),
-                twocolumns(heading = "The 10 least likely species to live in your farm's Box Gum Grassy Woodland.",
-                           left = tags$p("Of the species in", appname, "these species are least likely. This doesn't include rare birds not in", appname, "."),
+                twocolumns(heading = "The 10 least likely species.",
+                           left = tags$p("Of the species in", appname, "these species are least likely.",
+                           "This list excludes rare birds that are not in", appname, "."),
                            right = 
                              tags$div(style="text-align: center",
                                       tags$div(class="row row-cols-1 row-cols-md-5 g-4",
@@ -72,9 +79,17 @@ predictionsUI <- function(id, refisaverage = TRUE){
                  )
                 ),
               accordion_item(title = "Vulnerable species", id = ns("vulspec"),
-                twocolumns(heading = "Heading",
-                           left = "about",
-                           right = lapply(consstatus$CommonName, function(specname) vulnerablespecUI(ns, specname)))
+                twocolumns(heading = "Vulnerable and threatened species",
+                           left = tags$div(appname,
+                                           "includes five species of conservation concern.",
+                                           "Estimates of their occupancy probabilities are described here."),
+                           right = tagList(
+                            lapply(consstatus$CommonName, function(specname) vulnerablespecUI(ns, specname)),
+                            tags$div(class = "datalabels", "All photographs curtesty of",
+                              tags$a("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
+                              "Click on each photo to view attribution.")
+                            )
+                )
                 ),
               if (refisaverage){
               accordion_item(title = "Occupancy Probability of All Species", id = ns("occall"),
@@ -217,8 +232,7 @@ predictionsServer <- function(id,
         output[[gsub("(-| )", "", specname)]] <- renderText({
           validate(need(datar()$species_prob_current, ""))
           c("The", specname, consstatus[specname, "statussummary"],
-            onespecwords(specname, datar()$species_prob_current),
-            onespecwords(specname, refpredictions())
+            onespecwords(specname, datar()$species_prob_current, refpredictions(), refisaverage = refisaverage)
             )
         })
       })

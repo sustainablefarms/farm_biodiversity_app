@@ -5,10 +5,18 @@ output:
 ---
 # Refactoring
 + functionality
-  + accordions 1d
-  + hidden tabs 1d
   + reset 0.5d
-  + new plots 0.5d
+  + about the app
+  + user guide
+  + FAQs
+  + save populated region and patch attributes only
+  + warn when trying to save incomplete attributes
+  + relative occupancy plot
+  + tab indicator panel
+  + hide tab panels properly using style = "display: none;" and update it later. Or .visually-hidden
+  + leaflet takes a long time to load still, can I have a leaflet loading screen? Might have to be by hand: https://davidruvolo51.github.io/shinytutorials/tutorials/leaflet-loading-screens/
+
++ CHECK THAT STATS WORK FOR THE 5 VULNERABLE SPECIES
 
 + styling 1d
 + words
