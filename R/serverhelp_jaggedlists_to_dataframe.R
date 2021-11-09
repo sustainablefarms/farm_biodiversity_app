@@ -36,8 +36,13 @@ patchequalsdefault <- function(specifiedvals){
   return(out)
 }
 
+getinusepid <- function(attr_table){
+  pidsinuse <- if (isTruthy(attr_table)){attr_table$pid} else {c()}
+  return(pidsinuse)
+}
+
 insertblankwoodlandarea <- function(attr_table, ns, maxpatchnum, session = getDefaultReactiveDomain()){
-    pidsinuse <- if (isTruthy(attr_table)){attr_table$pid} else {c()}
+    pidsinuse <- getinusepid(attr_table)
     newid <- min(setdiff(1:maxpatchnum, pidsinuse))
     pattr <- defaultpatchvalues
     # if (is.data.frame(newinattr())){ for non-blank woodland areas - used elsewhere

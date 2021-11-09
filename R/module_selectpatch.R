@@ -15,6 +15,16 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     function(input, output, session){
       ns <- session$ns
       maxpatchnum <- 6
+      # deleteincrementer <- lapply(1:maxpatchnum, reactiveVal(NULL))
+      
+  # refresh patches whenever new newinattr
+  # observeEvent(newinattr(), {
+    # signal to each patch to delete its UI and clear out saved values
+    # pidsinuse <- getinusepid(attr_table())
+    # if (length(pidsinuse) > 0){
+    #   lapply(deleteincrementer[pidsinuse], inc(inc() + 1))
+    # }
+  # })
       
   # react to button pressing
   observeEvent(input$addpatch, {
@@ -23,7 +33,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
   
   # have servers running already, similar to the patch deleters
   attr_out_r <- lapply(1:maxpatchnum, function(pid){
-    out <- patchattr_Server(paste0("p", pid), pid, bbox = bbox)
+    out <- patchattr_Server(paste0("p", pid), pid, delete = deleteincrementer[[pid]], bbox = bbox)
     return(out)
     })
   names(attr_out_r) <- as.character(1:maxpatchnum)

@@ -171,7 +171,7 @@ if (inattrisdefault){acc_item <- expanditem(acc_item)}
 return(acc_item)
 }
 
-patchattr_Server <- function(id, pid, bbox){
+patchattr_Server <- function(id, pid, deleteexternal, bbox){
   moduleServer(
     id,
     function(input, output, session){
@@ -307,9 +307,19 @@ patchattr_Server <- function(id, pid, bbox){
       observeEvent(input$delete, {
         print("Delete button clicked")
         removeUI(paste0("#", ns("accitem"))) 
+        # # set slider somewhere strange, so when it is populated with the default the system notices
+        # updateSliderInput(inputId = "pc_woody3000m",
+        #                   value = defaultpatchvalues$woody3000m+30)
         savedvals(NULL)
       }, ignoreInit = TRUE)
       
+      # autoupdate saved vals when woody3000m gets update from NULL saved vals - this is to make sure the patch output knows it is there
+      observeEvent(input[["pc_woody3000m"]], {
+        validate(need(!isTruthy(savedvals()), ""))
+        showNotification("New patch detected")
+        savedvals(list(woody3000m = input[["pc_woody3000m"]],
+                       pid = pid))
+      }, priority = 1)
       
       setBookmarkExclude(c("woodlandtype", 
                            "pc_woody3000m",
