@@ -13,12 +13,25 @@ predictionsUI <- function(id, refisaverage = TRUE){
         item.style.backgroundColor = "yellow";
       }'),
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
+    
     fluidRow(class = "justify-content-center",
              column(6, class = "text-center",
-                    tags$h1("Bird Diversity"),
-                    tags$h3("Step 2: Results of Scenario 1"),
-                    tags$p("We've estimated occupancy for sixty birds based",
-                           "based on the information you provided in the previous step."),
+                    if (refisaverage){
+                      tagList(
+                      tags$h1("Bird Diversity"),
+                      tags$h3("Step 2: Results of Scenario 1"),
+                      tags$p("We've estimated occupancy for sixty birds based",
+                             "based on the information you provided in the previous step.")
+                      )
+                    } else {
+                      tagList(
+                      tags$h1("Compare Bird Diversity"),
+                      tags$h3("Step 4: Review comparison"),
+                      tags$p("You've reached the final step in the app.",
+                            "Here you can compare the results of Scenario 1 and Scenario 2",
+                            "to estimate the potential for bird diversity on your farm")
+                      )
+                    },
                     tags$p(tags$em(uiOutput(ns("warn"), inline = TRUE)))
              )
     ),
@@ -94,11 +107,16 @@ predictionsUI <- function(id, refisaverage = TRUE){
               if (refisaverage){
               accordion_item(title = "Occupancy Probability of All Species", id = ns("occall"),
                 twocolumns(heading = "Estimates of the occupancy probability for every species",
-                           left = tagList(proboccplotdescription,
-                                          tags$p("Body length data from",
-                                                 linknewtab(href = "https://www.nature.com/articles/sdata201561", "Garnett et al. (Scientific Data 2, 2015)."))),
-                           right = allprob_plot_UI(ns("allprob"), refisaverage = refisaverage)
-                           )
+                           left = tags$div(class = "bodysmall", proboccplotdescription),
+                           right = tagList(allprob_plot_UI(ns("allprob"), refisaverage = refisaverage),
+                                           tags$div(class = "datalabels",
+                                                  "Length and weight data from",
+                                                  tags$a(href = "https://www.nature.com/articles/sdata201561",
+                                                             "Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015).")
+                                                  )
+                              )
+                           ),
+                footer = downloadButton(ns("downloaddata"), "Table", class = "download_badge")
                 )
               } else {
               accordion_item(title = "Relative Occupancy Probability", id = ns("occallrel"),
@@ -116,7 +134,8 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                                                           "Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015).")
                                                                )
                                         )
-                             )
+                                   ),
+                             footer = downloadButton(ns("downloaddata_rel"), "Table", class = "download_badge")
               )
               }
               ),
@@ -127,22 +146,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
           if (isTRUE(getOption("shiny.testmode"))){
             downloadButton(ns("downloaddataverbose"), "Verbose Prediction Data", class = "download_badge")
           },
-          downloadButton(ns("downloaddata"), "Table", class = "download_badge"),
           downloadButton(ns("downloadreport"), "Report", class = "download_badge")
-               ),
-        column(width = 5, offset = 1,
-          # style = "text-align: right",
-            "Reference:",
-          infotooltip(title = tags$html(tags$em("Comparing to Other Estimates"),
-				  referencesblurb,
-                                   tags$p(tags$em("Update"), "sets the reference estimates to the current estimates.",
-                                   "After setting the reference estimates for the first time, uncheck", tags$em("Use Default"), "to use them.",
-                                   "Initially the ratio of occupancy probabilities to reference probabilities will be all 1.",
-                                   "This will be the case until you alter attributes of the farm's woodland."),
-                                   tags$p(tags$em("Use Default,"), "when checked, overides the saved estimates with the default estimates.",
-                                   "Uncheck", tags$em("Use Default"), "to use the saved reference."),
-				   tags$p(tags$em("Warning: refreshing the web browser removes the saved reference."))),
-		      HTML = TRUE)
                )
       )
   )

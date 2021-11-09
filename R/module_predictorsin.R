@@ -1,15 +1,29 @@
 # Module for all the land selections
-predictors_UI <- function(id){
+predictors_UI <- function(id, isS2 = TRUE){
   ns <- NS(id)
   tagList(
-    tags$div(
-      tags$h1("Your Farm"),
-      tags$h3("Step 1: Tell us about your farm"),
-      tags$div("Select your region,",
-                "then add the number of woodland areas found on your farm,",
-                "before defining the characteristics of each woodland area.",
-                "This information will become Scenario 1.",
-               style = "text-align: center; max-width: 552px; margin: auto;")
+    fluidRow(class = "justify-content-center",
+             column(6, class = "text-center",
+      if (isS2){
+        tagList(
+          tags$h1("Create a new scenario"),
+          tags$h3("Step 3: Modify your farm to create a comparison"),
+          tags$p("Use this step to increase woody vegetation cover,",
+                  "add or remove woodland areas,",
+                  "and add or remove Noisy Miners.",
+                 "The information will become Scenario 2.")
+        )
+      } else {
+        tagList(
+          tags$h1("Your Farm"),
+          tags$h3("Step 1: Tell us about your farm"),
+          tags$p("Select your region,",
+                   "then add the number of woodland areas found on your farm,",
+                   "before defining the characteristics of each woodland area.",
+                   "This information will become Scenario 1.")
+        )
+      }
+      )
     ),
     accordion(id = ns("acc"), 
       accordion_item("Your region", id = ns("acc-loc"), 
@@ -106,7 +120,7 @@ app_predictorsin <- function(){
     {bootstrapPage(
       includeCSS("./www/base.css"),
       includeCSS("./www/accordion.css"),
-      predictors_UI("S1in"),
+      predictors_UI("S1in", isS2 = FALSE),
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){

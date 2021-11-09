@@ -44,7 +44,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
 ui <- function(request){
   navbarsection <- tabsetPanel(
       tabPanelBody(value = "in1",
-               predictors_UI("S1in"),
+               predictors_UI("S1in", isS2 = FALSE),
                fluidRow(column(6, actionButton("in1_back", "Back", class = "btn-secondary", width = "100%")),
                         column(6, actionButton("in1_next", "Next", class = "btn-primary", width = "100%")))
       ),
@@ -55,7 +55,7 @@ ui <- function(request){
                     column(4, actionButton("out1_next", "Next", class = "btn-primary", width = "100%")))
       ),
       tabPanelBody(value = "in2",
-               predictors_UI("S2in"),
+               predictors_UI("S2in", isS2 = TRUE),
                fluidRow(column(6, actionButton("in2_back", "Back", class = "btn-secondary", width = "100%")),
                         column(6, actionButton("in2_next", "Next", class = "btn-primary", width = "100%")))
       ),
