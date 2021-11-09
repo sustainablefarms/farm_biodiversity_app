@@ -121,7 +121,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     validate(need(length(patchidsinuse()) > 0, "No patches"))
     print("getting attr list")
     attr_out_list <- lapply(patchidsinuse(), function(pid){
-      cbind(attr_out_r[[pid]](), "pid" = pid)})
+      attr_out_r[[pid]]()})
     print(attr_out_list)
     validate(need(all(unlist(lapply(attr_out_list, isTruthy))), "Some NULL patches"))
     outtable <- attrlist2attrtbl(attr_out_list)
