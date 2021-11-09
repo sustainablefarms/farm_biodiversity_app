@@ -17,7 +17,15 @@ selectpatch_Server <- function(id, selected_region, newinattr){
       maxpatchnum <- 6
       patchnumshown <- reactiveVal(0)
       patchnumwanted <- reactiveVal(0)
-      patchidsinuse <- reactiveVal(vector())
+      patchidsinuse <- reactive({
+        validate(need(nrow(attr_table()) > 0, c()))
+        unlist(attr_table()$pid)
+      })
+  observeEvent(patchidsinuse(),{
+    validate(need(nrow(attr_table()) > 0, c()))
+    print("pids in use are:")
+    print(patchidsinuse())
+  })
       
   # clearout existing and refresh if new attributes updated
   # don't want it to react to internals though - eg when patchidsinuse changes
@@ -29,7 +37,6 @@ selectpatch_Server <- function(id, selected_region, newinattr){
       })
       patchnumshown(0)
       patchnumwanted(0)
-      patchidsinuse(vector())
     }
 
     # make new patch items
@@ -70,33 +77,10 @@ selectpatch_Server <- function(id, selected_region, newinattr){
              where = "beforeBegin",
              ui = patchattr_UI(ns(paste0("p", newid)), newid, pattr)
              )
-    patchidsinuse(c(patchidsinuse(), newid))
     patchnumshown(patchnumshown() + 1)
     }
   }, ignoreInit = FALSE, ignoreNULL = FALSE)
   
-  # remove patch when output requests it
-  observe({
-    validate(need(attr_table(), ""))
-    validate(need(isTruthy(any(attr_table()$delete)), ""))
-    print("removing patches")
-    rempids <- attr_table()$pid[attr_table()$delete]
-    lapply(rempids, function(pid){
-      removeUI(paste0("#", ns(paste0("p", pid, "-accitem")))) #the accitem is hardcoded into the patch attribute module
-    })
-    patchidsinuse(setdiff(patchidsinuse(), rempids))
-  }, priority = -1)
-  patchdeleters <- lapply(1:maxpatchnum, function(pid){
-    observeEvent(input[[paste0("p", pid,"delete")]],
-                 {
-                   removeUI(paste0("#", ns(paste0("pacc", pid))))
-                   patchidsinuse(setdiff(patchidsinuse(), pid))
-                 }
-                 # ignoreInit = TRUE, once = TRUE
-    )})
-  
-
-
   # have servers running already, similar to the patch deleters
   attr_out_r <- lapply(1:maxpatchnum, function(pid){
     out <- patchattr_Server(paste0("p", pid), pid, bbox = bbox)

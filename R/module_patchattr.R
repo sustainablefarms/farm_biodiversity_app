@@ -176,7 +176,7 @@ patchattr_Server <- function(id, pid, bbox){
     id,
     function(input, output, session){
       ns <- session$ns
-      savedvals <- reactiveVal()
+      savedvals <- reactiveVal(NULL)
       
       # from lat lon work
       leafletout <- leaflet_Server("leaflet", bbox)
@@ -269,7 +269,6 @@ patchattr_Server <- function(id, pid, bbox){
           usedlon = usedlon(),
           usedlat = usedlat(),
           usedyear = usedyear(),
-          delete = FALSE,
           pid = pid
           )
         out
@@ -307,7 +306,8 @@ patchattr_Server <- function(id, pid, bbox){
       # output a delete trigger
       observeEvent(input$delete, {
         print("Delete button clicked")
-        savedvals(list("delete" = TRUE, pid = pid))
+        removeUI(paste0("#", ns("accitem"))) 
+        savedvals(NULL)
       }, ignoreInit = TRUE)
       
       
