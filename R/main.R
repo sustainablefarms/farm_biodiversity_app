@@ -36,7 +36,8 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   stopifnot(file.copy("./www/Sustainable Farms logo RGB.png", paste0(apptempdir, "/www/"), overwrite = TRUE)) 
   stopifnot(file.copy(paste0("./www/", speciesinfo$imgfilename), paste0(apptempdir, "/www/"), overwrite = TRUE)) 
   appcolors <<- c("Dark Green" = "#026666",
-              "Dark Gray" = "#3B4042")
+              "Dark Gray" = "#3B4042",
+              "Bright Blue" = "#168BCB")
   enableBookmarking(store = "disable")
 }
 
@@ -50,9 +51,30 @@ ui <- function(request){
       ),
       tabPanelBody(value = "out1",
            predictionsUI("pred1", refisaverage = TRUE),
-           fluidRow(column(4, actionButton("out1_back", "Back", class = "btn-secondary", width = "100%")),
-                    column(4, actionButton("out1_product", "Download Report", width = "100%")),
-                    column(4, actionButton("out1_next", "Next", class = "btn-primary", width = "100%")))
+           fluidRow(class = "align-items-end",
+            column(4, class = "text-center",
+             tags$h2("Edit your farm data"),
+             tags$div(class = "bodysmall", "Go back to edit Scenario 1"),
+             actionButton("out1_back", "Back", class = "btn-secondary", width = "100%")
+            ),
+            column(4, class = "text-center",
+             tags$div(style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
+                      style = "height: 100%",
+             tags$h2("Download a report"),
+             tags$div(class = "bodysmall", 
+                      "Download a full report on the birds that are likely to live in your farm's woodland.",
+                      "This report will include comparison between your farm and bird occupancy in an average woodland area.")
+             ),
+             actionButton("out1_product", "Download Report", width = "100%", style = paste0("background-color: ", appcolors[["Bright Blue"]], ";") )
+            ),
+            column(4, class = "text-center",
+             tags$h2("Create a comparison"),
+             tags$div(class = "bodysmall",
+                      "Go to the next step to create a second comparison scenario for your farm.",
+                      "For example, what birds might live on your farm if you increase woody vegetation cover?"),
+             actionButton("out1_next", "Next", class = "btn-primary", width = "100%")
+            )
+          )
       ),
       tabPanelBody(value = "in2",
                predictors_UI("S2in", isS2 = TRUE),
@@ -61,12 +83,34 @@ ui <- function(request){
       ),
       tabPanelBody(value = "out2",
            predictionsUI("pred2", refisaverage = FALSE),
-           fluidRow(column(4, actionButton("out2_back", "Back", class = "btn-secondary", width = "100%")),
-                    column(4, actionButton("out2_product", "Download Report", width = "100%")),
-                    column(4, actionButton("out2_next", "Go to Sustainable Farms", class = "btn-primary", width = "100%")))
+           fluidRow(class = "align-items-end",
+            column(4, class = "text-center",
+             tags$h2("Edit your farm data"),
+             tags$div(class = "bodysmall", "Go back to edit Scenario 2"),
+             actionButton("out2_back", "Back", class = "btn-secondary", width = "100%")
+            ),
+            column(4, class = "text-center",
+             tags$div(style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
+                      style = "height: 100%",
+             tags$h2("Download a report"),
+             tags$div(class = "bodysmall", 
+                      "Download a full report on the birds that are likely to live in your farm's woodland.",
+                      "This report will include comparison between Scenario 1 and Scenario 2.")
+             ),
+             actionButton("out2_product", "Download Report", width = "100%", style = paste0("background-color: ", appcolors[["Bright Blue"]], ";") )
+            ),
+            column(4, class = "text-center",
+             tags$h2("Estimation Complete"),
+             tags$div(class = "bodysmall",
+                      "Congratulations! You have completed all the steps in the app.",
+                      "Visit the Sustainable Farms website for more guidance on supporting sustainable and profitable agriculture."),
+             actionButton("out2_next", "Go to Sustainable Farms", class = "btn-primary", width = "100%")
+            )
+          )
       ),
     id = "maintabs",
-    type = "hidden"
+    type = "hidden",
+    selected = "out2"
   )
   out <- bootstrapPage(
       includeCSS("./www/base.css"),
