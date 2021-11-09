@@ -52,8 +52,9 @@ selectlocationUI <- function(id){
   	                   textOutput(ns("precip_cold"))
   	          ))
   	 ),
-	 tags$div("Climate data estimated by",
-	          linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
+	 tags$div(class = "datalabels",
+	          "Climate data estimated by",
+	          tags$a(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
 	     )),
    selectYfAUI(ns("yfa")),
          ))
