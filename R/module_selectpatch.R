@@ -18,17 +18,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
       
   # react to button pressing
   observeEvent(input$addpatch, {
-    newid <- input$addpatch
-    pattr <- defaultpatchvalues
-    if (is.data.frame(newinattr())){
-      rowintable <- which(newinattr()$pid == newid)
-      if (isTruthy(rowintable)){pattr <- newinattr()[rowintable[[1]], ]}
-    }
-    # insertUI
-    insertUI(paste0("#", ns("placeholder")),
-             where = "beforeBegin",
-             ui = patchattr_UI(ns(paste0("p", newid)), newid, pattr)
-             )
+    insertblankwoodlandarea(attr_table(), ns = ns, maxpatchnum = maxpatchnum)
     }, ignoreInit = TRUE, ignoreNULL = TRUE)
   
   # have servers running already, similar to the patch deleters

@@ -35,3 +35,20 @@ patchequalsdefault <- function(specifiedvals){
   out <- isTRUE(all.equal(unlist(valscut), unlist(defaultpatchvalues)[names(valscut)]))
   return(out)
 }
+
+insertblankwoodlandarea <- function(attr_table, ns, maxpatchnum, session = getDefaultReactiveDomain()){
+    pidsinuse <- if (isTruthy(attr_table)){attr_table$pid} else {c()}
+    newid <- min(setdiff(1:maxpatchnum, pidsinuse))
+    pattr <- defaultpatchvalues
+    # if (is.data.frame(newinattr())){ for non-blank woodland areas - used elsewhere
+    #   rowintable <- which(newinattr()$pid == newid)
+    #   if (isTruthy(rowintable)){pattr <- newinattr()[rowintable[[1]], ]}
+    # }
+    # insertUI
+   newUI <- patchattr_UI(ns(paste0("p", newid)), newid, pattr)
+   insertUI(paste0("#", ns("placeholder")),
+             where = "beforeBegin",
+             ui = newUI
+             )
+   invisible(newUI)
+}
