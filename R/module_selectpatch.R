@@ -68,25 +68,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     # insertUI
     insertUI(paste0("#", ns("placeholder")),
              where = "beforeBegin",
-             ui = 
-               accordion_item(title = paste("Woodland area", newid),
-                   id = ns(paste0("pacc", newid)),
-                   patchattr_UI(ns(paste0("p", newid)), pattr),
-                   footer = tagList(
-                     actionButton(ns(paste0("p", newid,"delete")), "Delete woodland area", icon = icon("trash"),
-                                  class = "btn-danger"),
-                     do.call(actionButton,
-                       args = c(list(ns(paste0("cancel_p", newid)), "Cancel", class = "btn-secondary"),
-                            toggle_attr(paste0(ns(paste0("pacc", newid)), "_body"))
-                            )),
-                     do.call(actionButton,
-                             args = c(list(ns(paste0("save_p", newid)), "Save and Close", class = "btn-primary"),
-                                      toggle_attr(paste0(ns(paste0("pacc", newid)), "_body"))
-                             ))
-                     ),
-                   footerdflt = "none",
-                   opentype = "edit"
-                   ) %>% expanditem()
+             ui = patchattr_UI(ns(paste0("p", newid)), newid, pattr)
              )
     patchidsinuse(c(patchidsinuse(), newid))
     patchnumshown(patchnumshown() + 1)

@@ -1,5 +1,6 @@
 # patch attributes module
-patchattr_UI <- function(id, attributes){
+patchattr_UI <- function(id, pid, attributes){
+  ns <- NS(id)
   inwoodlandtype <- if (is.null(attributes$IsRemnant)){
     character(0)
   } else if (attributes$IsRemnant){
@@ -14,8 +15,7 @@ patchattr_UI <- function(id, attributes){
   } else {
     "no"
   }
-  ns <- NS(id)
-  tagList(
+  internals <- tagList(
     #woodland type
     twocolumns(heading = "Type of woody coverage",
        left = tagList(
@@ -146,7 +146,26 @@ twocolumns(heading = "Woody cover amounts",
   )
   )
 ))
+  
 
+accordion_item(title = paste("Woodland area", pid),
+    id = ns("accitem"),
+    internals,
+    footer = tagList(
+      actionButton(ns("delete"), "Delete woodland area", icon = icon("trash"),
+                   class = "btn-danger"),
+      do.call(actionButton,
+        args = c(list(ns("cancel"), "Cancel", class = "btn-secondary"),
+             toggle_attr(paste0(ns("accitem"), "_body"))
+             )),
+      do.call(actionButton,
+              args = c(list(ns("save"), "Save and Close", class = "btn-primary"),
+                       toggle_attr(paste0(ns("accitem"), "_body"))
+              ))
+      ),
+    footerdflt = "none",
+    opentype = "edit"
+    ) %>% expanditem()
 }
 
 patchattr_Server <- function(id, bbox, savebutton, cancelbutton){
