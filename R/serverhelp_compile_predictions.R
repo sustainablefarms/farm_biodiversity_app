@@ -10,16 +10,15 @@ compile_predictions <- function(current_values, refpredictions, refisaverage = T
   data$species_prob_current <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwXocc)
   data$spec_different <- todifferent(data$species_prob_current, refpredictions)
   species_richness_raw <- rbind(compute_richness(model_data, data$Xocc),
-                                 reference = sum(refpredictions[, "median"]))           # add in reference
-  species_richness_raw$category <- factor(1:4, levels = 4:1,
-         labels = c(
-                    if (refisaverage){"Average"} else {"Scenario 1"},
-                    "Nearby woody cover = 20%",
-                    if (refisaverage){"Scenario 1"} else {"Scenario 2"},
-           "Nearby woody cover = 2%"
-           ),
-         ordered = TRUE
-  )
+                                 reference = sum(refpredictions[, "median"])) 
+  category_name <- c(
+    "high" = "Nearby woody cover = 20%",
+    "low" = "Nearby woody cover = 2%",
+    "reference" = if (refisaverage){"Scenario 1"} else {"Scenario 2"},
+    "current" = if (refisaverage){"Average"} else {"Scenario 1"})
+                     
+  category_name_f <- factor(category_name, levels = category_name, ordered = TRUE)
+  species_richness_raw$category <- category_name_f[rownames(species_richness_raw)]
   data$species_richness <- species_richness_raw
   
   topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]

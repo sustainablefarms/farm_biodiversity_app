@@ -2,7 +2,7 @@
 predictionsUI <- function(id, refisaverage = TRUE){
   ns <- NS(id)
   tagList(
-    includeHTML("./www/extra.html"),
+    includeHTML("./www/extra.html"), #has the toggleexpand function
     # the following enables bootstrap 3's inbuilt tooltips
     tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
@@ -12,17 +12,25 @@ predictionsUI <- function(id, refisaverage = TRUE){
       function bgyellow(item){
         item.style.backgroundColor = "yellow";
       }'),
-
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
+    fluidRow(class = "justify-content-center",
+             column(6, class = "text-center",
+                    tags$h1("Bird Diversity"),
+                    tags$h3("Step 2: Results of Scenario 1"),
+                    tags$p("We've estimated occupancy for sixty birds based",
+                           "based on the information you provided in the previous step."),
+                    tags$p(tags$em(uiOutput(ns("warn"), inline = TRUE)))
+             )
+    ),
+    
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
-               left = tagList(paste("The <em>second</em> bar is the expected number of birds species in our model that we predict will be occupying at least one patch on your farm.",
-                            "<br><br>",
-                            "The top bar is the number of species we expect if there is 2% (1.5ha) nearby woody cover for every patch.",
-                            "The third bar is the number of species we expect if there is 20% (15ha) nearby woody cover for every patch.",
-                            "The final bar is the number of species we expect from your reference estimates.",
-                            "<br><br>Each species was assigned an occupancy probability equal to the maximum of all patches (we use the maximum as we expect occupancy between patches to be highly correlated)."),
-                            tags$em(uiOutput(ns("warn"), inline = TRUE))),
+               left = tagList(
+                 tags$p("These are estimates of the expected number of species that occupy at least one woodland area.",
+                        "The lower two bars are estimates for",
+                        if (refisaverage){"Scenario 2"}else{"Scenario 1"},
+                        "if all the woodland areas had minimal or a large amount of nearby woody cover."
+                        )),
                right = plotOutput(ns("species_richness"), height = "250px")
     ),
     tags$div(class = "clearfix", tags$div(class =  "float-end", 
