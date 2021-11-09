@@ -10,7 +10,7 @@ selectlocationUI <- function(id){
 	 waiter::use_waiter(),
 	 twocolumns(
 	   heading = "Select your region",
-	   left = tagList(tags$p("Lorem ipsum..."),
+	   left = tagList(tags$p("We use your region to estimate your farm's climate."),
 	                  infotext("Click map or select from list")),
 	   right = 
 	     tagList(
@@ -28,7 +28,7 @@ selectlocationUI <- function(id){
 	   # climate values
 	   twocolumns(
 	     heading = "View climate data",
-	     left = "The climate data shown here are the long-term averages for the centre of your region.",
+	     left = "Shown here are historical climate averages for the centre of your region.",
 	     right = tagList(
 	 tags$div(class="row row-cols-1 row-cols-md-4 g-4",
   	 tags$div(class = "card",
@@ -222,11 +222,13 @@ selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, saveb
   ## YfA
   fromyfa <- selectYfAServer("yfa", selected_region, inAnnPrec.YfA)
   observeEvent(selected_region(), {
-   showNotification(paste("Selected region is", selected_region()))
    shinyjs::toggleElement(id = "hide_until_region",
                    condition = isTruthy(selected_region()))
   }, ignoreNULL = FALSE, ignoreInit = FALSE)
-  
+  if (isTRUE(getOption("shiny.testmode"))){
+    observeEvent(selected_region(), {showNotification(paste("Selected region is", selected_region()))})
+  }
+
   setBookmarkExclude(c("show_maxtemp_modal",
                        "plot_points_waiter_hidden",
                        "show_precip_warm_modal",

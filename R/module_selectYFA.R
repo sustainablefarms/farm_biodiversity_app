@@ -1,11 +1,9 @@
 # select YfA info# select location
 selectYfAUI <- function(id){
   ns <- NS(id)
-  twocolumns(heading = "Approximate recent rainfall",
+  twocolumns(heading = "Last year of rainfall",
              left = tagList(tags$p(class = "bodysmall",
-             "Some species show a small sensitivity to the rainfall since the start of last spring.",
-             "The sensitivity is small so only a rough estimate of rainfall is required.",
-             "Often using the average annual rainfall for your region will be good enough."),
+             "A good guess is your region's average rainfall."),
              infotext("Drag to adjust rainfall amount")),
              right = tagList(
                sliderInput(
@@ -54,7 +52,7 @@ selectYfAServer <- function(id, selected_region, inAnnPrec.YfA){
       output$annprec.lt.region <- renderText({
         validate(need(selected_region(), ""))
         climate_row <- which(climate.lt$label == selected_region())
-        sprintf("(long term average for %s: %i)",
+        sprintf("(long term average for %s: %imm)",
                 selected_region(),
                 climate.lt$AnnPrec[climate_row])
       })
