@@ -102,16 +102,20 @@ predictionsUI <- function(id, refisaverage = TRUE){
                 )
               } else {
               accordion_item(title = "Relative Occupancy Probability", id = ns("occallrel"),
-                             twocolumns(heading = "Estimates of occupancy probability relative to S1 for every species.",
-                                        left = tags$div(tags$p("This is the ratio of each species' estimated occupancy probability to the reference occupancy probability.",
-                                                               "For example, if the Superb Parrot has a ratio of '2', then it is estimated that the Superb Parrot is twice as likely to live in your farm's woodland than in the reference farm."),
-                                                        tags$p(
-                                                          "A ratio of '1' means the species is", tags$em("equally"), "as likely to occupy your farm's woodland as the reference farm.",
-                                                          "A ratio smaller than 1 means the species is", tags$em("less"), "likely to occupy your farm's woodland than the reference farm."),
-                                                        tags$p("Body length data from",
-                                                               linknewtab(href = "https://www.nature.com/articles/sdata201561", "Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015)."))
+                             twocolumns(heading = "Estimates of occupancy probability relative to Scenario 1.",
+                                        left = tags$div(tags$p("Shown is the ratio of occupancy probability in Scenario 2 over Scenario 1.",
+                                                          "A ratio greater than 1 means the species is", tags$em("more"), "likely to occur in Scenario 2 than Scenario 1.",
+                                                          "A ratio of '1' means the species is", tags$em("equally"), "likely to occur in Scenario 2 and Scenario 1.",
+                                                          "A ratio smaller than 1 means the species is", tags$em("less"), "likely to occur in Scenario 2 compared to Scenario 1.",
+                                                          "For example, if the Superb Parrot has a ratio of '2', then it is estimated that the Superb Parrot is twice as likely to live in your farm's woodland than in the reference farm."),
                                                       ),
-                                        right = allrel_plot_UI(ns("allrel"))
+                                        right = tagList(allrel_plot_UI(ns("allrel")),
+                                                        tags$div(class = "datalabels",
+                                                               "Length and weight data from",
+                                                               tags$a(href = "https://www.nature.com/articles/sdata201561",
+                                                                          "Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015).")
+                                                               )
+                                        )
                              )
               )
               }
