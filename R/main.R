@@ -109,8 +109,7 @@ ui <- function(request){
           )
       ),
     id = "maintabs",
-    type = "hidden",
-    selected = "out2"
+    type = "hidden"
   )
   out <- bootstrapPage(
       includeCSS("./www/base.css"),
