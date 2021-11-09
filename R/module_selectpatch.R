@@ -18,13 +18,26 @@ selectpatch_Server <- function(id, selected_region, newinattr){
       presentindicator <- lapply(1:maxpatchnum, function(id) reactiveVal(NULL))
       
   # refresh patches whenever new newinattr
-  # observeEvent(newinattr(), {
+  observeEvent(newinattr(), {
+    print("Delete the attributes!")
     # signal to each patch to delete its UI and clear out saved values
-    # pidsinuse <- getinusepid(attr_table())
-    # if (length(pidsinuse) > 0){
-    #   lapply(deleteincrementer[pidsinuse], inc(inc() + 1))
-    # }
-  # })
+    pidsinuse <- getinusepid(attr_table())
+    if (length(pidsinuse) > 0){
+      lapply(pidsinuse, function(pid){presentindicator[[pid]](NULL)})
+    }
+    # add in attributes
+    print("New attributes!")
+    if (is.list(newinattr())){
+      inattrtbl <- newinattr()
+      print(inattrtbl)
+      pidstoadd <- inattrtbl$pid
+      print(pidstoadd)
+      lapply(pidstoadd, function(pid){
+        print(inattrtbl[inattrtbl$pid == pid, ])
+        print(is.list(inattrtbl[inattrtbl$pid == pid, ]))
+        presentindicator[[pid]](inattrtbl[inattrtbl$pid == pid, ])})
+    }
+  })
       
   # react to button pressing
   observeEvent(input$addpatch, {

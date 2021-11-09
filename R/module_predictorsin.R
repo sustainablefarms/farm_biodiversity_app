@@ -126,15 +126,22 @@ app_predictorsin <- function(){
     },
     function(input, output, session){
       selected_region <- reactiveVal()
-      newinattr <- reactiveVal(data.frame(woody500m = 5, woody3000m = 5, noisy_miner = TRUE, IsRemnant = TRUE))
-      refresh <- reactiveTimer(1000 * 30)
+      newinattr <- reactiveVal()
+      refresh <- reactiveTimer(1000 * 10)
       observeEvent(refresh(),{
         attr <- newinattr()
-        attr <- rbind(attr, attr[1, ])
-        attr[1, "pid"] <- 3
-        attr$woody500m <- 1.3 * attr$woody500m
-        newinattr(attr)
-      })
+        if (!isTruthy(attr)){
+          newinattr(data.frame(woody500m = 5, woody3000m = 5, noisy_miner = TRUE, IsRemnant = TRUE, pid = 1))
+        } else {
+          newattr <- attr[1, ]
+          newattr$pid <- max(attr$pid) + 1
+          attr <- rbind(attr, newattr)
+          attr$woody500m <- 1.3 * attr$woody500m
+          newinattr(attr)
+        }         
+      print("new in attribute table:")
+      print(attr)
+      }, ignoreInit = TRUE)
       inAnnPrec.YfA <- reactiveVal()
       # observeEvent(refresh(), {
       #   inAnnPrec.YfA(inAnnPrec.YfA() + 50)

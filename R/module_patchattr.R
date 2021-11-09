@@ -197,11 +197,12 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
             newattr <- presentindicator()
             print("inserting novel patch")
             newUI <- patchattr_UI(ns, pid, newattr)
-            insertUI("#placeholder",
+            insertUI(selector,
                      where = "beforeBegin",
                      ui = newUI
             )
-            savedvals(c(as.list(newattr), "pid" = pid)) #as.list converts data frame to list of columns
+            newattr$pid = pid
+            savedvals(as.list(newattr)) #as.list converts data frame to list of columns
           }
         }
       }, ignoreInit = TRUE, ignoreNULL = FALSE)
