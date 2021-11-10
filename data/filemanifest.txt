@@ -41,6 +41,7 @@ NAMESPACE
 ./R/prep_load_consstatus.R
 ./R/prep_load_model_data.R
 ./R/prep_traits.R
+./R/serverhelp_checkcvals.R
 ./R/serverhelp_compile_predictions.R
 ./R/serverhelp_compute_prediction_data.R
 ./R/serverhelp_createXocc_from_selected.R
