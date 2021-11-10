@@ -26,20 +26,7 @@ predictors_UI <- function(id, isS2 = TRUE){
       )
     ),
     accordion(id = ns("acc"), 
-      accordion_item("Your region", id = ns("acc-loc"), 
-                     selectlocationUI(ns("loc")),
-                     footer = tagList(
-                       do.call(actionButton,
-                               args = c(list(ns(paste0("cancel_region")), "Cancel", class = "btn-secondary"),
-                                        toggle_attr(paste0(ns("acc-loc"), "_body"))
-                               )),
-                       do.call(actionButton,
-                         args = c(list(ns(paste0("save_region")), "Save and Close", class = "btn-primary"),
-                                  toggle_attr(paste0(ns("acc-loc"), "_body"))
-                         ))
-                     ),
-                     footerdflt = "none"
-                     ),
+      selectlocationUI(ns("loc")),
       selectpatch_UI(ns("ptch")),
       opentype = "edit"
     ),
@@ -69,9 +56,7 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
       ## REGION
       fromlocation <- selectlocationServer("loc",
                                            selected_region,
-                                           inAnnPrec.YfA,
-                                           reactive(input$save_region),
-                                           reactive(input$cancel_region))
+                                           inAnnPrec.YfA)
       
       ## Combine!
       cval <- reactive({

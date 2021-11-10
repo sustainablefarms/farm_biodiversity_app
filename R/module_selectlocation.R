@@ -6,7 +6,7 @@ selectlocationUI <- function(id){
                  `New South Wales` = climate.lt[climate.lt$state == "New South Wales", "label"])
   
   ns <- NS(id)
-  tagList(
+  internals <-  tagList(
 	 waiter::use_waiter(),
 	 twocolumns(
 	   heading = "Select your region",
@@ -70,9 +70,25 @@ selectlocationUI <- function(id){
 	              tags$div(textOutput(ns("annprec.lt.region"), inline = TRUE))
 	            ))
          ))
+  
+accitem <- accordion_item("Your region", id = ns("acc"), 
+                          internals,
+                          footer = tagList(
+                            do.call(actionButton,
+                                    args = c(list(ns(paste0("cancel")), "Cancel", class = "btn-secondary"),
+                                             toggle_attr(paste0(ns("acc"), "_body"))
+                                    )),
+                            do.call(actionButton,
+                                    args = c(list(ns(paste0("save")), "Save and Close", class = "btn-primary"),
+                                             toggle_attr(paste0(ns("acc"), "_body"))
+                                    ))
+                          ),
+                          footerdflt = "none"
+)
+  return(accitem)
 }
 
-selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer, savebutton, cancelbutton){
+selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
   moduleServer(
     id,
     function(input, output, session){
@@ -112,11 +128,12 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer, s
       }, priority = -1, ignoreInit = TRUE, ignoreNULL = TRUE)
       
       # from internal to outer
-      observeEvent(savebutton(), {
+      observeEvent(input$save, {
+        validate(need(selected_region(), ""))
         selected_region_outer(selected_region())
         AnnPrec.YfA_outer(input$AnnPrec.YfA)
       })
-      observeEvent(cancelbutton(), {
+      observeEvent(input$cancel, {
         selected_region(selected_region_outer())
       })
       
@@ -127,6 +144,10 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer, s
         c(ltclim, yfainfo) #output once outer is updated
       })
 
+      # disables and checks
+      # observe({
+      #   shinyjs::toggleState(id = "save", selected_region()})
+      
 
       wleaflet <- waiter::Waiter$new(id = ns("regionsleaflet"))
 
