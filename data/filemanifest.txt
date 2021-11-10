@@ -47,6 +47,7 @@ NAMESPACE
 ./R/serverhelp_getcanopyfromlatlon.R
 ./R/serverhelp_input_tracker.R
 ./R/serverhelp_jaggedlists_to_dataframe.R
+./R/serverhelp_ltcliminfo.R
 ./R/serverhelp_onespecwords.R
 ./R/serverhelp_ordfactby.R
 ./R/UI_accordion.R
