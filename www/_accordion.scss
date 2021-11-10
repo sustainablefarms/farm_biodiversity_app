@@ -1,11 +1,14 @@
 //
 // Base styles
+// From Bootstrap 5.0.2
 //
+@import "../scripts/_functions.scss";
+@import "../scripts/_variables.scss";
 
 .accordion-button.edit {
   &:not(.collapsed) {
     &::after {
-      background-image: $accordion-button-active-icon;
+      background-image: escape-svg($accordion-button-active-icon);
       transform: $accordion-icon-transform;
       opacity: 0.5;
     }
@@ -18,7 +21,7 @@
     content: "";
     opacity: 1;
     transition: opacity 1s ease;
-    background-image: $accordion-button-icon;
+    background-image: escape-svg($accordion-button-icon);
     background-repeat: no-repeat;
   }
 
