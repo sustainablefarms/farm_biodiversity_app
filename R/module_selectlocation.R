@@ -111,7 +111,9 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
       # from outer to internal for region (the YfA)
       observeEvent(selected_region_outer(), {
         if (!isTruthy(selected_region() == selected_region_outer())){
-          selected_region(selected_region_outer())}
+          selected_region(selected_region_outer())
+          showNotification("Internal selected_region updated")
+          }
       }) 
       # from outer to internal for YfA
       observeEvent(selected_region(), {
@@ -175,7 +177,8 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
       #update map to show selected region if selected another way
       observeEvent(selected_region(), {
           lftproxy <- leaflet::leafletProxy("regionsleaflet") %>%
-            leaflet::removeShape("selectedpolygon")
+            leaflet::removeShape("selectedpolygon") %>%
+            leaflet::removePopup("selectedpolygon")
             if (isTruthy(selected_region())){
               regionpolygon <- regionpolygons_4326[regionpolygons_4326$SA2_NAME16 == selected_region(), ]
               regionpt <- regionpts[regionpts$label == selected_region(), ]
@@ -199,7 +202,8 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
          selected_region(input$selectbox)
        })
        observeEvent(selected_region(),{
-                validate(need(selected_region(), ""))
+                showNotification("selected region could be updated here")
+                validate(need(isTruthy(is.character(selected_region())), ""))
                 updateSelectInput(inputId = "selectbox",
                                   selected = selected_region())
        }, ignoreInit = FALSE)
@@ -312,10 +316,12 @@ app_selectlocation <- function(){
     function(input, output, session){
       selected_region_outer <- reactiveVal()
       AnnPrec.YfA_outer <- reactiveVal()
-      # refresh <- reactiveTimer(1000 * 30)
-      # observeEvent(refresh(), {
-      #   selected_region("Temora")
-      # })
+      refresh <- reactiveTimer(1000 * 5)
+      observeEvent(refresh(), {
+        selected_region_outer(NULL)
+        selected_region_outer("")
+        showNotification("Region to empty")
+      })
       selectlocationServer("location", selected_region_outer, AnnPrec.YfA_outer)
     })
 }

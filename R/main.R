@@ -149,9 +149,9 @@ server <- function(input, output, session) {
            ui = actionButton("hidestartpage", "Start", class = "position-absolute btn-primary translate-middle"))
   
   # set up required data
-  startregion <- reactiveVal()
+  startregion <- reactiveVal("") #so region select box starts at ""
   startattr <- reactiveVal(cbind(defaultpatchvalues, pid = 1)) #this is duplicated in restart
-  startAnnPrec.YfA <- reactiveVal()
+  startAnnPrec.YfA <- reactiveVal(NULL)
   inregion <- reactiveVal()
   inattr <- reactiveVal()
   inAnnPrec.YfA <- reactiveVal() 
@@ -205,8 +205,8 @@ server <- function(input, output, session) {
   
   # restart, set default starting too
   observeEvent(c(input$restart, input$start), {# need to flip them to something briefly observers notice a change
-    startregion("")
     startregion(NULL)
+    startregion("")
     startattr(0)
     startattr(cbind(defaultpatchvalues, pid = 1)) #this is duplicated in initiation of values
     startAnnPrec.YfA("")
