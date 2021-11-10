@@ -145,8 +145,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
         column(width = 6,
           if (isTRUE(getOption("shiny.testmode"))){
             downloadButton(ns("downloaddataverbose"), "Verbose Prediction Data", class = "download_badge")
-          },
-          downloadButton(ns("downloadreport"), "Report", class = "download_badge")
+          }
                )
       )
   )
