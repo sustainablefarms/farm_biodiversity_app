@@ -204,6 +204,13 @@ server <- function(input, output, session) {
     },
     ignoreNULL = TRUE)
   
+  # restart modal
+  observeEvent(input$restartmodal, {
+    showModal(
+      restartmodaldialog()
+    )
+  })
+  
   # restart, set default starting too
   observeEvent(input$restart, {# need to flip them to something briefly observers notice a change
     shinyjs::addClass(class = "visually-hidden", selector = "#tw")
