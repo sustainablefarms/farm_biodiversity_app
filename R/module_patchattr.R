@@ -177,6 +177,7 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
       stopifnot(is.reactive(presentindicator))
       ns <- session$ns
       savedvals <- reactiveVal(NULL)
+      showwarnings <- reactiveVal(FALSE)
       
       # keep presence of UI and savedvals up to date with presentindicator
       observeEvent(presentindicator(), {
@@ -334,7 +335,9 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
         savedvals(NULL)
       }, ignoreInit = TRUE)
       
-      # autoupdate saved vals when UI inserted
+      # checks
+      observe({shinyjs::toggleState(id = "save", 
+                 condition = (isTruthy(input$nm) & isTruthy(input$woodlandtype)))})
       
       setBookmarkExclude(c("woodlandtype", 
                            "pc_woody3000m",

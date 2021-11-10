@@ -163,13 +163,13 @@ server <- function(input, output, session) {
   cval1 <- predictors_Server("S1in", reactiveVal(),  reactiveVal(),  reactiveVal())
   cval2 <- predictors_Server("S2in",  inregion,  inattr,  inAnnPrec.YfA)
   
-  if (isTRUE(getOption("shiny.testmode"))){
-    observeEvent(cval1(), {print("New cval1() evaluation")
-                          print(cval1())})
-    observeEvent(cval2(), {print("New cval2() evaluation")
-      print(cval2())})
-    # cval1(readRDS("./tests/testthat/current_values_1patch.rds"))
-  }
+  # if (isTRUE(getOption("shiny.testmode"))){
+  #   observeEvent(cval1(), {print("New cval1() evaluation")
+  #                         print(cval1())})
+  #   observeEvent(cval2(), {print("New cval2() evaluation")
+  #     print(cval2())})
+  #   # cval1(readRDS("./tests/testthat/current_values_1patch.rds"))
+  # }
   
   # populating Scenario 2
   observeEvent(input$out1_next, {

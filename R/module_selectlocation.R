@@ -110,7 +110,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
       # sync selected_region_outer with selected region here, its ok to sensitive to both, because they can only change at the same time
       # from outer to internal for region (the YfA)
       observeEvent(selected_region_outer(), {
-        if (selected_region() != selected_region_outer()){
+        if (!isTruthy(selected_region() == selected_region_outer())){
           selected_region(selected_region_outer())}
       }) 
       # from outer to internal for YfA
@@ -123,7 +123,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
       # whenever both inputs change at the same time, do an update from AnnPrec.YfA_outer *second*
       observeEvent(AnnPrec.YfA_outer(), {
         validate(need(AnnPrec.YfA_outer(), ""))
-        if (AnnPrec.YfA_outer() != input$AnnPrec.YfA){
+        if (!isTruthy(AnnPrec.YfA_outer() == input$AnnPrec.YfA)){
           updateSliderInput(inputId = "AnnPrec.YfA",
                             value = AnnPrec.YfA_outer())
         }
