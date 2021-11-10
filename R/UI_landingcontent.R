@@ -69,14 +69,20 @@ landingpage <- function(id = NULL){
 
 
 restartmodaldialog <- function(){
-  modalDialog(title = tags$h2("Are you sure you want to Restart?"),
+  modalDialog(
+          title = tags$div(class = "clearfix",
+                    tags$h2("Are you sure you want to Restart?", class = "float-start"),
+                    tags$button(type = "button", class = "btn-close float-end", `aria-label` = "Cancel", `data-dismiss` = "modal", 
+                                `data-bs-dismiss` = "modal"),
+                  ),
           tags$div(class = "body", 
                    "Restarting the app will clear your farm data and results.",
                    "You will be redirected to the launch page of", paste0(appname, ".")),
           footer = tagList(
             tags$button(type = "button", class = "btn btn-secondary", `data-dismiss` = "modal", 
-                        `data-bs-dismiss` = "modal", "Cancel"),
-            actionButton(inputId = "restart", label = "I want to restart", class = "btn-primary")
+                        `data-bs-dismiss` = "modal", `aria-label` = "Cancel", "Cancel"),
+            actionButton(inputId = "restart", label = "I want to restart", class = "btn-primary",
+                         `data-dismiss` = "modal", `data-bs-dismiss` = "modal", `aria-label` = "Restart",)
           ),
           easyClose = TRUE,
           fade = TRUE
