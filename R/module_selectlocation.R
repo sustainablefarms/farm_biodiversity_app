@@ -56,11 +56,23 @@ selectlocationUI <- function(id){
 	          "Climate data estimated by",
 	          tags$a(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
 	     )),
-   selectYfAUI(ns("yfa")),
+	 twocolumns(heading = "Last year of rainfall",
+	            left = tagList(tags$p(class = "bodysmall",
+	                                  "A good guess is your region's average rainfall."),
+	                           infotext("Drag to adjust rainfall amount")),
+	            right = tagList(
+	              sliderInput(
+	                inputId = ns("AnnPrec.YfA"),
+	                label = NULL,
+	                min = 400, max = 1000, step = 20,
+	                width = "100%",
+	                value = new_data_mean$AnnPrec.YfA),
+	              tags$div(textOutput(ns("annprec.lt.region"), inline = TRUE))
+	            ))
          ))
 }
 
-selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, savebutton, cancelbutton){
+selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer, savebutton, cancelbutton){
   moduleServer(
     id,
     function(input, output, session){
@@ -76,17 +88,25 @@ selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, saveb
         climate = NULL,
         climate_title = NULL)
       ns <- session$ns
+      climate.lt <- readRDS("data/sa2_points_climate.rds")
       
       # sync selected_region_outer with selected region here, its ok to sensitive to both, because they can only change at the same time
-      observeEvent(c(selected_region_outer(), inAnnPrec.YfA()), {
-        selected_region(selected_region_outer())
-        ltcliminfo <- ltcliminfo_region(selected_region_outer(), climdatatbl = data$points)
-        yfainfo <- list(AnnPrec.YfA = inAnnPrec.YfA())
-        outofmodule(c(ltcliminfo, yfainfo))
+      # from outer to out of module
+      observeEvent(c(selected_region_outer(), AnnPrec.YfA_outer()), {
+        ltclim <- ltcliminfo_region(selected_region_outer(), climdatatbl = data$points)
+        yfainfo <- list(AnnPrec.YfA = AnnPrec.YfA_outer())
+        print("updating from outer")
+        outofmodule(c(ltclim, yfainfo)) #output once outer is update
       })
+      # from outer to internal
+      observeEvent(selected_region_outer(), {
+        if (selected_region() != selected_region_outer()){
+          selected_region(selected_region_outer())}
+      })
+      # from internal to outer
       observeEvent(savebutton(), {
         selected_region_outer(selected_region())
-        outofmodule(c(ltcliminfo(), fromyfa()))
+        AnnPrec.YfA_outer(input$AnnPrec.YfA)
       })
       observeEvent(cancelbutton(), {
         selected_region(selected_region_outer())
@@ -203,7 +223,31 @@ selectlocationServer <- function(id, selected_region_outer, inAnnPrec.YfA, saveb
   })
     
   ## YfA
-  fromyfa <- selectYfAServer("yfa", selected_region, inAnnPrec.YfA)
+  # update YfA based on new location info
+  observeEvent(selected_region(), {
+      	validate(need(selected_region(), ""))
+        climate_row <- which(climate.lt$label == selected_region())
+	updateSliderInput(inputId = "AnnPrec.YfA",
+			  value = climate.lt$AnnPrec[climate_row])
+      }, priority = 100, ignoreInit = TRUE, ignoreNULL = TRUE)
+  # whenever both inputs change at the same time, do an update from AnnPrec.YfA_outer *second*
+  observeEvent(AnnPrec.YfA_outer(), {
+    validate(need(AnnPrec.YfA_outer(), ""))
+    if (AnnPrec.YfA_outer() != input$AnnPrec.YfA){
+      updateSliderInput(inputId = "AnnPrec.YfA",
+                        value = AnnPrec.YfA_outer())
+    }
+  }, priority = -1, ignoreInit = TRUE, ignoreNULL = TRUE)
+  
+  output$annprec.lt.region <- renderText({
+    validate(need(selected_region(), ""))
+    climate_row <- which(climate.lt$label == selected_region())
+    sprintf("(long term average for %s: %imm)",
+            selected_region(),
+            climate.lt$AnnPrec[climate_row])
+  })
+  
+  # hide a section
   observeEvent(selected_region(), {
    shinyjs::toggleElement(id = "hide_until_region",
                    condition = isTruthy(selected_region()))

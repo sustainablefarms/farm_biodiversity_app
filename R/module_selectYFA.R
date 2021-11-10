@@ -28,14 +28,6 @@ selectYfAServer <- function(id, selected_region, inAnnPrec.YfA){
         usebookmark = FALSE,
         value = NULL
       )
-      climate.lt <- readRDS("data/sa2_points_climate.rds")
-  # update YfA based on new location info
-      observeEvent(selected_region(), {
-      	validate(need(selected_region(), ""))
-        climate_row <- which(climate.lt$label == selected_region())
-	updateSliderInput(inputId = "AnnPrec.YfA",
-			  value = climate.lt$AnnPrec[climate_row])
-      }, priority = 100, ignoreInit = TRUE, ignoreNULL = TRUE)
   # whenever both inputs change at the same time, do an update from inAnnPrec.YfA *last*
   observeEvent(inAnnPrec.YfA(), {
     validate(need(inAnnPrec.YfA(), ""))
