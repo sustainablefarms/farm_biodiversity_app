@@ -110,7 +110,11 @@ app_predictorsin <- function(){
     },
     function(input, output, session){
       selected_region <- reactiveVal()
-      newinattr <- reactiveVal()
+      newinattr <- reactiveVal(cbind(defaultpatchvalues, pid = 1))
+      refresh1 <- reactiveTimer(1000 * 7)
+      refresh2 <- reactiveTimer(1000 * 11)
+      observeEvent(refresh1(),{newinattr(NULL); print("NULL inputs")})
+      observeEvent(refresh2(),{newinattr(cbind(defaultpatchvalues, pid = 1)); print("1 patch in")})
       # refresh <- reactiveTimer(1000 * 10)
       # observeEvent(refresh(),{
       #   attr <- newinattr()

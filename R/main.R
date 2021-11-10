@@ -140,6 +140,8 @@ ui <- function(request){
 # SERVER
 server <- function(input, output, session) {
   ns <- session$ns
+
+  
   ## Stuff to do with the opening page of the app
   removeUI(selector = paste0("#", ns("startspinner")))
   insertUI(selector = paste0("#", ns("startbuttonlocation")),
@@ -147,6 +149,9 @@ server <- function(input, output, session) {
            ui = actionButton("hidestartpage", "Start", class = "position-absolute btn-primary translate-middle"))
   
   # set up required data
+  startregion <- reactiveVal()
+  startattr <- reactiveVal(cbind(defaultpatchvalues, pid = 1)) #this is duplicated in restart
+  startAnnPrec.YfA <- reactiveVal()
   inregion <- reactiveVal()
   inattr <- reactiveVal()
   inAnnPrec.YfA <- reactiveVal() 
@@ -160,7 +165,7 @@ server <- function(input, output, session) {
   )
   
   ## Predictors Input
-  cval1 <- predictors_Server("S1in", reactiveVal(),  reactiveVal(),  reactiveVal())
+  cval1 <- predictors_Server("S1in", startregion,  startattr,  startAnnPrec.YfA)
   cval2 <- predictors_Server("S2in",  inregion,  inattr,  inAnnPrec.YfA)
   
   # if (isTRUE(getOption("shiny.testmode"))){
@@ -197,6 +202,17 @@ server <- function(input, output, session) {
     showModal(moreinfomodal())
     },
     ignoreNULL = TRUE)
+  
+  # restart, set default starting too
+  observeEvent(c(input$restart, input$start), {# need to flip them to something briefly observers notice a change
+    startregion("")
+    startregion(NULL)
+    startattr(0)
+    startattr(cbind(defaultpatchvalues, pid = 1)) #this is duplicated in initiation of values
+    startAnnPrec.YfA("")
+    startAnnPrec.YfA(new_data_mean$AnnPrec.YfA)
+    showNotification("restarting")
+  }, ignoreInit = TRUE, ignoreNULL = TRUE) #ignore init and null here so that I have a chane of making bookmarking work
   
   ## tab navigation
   observeEvent(input$in1_next, {updateTabsetPanel(session, inputId = "maintabs", "out1")}, ignoreInit = TRUE)

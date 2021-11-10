@@ -181,11 +181,13 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
       
       # keep presence of UI and savedvals up to date with presentindicator
       observeEvent(presentindicator(), {
+        print("presentindicator altered")
         # all changes involve first deleting the UI and savedvals
         removeUI(paste0("#", ns("accitem"))) 
         savedvals(NULL)
         if (isTruthy(presentindicator())){
           if (is.numeric(presentindicator())){
+              print("presentindicator sparking new patch UI")
               newUI <- patchattr_UI(ns, pid, defaultpatchvalues)
               insertUI(selector,
                        where = "beforeBegin",
@@ -204,7 +206,7 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
             savedvals(as.list(newattr)) #as.list converts data frame to list of columns
           }
         }
-      }, ignoreInit = TRUE, ignoreNULL = FALSE)
+      }, ignoreInit = FALSE, ignoreNULL = FALSE) #so at the very start of the app a woodland area can be added
       
       # from lat lon work
       leafletout <- leaflet_Server("leaflet", bbox)
