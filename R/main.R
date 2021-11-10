@@ -38,100 +38,106 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   appcolors <<- c("Dark Green" = "#026666",
               "Dark Gray" = "#3B4042",
               "Bright Blue" = "#168BCB")
+  basecss <<- sass::sass(sass::sass_file("./www/base.scss"))
   enableBookmarking(store = "disable")
 }
 
 # UI
+tabwrapper <- function(){tabsetPanel(
+    tabPanelBody(value = "in1",
+             predictors_UI("S1in", isS2 = FALSE),
+             fluidRow(column(6, actionButton("in1_back", "Back", class = "btn-secondary", width = "100%")),
+                      column(6, actionButton("in1_next", "Next", class = "btn-primary", width = "100%")))
+    ),
+    tabPanelBody(value = "out1",
+         predictionsUI("pred1", refisaverage = TRUE),
+         fluidRow(class = "align-items-end",
+          column(4, class = "text-center",
+           tags$h2("Edit your farm data"),
+           tags$div(class = "bodysmall", "Go back to edit Scenario 1"),
+           actionButton("out1_back", "Back", class = "btn-secondary", width = "100%")
+          ),
+          column(4, class = "text-center",
+           tags$div(style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
+                    style = "height: 100%",
+           tags$h2("Download a report"),
+           tags$div(class = "bodysmall", 
+                    "Download a full report on the birds that are likely to live in your farm's woodland.",
+                    "This report will include comparison between your farm and bird occupancy in an average woodland area.")
+           ),
+           actionButton("out1_product", "Download Report", width = "100%", style = paste0("background-color: ", appcolors[["Bright Blue"]], ";") )
+          ),
+          column(4, class = "text-center",
+           tags$h2("Create a comparison"),
+           tags$div(class = "bodysmall",
+                    "Go to the next step to create a second comparison scenario for your farm.",
+                    "For example, what birds might live on your farm if you increase woody vegetation cover?"),
+           actionButton("out1_next", "Next", class = "btn-primary", width = "100%")
+          )
+        )
+    ),
+    tabPanelBody(value = "in2",
+             predictors_UI("S2in", isS2 = TRUE),
+             fluidRow(column(6, actionButton("in2_back", "Back", class = "btn-secondary", width = "100%")),
+                      column(6, actionButton("in2_next", "Next", class = "btn-primary", width = "100%")))
+    ),
+    tabPanelBody(value = "out2",
+         predictionsUI("pred2", refisaverage = FALSE),
+         fluidRow(class = "align-items-end",
+          column(4, class = "text-center",
+           tags$h2("Edit your farm data"),
+           tags$div(class = "bodysmall", "Go back to edit Scenario 2"),
+           actionButton("out2_back", "Back", class = "btn-secondary", width = "100%")
+          ),
+          column(4, class = "text-center",
+           tags$div(style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
+                    style = "height: 100%",
+           tags$h2("Download a report"),
+           tags$div(class = "bodysmall", 
+                    "Download a full report on the birds that are likely to live in your farm's woodland.",
+                    "This report will include comparison between Scenario 1 and Scenario 2.")
+           ),
+           actionButton("out2_product", "Download Report", width = "100%", style = paste0("background-color: ", appcolors[["Bright Blue"]], ";") )
+          ),
+          column(4, class = "text-center",
+           tags$h2("Estimation Complete"),
+           tags$div(class = "bodysmall",
+                    "Congratulations! You have completed all the steps in the app.",
+                    "Visit the Sustainable Farms website for more guidance on supporting sustainable and profitable agriculture."),
+           actionButton("out2_next", "Go to Sustainable Farms", class = "btn-primary", width = "100%")
+          )
+        )
+    ),
+  id = "maintabs",
+  type = "hidden"
+)
+}
+
+outerpage <- function(){bootstrapPage(
+    tags$head(tags$style(basecss)),
+    # includeCSS("./www/base.css"),
+    includeCSS("./www/accordion.css"),
+    waiter::use_waiter(), 
+    tags$head(includeHTML("./www/google-analytics.html")),
+    tags$script("$(function () {
+      $('[data-toggle=tooltip]').tooltip()
+    })"
+    ),
+    shinyjs::useShinyjs(),
+    leaflet::leafletOutput("loadleaflet", height = "0px", width = "0px"), #so leaflet scripts are loaded
+    plotly::plotlyOutput("loadplotly", height = "0px", width = "0px"), #so plotly is loaded
+    headercontent(),
+    tags$div(id = "lp", landingpage()),
+    tags$div(id = "tw", class = "visually-hidden", tabwrapper()),
+    footercontent(),
+    title = appname,
+    theme = bslib::bs_theme(version = 5, "lumen",
+                            "primary" = appcolors[["Dark Green"]],
+                            "dark" = appcolors[["Dark Gray"]])
+)}
+
 ui <- function(request){
-  navbarsection <- tabsetPanel(
-      tabPanelBody(value = "in1",
-               predictors_UI("S1in", isS2 = FALSE),
-               fluidRow(column(6, actionButton("in1_back", "Back", class = "btn-secondary", width = "100%")),
-                        column(6, actionButton("in1_next", "Next", class = "btn-primary", width = "100%")))
-      ),
-      tabPanelBody(value = "out1",
-           predictionsUI("pred1", refisaverage = TRUE),
-           fluidRow(class = "align-items-end",
-            column(4, class = "text-center",
-             tags$h2("Edit your farm data"),
-             tags$div(class = "bodysmall", "Go back to edit Scenario 1"),
-             actionButton("out1_back", "Back", class = "btn-secondary", width = "100%")
-            ),
-            column(4, class = "text-center",
-             tags$div(style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
-                      style = "height: 100%",
-             tags$h2("Download a report"),
-             tags$div(class = "bodysmall", 
-                      "Download a full report on the birds that are likely to live in your farm's woodland.",
-                      "This report will include comparison between your farm and bird occupancy in an average woodland area.")
-             ),
-             actionButton("out1_product", "Download Report", width = "100%", style = paste0("background-color: ", appcolors[["Bright Blue"]], ";") )
-            ),
-            column(4, class = "text-center",
-             tags$h2("Create a comparison"),
-             tags$div(class = "bodysmall",
-                      "Go to the next step to create a second comparison scenario for your farm.",
-                      "For example, what birds might live on your farm if you increase woody vegetation cover?"),
-             actionButton("out1_next", "Next", class = "btn-primary", width = "100%")
-            )
-          )
-      ),
-      tabPanelBody(value = "in2",
-               predictors_UI("S2in", isS2 = TRUE),
-               fluidRow(column(6, actionButton("in2_back", "Back", class = "btn-secondary", width = "100%")),
-                        column(6, actionButton("in2_next", "Next", class = "btn-primary", width = "100%")))
-      ),
-      tabPanelBody(value = "out2",
-           predictionsUI("pred2", refisaverage = FALSE),
-           fluidRow(class = "align-items-end",
-            column(4, class = "text-center",
-             tags$h2("Edit your farm data"),
-             tags$div(class = "bodysmall", "Go back to edit Scenario 2"),
-             actionButton("out2_back", "Back", class = "btn-secondary", width = "100%")
-            ),
-            column(4, class = "text-center",
-             tags$div(style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
-                      style = "height: 100%",
-             tags$h2("Download a report"),
-             tags$div(class = "bodysmall", 
-                      "Download a full report on the birds that are likely to live in your farm's woodland.",
-                      "This report will include comparison between Scenario 1 and Scenario 2.")
-             ),
-             actionButton("out2_product", "Download Report", width = "100%", style = paste0("background-color: ", appcolors[["Bright Blue"]], ";") )
-            ),
-            column(4, class = "text-center",
-             tags$h2("Estimation Complete"),
-             tags$div(class = "bodysmall",
-                      "Congratulations! You have completed all the steps in the app.",
-                      "Visit the Sustainable Farms website for more guidance on supporting sustainable and profitable agriculture."),
-             actionButton("out2_next", "Go to Sustainable Farms", class = "btn-primary", width = "100%")
-            )
-          )
-      ),
-    id = "maintabs",
-    type = "hidden"
-  )
-  out <- bootstrapPage(
-      includeCSS("./www/base.css"),
-      includeCSS("./www/accordion.css"),
-      waiter::use_waiter(), 
-      tags$head(includeHTML("./www/google-analytics.html")),
-      tags$script("$(function () {
-        $('[data-toggle=tooltip]').tooltip()
-      })"
-      ),
-      shinyjs::useShinyjs(),
-      leaflet::leafletOutput("loadleaflet", height = "0px", width = "0px"), #so leaflet scripts are loaded
-      plotly::plotlyOutput("loadplotly", height = "0px", width = "0px"), #so plotly is loaded
-      headercontent(),
-      tags$div(id = "lp", landingpage()),
-      tags$div(id = "tw", class = "visually-hidden", navbarsection),
-      footercontent(),
-      title = appname,
-      theme = bslib::bs_theme(version = 5, "lumen",
-                              "primary" = appcolors[["Dark Green"]],
-                              "dark" = appcolors[["Dark Gray"]])
-  )
+  outerpage()
 }
 
 # SERVER
