@@ -138,6 +138,8 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
       })
       observeEvent(input$cancel, {
         selected_region(selected_region_outer())
+        updateSliderInput(inputId = "AnnPrec.YfA",
+                          value = AnnPrec.YfA_outer())
       })
       
       # from outer to out of module
