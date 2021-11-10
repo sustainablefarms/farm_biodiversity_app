@@ -310,8 +310,6 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
       
       
       # saving and cancelling
-      observeEvent(input$save,{ showNotification("patch saved")})
-      observeEvent(input$cancel,{ showNotification("patch reset")})
       observeEvent(input$save, {
         savedvals(specifiedvals())
       }, ignoreNULL = FALSE, ignoreInit = FALSE)
