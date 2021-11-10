@@ -78,7 +78,6 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer, s
     function(input, output, session){
       # set up reactive values
       selected_region <- reactiveVal()
-      outofmodule <- reactiveVal()
       data <- reactiveValues(
         climate = NULL,
         polygons = NULL,
@@ -91,18 +90,19 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer, s
       climate.lt <- readRDS("data/sa2_points_climate.rds")
       
       # sync selected_region_outer with selected region here, its ok to sensitive to both, because they can only change at the same time
-      # from outer to out of module
-      observeEvent(c(selected_region_outer(), AnnPrec.YfA_outer()), {
-        ltclim <- ltcliminfo_region(selected_region_outer(), climdatatbl = data$points)
-        yfainfo <- list(AnnPrec.YfA = AnnPrec.YfA_outer())
-        print("updating from outer")
-        outofmodule(c(ltclim, yfainfo)) #output once outer is update
-      })
-      # from outer to internal
+      # from outer to internal for region (the YfA)
       observeEvent(selected_region_outer(), {
         if (selected_region() != selected_region_outer()){
           selected_region(selected_region_outer())}
+      })  
+      # from outer to out of module
+      outofmodule <- reactive({
+        ltclim <- ltcliminfo_region(selected_region_outer(), climdatatbl = data$points)
+        yfainfo <- list(AnnPrec.YfA = AnnPrec.YfA_outer())
+        print("updating from outer")
+        c(ltclim, yfainfo) #output once outer is update
       })
+
       # from internal to outer
       observeEvent(savebutton(), {
         selected_region_outer(selected_region())
