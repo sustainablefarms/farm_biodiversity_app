@@ -10,7 +10,7 @@ sass(
     sass_file("./www/_accordion.scss")),
   "./www/accordion.css",
   options = sass_options(
-    # output_style = "compressed",
-    # source_map_embed = TRUE
+    output_style = "compressed",
+    source_map_embed = TRUE
   )
 )

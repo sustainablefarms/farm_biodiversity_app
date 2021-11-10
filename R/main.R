@@ -39,6 +39,15 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
               "Dark Gray" = "#3B4042",
               "Bright Blue" = "#168BCB")
   basecss <<- sass::sass(sass::sass_file("./www/base.scss"))
+  acccss <<- sass::sass(
+    input = list(
+      "primary" = "#026666",
+      "accordion-button-active-icon" = 
+        "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23137ea7'%3e%3cpath fill-rule='evenodd' d='M497.9 74.16l-60.09-60.1c-18.75-18.75-49.19-18.75-67.93 0L313.4 70.61l127.1 128l56.56-56.55C516.7 123.3 516.7 92.91 497.9 74.16zM31.04 352.1c-2.234 2.234-3.756 5.078-4.377 8.176l-26.34 131.7C-1.703 502.1 6.156 512 15.95 512c1.049 0 2.117-.1035 3.199-.3203l131.7-26.34c3.098-.6191 5.941-2.141 8.176-4.373l259.7-259.7l-128-128L31.04 352.1zM131.9 440.2l-75.14 15.03l15.03-75.15L96 355.9V416h60.12L131.9 440.2z'/%3e%3c/svg%3e\")",
+      "accordion-button-icon" = "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23137ea7'%3e%3cpath fill-rule='evenodd' d='M497.9 74.16l-60.09-60.1c-18.75-18.75-49.19-18.75-67.93 0L313.4 70.61l127.1 128l56.56-56.55C516.7 123.3 516.7 92.91 497.9 74.16zM31.04 352.1c-2.234 2.234-3.756 5.078-4.377 8.176l-26.34 131.7C-1.703 502.1 6.156 512 15.95 512c1.049 0 2.117-.1035 3.199-.3203l131.7-26.34c3.098-.6191 5.941-2.141 8.176-4.373l259.7-259.7l-128-128L31.04 352.1zM131.9 440.2l-75.14 15.03l15.03-75.15L96 355.9V416h60.12L131.9 440.2z'/%3e%3c/svg%3e\")",
+      "accordion-icon-transform" = "none",
+      sass::sass_file("./www/_accordion.scss"))
+  )
   enableBookmarking(store = "disable")
 }
 
@@ -114,9 +123,10 @@ tabwrapper <- function(){tabsetPanel(
 }
 
 outerpage <- function(){bootstrapPage(
-    tags$head(tags$style(basecss)),
+    tags$head(tags$style(HTML(basecss, acccss))),
+    # tags$head(tags$style(acccss)),
     # includeCSS("./www/base.css"),
-    includeCSS("./www/accordion.css"),
+    # includeCSS("./www/accordion.css"),
     waiter::use_waiter(), 
     tags$head(includeHTML("./www/google-analytics.html")),
     tags$script("$(function () {
