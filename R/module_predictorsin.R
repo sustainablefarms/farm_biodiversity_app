@@ -102,6 +102,7 @@ app_predictorsin <- function(){
   
   shinyApp(
     {bootstrapPage(
+      shinyjs::useShinyjs(),
       includeCSS("./www/base.css"),
       includeCSS("./www/accordion.css"),
       predictors_UI("S1in", isS2 = FALSE),

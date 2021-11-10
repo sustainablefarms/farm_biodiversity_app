@@ -11,7 +11,8 @@ selectlocationUI <- function(id){
 	 twocolumns(
 	   heading = "Select your region",
 	   left = tagList(tags$p("We use your region to estimate your farm's climate."),
-	                  infotext("Click map or select from list")),
+	                  infotext("Click map or select from list"),
+	                  uiOutput(ns("warn"))),
 	   right = 
 	     tagList(
 	       selectInput(ns("selectbox"), label = NULL, 
@@ -94,6 +95,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
     function(input, output, session){
       # set up reactive values
       selected_region <- reactiveVal()
+      showwarnings <- reactiveVal(FALSE)
       data <- reactiveValues(
         climate = NULL,
         polygons = NULL,
@@ -132,6 +134,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
         validate(need(selected_region(), ""))
         selected_region_outer(selected_region())
         AnnPrec.YfA_outer(input$AnnPrec.YfA)
+        showwarnings(TRUE)
       })
       observeEvent(input$cancel, {
         selected_region(selected_region_outer())
@@ -144,10 +147,8 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
         c(ltclim, yfainfo) #output once outer is updated
       })
 
-      # disables and checks
-      # observe({
-      #   shinyjs::toggleState(id = "save", selected_region()})
-      
+      # disable if nothing selected
+      observe({shinyjs::toggleState(id = "save", isTruthy(selected_region()))})
 
       wleaflet <- waiter::Waiter$new(id = ns("regionsleaflet"))
 
@@ -301,16 +302,18 @@ app_selectlocation <- function(){
   
   shinyApp(
     {bootstrapPage(
+      shinyjs::useShinyjs(),
       includeCSS("./www/base.css"),
       fluidRow(selectlocationUI("location")),
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
-      selected_region <- reactiveVal("Nagambie")
-      refresh <- reactiveTimer(1000 * 30)
-      observeEvent(refresh(), {
-        selected_region("Temora")
-      })
-      selectlocationServer("location", selected_region)
+      selected_region_outer <- reactiveVal()
+      AnnPrec.YfA_outer <- reactiveVal()
+      # refresh <- reactiveTimer(1000 * 30)
+      # observeEvent(refresh(), {
+      #   selected_region("Temora")
+      # })
+      selectlocationServer("location", selected_region_outer, AnnPrec.YfA_outer)
     })
 }
