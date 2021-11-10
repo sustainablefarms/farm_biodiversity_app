@@ -94,15 +94,23 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer, s
       observeEvent(selected_region_outer(), {
         if (selected_region() != selected_region_outer()){
           selected_region(selected_region_outer())}
-      })  
-      # from outer to out of module
-      outofmodule <- reactive({
-        ltclim <- ltcliminfo_region(selected_region_outer(), climdatatbl = data$points)
-        yfainfo <- list(AnnPrec.YfA = AnnPrec.YfA_outer())
-        print("updating from outer")
-        c(ltclim, yfainfo) #output once outer is update
-      })
-
+      }) 
+      # from outer to internal for YfA
+      observeEvent(selected_region(), {
+          	validate(need(selected_region(), ""))
+            climate_row <- which(climate.lt$label == selected_region())
+    	updateSliderInput(inputId = "AnnPrec.YfA",
+    			  value = climate.lt$AnnPrec[climate_row])
+          }, priority = 100, ignoreInit = TRUE, ignoreNULL = TRUE)
+      # whenever both inputs change at the same time, do an update from AnnPrec.YfA_outer *second*
+      observeEvent(AnnPrec.YfA_outer(), {
+        validate(need(AnnPrec.YfA_outer(), ""))
+        if (AnnPrec.YfA_outer() != input$AnnPrec.YfA){
+          updateSliderInput(inputId = "AnnPrec.YfA",
+                            value = AnnPrec.YfA_outer())
+        }
+      }, priority = -1, ignoreInit = TRUE, ignoreNULL = TRUE)
+      
       # from internal to outer
       observeEvent(savebutton(), {
         selected_region_outer(selected_region())
@@ -112,12 +120,15 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer, s
         selected_region(selected_region_outer())
       })
       
+      # from outer to out of module
+      outofmodule <- reactive({
+        ltclim <- ltcliminfo_region(selected_region_outer(), climdatatbl = climate.lt)
+        yfainfo <- list(AnnPrec.YfA = AnnPrec.YfA_outer())
+        c(ltclim, yfainfo) #output once outer is updated
+      })
 
-      # observeEvent(input$spatial_type, {
-        # if(input$spatial_type != "none"){
-          data$points <- readRDS("data/sa2_points_climate.rds")
-        # }
-        wleaflet <- waiter::Waiter$new(id = ns("regionsleaflet"))
+
+      wleaflet <- waiter::Waiter$new(id = ns("regionsleaflet"))
 
         
       # leaflet map operations
@@ -169,13 +180,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer, s
                                   selected = selected_region())
        }, ignoreInit = FALSE)
        
-       # obtain actual climate if required by later work
-       ltcliminfo <- reactive({
-          locinfo <- ltcliminfo_region(selected_region(), climdatatbl = data$points)
-          locinfo
-        }) %>% throttle(1000)
-        
-        # insert region name
+        # render region name
         output$regionname <- renderText({
           validate(need(selected_region(), ""))
           selected_region()
@@ -183,62 +188,39 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer, s
         # draw a map
         output$map <- renderPlot({
           validate(need(selected_region(), "Please select your region"))
-          # map_text <- data$points[data$points$label == outOfModule()$selected_region, ]
-          # map_text$label <- paste(strsplit(map_text$label, " ")[[1]], collapse = "\n")
           ggplot(regionpolygons_4326[regionpolygons_4326$SA2_NAME16 == selected_region(), ]) +
             geom_sf(fill = "grey90", color = "grey10") +
-            # geom_text(data = map_text,
-            #           mapping = aes(x = longitude, y = latitude, label = label),
-            #           color = "grey30",
-            #           alpha = 0.5,
-            #           size = 5
-            # ) +
             theme_void()
         })
       # })
       
   ## CLIMATE values render output
+  ltclim_fordisplay <- reactive({ltcliminfo_region(selected_region(), climdatatbl = climate.lt)})
   output$maxtemp <- renderUI({
-    validate(need(ltcliminfo()$MaxTWarmMonth.lt, ""))
-    HTML(paste0(round(ltcliminfo()$MaxTWarmMonth.lt * 0.1, 1),
+    validate(need(ltclim_fordisplay()$MaxTWarmMonth.lt, ""))
+    HTML(paste0(round(ltclim_fordisplay()$MaxTWarmMonth.lt * 0.1, 1),
                 "&deg;C"))
   })
   
   output$mintemp <- renderUI({
-    validate(need(ltcliminfo()$MinTColdMonth.lt, ""))
-    HTML(paste0(round(ltcliminfo()$MinTColdMonth.lt * 0.1, 1),
+    validate(need(ltclim_fordisplay()$MinTColdMonth.lt, ""))
+    HTML(paste0(round(ltclim_fordisplay()$MinTColdMonth.lt * 0.1, 1),
                 "&deg;C"))
   })
 
   output$precip_warm <- renderText({
-    validate(need(ltcliminfo()$PrecWarmQ.lt, ""))
-    HTML(paste0(round(ltcliminfo()$PrecWarmQ.lt * 0.1, 1),
+    validate(need(ltclim_fordisplay()$PrecWarmQ.lt, ""))
+    HTML(paste0(round(ltclim_fordisplay()$PrecWarmQ.lt * 0.1, 1),
                 "mm"))
   })
   
   output$precip_cold <- renderText({
-    validate(need(ltcliminfo()$PrecColdQ.lt, ""))
-    HTML(paste0(round(ltcliminfo()$PrecColdQ.lt * 0.1, 1),
+    validate(need(ltclim_fordisplay()$PrecColdQ.lt, ""))
+    HTML(paste0(round(ltclim_fordisplay()$PrecColdQ.lt * 0.1, 1),
                 "mm"))
   })
     
-  ## YfA
-  # update YfA based on new location info
-  observeEvent(selected_region(), {
-      	validate(need(selected_region(), ""))
-        climate_row <- which(climate.lt$label == selected_region())
-	updateSliderInput(inputId = "AnnPrec.YfA",
-			  value = climate.lt$AnnPrec[climate_row])
-      }, priority = 100, ignoreInit = TRUE, ignoreNULL = TRUE)
-  # whenever both inputs change at the same time, do an update from AnnPrec.YfA_outer *second*
-  observeEvent(AnnPrec.YfA_outer(), {
-    validate(need(AnnPrec.YfA_outer(), ""))
-    if (AnnPrec.YfA_outer() != input$AnnPrec.YfA){
-      updateSliderInput(inputId = "AnnPrec.YfA",
-                        value = AnnPrec.YfA_outer())
-    }
-  }, priority = -1, ignoreInit = TRUE, ignoreNULL = TRUE)
-  
+  #text for AnnPrec region
   output$annprec.lt.region <- renderText({
     validate(need(selected_region(), ""))
     climate_row <- which(climate.lt$label == selected_region())
