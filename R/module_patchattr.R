@@ -181,13 +181,11 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
       
       # keep presence of UI and savedvals up to date with presentindicator
       observeEvent(presentindicator(), {
-        print("presentindicator altered")
         # all changes involve first deleting the UI and savedvals
         removeUI(paste0("#", ns("accitem"))) 
         savedvals(NULL)
         if (isTruthy(presentindicator())){
           if (is.numeric(presentindicator())){
-              print("presentindicator sparking new patch UI")
               newUI <- patchattr_UI(ns, pid, defaultpatchvalues)
               insertUI(selector,
                        where = "beforeBegin",

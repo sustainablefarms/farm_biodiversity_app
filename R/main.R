@@ -204,14 +204,13 @@ server <- function(input, output, session) {
     ignoreNULL = TRUE)
   
   # restart, set default starting too
-  observeEvent(c(input$restart, input$start), {# need to flip them to something briefly observers notice a change
+  observeEvent(input$restart, {# need to flip them to something briefly observers notice a change
     startregion(NULL)
     startregion("")
     startattr(0)
     startattr(cbind(defaultpatchvalues, pid = 1)) #this is duplicated in initiation of values
     startAnnPrec.YfA("")
     startAnnPrec.YfA(new_data_mean$AnnPrec.YfA)
-    showNotification("restarting")
   }, ignoreInit = TRUE, ignoreNULL = TRUE) #ignore init and null here so that I have a chane of making bookmarking work
   
   ## tab navigation

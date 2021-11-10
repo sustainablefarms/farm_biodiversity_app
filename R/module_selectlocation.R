@@ -111,9 +111,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
       # from outer to internal for region (the YfA)
       observeEvent(selected_region_outer(), {
         if (!isTruthy(selected_region() == selected_region_outer())){
-          selected_region(selected_region_outer())
-          showNotification("Internal selected_region updated")
-          }
+          selected_region(selected_region_outer())}
       }) 
       # from outer to internal for YfA
       observeEvent(selected_region(), {
@@ -169,7 +167,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
         validate(need(p, ""))
         containing_region <- lonlat2region(p$lng,p$lat)
         if (length(containing_region) > 1){
-          showNotification("Please click in the interior of the region")
+          showNotification("Please click further into the interior of the region")
         } else {
           selected_region(containing_region)
         }
@@ -202,7 +200,6 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
          selected_region(input$selectbox)
        })
        observeEvent(selected_region(),{
-                showNotification("selected region could be updated here")
                 validate(need(isTruthy(is.character(selected_region())), ""))
                 updateSelectInput(inputId = "selectbox",
                                   selected = selected_region())
