@@ -224,13 +224,27 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE, ignoreNULL = TRUE) #ignore init and null here so that I have a chane of making bookmarking work
   
   ## tab navigation
-  observeEvent(input$in1_next, {updateTabsetPanel(session, inputId = "maintabs", "out1")}, ignoreInit = TRUE)
+  observeEvent(input$in1_next, {
+    assessments <- checkcvals(cval1())
+    if (length(assessments) > 0){
+      lapply(assessments, function(str) showNotification(str, type = "error"))
+    } else {
+      updateTabsetPanel(session, inputId = "maintabs", "out1")
+    }
+  }, ignoreInit = TRUE)
   
   observeEvent(input$out1_back, {updateTabsetPanel(session, inputId = "maintabs", "in1")}, ignoreInit = TRUE)
   observeEvent(input$out1_next, {updateTabsetPanel(session, inputId = "maintabs", "in2")}, ignoreInit = TRUE)
   
   observeEvent(input$in2_back, {updateTabsetPanel(session, inputId = "maintabs", "out1")}, ignoreInit = TRUE)
-  observeEvent(input$in2_next, {updateTabsetPanel(session, inputId = "maintabs", "out2")}, ignoreInit = TRUE)
+  observeEvent(input$in2_next, {
+    assessments <- checkcvals(cval2())
+    if (length(assessments) > 0){
+      lapply(assessments, function(str) showNotification(str, type = "error"))
+    } else {
+      updateTabsetPanel(session, inputId = "maintabs", "out2")
+    }
+  }, ignoreInit = TRUE)
   
   observeEvent(input$out2_back, {updateTabsetPanel(session, inputId = "maintabs", "in2")}, ignoreInit = TRUE)
   

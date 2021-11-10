@@ -16,7 +16,7 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
   }
   internals <- tagList(
     #woodland type
-    twocolumns(heading = "Type of woody coverage",
+    twocolumns(heading = "Type of woodland",
        left = tagList(
          radioButtons(ns("woodlandtype"),
                       label = "This woodland area is...",
