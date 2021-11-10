@@ -124,11 +124,8 @@ ui <- function(request){
       leaflet::leafletOutput("loadleaflet", height = "0px", width = "0px"), #so leaflet scripts are loaded
       plotly::plotlyOutput("loadplotly", height = "0px", width = "0px"), #so plotly is loaded
       headercontent(),
-      conditionalPanel("!(input.hidestartpage > 0)",
-                       landingpage()
-                       ),
-      conditionalPanel("input.hidestartpage > 0",
-                       navbarsection),
+      tags$div(id = "lp", landingpage()),
+      tags$div(id = "tw", class = "visually-hidden", navbarsection),
       footercontent(),
       title = appname,
       theme = bslib::bs_theme(version = 5, "lumen",
@@ -147,6 +144,10 @@ server <- function(input, output, session) {
   insertUI(selector = paste0("#", ns("startbuttonlocation")),
            where = "afterBegin",
            ui = actionButton("hidestartpage", "Start", class = "position-absolute btn-primary translate-middle"))
+  observeEvent(input$hidestartpage, {
+    shinyjs::addClass(class = "visually-hidden", selector = "#lp")
+    shinyjs::removeClass(class = "visually-hidden", selector = "#tw")
+  })
   
   # set up required data
   startregion <- reactiveVal("") #so region select box starts at ""
@@ -205,6 +206,8 @@ server <- function(input, output, session) {
   
   # restart, set default starting too
   observeEvent(input$restart, {# need to flip them to something briefly observers notice a change
+    shinyjs::addClass(class = "visually-hidden", selector = "#tw")
+    shinyjs::removeClass(class = "visually-hidden", selector = "#lp")
     startregion(NULL)
     startregion("")
     startattr(0)
