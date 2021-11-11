@@ -11,12 +11,24 @@ appcolors <- c("Dark Green" = "#026666",
 
 
 apptheme <- function(){
-  bslib::bs_theme(version = 5, "lumen",
+  theme <- bslib::bs_theme(version = 5, "lumen",
+		"btn-focus-box-shadow" = "none",
+		"btn-box-shadow" = "none",
                 "accordion-button-color" = appcolors[["Dark Green"]],
                 "accordion-button-active-bg" = "#FFFFFF",
                 "accordion-border-color" = appcolors[["Green 50"]],
                 "primary" = appcolors[["Dark Green"]],
                 "dark" = appcolors[["Dark Gray"]])
+  colordfns <- list(
+    "primary" = appcolors[["Dark Green"]],
+    "dark" = appcolors[["Dark Gray"]],
+    "brightblue" = appcolors[["Bright Blue"]],
+    "black" = appcolors[["Black"]],
+    "green10" = appcolors[["Green 10"]]
+  )
+  theme <- do.call(bslib::bs_add_variables, args = c(list(theme = theme), colordfns)) %>%
+      bslib::bs_add_rules(sass::sass_file("./www/base.scss"))
+  theme
 }
 
 compilecss <- function(){
@@ -40,12 +52,6 @@ compilecss <- function(){
       ),
     "accordion-icon-transform" = "none")
   
-  basecss <- sass::sass(
-    input = c(
-      colordfns,
-      list(sass::sass_file("./www/base.scss"))
-    )
-  )
   acccss <- sass::sass(
     input = c(
       colordfns,
@@ -53,5 +59,5 @@ compilecss <- function(){
       list(sass::sass_file("./www/_accordion.scss"))
     )
   )
-  return(HTML(basecss, acccss))
+  return(acccss)
 }
