@@ -82,7 +82,7 @@ accitem <- accordion_item("Your region", id = ns("acc"),
                           internals,
                           footer = tagList(
                             do.call(actionButton,
-                                    args = c(list(ns(paste0("cancel")), "Cancel", class = "btn-secondary"),
+                                    args = c(list(ns(paste0("cancel")), "Cancel", class = "btn-outline-primary"),
                                              toggle_attr(paste0(ns("acc"), "_body"))
                                     )),
                             do.call(actionButton,
