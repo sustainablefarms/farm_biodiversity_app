@@ -18,7 +18,7 @@ headercontent <- function(id = NULL){
 footercontent <- function(id = NULL){
   ns <- NS(id)
   fluidRow(
-    class = "clearfix",
+    class = "clearfix fixed-bottom py-2",
     style = paste("background-color:", appcolors[["Dark Green"]]), #try to get using bs_get_variables
     
     column(4, class = "float-start", style = "color: #FFFFFF;", "A product of the ANU Sustainable Farms Initiative"),

@@ -4,7 +4,8 @@ appcolors <- c("Dark Green" = "#026666",
   "Golden Wheat" = "#CC9C2E",
   "Yellow" = "#FDDD00",
   "Dark Gray" = "#3B4042",
-  "Black" = "#1E2326"
+  "Black" = "#1E2326",
+  "Green 10" = "#E6F0F0"
 )
 
 compilecss <- function(){
