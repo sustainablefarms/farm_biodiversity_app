@@ -340,6 +340,7 @@ text-align: left;
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
+  box-shadow: none !important; //removed the underline
 }
 
 a {
@@ -347,3 +348,7 @@ a {
   color: $brightblue;
 }
 
+// remove the underline for accordion buttons
+.accordion-button:not(.collapsed) {
+  box-shadow: none;
+}
