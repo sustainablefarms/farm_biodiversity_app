@@ -27,8 +27,8 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
                       selected = inwoodlandtype
                       )
        ),
-       right = tags$div(style = "background-color: #E6F0F0;",
-          tags$h3("What can my Woodland Area be?"),
+       right = tags$div(class = "p-3", style = paste("background-color:", appcolors[["Green 10"]], ";"),
+          tags$h3("What can my Woodland Area be?", style = paste("color:", appcolors[["Dark Green"]], ";")),
           tags$p("The Woodland Area must be approximately 1ha -10ha in area",
                  "with similar vegetation structure throughout.",
                  "Here, remnant woodland is Box Gum Grassy Woodland that has survived since before colonisation.",
@@ -47,9 +47,8 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
                              choices = c("yes", "no"),
                              selected = innm)
                 ),
-              right = fluidRow(style = "background-color: #E6F0F0;",
-column(12, 
-  tags$h4("Why are Noisy Miners used in this modelling?"),
+       right = tags$div(class = "p-3", style = paste("background-color:", appcolors[["Green 10"]], ";"),
+  tags$h3("Why are Noisy Miners used in this modelling?", style = paste("color:", appcolors[["Dark Green"]], ";")),
   tags$div(class = "clearfix",
   tags$div(class = "col-md-3 float-md-end mb-3 ms-md-3",
            tags$div(tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
@@ -62,7 +61,9 @@ column(12,
   ),
   tags$p(
 		"Noisy Miners are native, but are often aggressive towards other small bird species,
-		preventing them from living in their patch."),
+		preventing them from living in their patch.",
+	  "You can discourage Noisy Miners by increasing the amount of midstorey (woody plants 2m-10m in height), such as through underplanting with wattles, tea-trees, bottlebrushes, and other native shrubs."
+		),
   tags$p(
     "Noisy Miners are easy to recognise by their bright yellow eyes and beak.",
     "Visit",
@@ -70,13 +71,7 @@ column(12,
            "BirdLife Australia"),
     "for a profile of Noisy Miners." 
     ),
-	tags$p(
-	  "You can discourage Noisy Miners by increasing the amount of midstorey in your patch, such as through underplanting with wattles, tea-trees, bottlebrushes, and other native shrubs.",
-	  "This is because Noisy Miners dislike habitat with high amounts of midstorey (woody plants 2m-10m in height)."
-		),
-
   tags$p(tags$a("Learn more", href = "??"), tags$em("Do we have something suitable on the SF website?"))
-  )
 )
 
 )

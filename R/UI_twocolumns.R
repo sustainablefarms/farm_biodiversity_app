@@ -1,7 +1,8 @@
 twocolumns <- function(
   heading = NULL,
   left,
-  right
+  right,
+  ...
 ){
   fluidRow(
     column(width = 3,
@@ -10,6 +11,8 @@ twocolumns <- function(
     ),
     column(width = 9,
            right
-    )
+    ),
+    class = "my-1",
+    ...
   )
 }

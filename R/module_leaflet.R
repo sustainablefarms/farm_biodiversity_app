@@ -4,7 +4,7 @@
 
 leaflet_UI <- function(id){ 
   ns <- NS(id)
-  fluidPage(leaflet::leafletOutput(ns("mymap")))
+  tags$div(leaflet::leafletOutput(ns("mymap"), height = "350px"))
 }
 
 leaflet_Server <- function(id, bbox){
