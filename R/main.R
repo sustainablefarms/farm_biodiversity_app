@@ -150,6 +150,7 @@ server <- function(input, output, session) {
            where = "afterBegin",
            ui = actionButton_notdfl("hidestartpage", "Start", class = "position-absolute btn-primary translate-middle"))
   observeEvent(input$hidestartpage, {
+    closelandingpage()
     shinyjs::addClass(class = "visually-hidden", selector = "#lp")
     shinyjs::removeClass(class = "visually-hidden", selector = "#tw")
   })
@@ -218,8 +219,7 @@ server <- function(input, output, session) {
   
   # restart, set default starting too
   observeEvent(input$restart, {# need to flip them to something briefly observers notice a change
-    shinyjs::addClass(class = "visually-hidden", selector = "#tw")
-    shinyjs::removeClass(class = "visually-hidden", selector = "#lp")
+    openlandingpage()
     startregion(NULL)
     startregion("")
     startattr(0)
@@ -229,6 +229,9 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE, ignoreNULL = TRUE) #ignore init and null here so that I have a chane of making bookmarking work
   
   ## tab navigation
+  observeEvent(input$in1_back, {
+    openlandingpage()
+  }, ignoreInit = TRUE)
   observeEvent(input$in1_next, {
     assessments <- checkcvals(cval1())
     if (length(assessments) > 0){

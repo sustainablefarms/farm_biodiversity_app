@@ -114,4 +114,16 @@ restartmodaldialog <- function(){
           # ))
           )
 }
- 
+
+
+openlandingpage <- function(){
+  shinyjs::addClass(class = "visually-hidden", selector = "#tw")
+  shinyjs::removeClass(class = "visually-hidden", selector = "#lp")
+  return(NULL)
+}
+
+closelandingpage <- function(){
+  shinyjs::addClass(class = "visually-hidden", selector = "#lp")
+  shinyjs::removeClass(class = "visually-hidden", selector = "#tw")
+  return(NULL) 
+}
