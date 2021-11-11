@@ -43,7 +43,7 @@ selectlocationUI <- function(id){
 	                       style = paste("color:", appcolors[["Dark Green"]], ";"),
 	                       style = "text-align: center;",
 	                       HTML(name),
-	                       uiOutput(ns(uiid))
+			       uiOutput(ns(uiid))
 	              ))
 	     )
 	   },
@@ -229,26 +229,34 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
   ltclim_fordisplay <- reactive({ltcliminfo_region(selected_region(), climdatatbl = climate.lt)})
   output$maxtemp <- renderUI({
     validate(need(ltclim_fordisplay()$MaxTWarmMonth.lt, ""))
+    tags$b(class = "bodylarge",
+           style = paste("color:", appcolors[["Dark Green"]], ";"),
     HTML(paste0(round(ltclim_fordisplay()$MaxTWarmMonth.lt * 0.1, 1),
-                "&deg;C"))
+                "&deg;C")))
   })
   
   output$mintemp <- renderUI({
     validate(need(ltclim_fordisplay()$MinTColdMonth.lt, ""))
+    tags$b(class = "bodylarge",
+           style = paste("color:", appcolors[["Dark Green"]], ";"),
     HTML(paste0(round(ltclim_fordisplay()$MinTColdMonth.lt * 0.1, 1),
-                "&deg;C"))
+                "&deg;C")))
   })
 
-  output$precip_warm <- renderText({
+  output$precip_warm <- renderUI({
     validate(need(ltclim_fordisplay()$PrecWarmQ.lt, ""))
+    tags$b(class = "bodylarge",
+           style = paste("color:", appcolors[["Dark Green"]], ";"),
     HTML(paste0(round(ltclim_fordisplay()$PrecWarmQ.lt * 0.1, 1),
-                "mm"))
+                "mm")))
   })
   
-  output$precip_cold <- renderText({
+  output$precip_cold <- renderUI({
     validate(need(ltclim_fordisplay()$PrecColdQ.lt, ""))
+    tags$b(class = "bodylarge",
+           style = paste("color:", appcolors[["Dark Green"]], ";"),
     HTML(paste0(round(ltclim_fordisplay()$PrecColdQ.lt * 0.1, 1),
-                "mm"))
+                "mm")))
   })
     
   #text for AnnPrec region
