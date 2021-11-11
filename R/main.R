@@ -125,12 +125,10 @@ outerpage <- function(){bootstrapPage(
     plotly::plotlyOutput("loadplotly", height = "0px", width = "0px"), #so plotly is loaded
     headercontent(),
     tags$div(id = "lp", landingpage()),
-    tags$div(id = "tw", class = "visually-hidden", tabwrapper()),
+    tags$div(id = "tw", class = "visually-hidden mx-2", tabwrapper()),
     footercontent(),
     title = appname,
-    theme = bslib::bs_theme(version = 5, "lumen",
-                            "primary" = appcolors[["Dark Green"]],
-                            "dark" = appcolors[["Dark Gray"]])
+    theme = apptheme()
 )}
 
 ui <- function(request){

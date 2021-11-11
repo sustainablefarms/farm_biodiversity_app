@@ -21,7 +21,7 @@ accordion <- function(id, ..., allstayopen = TRUE, opentype = "none") {
   }
   modded <- tagstructure$allTags()
   # modded <- gsub("#placeholderparentid", paste0("#", id), ...) #can't use gsub easily at it stuffs up the escaping
-  tags$div(class = "accordion", id = id, modded)
+  tags$div(class = "accordion-flush", id = id, modded)
 }
 
 #' @param title Title of accordion item

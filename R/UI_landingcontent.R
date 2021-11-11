@@ -1,11 +1,11 @@
 headercontent <- function(id = NULL){
   ns <- NS(id)
   tagList(
-  HTML("<div class='header'>"),
+  HTML("<div class='header' style = 'background-color: #FFFFFF'>"), # style = 'background-color: inherit'
   tags$div(class = "clearfix",
     tags$div(class = "float-start",
              tags$a(href = "http://sustainablefarms.org.au/", tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px")), 
-             tags$span(class = "main", appname)
+             tags$span(class = "apptitle", appname)
              ),
     tags$div(class = "float-end",
              actionButton(ns("about"), "About the App"),
@@ -18,11 +18,11 @@ headercontent <- function(id = NULL){
 footercontent <- function(id = NULL){
   ns <- NS(id)
   fluidRow(
-    class = "clearfix fixed-bottom py-2",
+    class = "clearfix py-2", #fixed-bottom means it overlays other content
     style = paste("background-color:", appcolors[["Dark Green"]]), #try to get using bs_get_variables
     
     column(4, class = "float-start", style = "color: #FFFFFF;", "A product of the ANU Sustainable Farms Initiative"),
-    column(4, style = "color: #FFFFFF;", "Copyright Sustainable Farms 2021", style = "text-align: center;"),
+    column(4, style = "color: #FFFFFF;", HTML("&copy;", "Sustainable Farms 2021"), style = "text-align: center;"),
     column(4, class = "clearfix",
            tags$div(class = "float-end", style = "color: #FFFFFF;", "By Kassel Hingee and the team.", "Version", appversion))
   )
@@ -33,8 +33,8 @@ landingpage <- function(id = NULL){
 	tagList(
 	tags$main(class = "text-center", 
 	          tags$a(href = "http://sustainablefarms.org.au/", tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px")), 
-	          tags$span(class = "main", appname)),
-	tags$div(class = "text-center", tags$h2("Indicating birdlife on farms")),
+	          tags$span(class = "apptitle", appname)),
+	tags$h2(class = "text-center", "Indicating birdlife on farms"),
 	fluidRow(class = "justify-content-center",
 	 column(6, class = "text-center",
 	        tags$p(

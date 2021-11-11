@@ -16,8 +16,6 @@ output:
   + hide tab panels properly using style = "display: none;" and update it later. Or .visually-hidden
   + leaflet takes a long time to load still, can I have a leaflet loading screen? Might have to be by hand: https://davidruvolo51.github.io/shinytutorials/tutorials/leaflet-loading-screens/
 
-+ warnings when location not saved
-
 + CHECK THAT STATS WORK FOR THE 5 VULNERABLE SPECIES
 
 + styling 1d
@@ -26,6 +24,8 @@ output:
 + polishing (days)
   + bookmarking
   + google analytics
+  + waiters for the plots
+  + waiter for leaflet regions (or at least letting rest of app get on with it)
 
 
 # High Priority:

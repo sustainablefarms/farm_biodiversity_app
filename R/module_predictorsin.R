@@ -15,7 +15,7 @@ predictors_UI <- function(id, isS2 = TRUE){
         )
       } else {
         tagList(
-          tags$h1("Your Farm"),
+          tags$h1("Your Farm", style = "text-align: center;"),
           tags$h3("Step 1: Tell us about your farm"),
           tags$p("Select your region,",
                    "then add the number of woodland areas found on your farm,",
@@ -102,19 +102,19 @@ app_predictorsin <- function(){
   
   shinyApp(
     {bootstrapPage(
+      tags$head(tags$style(appcss)),
       shinyjs::useShinyjs(),
-      includeCSS("./www/base.css"),
-      includeCSS("./www/accordion.css"),
       predictors_UI("S1in", isS2 = FALSE),
-      theme = bslib::bs_theme(version = 5, "lumen"))
+      theme = apptheme()
+    )
     },
     function(input, output, session){
       selected_region <- reactiveVal()
       newinattr <- reactiveVal(cbind(defaultpatchvalues, pid = 1))
-      refresh1 <- reactiveTimer(1000 * 7)
-      refresh2 <- reactiveTimer(1000 * 11)
-      observeEvent(refresh1(),{newinattr(NULL); print("NULL inputs")})
-      observeEvent(refresh2(),{newinattr(cbind(defaultpatchvalues, pid = 1)); print("1 patch in")})
+      # refresh1 <- reactiveTimer(1000 * 7)
+      # refresh2 <- reactiveTimer(1000 * 11)
+      # observeEvent(refresh1(),{newinattr(NULL); print("NULL inputs")})
+      # observeEvent(refresh2(),{newinattr(cbind(defaultpatchvalues, pid = 1)); print("1 patch in")})
       # refresh <- reactiveTimer(1000 * 10)
       # observeEvent(refresh(),{
       #   attr <- newinattr()
