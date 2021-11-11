@@ -43,9 +43,8 @@ compilecss <- function(){
   basecss <- sass::sass(
     input = c(
       colordfns,
-
-      list(sass::sass_file("./www/base.scss")
-    ))
+      list(sass::sass_file("./www/base.scss"))
+    )
   )
   acccss <- sass::sass(
     input = c(

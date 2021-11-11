@@ -102,10 +102,10 @@ app_predictorsin <- function(){
   
   shinyApp(
     {bootstrapPage(
-      tags$head(tags$style(appcss)),
       shinyjs::useShinyjs(),
       predictors_UI("S1in", isS2 = FALSE),
-      theme = apptheme()
+      theme = apptheme(),
+      tags$head(tags$style(appcss)),
     )
     },
     function(input, output, session){
