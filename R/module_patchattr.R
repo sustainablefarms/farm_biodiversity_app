@@ -108,7 +108,7 @@ twocolumns(heading = "Woody cover amounts",
                 min = 1990,
                 max = 2019),
       tags$div(
-        actionButton(ns("getwoodycanopy"), "Load woody cover", class = "btn-primary"),
+        actionButton_notdfl(ns("getwoodycanopy"), "Load woody cover", class = "btn-primary"),
         tags$span(id = ns("tickplace"),
             style = "width: 2rem; height: 2rem; background-color: #BBBBBB; vertical-align: middle;",
             style = "margin-left: 1rem; position: relative")
@@ -151,13 +151,13 @@ acc_item <- accordion_item(title = paste("Woodland area", pid),
     id = ns("accitem"),
     internals,
     footer = tagList(
-      actionButton(ns("delete"), "Delete woodland area", icon = icon("trash"),
+      actionButton_notdfl(ns("delete"), "Delete woodland area", icon = icon("trash"),
                    class = "btn-danger"),
-      do.call(actionButton,
+      do.call(actionButton_notdfl,
         args = c(list(ns("cancel"), "Cancel", class = "btn-outline-primary"),
              toggle_attr(paste0(ns("accitem"), "_body"))
              )),
-      do.call(actionButton,
+      do.call(actionButton_notdfl,
               args = c(list(ns("save"), "Save and Close", class = "btn-primary"),
                        toggle_attr(paste0(ns("accitem"), "_body"))
               ))

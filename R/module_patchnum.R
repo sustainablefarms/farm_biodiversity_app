@@ -16,7 +16,7 @@ patchnum_Server <- function(id, update, maxpatchnum){
           $('[data-toggle=tooltip]').tooltip()
         })"
       ),
-    actionButton2(
+    actionButton_notdfl2(
       inputId = ns("choose_n_patches"),
       label = HTML(paste0("Number of<br>patches<br><h3>", update$numpatches_new, "</h3>")),
       class = "badge"
@@ -36,7 +36,7 @@ patchnum_Server <- function(id, update, maxpatchnum){
         tags$br(),
 	patchdefn,
 	tags$br(),
-        actionButton(ns("choose_n_patches_execute"), "Save"),
+        actionButton_notdfl(ns("choose_n_patches_execute"), "Save"),
         modalButton("Cancel"),
         title = "Select number of patches",
         footer = NULL,

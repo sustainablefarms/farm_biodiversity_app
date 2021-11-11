@@ -43,8 +43,8 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
 tabwrapper <- function(){tabsetPanel(
     tabPanelBody(value = "in1",
              predictors_UI("S1in", isS2 = FALSE),
-             fluidRow(column(6, actionButton("in1_back", "Back", class = "btn-outline-primary", width = "100%")),
-                      column(6, actionButton("in1_next", "Next", class = "btn-primary", width = "100%")))
+             fluidRow(column(6, actionButton_notdfl("in1_back", "Back", class = "btn-outline-primary", width = "100%")),
+                      column(6, actionButton_notdfl("in1_next", "Next", class = "btn-primary", width = "100%")))
     ),
     tabPanelBody(value = "out1",
          predictionsUI("pred1", refisaverage = TRUE),
@@ -52,7 +52,7 @@ tabwrapper <- function(){tabsetPanel(
           column(4, class = "text-center",
            tags$h2("Edit your farm data"),
            tags$div(class = "bodysmall", "Go back to edit Scenario 1"),
-           actionButton("out1_back", "Back", class = "btn-outline-primary", width = "100%")
+           actionButton_notdfl("out1_back", "Back", class = "btn-outline-primary", width = "100%")
           ),
           column(4, class = "text-center",
            tags$div(style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
@@ -62,21 +62,21 @@ tabwrapper <- function(){tabsetPanel(
                     "Download a full report on the birds that are likely to live in your farm's woodland.",
                     "This report will include comparison between your farm and bird occupancy in an average woodland area.")
            ),
-           actionButton("out1_product", "Download Report", width = "100%", style = paste0("background-color: ", appcolors[["Bright Blue"]], ";") )
+           actionButton_notdfl("out1_product", "Download Report", width = "100%", style = paste0("background-color: ", appcolors[["Bright Blue"]], ";") )
           ),
           column(4, class = "text-center",
            tags$h2("Create a comparison"),
            tags$div(class = "bodysmall",
                     "Go to the next step to create a second comparison scenario for your farm.",
                     "For example, what birds might live on your farm if you increase woody vegetation cover?"),
-           actionButton("out1_next", "Next", class = "btn-primary", width = "100%")
+           actionButton_notdfl("out1_next", "Next", class = "btn-primary", width = "100%")
           )
         )
     ),
     tabPanelBody(value = "in2",
              predictors_UI("S2in", isS2 = TRUE),
-             fluidRow(column(6, actionButton("in2_back", "Back", class = "btn-outline-primary", width = "100%")),
-                      column(6, actionButton("in2_next", "Next", class = "btn-primary", width = "100%")))
+             fluidRow(column(6, actionButton_notdfl("in2_back", "Back", class = "btn-outline-primary", width = "100%")),
+                      column(6, actionButton_notdfl("in2_next", "Next", class = "btn-primary", width = "100%")))
     ),
     tabPanelBody(value = "out2",
          predictionsUI("pred2", refisaverage = FALSE),
@@ -84,7 +84,7 @@ tabwrapper <- function(){tabsetPanel(
           column(4, class = "text-center",
            tags$h2("Edit your farm data"),
            tags$div(class = "bodysmall", "Go back to edit Scenario 2"),
-           actionButton("out2_back", "Back", class = "btn-outline-primary", width = "100%")
+           actionButton_notdfl("out2_back", "Back", class = "btn-outline-primary", width = "100%")
           ),
           column(4, class = "text-center",
            tags$div(style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
@@ -94,14 +94,14 @@ tabwrapper <- function(){tabsetPanel(
                     "Download a full report on the birds that are likely to live in your farm's woodland.",
                     "This report will include comparison between Scenario 1 and Scenario 2.")
            ),
-           actionButton("out2_product", "Download Report", width = "100%", style = paste0("background-color: ", appcolors[["Bright Blue"]], ";") )
+           actionButton_notdfl("out2_product", "Download Report", width = "100%", style = paste0("background-color: ", appcolors[["Bright Blue"]], ";") )
           ),
           column(4, class = "text-center",
            tags$h2("Estimation Complete"),
            tags$div(class = "bodysmall",
                     "Congratulations! You have completed all the steps in the app.",
                     "Visit the Sustainable Farms website for more guidance on supporting sustainable and profitable agriculture."),
-           actionButton("out2_next", "Go to Sustainable Farms", class = "btn-primary", width = "100%")
+           actionButton_notdfl("out2_next", "Go to Sustainable Farms", class = "btn-primary", width = "100%")
           )
         )
     ),
@@ -144,7 +144,7 @@ server <- function(input, output, session) {
   removeUI(selector = paste0("#", ns("startspinner")))
   insertUI(selector = paste0("#", ns("startbuttonlocation")),
            where = "afterBegin",
-           ui = actionButton("hidestartpage", "Start", class = "position-absolute btn-primary translate-middle"))
+           ui = actionButton_notdfl("hidestartpage", "Start", class = "position-absolute btn-primary translate-middle"))
   observeEvent(input$hidestartpage, {
     shinyjs::addClass(class = "visually-hidden", selector = "#lp")
     shinyjs::removeClass(class = "visually-hidden", selector = "#tw")

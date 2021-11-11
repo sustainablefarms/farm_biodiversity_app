@@ -81,11 +81,11 @@ selectlocationUI <- function(id){
 accitem <- accordion_item("Your region", id = ns("acc"), 
                           internals,
                           footer = tagList(
-                            do.call(actionButton,
+                            do.call(actionButton_notdfl,
                                     args = c(list(ns(paste0("cancel")), "Cancel", class = "btn-outline-primary"),
                                              toggle_attr(paste0(ns("acc"), "_body"))
                                     )),
-                            do.call(actionButton,
+                            do.call(actionButton_notdfl,
                                     args = c(list(ns(paste0("save")), "Save and Close", class = "btn-primary"),
                                              toggle_attr(paste0(ns("acc"), "_body"))
                                     ))

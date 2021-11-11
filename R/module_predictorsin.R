@@ -35,7 +35,7 @@ predictors_UI <- function(id, isS2 = TRUE){
            downloadButton(ns("downloadcvals"), "Download Current Values", class = "download_badge")
          },
          if (isTRUE(getOption("shiny.testmode"))){
-           actionButton(ns("viewcvals"), "View Current Values", class = "download_badge")
+           actionButton_notdfl(ns("viewcvals"), "View Current Values", class = "download_badge")
          }
   )
 }

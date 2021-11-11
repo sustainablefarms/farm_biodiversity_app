@@ -1,5 +1,11 @@
 # This content is altered from Shiny base code
 # it has been altered to improve appearance of actionbuttons
+
+actionButton_notdfl <- function(...){
+  out <- actionButton(...)
+  htmltools::tagQuery(out)$removeClass("btn-default")$allTags()
+}
+
 actionButton2 <- function(inputId, label, class = "badge", icon = NULL, width = NULL, ...){
   value <- shiny::restoreInput(id = inputId, default = NULL)
   tags$button(id = inputId,

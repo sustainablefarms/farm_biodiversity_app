@@ -8,9 +8,9 @@ headercontent <- function(id = NULL){
              tags$span(class = "apptitle", appname)
              ),
     tags$div(class = "float-end",
-             actionButton(ns("about"), "About the App"),
-             actionButton(ns("guide"), "User Guide"),
-             actionButton(ns("restartmodal"), "Restart"))
+             actionButton_notdfl(ns("about"), "About the App"),
+             actionButton_notdfl(ns("guide"), "User Guide"),
+             actionButton_notdfl(ns("restartmodal"), "Restart"))
   ),
   HTML("</div>")
   )}
@@ -84,7 +84,7 @@ landingpage <- function(id = NULL){
 #       tags$div(class = "modal-footer",
 #         tags$button(type = "button", class = "btn btn-outline-primary", `data-dismiss` = "modal", 
 #                     `data-bs-dismiss` = "modal", `aria-label` = "Cancel", "Cancel"),
-#         actionButton(inputId = "restart", label = "I want to restart", class = "btn-primary",
+#         actionButton_notdfl(inputId = "restart", label = "I want to restart", class = "btn-primary",
 #                      `data-dismiss` = "modal", `data-bs-dismiss` = "modal", `aria-label` = "Restart")
 #         )
 #       )
@@ -104,7 +104,7 @@ restartmodaldialog <- function(){
           footer = tagList(
             tags$button(type = "button", class = "btn btn-outline-primary", `data-dismiss` = "modal", 
                         `data-bs-dismiss` = "modal", `aria-label` = "Cancel", "Cancel"),
-            actionButton(inputId = "restart", label = "I want to restart", class = "btn-primary",
+            actionButton_notdfl(inputId = "restart", label = "I want to restart", class = "btn-primary",
                          `data-dismiss` = "modal", `data-bs-dismiss` = "modal", `aria-label` = "Restart")
           ),
           easyClose = TRUE,

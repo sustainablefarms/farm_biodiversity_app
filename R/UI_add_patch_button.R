@@ -8,7 +8,7 @@ add_patch_button <- function(
     selector = paste0("#", ui_selector),
     ui = div(
       id = paste0("patch_number_", entry_number),
-      actionButton2(
+      actionButton_notdfl2(
         inputId = ns(paste0("patch_number_", entry_number)),
         label = tags$span(paste0("Patch #", entry_number),
 			    HTML("&ensp;"),
