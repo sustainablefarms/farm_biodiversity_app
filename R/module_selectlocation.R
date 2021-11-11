@@ -10,7 +10,7 @@ selectlocationUI <- function(id){
 	 waiter::use_waiter(),
 	 twocolumns(
 	   heading = "Select your region",
-	   left = tagList(tags$p("We use your region to estimate your farm's climate."),
+	   left = tagList(tags$p(appname, "uses your region to estimate your farm's climate."),
 	                  infotext("Click map or select from list"),
 	                  uiOutput(ns("warn"))),
 	   right = 
