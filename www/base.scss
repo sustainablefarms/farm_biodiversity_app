@@ -26,21 +26,63 @@ div.subheader {
 }
 
 h1 {
-  text-align: center;
+  font-family: Poppins;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: $primary;
 }
 
 h2 {
   font-family: Poppins;
-  font-style: normal;
-  font-weight: normal;
   font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
   line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: $primary;
 }
 
 h3 {
+  //styleName: Heading 3;
+  font-family: Poppins;
   font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
   line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: $primary;
 }
+
+.bodylarge {
+  //styleName: Body Large;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: $dark;
+}
+
+.bodyusual {//styleName: Body;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: $dark;
+}
+
+
 
 h4 {
   margin-top: 0; /* overrides bootstrap default for headings */
@@ -227,9 +269,48 @@ h4 {
 
 
 bodysmall {
+//styleName: Body Small;
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 18px;
+letter-spacing: 0em;
+text-align: left;
+color: $dark;
+}
+
+.linklarge {
+  //styleName: Link Large;
+font-family: Inter;
+font-size: 18px;
+font-style: normal;
+font-weight: 600;
+line-height: 28px;
+letter-spacing: 0em;
+text-align: left;
+}
+
+.linkusual {
+  //styleName: Link;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.linksmall {
+  //styleName: Link Small;
+  font-family: Inter;
   font-size: 14px;
-  line-height: 18px;
-  margin: auto;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
 }
 
 .datalabels {
@@ -239,8 +320,19 @@ bodysmall {
 
 .btn {
   text-transform: none;
+  //styleName: Button;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: black;
 }
 
 a {
   target: "_blank";
+  color: $brightblue;
+
 }
