@@ -71,6 +71,17 @@ h3 {
   color: $dark;
 }
 
+body {//styleName: Body;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: $dark;
+}
+
 .bodyusual {//styleName: Body;
   font-family: Inter;
   font-size: 16px;
@@ -334,5 +345,5 @@ text-align: left;
 a {
   target: "_blank";
   color: $brightblue;
-
 }
+
