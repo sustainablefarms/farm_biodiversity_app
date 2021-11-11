@@ -43,7 +43,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
 tabwrapper <- function(){tabsetPanel(
     tabPanelBody(value = "in1",
              predictors_UI("S1in", isS2 = FALSE),
-             fluidRow(column(6, actionButton("in1_back", "Back", class = "btn-secondary", width = "100%")),
+             fluidRow(column(6, actionButton("in1_back", "Back", class = "btn-outline-primary", width = "100%")),
                       column(6, actionButton("in1_next", "Next", class = "btn-primary", width = "100%")))
     ),
     tabPanelBody(value = "out1",
@@ -52,7 +52,7 @@ tabwrapper <- function(){tabsetPanel(
           column(4, class = "text-center",
            tags$h2("Edit your farm data"),
            tags$div(class = "bodysmall", "Go back to edit Scenario 1"),
-           actionButton("out1_back", "Back", class = "btn-secondary", width = "100%")
+           actionButton("out1_back", "Back", class = "btn-outline-primary", width = "100%")
           ),
           column(4, class = "text-center",
            tags$div(style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
@@ -75,7 +75,7 @@ tabwrapper <- function(){tabsetPanel(
     ),
     tabPanelBody(value = "in2",
              predictors_UI("S2in", isS2 = TRUE),
-             fluidRow(column(6, actionButton("in2_back", "Back", class = "btn-secondary", width = "100%")),
+             fluidRow(column(6, actionButton("in2_back", "Back", class = "btn-outline-primary", width = "100%")),
                       column(6, actionButton("in2_next", "Next", class = "btn-primary", width = "100%")))
     ),
     tabPanelBody(value = "out2",
@@ -84,7 +84,7 @@ tabwrapper <- function(){tabsetPanel(
           column(4, class = "text-center",
            tags$h2("Edit your farm data"),
            tags$div(class = "bodysmall", "Go back to edit Scenario 2"),
-           actionButton("out2_back", "Back", class = "btn-secondary", width = "100%")
+           actionButton("out2_back", "Back", class = "btn-outline-primary", width = "100%")
           ),
           column(4, class = "text-center",
            tags$div(style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),

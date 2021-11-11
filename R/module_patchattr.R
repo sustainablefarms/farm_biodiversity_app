@@ -154,7 +154,7 @@ acc_item <- accordion_item(title = paste("Woodland area", pid),
       actionButton(ns("delete"), "Delete woodland area", icon = icon("trash"),
                    class = "btn-danger"),
       do.call(actionButton,
-        args = c(list(ns("cancel"), "Cancel", class = "btn-secondary"),
+        args = c(list(ns("cancel"), "Cancel", class = "btn-outline-primary"),
              toggle_attr(paste0(ns("accitem"), "_body"))
              )),
       do.call(actionButton,

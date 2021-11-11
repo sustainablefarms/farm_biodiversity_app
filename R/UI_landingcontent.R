@@ -82,7 +82,7 @@ landingpage <- function(id = NULL){
 #                paste0(appname, ".")
 #         ),
 #       tags$div(class = "modal-footer",
-#         tags$button(type = "button", class = "btn btn-secondary", `data-dismiss` = "modal", 
+#         tags$button(type = "button", class = "btn btn-outline-primary", `data-dismiss` = "modal", 
 #                     `data-bs-dismiss` = "modal", `aria-label` = "Cancel", "Cancel"),
 #         actionButton(inputId = "restart", label = "I want to restart", class = "btn-primary",
 #                      `data-dismiss` = "modal", `data-bs-dismiss` = "modal", `aria-label` = "Restart")
@@ -102,7 +102,7 @@ restartmodaldialog <- function(){
                    "Restarting the app will clear your farm data and results.",
                    "You will be redirected to the launch page of", paste0(appname, ".")),
           footer = tagList(
-            tags$button(type = "button", class = "btn btn-secondary", `data-dismiss` = "modal", 
+            tags$button(type = "button", class = "btn btn-outline-primary", `data-dismiss` = "modal", 
                         `data-bs-dismiss` = "modal", `aria-label` = "Cancel", "Cancel"),
             actionButton(inputId = "restart", label = "I want to restart", class = "btn-primary",
                          `data-dismiss` = "modal", `data-bs-dismiss` = "modal", `aria-label` = "Restart")

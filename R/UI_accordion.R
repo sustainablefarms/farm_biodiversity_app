@@ -65,7 +65,7 @@ accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headin
   if (footerdflt == "backnclose"){
     footerpart <- tagList(
       tags$a(href=paste0("#", id), 
-        class = "btn btn-secondary",
+        class = "btn btn-outline-primary",
         "Back to top"),
       do.call(tags$button, args = c(
         list(class = "btn btn-primary",
