@@ -32,26 +32,32 @@ selectlocationUI <- function(id){
 	     left = "Shown here are historical climate averages for the centre of your region.",
 	     right = tagList(
 	 tags$div(class="row row-cols-1 row-cols-md-4 g-4",
-  	 tags$div(class = "card",
-  	   tags$div(class = "card-body",
-  	            HTML("Annual Minimum<br>Temperature"),
-  	            uiOutput(ns("mintemp"))
-  	            )),
-  	 tags$div(class = "card",
-  	          tags$div(class = "card-body",
-  	                   HTML("Annual Maximum<br>Temperature"),
-  	                   uiOutput(ns("maxtemp"))
-  	          )),
-  	 tags$div(class = "card",
-  	          tags$div(class = "card-body",
-  	                   HTML("Summer<br>Precipitation"),
-  	                   textOutput(ns("precip_warm"))
-  	          )),
-  	 tags$div(class = "card",
-  	          tags$div(class = "card-body",
-  	                   HTML("Winter<br>Precipitation"),
-  	                   textOutput(ns("precip_cold"))
-  	          ))
+	   mapply(function(name, uiid){
+	     column(3, 
+	     tags$div(class = "card",
+	              style = paste("background-color:", appcolors[["Green 10"]], ";"),
+	              style = "border-radius: 0;",
+	              style = "border-bottom-style: none; border-left-style:none; border-right-style: none;",
+	              style = paste("border-color: ", appcolors[["Dark Green"]], ";"),
+	              tags$div(class = "card-body bodysmall",
+	                       style = paste("color:", appcolors[["Dark Green"]], ";"),
+	                       style = "text-align: center;",
+	                       HTML(name),
+	                       uiOutput(ns(uiid))
+	              ))
+	     )
+	   },
+	   list("Annual Minimum<br>Temperature",
+	        "Annual Maximum<br>Temperature",
+	        "Summer<br>Precipitation",
+	        "Winter<br>Precipitation"),
+	   list("mintemp",
+	        "maxtemp",
+	        "precip_warm",
+	        "precip_cold"
+	        ),
+	   SIMPLIFY = FALSE
+	   )
   	 ),
 	 tags$div(class = "datalabels",
 	          "Climate data estimated by",
