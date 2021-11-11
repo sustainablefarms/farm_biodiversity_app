@@ -27,6 +27,7 @@ predictors_UI <- function(id, isS2 = TRUE){
     ),
     accordion(id = ns("acc"), 
       selectlocationUI(ns("loc")),
+      tags$h2(class = "m-4 text-center", "Woodland areas on your farm"),
       selectpatch_UI(ns("ptch")),
       opentype = "edit"
     ),
