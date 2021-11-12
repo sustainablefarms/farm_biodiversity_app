@@ -214,7 +214,7 @@ server <- function(input, output, session) {
   # bookmarking 
   # appendinputids() #for recording input ids - an observer
   setBookmarkExclude(readLines("./data/inputidslist.txt"))
-  observeEvent(input$hidestartpage, {
+  observeEvent({input$hidestartpage; input$maintabs}, {
     session$doBookmark()
   })
   # Update the query string
@@ -222,6 +222,18 @@ server <- function(input, output, session) {
     valuesonlyurl <- gsub("_inputs_.*_values_","_values_", url)
     updateQueryString(valuesonlyurl)
     })
+  
+  # Save extra values in state$values when we bookmark
+  onBookmark(function(state) {
+    state$values$tab <- input$maintabs 
+  })
+  
+  # Read values from state$values when we restore
+  onRestore(function(state) {
+    if (isTruthy(state$values$tabs)){
+      updateTabsetPanel(inputId = maintabs, selected = state$values$tabs)
+    }
+  })
 
 } # end server
 
