@@ -90,8 +90,8 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
       cval()
     })
   }
-      
-  setBookmarkExclude(c("viewcvals", "downloadcvals"))
+
+  observe_excludebookmark(NULL)
     ## out!
       cval
     })

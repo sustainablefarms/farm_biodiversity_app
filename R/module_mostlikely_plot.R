@@ -78,6 +78,8 @@ mostlikely_plot_Server <- function(id,
           updateTabsetPanel(inputId = "mostlikelytabs",
                             selected = selected)
         })
+  
+  observe_excludebookmark(NULL) 
   })
 }
 

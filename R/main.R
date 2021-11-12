@@ -212,15 +212,10 @@ server <- function(input, output, session) {
  
 
   # bookmarking 
-  observeEvent({
+  observe_excludebookmark({
     input$maintabs
     input$hidestartpage
-    }, {
-    showNotification("bookmarking now")
-    toExclude <- setdiff(names(input), c("maintabs", "hidestartpage"))
-    setBookmarkExclude(toExclude)
-    session$doBookmark()
-  })  
+    })
   # Update the query string
   onBookmarked(updateQueryString)
 
