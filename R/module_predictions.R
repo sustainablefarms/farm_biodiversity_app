@@ -36,19 +36,22 @@ predictionsUI <- function(id, refisaverage = TRUE){
              )
     ),
     
+    tags$div(style = "background-color: #FFFFFF;",
+    tags$div(class = "p-3",
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
                left = tagList(
                  tags$p("These are estimates of the expected number of species that occupy at least one woodland area.",
                         "The lower two bars are estimates for",
                         if (refisaverage){"Scenario 1"}else{"Scenario 2"},
-                        "if all the woodland areas had minimal or a large amount of nearby woody cover."
+                        "if all the woodland areas had a minimal or a large amount of nearby woody cover."
                         )),
                right = plotOutput(ns("species_richness"), height = "250px")
+    )
     ),
     tags$div(class = "clearfix", tags$div(class =  "float-end", 
        accordion_showhideall(ns("predacc"))
-    )),
+    ))),
     accordion(ns("predacc"),
               accordion_item(title = "Most likely species", id = ns("mostlikely"),
                twocolumns(heading = "The 10 most likely species.",
@@ -334,9 +337,10 @@ app_predictions <- function(){
   
   shinyApp(
     {fluidPage(
-      includeCSS("./www/base.css"),
-      predictionsUI("pred", refisaverage = FALSE),
-      theme = bslib::bs_theme(version = 5, "lumen"))
+      predictionsUI("pred", refisaverage = TRUE),
+      theme = apptheme(),
+      tags$head(tags$style(appcss))
+      )
       },
            function(input, output, session){
              predictionsServer("pred", 
@@ -344,6 +348,6 @@ app_predictions <- function(){
                                reactiveVal(species_prob_mean),
                                model_data, 
                                report_path,
-                               refisaverage = FALSE)
+                               refisaverage = TRUE)
            })
 }

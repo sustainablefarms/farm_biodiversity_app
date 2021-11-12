@@ -12,8 +12,8 @@ compile_predictions <- function(current_values, refpredictions, refisaverage = T
   species_richness_raw <- rbind(compute_richness(model_data, data$Xocc),
                                  reference = sum(refpredictions[, "median"])) 
   category_name <- c(
-    "high" = "Nearby woody cover = 20%",
-    "low" = "Nearby woody cover = 2%",
+    "high" = sprintf("%sNearby woody cover = 20%%", if(refisaverage){""}else{"S.2: "}),
+    "low" = sprintf("%sNearby woody cover = 2%%", if(refisaverage){""}else{"S.2: "}),
     "reference" = if (refisaverage){"Average"} else {"Scenario 1"},
     "current" = if (refisaverage){"Scenario 1"} else {"Scenario 2"})
                      
