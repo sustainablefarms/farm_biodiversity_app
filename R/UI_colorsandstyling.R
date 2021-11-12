@@ -18,6 +18,7 @@ apptheme <- function(){
                 "accordion-button-active-bg" = "#FFFFFF",
                 "accordion-border-color" = appcolors[["Green 50"]],
                 "primary" = appcolors[["Dark Green"]],
+		"secondary" = appcolors[["Green 10"]],
                 "dark" = appcolors[["Dark Gray"]])
   colordfns <- list(
     "primary" = appcolors[["Dark Green"]],

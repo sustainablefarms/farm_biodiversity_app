@@ -119,7 +119,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                                   )
                               )
                            ),
-                footer = downloadButton(ns("downloaddata"), "Table", class = "download_badge")
+                footer = downloadButton(ns("downloaddata"), "Download Probability Table", style = paste("color:", appcolors[["Dark Green"]], ";"))
                 )
               } else {
               accordion_item(title = "Relative Occupancy Probability", id = ns("occallrel"),
@@ -138,7 +138,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                                                )
                                         )
                                    ),
-                             footer = downloadButton(ns("downloaddata_rel"), "Table", class = "download_badge")
+                             footer = downloadButton(ns("downloaddata_rel"), "Download Probability Table", paste("color:", appcolors[["Dark Green"]], ";"))
               )
               }
               ),
