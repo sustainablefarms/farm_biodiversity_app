@@ -54,7 +54,8 @@ plot_ly_youtside <- function(df, log2 = FALSE){
     )
   plt %>%
     plotly::layout(
-      yaxis = list(title = "", visible = TRUE, type = "category")
+      yaxis = list(title = "", visible = TRUE, type = "category",
+                   color = appcolors[["Dark Green"]])
     )
 }
 
@@ -102,7 +103,7 @@ add_label_onleft <- function(p){
                   text = ~label,
                   xanchor = "right",
                   xshift = -3,
-                  font = list(color = "rgba(0,0,0,1)"),
+                  font = list(color = appcolors[["Dark Green"]]),
                   bgcolor = "rgba(255,255,255,1)",
                   showarrow = FALSE,
                   showlegend = FALSE) 
@@ -120,7 +121,7 @@ add_label_onright <- function(p){
                     text = ~label,
                     xanchor = "left",
                     xshift = 3,
-                    font = list(color = "rgba(0,0,0,1)"),
+                    font = list(color = appcolors[["Dark Green"]]),
                     bgcolor = "rgba(255,255,255,0)",
                     showarrow = FALSE,
                     showlegend = FALSE) 
@@ -144,7 +145,7 @@ add_label_onsignside <- function(p){
                     text = ~label,
                     xanchor = xanchor,
                     xshift = 3,
-                    font = list(color = "rgba(0,0,0,1)"),
+                    font = list(color = appcolors[["Dark Green"]]),
                     bgcolor = "rgba(255,255,255,0)",
                     showarrow = FALSE,
                     showlegend = FALSE) 
