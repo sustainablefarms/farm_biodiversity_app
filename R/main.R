@@ -218,7 +218,10 @@ server <- function(input, output, session) {
     session$doBookmark()
   })
   # Update the query string
-  onBookmarked(updateQueryString)
+  onBookmarked(function(url){
+    valuesonlyurl <- gsub("_inputs_.*_values_","_values_", url)
+    updateQueryString(valuesonlyurl)
+    })
 
 } # end server
 
