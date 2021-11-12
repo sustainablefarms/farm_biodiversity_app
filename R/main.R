@@ -213,14 +213,13 @@ server <- function(input, output, session) {
 
   # bookmarking 
   # appendinputids() #for recording input ids - an observer
-  setBookmarkExclude(readLines("./data/inputidslist.txt"))
   observeEvent({input$hidestartpage; input$maintabs}, {
     session$doBookmark()
   })
-  # Update the query string
-  onBookmarked(function(url){
-    valuesonlyurl <- gsub("_inputs_.*_values_","_values_", url)
-    updateQueryString(valuesonlyurl)
+  # Update the query string - works for whole app I think
+  onBookmarked(function(querystring){
+    newstring <- minimisequerystring(querystring)
+    updateQueryString(newstring)
     })
   
   # Save extra values in state$values when we bookmark

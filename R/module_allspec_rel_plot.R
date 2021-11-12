@@ -43,7 +43,6 @@ allrel_plot_Server <- function(id,
             out <- out %>%
               order_y(.data[[input$yorder]])
           }
-  setBookmarkExclude(readLines("./data/inputidslist.txt"))
           out
         })
   })
