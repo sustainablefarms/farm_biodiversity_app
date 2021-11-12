@@ -178,8 +178,7 @@ server <- function(input, output, session) {
     startattr(cbind(defaultpatchvalues, pid = 1)) #this is duplicated in initiation of values
     startAnnPrec.YfA("")
     startAnnPrec.YfA(new_data_mean$AnnPrec.YfA)
-    cururl <- getQueryString()
-    updateQueryString(gsub("\\?_.*", "", cururl))
+    updateQueryString("?_inputs_")
   }, ignoreInit = TRUE, ignoreNULL = TRUE) #ignore init and null here so that I have a chane of making bookmarking work
   
   ## tab navigation
