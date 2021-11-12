@@ -40,7 +40,7 @@ out1_foot <- function(){
     righthead = "Create a Comparison", rightbody = HTML(
       "Go to the next step to create a second comparison scenario for your farm.",
       "For example, what birds might live on your farm if you increase woody vegetation cover?"),
-    rightfoot = actionButton_notdfl("out1_next", "Go to Sustainable Farms", class = "btn-primary py-3", width = "100%")
+    rightfoot = actionButton_notdfl("out1_next", "Next", class = "btn-primary py-3", width = "100%")
   )
 }
 
