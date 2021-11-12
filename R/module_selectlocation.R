@@ -283,11 +283,8 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
                        "show_mintemp_modal",
                        "show_precip_cold_modal"))
   
-  
-  observe({
-    outofmodule()
-    session$doBookmark()
-  })
+ 
+  observe_bookmark(outofmodule()) 
   # Save extra values in state$values when we bookmark
   onBookmark(function(state) {
     # if (length(selected_region()) == 0){

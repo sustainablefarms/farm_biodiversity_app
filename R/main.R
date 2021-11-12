@@ -36,7 +36,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   stopifnot(file.copy("./www/Sustainable Farms logo RGB.png", paste0(apptempdir, "/www/"), overwrite = TRUE)) 
   stopifnot(file.copy(paste0("./www/", speciesinfo$imgfilename), paste0(apptempdir, "/www/"), overwrite = TRUE)) 
   appcss <<- compilecss()
-  enableBookmarking(store = "disable")
+  enableBookmarking(store = "url")
 }
 
 # UI
@@ -178,6 +178,8 @@ server <- function(input, output, session) {
     startattr(cbind(defaultpatchvalues, pid = 1)) #this is duplicated in initiation of values
     startAnnPrec.YfA("")
     startAnnPrec.YfA(new_data_mean$AnnPrec.YfA)
+    cururl <- getQueryString()
+    updateQueryString(gsub("\\?_.*", "", cururl))
   }, ignoreInit = TRUE, ignoreNULL = TRUE) #ignore init and null here so that I have a chane of making bookmarking work
   
   ## tab navigation
@@ -207,25 +209,18 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
   
   observeEvent(input$out2_back, {updateTabsetPanel(session, inputId = "maintabs", "in2")}, ignoreInit = TRUE)
-  
-  
-  setBookmarkExclude(c("overallhelpfake",
-                       "moredetailfake",
-                       "overallhelp",
-                       "waiter_shown",
-                       "introfake",
-                       "downloadreportfake",
-                       "intro",
-                       ".clientValue-default-plotlyCrosstalkOpts",
-                       "plotly_click-region_map",
-                       "plotly_relayout-region_map",
-                       "plotly_afterplot-A",
-                       "plotly_relayout-A",
-                       "plotly_hover-A",
-                       "plotly_afterplot-region_map",
-                       "plotly_hover-region_map"))
-  
-  # Automatically bookmark every time an input changes
+ 
+
+  # bookmarking 
+  observeEvent({
+    input$maintabs
+    input$hidestartpage
+    }, {
+    showNotification("bookmarking now")
+    toExclude <- setdiff(names(input), c("maintabs", "hidestartpage"))
+    setBookmarkExclude(toExclude)
+    session$doBookmark()
+  })  
   # Update the query string
   onBookmarked(updateQueryString)
 
