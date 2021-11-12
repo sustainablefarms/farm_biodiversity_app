@@ -91,7 +91,7 @@ predictors_Server <- function(id, selected_region, newinattr, inAnnPrec.YfA){
     })
   }
 
-  observe_excludebookmark(NULL)
+  setBookmarkExclude(readLines("./data/inputidslist.txt"))
     ## out!
       cval
     })

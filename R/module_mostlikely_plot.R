@@ -79,7 +79,7 @@ mostlikely_plot_Server <- function(id,
                             selected = selected)
         })
   
-  observe_excludebookmark(NULL) 
+  setBookmarkExclude(readLines("./data/inputidslist.txt"))
   })
 }
 

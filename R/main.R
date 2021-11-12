@@ -212,10 +212,11 @@ server <- function(input, output, session) {
  
 
   # bookmarking 
-  observe_excludebookmark({
-    input$maintabs
-    input$hidestartpage
-    })
+  # appendinputids() #for recording input ids - an observer
+  setBookmarkExclude(readLines("./data/inputidslist.txt"))
+  observeEvent(input$hidestartpage, {
+    session$doBookmark()
+  })
   # Update the query string
   onBookmarked(updateQueryString)
 

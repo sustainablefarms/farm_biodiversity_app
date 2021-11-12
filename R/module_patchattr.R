@@ -342,6 +342,7 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
                            "yearforcanopy",
                            "lon",
                            "lat"))
+  setBookmarkExclude(readLines("./data/inputidslist.txt"))
       
       # convert out info
       reactive({

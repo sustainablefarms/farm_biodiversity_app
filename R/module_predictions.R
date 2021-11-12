@@ -325,6 +325,7 @@ predictionsServer <- function(id,
       }
       
       # bookmarking settings
+  setBookmarkExclude(readLines("./data/inputidslist.txt"))
       setBookmarkExclude(c("moredetail"))
       reactive(datar()$species_prob_current)
     })

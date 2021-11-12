@@ -73,6 +73,7 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     bbox_r
   })
 
+  setBookmarkExclude(readLines("./data/inputidslist.txt"))
 
   attr_table
 }

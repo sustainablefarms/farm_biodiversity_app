@@ -284,7 +284,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
                        "show_precip_cold_modal"))
   
  
-  observe_excludebookmark(NULL) 
+  setBookmarkExclude(readLines("./data/inputidslist.txt"))
   # Save extra values in state$values when we bookmark
   onBookmark(function(state) {
     # if (length(selected_region()) == 0){
@@ -305,6 +305,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
     }
   })
       
+  setBookmarkExclude(readLines("./data/inputidslist.txt"))
   outofmodule
     }
   )
