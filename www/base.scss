@@ -355,3 +355,13 @@ a {
 .accordion-button:not(.collapsed) {
   box-shadow: none;
 }
+
+// for making columns equal height
+.row.display-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.display-flex > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
