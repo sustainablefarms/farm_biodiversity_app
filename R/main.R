@@ -229,6 +229,7 @@ server <- function(input, output, session) {
   
   # Read values from state$values when we restore
   onRestore(function(state) {
+    closelandingpage()
     if (isTruthy(state$values$tabs)){
       updateTabsetPanel(inputId = maintabs, selected = state$values$tabs)
     }

@@ -40,12 +40,13 @@ appendinputids <- function(session = getDefaultReactiveDomain(), nssep = "-"){
 }
 
 minimisequerystring <- function(querystring){
-  valuesonlystring <- gsub("_inputs_.*_values_","_values_", querystring)
+  root <- gsub("_inputs_.*", "", querystring)
+  valuesonlystring <- gsub(".*_values_","_values_", querystring)
   maintabloc <- regexpr("maintabs=[^&]*", querystring)
   maintabsstring <- substr(querystring, maintabloc, maintabloc + attr(maintabloc, "match.length") - 1)
   
   combinedstring <- paste("_inputs_", maintabsstring, valuesonlystring, sep = "&")
-  return(combinedstring)
+  return(paste0(root, combinedstring))
 }
 
 
