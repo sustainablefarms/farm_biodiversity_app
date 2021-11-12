@@ -334,14 +334,6 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
       observe({shinyjs::toggleState(id = "save", 
                  condition = (isTruthy(input$nm) & isTruthy(input$woodlandtype)))})
       
-      setBookmarkExclude(c("woodlandtype", 
-                           "pc_woody3000m",
-                           "pc_woody500m",
-                           "getwoodycanopy",
-                           "nm",
-                           "yearforcanopy",
-                           "lon",
-                           "lat"))
   observeEvent(c(input$save, input$delete), {
     showNotification("Bookmarking from patch attribute")
     session$doBookmark()

@@ -324,8 +324,6 @@ predictionsServer <- function(id,
           contentType = "rds")
       }
       
-      # bookmarking settings
-      setBookmarkExclude(c("moredetail"))
       reactive(datar()$species_prob_current)
     })
 }

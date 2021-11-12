@@ -277,11 +277,6 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
     observeEvent(selected_region(), {showNotification(paste("Selected region is", selected_region()))})
   }
 
-  setBookmarkExclude(c("show_maxtemp_modal",
-                       "plot_points_waiter_hidden",
-                       "show_precip_warm_modal",
-                       "show_mintemp_modal",
-                       "show_precip_cold_modal"))
   observeEvent(input$save, {
     showNotification("Bookmarking from selectlocation")
     session$doBookmark()
