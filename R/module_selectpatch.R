@@ -73,6 +73,10 @@ selectpatch_Server <- function(id, selected_region, newinattr){
     bbox_r
   })
 
+  observeEvent(input$addpatch, {
+    showNotification("Bookmarking from selectpatch")
+    session$doBookmark()
+  }, priority = -100)  
 
   attr_table
 }

@@ -342,6 +342,10 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
                            "yearforcanopy",
                            "lon",
                            "lat"))
+  observeEvent(c(input$save, input$delete), {
+    showNotification("Bookmarking from patch attribute")
+    session$doBookmark()
+  }, priority = -100)  
       
       # convert out info
       reactive({

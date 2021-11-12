@@ -212,9 +212,15 @@ server <- function(input, output, session) {
 
   # bookmarking 
   # appendinputids() #for recording input ids - an observer
-  observeEvent({input$hidestartpage; input$maintabs}, {
+  observeEvent({
+    input$hidestartpage; input$maintabs;
+    startregion(); startattr(); startAnnPrec.YfA();
+    inregion(); inattr(); inAnnPrec.YfA();
+    }, {
+    showNotification("Bookmarking from main.R")
     session$doBookmark()
   })
+  
   # Update the query string - works for whole app I think
   onBookmarked(function(querystring){
     newstring <- minimisequerystring(querystring)
@@ -223,15 +229,26 @@ server <- function(input, output, session) {
   
   # Save extra values in state$values when we bookmark
   onBookmark(function(state) {
-    state$values$tab <- input$maintabs 
+    state$values$sr <- startregion()
+    state$values$ir <- inregion()
+    state$values$sp <- startAnnPrec.YfA()
+    state$values$ip <- inAnnPrec.YfA()
+    state$values$s1at <- compactattrtable(cval1()$patchattr_tbl)
+    state$values$s2at <- compactattrtable(cval2()$patchattr_tbl)
   })
   
   # Read values from state$values when we restore
   onRestore(function(state) {
     closelandingpage()
-    if (isTruthy(state$values$tabs)){
-      updateTabsetPanel(inputId = maintabs, selected = state$values$tabs)
-    }
+    # url converts "" values to list() values so below needed to fix it
+    sr <- state$values$sr
+    ir <- state$values$ir
+    if (length(sr) == 0){ startregion("") } else { startregion(sr) }
+    if (length(ir) == 0){ inregion("") } else { inregion(ir) }
+    startAnnPrec.YfA(state$values$sp)
+    inAnnPrec.YfA(state$values$ip)
+    startattr(urltable2attrtbl(state$values$s1at))
+    inattr(urltable2attrtbl(state$values$s2at))
   })
 
 } # end server

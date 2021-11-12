@@ -282,28 +282,11 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
                        "show_precip_warm_modal",
                        "show_mintemp_modal",
                        "show_precip_cold_modal"))
-  
+  observeEvent(input$save, {
+    showNotification("Bookmarking from selectlocation")
+    session$doBookmark()
+  })  
  
-  # Save extra values in state$values when we bookmark
-  onBookmark(function(state) {
-    # if (length(selected_region()) == 0){
-      # state$values$selected_region <- "None"
-    # } else {
-      state$values$selected_region <- selected_region()
-    # }
-  })
-  
-  # Read values from state$values when we restore
-  onRestore(function(state) {
-    # url converts "" values to list() values so below needed to fix it
-    urlselected_region <- state$values$selected_region
-    if (length(urlselected_region) == 0){
-      selected_region("")
-    } else {
-      selected_region(urlselected_region)
-    }
-  })
-      
   outofmodule
     }
   )
