@@ -3,10 +3,8 @@ observe_excludebookmark <- function(react, inputstosave = NULL, session = getDef
   observeEvent(
     react,
     {   
-    showNotification("bookmarking now") 
-    toExclude <- setdiff(names(session$input), c("maintabs", "hidestartpage"))
+    toExclude <- setdiff(names(session$input), c(""))
     setBookmarkExclude(toExclude)
-    session$doBookmark()
     },
     ignoreNULL = FALSE,
     ignoreInit = FALSE,
