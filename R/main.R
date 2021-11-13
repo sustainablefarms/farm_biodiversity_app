@@ -172,6 +172,7 @@ server <- function(input, output, session) {
   # restart, set default starting too
   observeEvent(input$restart, {# need to flip them to something briefly observers notice a change
     openlandingpage()
+    updateTabsetPanel(session, inputId = "maintabs", "in1")
     startregion(NULL)
     startregion("")
     startattr(0)
