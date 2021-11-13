@@ -46,7 +46,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                         if (refisaverage){"Scenario 1"}else{"Scenario 2"},
                         "if all the woodland areas had a minimal or a large amount of nearby woody cover."
                         )),
-               right = plotOutput(ns("species_richness"), height = "250px")
+               right = plotOutput(ns("species_richness"), height = "250px", width = "100%")
     )
     ),
     tags$div(class = "clearfix", tags$div(class =  "float-end", 
@@ -175,6 +175,8 @@ predictionsServer <- function(id,
   
       # compute predictions below
       datar <- reactive({
+        validate(need(current_values()$patchattr_tbl, ""))
+        validate(need(current_values()$AnnPrec.YfA, ""))
         data <- compile_predictions(current_values(), refpredictions(), refisaverage = refisaverage)
         session$sendCustomMessage("predictionsmade", "nothing") #for usage tracking
         data

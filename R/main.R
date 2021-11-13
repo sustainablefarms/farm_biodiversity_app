@@ -213,13 +213,13 @@ server <- function(input, output, session) {
   # bookmarking 
   # appendinputids() #for recording input ids - an observer
   observeEvent({
-    input$hidestartpage; input$maintabs;
-    startregion(); startattr(); startAnnPrec.YfA();
-    inregion(); inattr(); inAnnPrec.YfA();
+    c(input$hidestartpage,
+      input$maintabs,
+      input$out1_next)
     }, {
     showNotification("Bookmarking from main.R")
     session$doBookmark()
-  })
+  }, ignoreInit = TRUE)
   
   # Update the query string - works for whole app I think
   onBookmarked(function(querystring){
@@ -239,16 +239,18 @@ server <- function(input, output, session) {
   
   # Read values from state$values when we restore
   onRestore(function(state) {
-    closelandingpage()
-    # url converts "" values to list() values so below needed to fix it
-    sr <- state$values$sr
-    ir <- state$values$ir
-    if (length(sr) == 0){ startregion("") } else { startregion(sr) }
-    if (length(ir) == 0){ inregion("") } else { inregion(ir) }
-    startAnnPrec.YfA(state$values$sp)
-    inAnnPrec.YfA(state$values$ip)
-    startattr(urltable2attrtbl(state$values$s1at))
-    inattr(urltable2attrtbl(state$values$s2at))
+    if (length(state$values) > 0){
+      # url converts "" values to list() values so below needed to fix it
+      sr <- state$values$sr
+      ir <- state$values$ir
+      if (length(sr) == 0){ startregion("") } else { startregion(sr) }
+      if (length(ir) == 0){ inregion("") } else { inregion(ir) }
+      startAnnPrec.YfA(state$values$sp)
+      inAnnPrec.YfA(state$values$ip)
+      startattr(urltable2attrtbl(state$values$s1at))
+      inattr(urltable2attrtbl(state$values$s2at))
+      closelandingpage()
+    }
   })
 
 } # end server
