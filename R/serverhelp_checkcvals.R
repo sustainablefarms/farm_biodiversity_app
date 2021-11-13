@@ -9,7 +9,8 @@ checkcvals <- function(cvals){
                         nrow = nrow(cvals$patchattr_tbl),
                         ncol = 5))
     names(df) <- c("woody500m", "woody3000m", "noisy_miner", "IsRemnant", "pid")
-    df[, names(cvals$patchattr_tbl)] <- cvals$patchattr_tbl
+    colsincommon <- sort(intersect(names(cvals$patchattr_tbl), names(df)))
+    df[, colsincommon] <- cvals$patchattr_tbl[, colsincommon]
     names(df) <- c("nearby woody cover",
                    "regional woody cover", 
                    "Noisy Miner presence",
