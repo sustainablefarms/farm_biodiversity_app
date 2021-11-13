@@ -132,5 +132,5 @@ NAMESPACE
 ./www/Sustainable Farms logo RGB.png
 ./www/google-analytics.html
 ./www/extra.html
-./www/accordion.scss
+./www/_accordion.scss
 ./www/base.scss
