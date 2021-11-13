@@ -219,7 +219,6 @@ server <- function(input, output, session) {
       input$maintabs,
       input$out1_next)
     }, {
-    showNotification("Bookmarking from main.R")
     session$doBookmark()
   }, ignoreInit = TRUE, priority = -100)
   

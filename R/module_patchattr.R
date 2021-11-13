@@ -335,7 +335,6 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
                  condition = (isTruthy(input$nm) & isTruthy(input$woodlandtype)))})
       
   observeEvent(c(input$save, input$delete), {
-    showNotification("Bookmarking from patch attribute")
     session$doBookmark()
   }, priority = -100)  
       
