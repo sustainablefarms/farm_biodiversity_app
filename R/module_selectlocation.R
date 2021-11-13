@@ -280,7 +280,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
   observeEvent(input$save, {
     showNotification("Bookmarking from selectlocation")
     session$doBookmark()
-  })  
+  }, ignoreInit = FALSE, priority = -100)  
  
   outofmodule
     }

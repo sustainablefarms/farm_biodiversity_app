@@ -42,6 +42,13 @@ appendinputids <- function(session = getDefaultReactiveDomain(), nssep = "-"){
 minimisequerystring <- function(querystring){
   root <- gsub("_inputs_.*", "", querystring)
   valuesonlystring <- gsub(".*_values_","_values_", querystring)
+  # if lp (landing page) is true then delete most of the string - landing page only seen at start
+  lpcharloc <- regexpr("&lp=[^&]*", valuesonlystring)
+  lpstr <- substr(valuesonlystring, lpcharloc, lpcharloc + attr(lpcharloc, "match.length") - 1)
+  lpstr <- gsub("^&lp=", "", lpstr)
+  lpval <- as.logical(lpstr)
+  if (isTruthy(lpval)){return(root)}
+  valuesprsd <- parseQueryString(valuesonlystring)
   maintabloc <- regexpr("maintabs=[^&]*", querystring)
   maintabsstring <- substr(querystring, maintabloc, maintabloc + attr(maintabloc, "match.length") - 1)
   

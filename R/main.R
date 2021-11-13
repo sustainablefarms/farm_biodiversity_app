@@ -94,6 +94,7 @@ ui <- function(request){
 # SERVER
 server <- function(input, output, session) {
   ns <- session$ns
+  landingpagestatus <- reactiveVal(TRUE) #indicates whether page is open (TRUE) or closed (FALSE)
 
   
   ## Stuff to do with the opening page of the app
@@ -102,7 +103,7 @@ server <- function(input, output, session) {
            where = "afterBegin",
            ui = actionButton_notdfl("hidestartpage", "Start", class = "position-absolute btn-primary translate-middle"))
   observeEvent(input$hidestartpage, {
-    closelandingpage()
+    landingpagestatus(closelandingpage())
     shinyjs::addClass(class = "visually-hidden", selector = "#lp")
     shinyjs::removeClass(class = "visually-hidden", selector = "#tw")
   })
@@ -171,7 +172,7 @@ server <- function(input, output, session) {
   
   # restart, set default starting too
   observeEvent(input$restart, {# need to flip them to something briefly observers notice a change
-    openlandingpage()
+    landingpagestatus(openlandingpage())
     updateTabsetPanel(session, inputId = "maintabs", "in1")
     startregion(NULL)
     startregion("")
@@ -184,7 +185,7 @@ server <- function(input, output, session) {
   
   ## tab navigation
   observeEvent(input$in1_back, {
-    openlandingpage()
+    landingpagestatus(openlandingpage())
   }, ignoreInit = TRUE)
   observeEvent(input$in1_next, {
     assessments <- checkcvals(cval1())
@@ -220,7 +221,7 @@ server <- function(input, output, session) {
     }, {
     showNotification("Bookmarking from main.R")
     session$doBookmark()
-  }, ignoreInit = TRUE)
+  }, ignoreInit = TRUE, priority = -100)
   
   # Update the query string - works for whole app I think
   onBookmarked(function(querystring){
@@ -230,6 +231,7 @@ server <- function(input, output, session) {
   
   # Save extra values in state$values when we bookmark
   onBookmark(function(state) {
+    state$values$lp <- landingpagestatus()
     state$values$sr <- startregion()
     state$values$ir <- inregion()
     state$values$sp <- startAnnPrec.YfA()
@@ -250,7 +252,7 @@ server <- function(input, output, session) {
       inAnnPrec.YfA(state$values$ip)
       startattr(urltable2attrtbl(state$values$s1at))
       inattr(urltable2attrtbl(state$values$s2at))
-      closelandingpage()
+      landingpagestatus(closelandingpage())
     }
   })
 
