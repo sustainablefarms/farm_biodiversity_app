@@ -308,12 +308,8 @@ predictionsServer <- function(id,
         warn <- warn_oot(current_values())
         validate(need(warn[["warn"]], ""))
         tagList(
-          tags$script("$(function () {
-                        $('[data-toggle=tooltip]').tooltip()
-                      })"
-          ),
-          tags$span(style = "color:red;", "Warning",
-                   infotooltip(warn[["reason"]]))
+          tags$span(style = "color:red;", "Warning:",
+                    warn[["reason"]])
         )
       })
       

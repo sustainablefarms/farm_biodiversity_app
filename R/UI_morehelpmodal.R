@@ -1,7 +1,6 @@
 moreinfomodal <- function(){
 out <- modalDialog(
   tags$div(class='subheader', tags$h2("COMPARISONS TO A REFERENCE")),
-  tags$p(referencesblurb),
   tags$p("The reference estimates can be set any time the app has produced a set of estimates."),
          
 
