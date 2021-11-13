@@ -10,8 +10,8 @@ wwwfiles2 <- paste0("./www/", c(
   "Sustainable Farms logo RGB.png",
   "google-analytics.html",
   "extra.html",
-  "accordion.css",
-  "base.css"))
+  "accordion.scss",
+  "base.scss"))
 # setdiff(list.files("./www", full.names = TRUE), c(wwwfiles1, wwwfiles2))
 
 datafiles <- paste0("./data/", 
