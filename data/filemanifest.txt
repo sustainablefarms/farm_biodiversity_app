@@ -134,3 +134,5 @@ NAMESPACE
 ./www/extra.html
 ./www/_accordion.scss
 ./www/base.scss
+./scripts/_functions.scss
+./scripts/_variables.scss

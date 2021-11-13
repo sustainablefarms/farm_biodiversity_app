@@ -31,5 +31,5 @@ c("nicecovarnames.csv",
 "model_data.rds",
 "traits.rds"))
 
-files <- c(rootfiles, datafiles, rfiles, wwwfiles1, wwwfiles2)
+files <- c(rootfiles, datafiles, rfiles, wwwfiles1, wwwfiles2, "./scripts/_functions.scss", "./scripts/_variables.scss")
 cat(files, file = "./data/filemanifest.txt", sep = "\n")
