@@ -19,7 +19,8 @@ tags$div(class="modal fade",
 }
       
 modalfooter_bigback <- function(){
-  tags$div(class = "modal-footer justify-content-center style='border-top: none;'",
+  tags$div(class = "modal-footer justify-content-center",
+           style="border-top: none;",
            tags$button(type = "button", class = "btn btn-outline-primary py-3",
                        style="width: 50%",
                        `data-dismiss` = "modal",

@@ -62,8 +62,8 @@ landingpage <- function(id = NULL){
 	         "and demonstrates the potential for biodiversity in a range of scenarios."
 	        ),
 	        tags$p("The estimates created by", appname,
-	               "are most reliable for remnant Box Gum Grassy Woodland or Eucalypt plantings",
-	               "that are within livestock grazing or mixed farms on the inland slopes of the Great Dividing Range,",
+	               "are designed for remnant Box Gum grassy woodland or planted eucalypt woodland",
+	               "that is within livestock grazing or mixed farms on the inland slopes of the Great Dividing Range,",
 	               "from Benalla in Victoria to Dubbo in NSW."),
 
 	        tags$div(style = "height: 4rem; width = 100%; position: relative",
