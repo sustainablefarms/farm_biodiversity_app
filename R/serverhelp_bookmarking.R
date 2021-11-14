@@ -12,7 +12,7 @@ minimisequerystring <- function(querystring){
   maintabsstring <- substr(querystring, maintabloc, maintabloc + attr(maintabloc, "match.length") - 1)
   
   combinedstring <- paste("_inputs_", maintabsstring, valuesonlystring, sep = "&")
-  return(paste0(root, combinedstring))
+  return(paste0("?", combinedstring))
 }
 
 abbrpatchtblnames <- c(
