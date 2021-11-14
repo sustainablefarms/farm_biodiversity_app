@@ -15,6 +15,17 @@ headercontent <- function(id = NULL){
   HTML("</div>")
   )}
 
+navstatusbar <- function(id = NULL){
+  ns <- NS(id)
+  tags$ul(class = "text-center",
+          style = paste("background-color:", appcolors[["Dark Green"]], ";"),
+    tags$li(1),
+    tags$li(class="active", 2),
+    tags$li(3),
+    tags$li(4)
+  )
+}
+
 footercontent <- function(id = NULL){
   ns <- NS(id)
   fluidRow(

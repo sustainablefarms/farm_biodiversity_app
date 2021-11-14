@@ -80,6 +80,7 @@ outerpage <- function(){bootstrapPage(
     leaflet::leafletOutput("loadleaflet", height = "0px", width = "0px"), #so leaflet scripts are loaded
     plotly::plotlyOutput("loadplotly", height = "0px", width = "0px"), #so plotly is loaded
     headercontent(),
+    navstatusbar(),
     tags$div(id = "lp", landingpage()),
     tags$div(id = "tw", class = "visually-hidden mx-2", tabwrapper()),
     footercontent(),
@@ -219,6 +220,7 @@ server <- function(input, output, session) {
       input$maintabs,
       input$out1_next)
     }, {
+    showNotification("Bookmarking from main.R")
     session$doBookmark()
   }, ignoreInit = TRUE, priority = -100)
   
