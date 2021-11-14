@@ -211,7 +211,20 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
   
   observeEvent(input$out2_back, {updateTabsetPanel(session, inputId = "maintabs", "in2")}, ignoreInit = TRUE)
- 
+  
+  # navigation status bar
+  observeEvent(input$maintabs, {
+    validate(need(input$maintabs, ""))
+    showNotification("Changing tab status")
+    shinyjs::addClass(class = "active", selector = paste0("#status_",input$maintabs))
+    
+    # set non-active maintabs to lack the 'active' class
+    tabids <- c("in1", "out1", "in2", "out2")
+    nonactiveids <- setdiff(tabids, input$maintabs)
+    lapply(nonactiveids, function(id)
+      {shinyjs::removeClass(class = "active", selector = paste0("#status_",id))}
+           )
+  })
 
   # bookmarking 
   # appendinputids() #for recording input ids - an observer

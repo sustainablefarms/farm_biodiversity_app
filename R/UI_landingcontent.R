@@ -19,10 +19,10 @@ navstatusbar <- function(id = NULL){
   ns <- NS(id)
   tags$ul(class = "text-center py-2",
           style = paste("background-color:", appcolors[["Dark Green"]], ";"),
-    tags$li(1),
-    tags$li(class="active", 2),
-    tags$li(3),
-    tags$li(4)
+    tags$li(1, id = ns("status_in1")),
+    tags$li(class="active", 2, id = ns("status_out1")),
+    tags$li(3, id = ns("status_in2")),
+    tags$li(4, id = ns("status_out2"))
   )
 }
 
