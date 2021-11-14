@@ -34,14 +34,16 @@ navstatusbar <- function(id = NULL){
 
 footercontent <- function(id = NULL){
   ns <- NS(id)
+  tags$div(
+    style = paste("background-color:", appcolors[["Dark Green"]]), #try to get using bs_get_variables
   fluidRow(
     class = "clearfix py-2", #fixed-bottom means it overlays other content
-    style = paste("background-color:", appcolors[["Dark Green"]]), #try to get using bs_get_variables
     
     column(4, class = "float-start", style = "color: #FFFFFF;", "A product of the ANU Sustainable Farms Initiative"),
     column(4, style = "color: #FFFFFF;", HTML("&copy;", "Sustainable Farms 2021"), style = "text-align: center;"),
     column(4, class = "clearfix",
            tags$div(class = "float-end", style = "color: #FFFFFF;", "By Kassel Hingee and the team.", "Version", appversion))
+  )
   )
 }
 
