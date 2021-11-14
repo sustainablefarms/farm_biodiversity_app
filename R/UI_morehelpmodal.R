@@ -12,16 +12,21 @@ tags$div(class="modal fade",
       tags$div(class = "modal-body",
         guidebody()
         ),
-      tags$div(class = "modal-footer",
-        tags$button(type = "button", class = "btn btn-outline-primary", `data-dismiss` = "modal",
-                    `data-bs-dismiss` = "modal", `aria-label` = "back", "Back"),
-      )
+      modalfooter_bigback()
     )
   )
 )
 }
       
-      
+modalfooter_bigback <- function(){
+  tags$div(class = "modal-footer justify-content-center style='border-top: none;'",
+           tags$button(type = "button", class = "btn btn-outline-primary py-3",
+                       style="width: 50%",
+                       `data-dismiss` = "modal",
+                       `data-bs-dismiss` = "modal", `aria-label` = "back", 
+                       icon("angle-left"), "Back"),
+  )
+}      
       
 guidebody <- function(){tagList(
   tags$div(class='subheader', tags$h2("COMPARISONS TO A REFERENCE")),

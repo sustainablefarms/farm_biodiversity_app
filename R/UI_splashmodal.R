@@ -12,10 +12,7 @@ tags$div(class="modal fade",
       tags$div(class = "modal-body",
         startpage()
         ),
-      tags$div(class = "modal-footer",
-        tags$button(type = "button", class = "btn btn-outline-primary", `data-dismiss` = "modal",
-                    `data-bs-dismiss` = "modal", `aria-label` = "back", "Back"),
-      )
+      modalfooter_bigback()
     )
   )
 )
