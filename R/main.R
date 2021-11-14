@@ -80,9 +80,10 @@ outerpage <- function(){bootstrapPage(
     leaflet::leafletOutput("loadleaflet", height = "0px", width = "0px"), #so leaflet scripts are loaded
     plotly::plotlyOutput("loadplotly", height = "0px", width = "0px"), #so plotly is loaded
     headercontent(),
-    navstatusbar(),
     tags$div(id = "lp", landingpage()),
-    tags$div(id = "tw", class = "visually-hidden mx-2", tabwrapper()),
+    tags$div(id = "tw", class = "visually-hidden mx-2", 
+             navstatusbar(),
+             tabwrapper()),
     footercontent(),
     title = appname,
     theme = apptheme()
@@ -215,7 +216,6 @@ server <- function(input, output, session) {
   # navigation status bar
   observeEvent(input$maintabs, {
     validate(need(input$maintabs, ""))
-    showNotification("Changing tab status")
     shinyjs::addClass(class = "active", selector = paste0("#status_",input$maintabs))
     
     # set non-active maintabs to lack the 'active' class

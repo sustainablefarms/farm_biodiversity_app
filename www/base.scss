@@ -367,7 +367,8 @@ a {
 }
 
 //itemize for the nav bar
-li {
+.mynavstatus {
+& > li {
   border: 1px solid;
   border-color: #80B2B3; //Green 50%
   background-color: #80B2B3; //Green 50%
@@ -390,7 +391,7 @@ li {
 }
 
 // this is the line between the items
-li::before{
+& > li::before {
   content: '';
   position: absolute;
   top: 1rem;
@@ -401,25 +402,26 @@ li::before{
 }
 
 
-li:first-child::before {
+& > li:first-child::before {
   display: none;
 }
 
 // this is the active item
-.active {
+& > .active {
   background: #FFFFFF;
   color: $primary;
   border-color: #FFFFFF;
 }
 
 //items after the active item
-.active ~ li {
+& > .active ~ li {
   background: none;
   color: #FFFFFF;
   border-color: #FFFFFF;
 }
 
 // lines after the active item
-.active ~ li::before {
+& > .active ~ li::before {
   background: #80B2B3;
+}
 }
