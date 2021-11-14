@@ -12,7 +12,10 @@ headercontent <- function(id = NULL){
                                  "data-bs-toggle"="modal", 
                                  "data-bs-target"="#aboutModal"),
              splashmodal(),
-             actionButton_notdfl(ns("guide"), "User Guide"),
+             actionButton_notdfl(ns("guide"), "User Guide",
+                                 "data-bs-toggle"="modal", 
+                                 "data-bs-target"="#guideModal"),
+             guidemodal(),
              actionButton_notdfl(ns("restartmodal"), "Restart", icon = icon("redo")))
   ),
   HTML("</div>")

@@ -159,14 +159,6 @@ server <- function(input, output, session) {
                     report_path,
                     refisaverage = FALSE) 
   
-  ## Help
-  observeEvent(input$about, {
-    showModal(splashmodal())
-  })
-  observeEvent(input$guide, {
-    showModal(moreinfomodal())
-  })
-  
   # restart modal
   observeEvent(input$restartmodal, {
     showModal(

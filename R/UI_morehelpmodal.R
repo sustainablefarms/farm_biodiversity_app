@@ -1,6 +1,29 @@
-moreinfomodal <- function(){
-out <- modalDialog(
-  class = "modal-fullscreen",
+guidemodal <- function(){
+tags$div(class="modal fade",
+         id="guideModal",
+         tabindex="-1",
+         "aria-labelledby"="aboutModal",
+         "aria-hidden"="true",
+  tags$div(class = "modal-dialog modal-fullscreen",
+    tags$div(class = "modal-content",
+      tags$div(class = "modal-header",
+        tags$h2("User Guide")
+        ),
+      tags$div(class = "modal-body",
+        guidebody()
+        ),
+      tags$div(class = "modal-footer",
+        tags$button(type = "button", class = "btn btn-outline-primary", `data-dismiss` = "modal",
+                    `data-bs-dismiss` = "modal", `aria-label` = "back", "Back"),
+      )
+    )
+  )
+)
+}
+      
+      
+      
+guidebody <- function(){tagList(
   tags$div(class='subheader', tags$h2("COMPARISONS TO A REFERENCE")),
   tags$p("The reference estimates can be set any time the app has produced a set of estimates."),
          
@@ -51,11 +74,6 @@ out <- modalDialog(
 	 ),
   
   tags$div(class='subheader', tags$h3("QUESTIONS AND BUGS")),
-  tags$p("For questions, help and bugs, please email Kassel at Kassel.Hingee@anu.edu.au"),
-  title = "More Help",
-  easyClose = TRUE,
-  fade = TRUE
+  tags$p("For questions, help and bugs, please email Kassel at Kassel.Hingee@anu.edu.au")
 )
-return(out)
 }
-# print(moreinfomodal(), browse = TRUE)
