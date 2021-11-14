@@ -17,7 +17,7 @@ headercontent <- function(id = NULL){
 
 navstatusbar <- function(id = NULL){
   ns <- NS(id)
-  tags$ul(class = "text-center",
+  tags$ul(class = "text-center py-2",
           style = paste("background-color:", appcolors[["Dark Green"]], ";"),
     tags$li(1),
     tags$li(class="active", 2),

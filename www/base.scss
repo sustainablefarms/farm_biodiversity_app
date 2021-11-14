@@ -368,33 +368,36 @@ a {
 
 //itemize for the nav bar
 li {
-  font-family: "Font Awesome 5 Free";
-  content: "\f058";
+  border: 1px solid;
+  border-color: #80B2B3; //Green 50%
+  background-color: #80B2B3; //Green 50%
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
   width: 2rem;
   height: 2rem;
   text-align: center;
-  line-height: 2rem;
+  line-height: 1.9rem;
   border-radius: 1rem;
   display: inline-block;
   color: transparent;
   position: relative;
   margin-top: 0;
-  margin-right: 2rem;
+  margin-right: 3rem;
   margin-bottom: 0;
-  margin-left: 2rem;
-  background-image: escape-svg(url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1536 1536"><path d="M1284 606q0-28-18-46l-91-90q-19-19-45-19t-45 19L677 877L451 651q-19-19-45-19t-45 19l-91 90q-18 18-18 46q0 27 18 45l362 362q19 19 45 19q27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5T1153.5 1433T768 1536t-385.5-103T103 1153.5T0 768t103-385.5T382.5 103T768 0t385.5 103T1433 382.5T1536 768z" fill="#80B2B3"/></svg>'));
-  
+  margin-left: 3rem;
+  background-image: escape-svg(url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1.5rem" height="1.5rem" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="#026666"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093l3.473-4.425a.267.267 0 0 1 .02-.022z"/></g></svg>'));
 }
 
 // this is the line between the items
 li::before{
   content: '';
   position: absolute;
-  top: .95rem;
-  left: -4.2rem;
-  width: 4rem;
-  height: .1rem;
-  background: #FFFFFF;
+  top: 1rem;
+  left: -6.2rem;
+  width: 6rem;
+  height: 1px;
+  background: #80B2B3;
 }
 
 
@@ -402,25 +405,21 @@ li:first-child::before {
   display: none;
 }
 
+// this is the active item
 .active {
   background: #FFFFFF;
   color: $primary;
-  border: 1px solid white;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: bold;
+  border-color: #FFFFFF;
 }
 
 //items after the active item
 .active ~ li {
   background: none;
-  border: 1px solid white;
   color: #FFFFFF;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: bold;
+  border-color: #FFFFFF;
 }
 
+// lines after the active item
 .active ~ li::before {
-  background: #FFFFFF;
+  background: #80B2B3;
 }
