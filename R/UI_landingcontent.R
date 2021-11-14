@@ -8,9 +8,12 @@ headercontent <- function(id = NULL){
              tags$span(class = "apptitle", appname)
              ),
     tags$div(class = "float-end",
-             actionButton_notdfl(ns("about"), "About the App"),
+             actionButton_notdfl(ns("about"), "About",
+                                 "data-bs-toggle"="modal", 
+                                 "data-bs-target"="#aboutModal"),
+             splashmodal(),
              actionButton_notdfl(ns("guide"), "User Guide"),
-             actionButton_notdfl(ns("restartmodal"), "Restart"))
+             actionButton_notdfl(ns("restartmodal"), "Restart", icon = icon("redo")))
   ),
   HTML("</div>")
   )}

@@ -1,9 +1,23 @@
 splashmodal <- function(){
-  modalDialog(startpage(),
-  title = appname,
-  size = "m",
-  easyClose = TRUE,
-  fade = TRUE
+tags$div(class="modal fade",
+         id="aboutModal",
+         tabindex="-1",
+         "aria-labelledby"="aboutModal",
+         "aria-hidden"="true",
+  tags$div(class = "modal-dialog modal-fullscreen",
+    tags$div(class = "modal-content",
+      tags$div(class = "modal-header",
+        tags$h2("About", appname)
+        ),
+      tags$div(class = "modal-body",
+        startpage()
+        ),
+      tags$div(class = "modal-footer",
+        tags$button(type = "button", class = "btn btn-outline-primary", `data-dismiss` = "modal",
+                    `data-bs-dismiss` = "modal", `aria-label` = "back", "Back"),
+      )
+    )
+  )
 )
 }
 
@@ -35,26 +49,21 @@ startpage <- function(){
         ),
   tags$p(
          tags$em("More help:"),
-	 "Click on",
-         actionButton_notdfl2("overallhelpfake", "More Help", class = "badge_tiny"),
-	 "at the top of the app and on the",
-	 infotooltip("Clicking on this icon will usually display helpful information."),
-	 "icons."
         ),
   tags$p(
          tags$em("More details on estimates:"),
 	 "See estimates for all species and some photos by",
 	 "clicking",
-          actionButton_notdfl2("moredetailfake", "View More Detail", class = "download_badge"),
+          actionButton_notdfl("moredetailfake", "View More Detail", class = "download_badge"),
 	 "or downloading a",
-          actionButton_notdfl2("downloadreportfake", "Report", class = "download_badge"),
+          actionButton_notdfl("downloadreportfake", "Report", class = "download_badge"),
 	 "You can also download a table of the estimates in '.csv' format.",
 	 "Hover over a species occupancy estimate to get insight into what model predictors influence that species."
         ),
 
 
   tags$p("Show this screen again by clicking",
-    actionButton_notdfl2("introfake", "Intro", class = "badge_tiny"),
+    actionButton_notdfl("introfake", "Intro", class = "badge_tiny"),
     "at the top of the app."
 	 )
   )

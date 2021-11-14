@@ -160,10 +160,12 @@ server <- function(input, output, session) {
                     refisaverage = FALSE) 
   
   ## Help
-  observeEvent(input$overallhelp, {
+  observeEvent(input$about, {
+    showModal(splashmodal())
+  })
+  observeEvent(input$guide, {
     showModal(moreinfomodal())
-    },
-    ignoreNULL = TRUE)
+  })
   
   # restart modal
   observeEvent(input$restartmodal, {
