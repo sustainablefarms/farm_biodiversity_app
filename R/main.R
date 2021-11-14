@@ -81,9 +81,9 @@ outerpage <- function(){bootstrapPage(
     plotly::plotlyOutput("loadplotly", height = "0px", width = "0px"), #so plotly is loaded
     headercontent(),
     tags$div(id = "lp", landingpage()),
-    tags$div(id = "tw", class = "visually-hidden mx-2", 
+    tags$div(id = "tw", class = "visually-hidden", 
              navstatusbar(),
-             tabwrapper()),
+             tags$div(class = "mx-2", tabwrapper())),
     footercontent(),
     title = appname,
     theme = apptheme()
@@ -233,7 +233,6 @@ server <- function(input, output, session) {
       input$maintabs,
       input$out1_next)
     }, {
-    showNotification("Bookmarking from main.R")
     session$doBookmark()
   }, ignoreInit = TRUE, priority = -100)
   
