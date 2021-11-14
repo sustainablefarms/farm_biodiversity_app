@@ -176,7 +176,7 @@ server <- function(input, output, session) {
     startattr(cbind(defaultpatchvalues, pid = 1)) #this is duplicated in initiation of values
     startAnnPrec.YfA("")
     startAnnPrec.YfA(new_data_mean$AnnPrec.YfA)
-    updateQueryString("?_inputs_", mode = "push")
+    updateQueryString("?_inputs_")
   }, ignoreInit = TRUE, ignoreNULL = TRUE) #ignore init and null here so that I have a chane of making bookmarking work
   
   ## tab navigation
@@ -233,7 +233,7 @@ server <- function(input, output, session) {
   # Update the query string - works for whole app I think
   onBookmarked(function(querystring){
     newstring <- minimisequerystring(querystring)
-    updateQueryString(newstring, mode = "push")
+    updateQueryString(newstring)
     })
   
   # Save extra values in state$values when we bookmark
