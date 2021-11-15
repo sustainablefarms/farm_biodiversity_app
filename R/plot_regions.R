@@ -7,7 +7,10 @@ regionpolygons_4326 <- readRDS("data/sa2_polygons.rds") %>%
   #                 dTolerance = 1000)
 
 regionplot_leaflet <- function(){
-  leaflet::leaflet(regionpolygons_4326) %>%
+  leaflet::leaflet(regionpolygons_4326,
+                   options = leaflet::leafletOptions(
+                     zoomControl = FALSE
+                   )) %>%
     leaflet::addTiles() %>%
     leaflet::addPolygons(
       # popup = ~SA2_NAME16,
