@@ -111,8 +111,12 @@ predictionsUI <- function(id, refisaverage = TRUE){
                 ),
               if (refisaverage){
               accordion_item(title = "Occupancy Probability of All Species", id = ns("occall"),
-                twocolumns(heading = "Estimates of the occupancy probability for every species",
-                           left = tags$div(class = "bodysmall", proboccplotdescription),
+                twocolumns(heading = "Estimates of occupancy probability for every species",
+                           left = 
+			     tagList(
+			       tags$div(class = "bodysmall", proboccplotdescription),
+			       infotext("Select from the list to reorder of figure.")
+			       ),
                            right = tagList(allprob_plot_UI(ns("allprob"), refisaverage = refisaverage),
                                            tags$div(class = "datalabels",
                                                   "Length and weight data from",
