@@ -28,8 +28,8 @@ selectlocationUI <- function(id){
 	 tags$div(id = ns("hide_until_region"),
 	   # climate values
 	   twocolumns(
-	     heading = "View climate data",
-	     left = "Shown here are historical climate averages for the centre of your region.",
+	     heading = "Climate averages",
+	     left = "Historical temperature and rainfall averages for the centre of your region.",
 	     right = tagList(
 	 tags$div(class="row row-cols-1 row-cols-md-4 g-4",
 	   mapply(function(name, uiid){
@@ -63,9 +63,9 @@ selectlocationUI <- function(id){
 	          "Climate data estimated by",
 	          tags$a(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
 	     )),
-	 twocolumns(heading = "Last year of rainfall",
+	 twocolumns(heading = "Recent rainfall",
 	            left = tagList(tags$p(class = "bodysmall",
-	                                  "A good guess is your region's average rainfall."),
+	                                  "Select the rainfall in the last year. The default is your region's historical yearly average."),
 	                           infotext("Drag to adjust rainfall amount")),
 	            right = tagList(
 	              sliderInput(

@@ -267,10 +267,10 @@ h4 {
 }
 .infotext:before {
   font-family: "Font Awesome 5 Free";
-  font-size: 20px;
+  font-size: 30px;
   content: "\f05a";
   color: $brightblue;
-
+  vertical-align: middle;
 }
 
 .warntext {

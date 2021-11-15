@@ -18,9 +18,8 @@ predictors_UI <- function(id, isS2 = TRUE){
           tags$h1("Your Farm", style = "text-align: center;"),
           tags$h3("Step 1: Tell us about your farm"),
           tags$p("Select your region,",
-                   "then add the number of woodland areas found on your farm,",
-                   "before defining the characteristics of each woodland area.",
-                   "This information will become Scenario 1.")
+                   "then define the characteristics of each woodland area found on your farm.",
+                   "This information will form Scenario 1.")
         )
       }
       )

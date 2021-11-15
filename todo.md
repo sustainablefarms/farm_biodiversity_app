@@ -13,14 +13,22 @@ output:
 
 + styling 1d
  + content slightly wider than screen,
+ + make content much thinner for large desktop screens
  + the bird carousel is formatted poorly,
  + modals are formatted a bit poorly,
  + the buttons at bottom of the prediction tabs need neater description formatting, 
  + vulnerable species words poorly formatted, 
  + a few margin and color things, 
  + whatever Laura comes back with.
+ + fonts - Sofia Pro is what  used by SF. It appears to be free for commercial used. I've downloaded it as a font-face kit (woff) from https://www.cufonfonts.com/font/sofia-pro. Examples of its use are in the downloaded zip, but it doesn't appear to work in that html.
+    + include a fallback as per https://www.w3schools.com/css/css_font_websafe.asp
+    + or include the font files directly: https://www.w3schools.com/cssref/css3_pr_font-face_rule.asp
 
 + words
+  + Check throughout consistency of headings – whether they are sentence case, or first letter capitalised 
+  + capilisation of Box Gum, Eucalypt etc
+
+
 + report 1d
 + polishing (days)
   + google analytics
