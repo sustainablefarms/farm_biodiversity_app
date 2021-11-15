@@ -55,8 +55,13 @@ out2_foot <- function(){
                                   style = "color: #FFFFFF;",
                                   class = "py-3" ),
     righthead = "Estimation Complete", rightbody = HTML(
-                         "Congratulations! You have completed all the steps in the app.",
+                         "Congratulations! You have completed all the steps in", paste0(appname, "."),
                          "Visit the Sustainable Farms website for more guidance on supporting sustainable and profitable agriculture."),
-    rightfoot = actionButton_notdfl("out2_next", "Go to Sustainable Farms", class = "btn-primary py-3", width = "100%")
+    rightfoot = 
+      tags$a(href = "https://www.sustainablefarms.org.au",
+	     style="width:100%;",
+	     type="button",
+	     class="btn btn-primary py-3",
+	     "Go to Sustainable Farms")
   )
 }
