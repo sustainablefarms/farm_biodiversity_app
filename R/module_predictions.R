@@ -27,7 +27,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                       tagList(
                       tags$h1("Compare Bird Diversity"),
                       tags$h3("Step 4: Review comparison"),
-                      tags$p("You've reached the final step in the app.",
+                      tags$p("You've reached the final step in", paste0(appname,"."),
                             "Here you can compare the results of Scenario 1 and Scenario 2",
                             "to estimate the potential for bird diversity on your farm")
                       )
@@ -44,7 +44,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                  tags$p("The upper bars are estimates of the expected number of species that occupy at least one woodland area in your farm",
                         if (refisaverage){
 				"(Scenario 1) or the average woodland area in our data (Average)."
-			}else{"under scenario 1 and Scenario 2."},
+			}else{"under Scenario 1 or Scenario 2."},
                         "The lower two bars are estimates for",
                         if (refisaverage){"Scenario 1"}else{"Scenario 2"},
                         "if all the woodland areas had a minimal (2%) or a large amount (20%) of nearby woody cover."
@@ -100,7 +100,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
               accordion_item(title = "Vulnerable species", id = ns("vulspec"),
                 twocolumns(heading = "Vulnerable and threatened species",
                            left = tags$div(appname,
-                                           "estimates five species of conservation concern."),
+                                           "estimates the occupancy probability of five species of conservation concern."),
                            right = tagList(
                             lapply(consstatus$CommonName, function(specname) vulnerablespecUI(ns, specname)),
                             tags$div(class = "datalabels", "All photographs curtesty of",
@@ -115,7 +115,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                            left = 
 			     tagList(
 			       tags$div(class = "bodysmall", proboccplotdescription),
-			       infotext("Select from the list to reorder of figure.")
+			       infotext("Select from the list to reorder the figure.")
 			       ),
                            right = tagList(allprob_plot_UI(ns("allprob"), refisaverage = refisaverage),
                                            tags$div(class = "datalabels",
@@ -130,11 +130,13 @@ predictionsUI <- function(id, refisaverage = TRUE){
               } else {
               accordion_item(title = "Relative Occupancy Probability", id = ns("occallrel"),
                              twocolumns(heading = "Estimates of occupancy probability relative to Scenario 1.",
-                                        left = tags$div(tags$p("Shown is the ratio of occupancy probability in Scenario 2 over Scenario 1.",
-                                                          "A ratio greater than 1 means the species is", tags$em("more"), "likely to occur in Scenario 2 than Scenario 1.",
-                                                          "A ratio of '1' means the species is", tags$em("equally"), "likely to occur in Scenario 2 and Scenario 1.",
-                                                          "A ratio smaller than 1 means the species is", tags$em("less"), "likely to occur in Scenario 2 compared to Scenario 1.",
-                                                          "For example, if the Superb Parrot has a ratio of '2', then it is estimated that the Superb Parrot is twice as likely to live in your farm's woodland than in the reference farm."),
+                                        left = tags$div(tags$p("Shown is the ratio of occupancy probability in Scenario 2 over the occupancy probability in Scenario 1.",
+                                                          "For example, if the Superb Parrot is twice as likely to live in your farm's woodland in Scenario 2 compared to Scenario 1, then the Superb Parrot will have a ratio of '2' shown here."),
+							  tags$p(
+                                                          "A ratio greater than 1 means the bird is", tags$em("more"), "likely to occupy your farm in Scenario 2 than Scenario 1.",
+                                                          "A ratio of '1' means the bird is", tags$em("equally"), "likely to occupy your farm in Scenario 2 and Scenario 1.",
+                                                          "A ratio smaller than 1 means the bird is", tags$em("less"), "likely to occupy your farm in Scenario 2 compared to Scenario 1."),
+			       infotext("Select from the list to reorder the figure.")
                                                       ),
                                         right = tagList(allrel_plot_UI(ns("allrel")),
                                                         tags$div(class = "datalabels",

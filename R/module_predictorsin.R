@@ -11,7 +11,7 @@ predictors_UI <- function(id, isS2 = TRUE){
           tags$p("Use this step to increase woody vegetation cover,",
                   "add or remove woodland areas,",
                   "and add or remove Noisy Miners.",
-                 "The information will become Scenario 2.")
+                 "This information will form Scenario 2.")
         )
       } else {
         tagList(
