@@ -13,6 +13,7 @@ output:
 
 + styling 1d
  + content slightly wider than screen,
+ + on thin screens columns that finish with an infotext have it overlaid by content of the next column.
  + make content much thinner for large desktop screens
  + the bird carousel is formatted poorly,
  + modals are formatted a bit poorly,

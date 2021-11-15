@@ -82,8 +82,8 @@ predictionsUI <- function(id, refisaverage = TRUE){
                 ),
               accordion_item(title = "Least likely species", id = ns("leastlikely"),
                 twocolumns(heading = "The 10 least likely species.",
-                           left = tags$p("Of the species in", appname, "these species are least likely.",
-                           "This list excludes rare birds that are not in", appname, "."),
+                           left = tags$p("Of the sixty birds estimated by ", paste0(appname, ","), "these birds are least likely to occupy woodland in your farm.",
+                           "Rare birds, migratory birds, and water birds are not estimated by ", paste0(appname, ".")),
                            right = 
                              tags$div(style="text-align: center",
                                       tags$div(class="row row-cols-1 row-cols-md-5 g-4",
@@ -100,8 +100,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
               accordion_item(title = "Vulnerable species", id = ns("vulspec"),
                 twocolumns(heading = "Vulnerable and threatened species",
                            left = tags$div(appname,
-                                           "includes five species of conservation concern.",
-                                           "Estimates of their occupancy probabilities are described here."),
+                                           "estimates five species of conservation concern."),
                            right = tagList(
                             lapply(consstatus$CommonName, function(specname) vulnerablespecUI(ns, specname)),
                             tags$div(class = "datalabels", "All photographs curtesty of",

@@ -2,16 +2,18 @@ onespecwords <- function(specname, species_prob_current, refpredictions, refisav
   relativeimprovement <- (species_prob_current[specname, "median"]/refpredictions[specname, "median"]) - 1
   out <- paste(
     paste(appname, "estimates that there is a",
-        sprintf("%0.*f%% (lower bound = %0.2f%%, upper bound = %0.2f%%)",
+        sprintf("%0.*f%%",
                 switch(as.character(species_prob_current[specname, "median"] > 0.01), "TRUE" = 0, "FALSE" = 2),
-                species_prob_current[specname, "median"] * 100,
-                species_prob_current[specname, "lower"] * 100,
-                species_prob_current[specname, "upper"] * 100
-                ),
+                species_prob_current[specname, "median"] * 100),
         "chance of the",
         specname,
-        "occupying at least one of your woodland patches in",
-        if (refisaverage){"Scenario 1."}else{"Scenario 2."}),
+        "occupying at least one of the woodland areas in",
+        if (refisaverage){"Scenario 1"}else{"Scenario 2"},
+        sprintf("(lower bound = %0.2f%%, upper bound = %0.2f%%).",
+                species_prob_current[specname, "lower"] * 100,
+                species_prob_current[specname, "upper"] * 100
+                )
+	),
     paste(
       sprintf("This is a %0.*f%% %s in occupancy probability",
               switch(as.character(abs(relativeimprovement) > 0.01), "TRUE" = 0, "FALSE" = 2),
@@ -27,5 +29,9 @@ onespecwords <- function(specname, species_prob_current, refpredictions, refisav
               refpredictions[specname, "median"] * 100)
     )
   )
+  # change any use of a 8.. or a 11 to an 8 and an 11
+  out <- gsub("a 8", "an 8", out)
+  out <- gsub("a 11%", "an 11%", out)
+  out <- gsub("a 18%", "an 18%", out)
   return(out)
 }
