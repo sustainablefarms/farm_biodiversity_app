@@ -21,8 +21,8 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
          radioButtons(ns("woodlandtype"),
                       label = "This woodland area is...",
                       choices = list(
-                        "Remnant woodland" = "remnant",
-                        "Planted woodland" = "planted"
+                        "remnant woodland" = "remnant",
+                        "planted woodland" = "planted"
                       ),
                       selected = inwoodlandtype
                       )

@@ -37,12 +37,10 @@ footercontent <- function(id = NULL){
   tags$div(
     style = paste("background-color:", appcolors[["Dark Green"]]), #try to get using bs_get_variables
   fluidRow(
-    class = "clearfix py-2", #fixed-bottom means it overlays other content
-    
-    column(4, class = "float-start", style = "color: #FFFFFF;", "A product of the ANU Sustainable Farms Initiative"),
-    column(4, style = "color: #FFFFFF;", HTML("&copy;", "Sustainable Farms 2021"), style = "text-align: center;"),
-    column(4, class = "clearfix",
-           tags$div(class = "float-end", style = "color: #FFFFFF;", "By Kassel Hingee and the team.", "Version", appversion))
+    #class = fixed-bottom means it overlays other content
+    column(6, style = "color: #FFFFFF;", HTML("&copy;", "Sustainable Farms 2021"), style = "text-align: left;"),
+    column(6, style = "color: #FFFFFF; text-align: right",
+	   "By Kassel Hingee and the team.", "Version", appversion)
   )
   )
 }

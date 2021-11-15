@@ -41,10 +41,13 @@ predictionsUI <- function(id, refisaverage = TRUE){
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
                left = tagList(
-                 tags$p("These are estimates of the expected number of species that occupy at least one woodland area.",
+                 tags$p("The upper bars are estimates of the expected number of species that occupy at least one woodland area in your farm",
+                        if (refisaverage){
+				"(Scenario 1) or the average woodland area in our data (Average)."
+			}else{"under scenario 1 and Scenario 2."},
                         "The lower two bars are estimates for",
                         if (refisaverage){"Scenario 1"}else{"Scenario 2"},
-                        "if all the woodland areas had a minimal or a large amount of nearby woody cover."
+                        "if all the woodland areas had a minimal (2%) or a large amount (20%) of nearby woody cover."
                         )),
                right = plotOutput(ns("species_richness"), height = "250px", width = "100%")
     )
