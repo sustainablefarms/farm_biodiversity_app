@@ -28,13 +28,13 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
                       )
        ),
        right = tags$div(class = "p-3", style = paste("background-color:", appcolors[["Green 10"]], ";"),
-          tags$h3("What can my Woodland Area be?", style = paste("color:", appcolors[["Dark Green"]], ";")),
-          tags$p("The Woodland Area must be approximately 1ha -10ha in area",
+          tags$p(appname,
+		 "requires", tags$b("woodland areas"), "that are between approximately 1 and 10 hectares in size",
                  "with similar vegetation structure throughout.",
-                 "Here, remnant woodland is Box Gum Grassy Woodland that has survived since before colonisation.",
-                 "Planted woodland is assumed to be 3+ years old, eucalypt-dominated,",
-                 "established by tubestock or direct seeding, and fenced at time of planting."),
-          tags$p(tags$a("Learn more", href = "??"), tags$em("Do we have something suitable on the SF website?"))
+                 tags$b("Remnant woodland"), "is Box Gum Grassy Woodland that has never been cleared.",
+                 tags$b("Planted woodland"), "is assumed to be eucalypt-dominated,",
+                 "established at least three years ago by planting tubestock or by direct seeding, and fenced at the time of planting."),
+          tags$p(tags$a("Learn more about planting woodlands", href = "??"), tags$em("Do we have something suitable on the SF website?"))
        )
     ),
     
@@ -43,12 +43,12 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
    twocolumns(heading = "Presence of Noisy Miners",
               left = tagList(
                 radioButtons(ns("nm"),
-                             label = "Are there Noisy Miners in this area...",
+                             label = "Are there Noisy Miners in this area?",
                              choices = c("yes", "no"),
                              selected = innm)
                 ),
        right = tags$div(class = "p-3", style = paste("background-color:", appcolors[["Green 10"]], ";"),
-  tags$h3("Why are Noisy Miners used in this modelling?", style = paste("color:", appcolors[["Dark Green"]], ";")),
+  #  tags$h3("Why Noisy Miners?", style = paste("color:", appcolors[["Dark Green"]], ";")),
   tags$div(class = "clearfix",
   tags$div(class = "col-md-3 float-md-end mb-3 ms-md-3",
            tags$div(tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
@@ -60,12 +60,14 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
                   HTML("&copy;Con Boekel 2016 BirdLife Photography"))
   ),
   tags$p(
-		"Noisy Miners are native, but are often aggressive towards other small bird species,
-		preventing them from living in their patch.",
-	  "You can discourage Noisy Miners by increasing the amount of midstorey (woody plants 2m-10m in height), such as through underplanting with wattles, tea-trees, bottlebrushes, and other native shrubs."
+		"Noisy Miners are native honeyeaters that have increased in abundance in recent decades.",
+		"The absence of Noisy Miners is often an indication of a healthy woodland vegetation structure.",
+		"Noisy Miners defend whole patches of woodland cooperatively,",
+	        "and their aggression prevents other small bird species from living in their patch.",
+	  "You can discourage Noisy Miners by increasing the amount of midstorey (woody plants 2-10m in height), such as through underplanting with wattles, tea-trees, bottlebrushes, and other native shrubs."
 		),
   tags$p(
-    "Noisy Miners are easy to recognise by their bright yellow eyes and beak.",
+    "Noisy Miners are easy to recognise by their bright yellow eyes and beak, and their distinctive squawk.",
     "Visit",
     tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
            "BirdLife Australia"),
@@ -79,13 +81,14 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
 	
    
   # WCF
-twocolumns(heading = "Woody cover amounts",
+twocolumns(heading = "Woody cover",
   left = tagList(
-    tags$p("Species occupancies depend heavily on the amount of 2m+ woody vegetation cover",
-    "inside the woodland and in the surrounding landscape."),
-    infotext("Click to place pin on the map, or enter Latitude and Longitude,",
-             "then load woody vegetation cover amounts for this woodland area.",
-             "Modify the amounts by dragging."
+    tags$p("Bird occupancy depends heavily on the amount of woody vegetation cover",
+   "(foliage cover greater than 2m high)",
+    "within the woodland area and in the surrounding landscape."),
+    tags$p("Estimate woody cover in and around your woodland area by identifying the location of your patch."),
+    infotext("Zoom to your farm and click to place a pin on the map, or enter latitude and longitude.",
+             "Select a representative year for your farm (between 1990 and 2019), then load woody vegetation cover amounts for this woodland area.",
              ),
   ),
   right = tagList(fluidRow(
@@ -119,10 +122,10 @@ twocolumns(heading = "Woody cover amounts",
                      "Liao et al. (IJAEOG, 2020).")),
   tags$div(style = "color:red; font-style:italic;", textOutput(ns("latlonerror"), inline = TRUE))
   ),
-  tags$h3("Modify amounts"),
+  tags$h3("Woody cover amounts"),
   # 500m WCF
   tags$div(
-    tags$html(tags$span("Nearby Woody Cover: within 500m of patch centre (% area), including cover inside patch")),
+    tags$html(tags$span("Nearby woody cover: % area woody cover within 500m of the centre of the woodland area, including cover inside the woodland")),
     sliderInput(label = NULL,
                 inputId = ns("pc_woody500m"),
                 min = 2, max = 20, step = 0.5,
@@ -131,7 +134,7 @@ twocolumns(heading = "Woody cover amounts",
   ),
   #3000m WCF
   tags$div(
-    tags$html(tags$span("Regional Woody Cover: within 3km of patch centre (% area)")),
+    tags$html(tags$span("Regional woody cover: % area woody cover within 3km of  the centre of woodland area)")),
     sliderInput(label = NULL,
                 inputId = ns("pc_woody3000m"),
                 min = 2, max = 20, step = 0.5,

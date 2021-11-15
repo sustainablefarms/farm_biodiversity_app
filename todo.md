@@ -35,6 +35,7 @@ output:
   + waiters for the plots
   + waiter for leaflet regions (or at least letting rest of app get on with it)
 
++ send to aus|smc?
 
 # High Priority:
 + Cleaner use and description for references
