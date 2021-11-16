@@ -30,7 +30,7 @@ aboutcontent <- function(){
 
   tags$p("Box Gum Grassy Woodlands characterise much of NSW South Western Slopes bioregion. Remnant or eucalypt-dominated plantings in this region may likely be Box Gum Grassy Woodland."),
   
-  tags$p(tags$em("Use this app to:"), "Estimate birds that live in your farm's wodland, create a report, and see how it compares to the birds you've seen.",
+  tags$p(tags$em("Use this app to"), "estimate birds that live in your farm's woodland, create a report, and see how it compares to the birds you've seen.",
   "Also use this app to estimate, and compare, which birds might live on your farm after some management interventions:",
 	 tags$ul(
             tags$li("addition or removal of nearby woody cover (i.e., vegetation restoration or land clearing)"),
@@ -44,7 +44,7 @@ aboutcontent <- function(){
     "The model accounts for detection difficulty and interspecies interaction",
     linknewtab(href = "https://doi.org/10.1002/ecy.2754",
 	       "[Tobler et al. 2019],"),
-    "although the latter is not included in", appname, "estimates due to the computational burden.",
+    "although the latter is not included in", appname, "estimates due to their computational burden.",
     "We used expert bird surveys at 453 different patches of remnant Box Gum Grassy Woodland and 65 different patches of planted woodland to create this model.",
     "These survey sites were located primarily in the NSW South Western Slopes bioregion, with a lesser number of surveys at location up to the Queensland-NSW border.",
     "The sites were surveyed in spring, spanning a timeframe of 17 years.",
@@ -52,22 +52,25 @@ aboutcontent <- function(){
 
 tags$p("The statistical model included all species that were detected in 100 or more surveys.",
        "These species were typically sedentary (non-migratory) and land based.",
-       "Of the 62 species in the model, the 60 are included in", appname, "are listed at the foot of this page.",
+       "Of the 62 species in the model, the 60 included in", appname, "are listed at the foot of this page.",
        appname, "creates estimates of occupancy for multiple woodland areas by taking the highest of the occupancy probabilities of each individiual area.",
        "This is consistent with assuming that a species that occupies a woodland area on a farm will also occupy any more favourable woodland area on the farm."),
 
 tags$h3("Software"),
-tags$p(appname, "was created using", linknewtab("??", "R"), linknewtab("??", "shiny"), "and uses several other packages for R:",
-       linknewtab("??", "sf"),
-       linknewtab("??", "R plotly"),
-       linknewtab("??", "ggplot2"),
-       linknewtab("??", "R Markdown")
+tags$p(appname, "was created using", linknewtab(href = "https://cran.r-project.org/", "R"), linknewtab(href = "https://shiny.rstudio.com", "shiny (Chang et al.)"), "and uses several other packages for R (",
+       linknewtab(href = "https://doi.org/10.32614/RJ-2018-009", "Pebesma"),
+       linknewtab(href = "https://plotly-r.com", "Sievert"),
+       linknewtab(href = "https://ggplot2.tidyverse.org/", "Wickham"),
+       linknewtab(href = "https://bookdown.org/yihui/rmarkdown-cookbook", "Xie et al."),
+       linknewtab(href = "https://CRAN.R-project.org/package=leaflet", "Cheng et al."),
+       ")",
        ),
   
   tags$div(class='subheader', tags$h3("Further Information")),
   tags$p("A manuscript for scientific publication is under development.",
 	 "The source code for", appname, "is available at",
-	 linknewtab("github.com/sustainablefarms/farm_biodiversity_app")),
+	 linknewtab(href = "github.com/sustainablefarms/farm_biodiversity_app",
+		    "github.com/sustainablefarms/farm_biodiversity_app")),
 
   tags$div(tags$h3("Acknowledgements")),
   tags$p(appname, "was created using the input from many people at ANU's Sustainable Farms Initiative.",
@@ -78,7 +81,8 @@ tags$p(appname, "was created using", linknewtab("??", "R"), linknewtab("??", "sh
 tags$p("This work was partly funded by the Meat and Livestock Association.",
        "Woody cover amounts can be loaded within", appname, "thanks to the ANU Centre for Water and Landscape Dynamics with technical support gratefully received from Pablo Larraondo.",
        "Photographs and descriptions of birds have been generously provided by BirdLife Australia and BirdLife Australia Photography."),
-tags$h3("Species in", appname)
+tags$h3("Species in", appname),
+includeHTML("./www/speciestable.html")
   )
 }
 # htmltools::browsable(aboutcontent())
