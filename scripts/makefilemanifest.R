@@ -8,9 +8,7 @@ rootfiles <- c(
 wwwfiles1 <- list.files("./www", pattern = "^lowres.*", full.names = TRUE) # birdlife images
 wwwfiles2 <- paste0("./www/", c(
   "Sustainable Farms logo RGB.png",
-  "ANU_Primary_Horizontal_GoldBlack.jpg",
   "ANU_Primary_Horizontal_GoldBlack.svg",
-  "ANU_Primary_Horizontal_GoldBlack.eps",
   "google-analytics.html",
   "extra.html",
   "_accordion.scss",

@@ -11,7 +11,7 @@ headercontent <- function(id = NULL){
              actionButton_notdfl(ns("about"), "About",
                                  "data-bs-toggle"="modal", 
                                  "data-bs-target"="#aboutModal"),
-             splashmodal(),
+             aboutModalDialog(),
              actionButton_notdfl(ns("guide"), "User Guide",
                                  "data-bs-toggle"="modal", 
                                  "data-bs-target"="#guideModal"),
