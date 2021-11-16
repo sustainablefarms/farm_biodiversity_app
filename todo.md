@@ -5,6 +5,7 @@ output:
 ---
 # Refactoring
 + functionality
+  + save and close plot that moves page if info not filled in but is otherwise a proper save and close button
   + FAQs
   + relative occupancy plot
   + leaflet takes a long time to load still, can I have a leaflet loading screen? Might have to be by hand: https://davidruvolo51.github.io/shinytutorials/tutorials/leaflet-loading-screens/
@@ -14,6 +15,7 @@ output:
 + styling 1d
  + content slightly wider than screen,
  + on thin screens columns that finish with an infotext have it overlaid by content of the next column.
+ + shorter lines between navbar icons - so they work on phones
  + make content much thinner for large desktop screens
  + the bird carousel is formatted poorly,
  + modals are formatted a bit poorly,

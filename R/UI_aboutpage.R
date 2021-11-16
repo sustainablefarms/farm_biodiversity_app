@@ -82,4 +82,4 @@ aboutcontent <- function(){
 	 )
   )
 }
-htmltools::browsable(aboutcontent()) 
+# htmltools::browsable(aboutcontent()) 

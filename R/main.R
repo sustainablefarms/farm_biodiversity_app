@@ -66,7 +66,7 @@ tabwrapper <- function(){tabsetPanel(
 )
 }
 
-outerpage <- function(){bootstrapPage(
+outerpage <- function(){fluidPage(
     tags$head(tags$style(appcss)),
     # includeCSS("./www/base.css"),
     # includeCSS("./www/accordion.css"),

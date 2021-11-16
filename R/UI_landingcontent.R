@@ -1,7 +1,8 @@
 headercontent <- function(id = NULL){
   ns <- NS(id)
-  tagList(
-  HTML("<div class='header' style = 'background-color: #FFFFFF'>"), # style = 'background-color: inherit'
+  fluidRow( #using fluidRow here instead of something plain so that the negative space of columns is organised
+  class='header',
+  style = 'background-color: #FFFFFF', # style = 'background-color: inherit'
   tags$div(class = "clearfix",
     tags$div(class = "float-start",
              tags$a(href = "http://sustainablefarms.org.au/", tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px")), 
@@ -18,11 +19,11 @@ headercontent <- function(id = NULL){
              guidemodal(),
              actionButton_notdfl(ns("restartmodal"), "Restart", icon = icon("redo")))
   ),
-  HTML("</div>")
   )}
 
 navstatusbar <- function(id = NULL){
   ns <- NS(id)
+  fluidRow(
   tags$ul(class = "mynavstatus text-center py-2",
           style = paste("background-color:", appcolors[["Dark Green"]], ";"),
     tags$li(1, id = ns("status_in1")),
@@ -30,13 +31,14 @@ navstatusbar <- function(id = NULL){
     tags$li(3, id = ns("status_in2")),
     tags$li(4, id = ns("status_out2"))
   )
+  )
 }
 
 footercontent <- function(id = NULL){
   ns <- NS(id)
   tags$div(
-    style = paste("background-color:", appcolors[["Dark Green"]]), #try to get using bs_get_variables
   fluidRow(
+    style = paste("background-color:", appcolors[["Dark Green"]]), #try to get using bs_get_variables
     #class = fixed-bottom means it overlays other content
     column(6, style = "color: #FFFFFF;", HTML("&copy;", "Sustainable Farms 2021"), style = "text-align: left;"),
     column(6, style = "color: #FFFFFF; text-align: right",
