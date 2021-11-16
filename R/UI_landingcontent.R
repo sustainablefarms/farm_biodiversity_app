@@ -65,7 +65,7 @@ landingpage <- function(id = NULL){
 	        ),
 	        tags$p("The estimates created by", appname,
 	               "are designed for remnant Box Gum grassy woodland or planted eucalypt woodland",
-	               "that is within livestock grazing or mixed farms on the inland slopes of the Great Dividing Range,",
+	               "that is within livestock grazing or mixed farms on the lower inland slopes of the Great Dividing Range,",
 	               "from Benalla in Victoria to Dubbo in NSW."),
 
 	        tags$div(class = "my-3", style = "height: 6rem; width = 100%; position: relative",
