@@ -9,6 +9,7 @@ wwwfiles1 <- list.files("./www", pattern = "^lowres.*", full.names = TRUE) # bir
 wwwfiles2 <- paste0("./www/", c(
   "Sustainable Farms logo RGB.png",
   "ANU_Primary_Horizontal_GoldBlack.svg",
+  "speciestable.html",
   "google-analytics.html",
   "extra.html",
   "_accordion.scss",

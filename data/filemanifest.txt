@@ -46,6 +46,7 @@ NAMESPACE
 ./R/serverhelp_ltcliminfo.R
 ./R/serverhelp_onespecwords.R
 ./R/serverhelp_ordfactby.R
+./R/UI_aboutpage.R
 ./R/UI_accordion.R
 ./R/UI_actionButtonLocal.R
 ./R/UI_avulnerablespecies.R
@@ -62,7 +63,6 @@ NAMESPACE
 ./R/UI_proboccplotdescription.R
 ./R/UI_radiobuttonsgroup.R
 ./R/UI_specimageOut.R
-./R/UI_splashmodal.R
 ./R/UI_twocolumns.R
 ./R/UI_warn_badinputs.R
 ./R/UI_WCFdesc.R
@@ -131,6 +131,7 @@ NAMESPACE
 ./www/lowres-efb5d00d8483530f1140d59a5ca05027.jpg
 ./www/Sustainable Farms logo RGB.png
 ./www/ANU_Primary_Horizontal_GoldBlack.svg
+./www/speciestable.html
 ./www/google-analytics.html
 ./www/extra.html
 ./www/_accordion.scss
