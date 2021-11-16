@@ -4,6 +4,12 @@ output:
   html_document: default
 ---
 # Refactoring
++ before video
+  + fonts
+  + logo
+  + reset modal
+  + Ange's user feedback - difficult questions
+
 + functionality
   + save and close plot that moves page if info not filled in but is otherwise a proper save and close button
   + FAQs
