@@ -130,6 +130,9 @@ NAMESPACE
 ./www/lowres-ec55f568c55b42ef433328df89193d6b.jpg
 ./www/lowres-efb5d00d8483530f1140d59a5ca05027.jpg
 ./www/Sustainable Farms logo RGB.png
+./www/ANU_Primary_Horizontal_GoldBlack.jpg
+./www/ANU_Primary_Horizontal_GoldBlack.svg
+./www/ANU_Primary_Horizontal_GoldBlack.eps
 ./www/google-analytics.html
 ./www/extra.html
 ./www/_accordion.scss

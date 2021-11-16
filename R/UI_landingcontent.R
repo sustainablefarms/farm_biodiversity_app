@@ -66,7 +66,7 @@ landingpage <- function(id = NULL){
 	               "that is within livestock grazing or mixed farms on the inland slopes of the Great Dividing Range,",
 	               "from Benalla in Victoria to Dubbo in NSW."),
 
-	        tags$div(style = "height: 4rem; width = 100%; position: relative",
+	        tags$div(class = "my-3", style = "height: 6rem; width = 100%; position: relative",
 	         tags$div(id = ns("startbuttonlocation"),
 	           class = "position-absolute top-50 start-50 translate-middle",
 	           tags$div(id = ns("startspinner"), 
@@ -75,11 +75,19 @@ landingpage <- function(id = NULL){
 	           )
 	         )
 	        ),
-	        tags$a(class = "text-center",
-	               href = "http://sustainablefarms.org.au/",
-	               tags$img(src = "Sustainable Farms logo RGB.png",
-	                        alt = "sflogo",
-	                        width = "100px"))
+	        tags$div(class = "py-5",
+  	        tags$a(class = "text-center mx-3",
+  	               href = "http://sustainablefarms.org.au/",
+  	               tags$img(src = "Sustainable Farms logo RGB.png",
+  	                        alt = "sflogo",
+  	                        height = "100px"),
+  	               ""),
+  	        tags$span(class = "text-center mx-5",
+  	               tags$img(src = "ANU_Primary_Horizontal_GoldBlack.svg",
+  	                        alt = "ANUlogo",
+  	                        height = "100px",
+  	                        "min-width" = "250px")),
+	        )
 	 ))
 	)
 }
