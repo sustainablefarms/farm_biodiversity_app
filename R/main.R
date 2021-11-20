@@ -68,8 +68,8 @@ tabwrapper <- function(){tabsetPanel(
 
 outerpage <- function(){fluidPage(
     tags$head(tags$style(appcss),
-	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins",
-		       	rel="stylesheet")
+	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins", rel="stylesheet"),
+	      tags$link(href="https://fonts.googleapis.com/css?family=Inter", rel="stylesheet")
 	      ),
     # includeCSS("./www/base.css"),
     # includeCSS("./www/accordion.css"),
