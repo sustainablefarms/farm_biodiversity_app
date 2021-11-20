@@ -67,7 +67,10 @@ tabwrapper <- function(){tabsetPanel(
 }
 
 outerpage <- function(){fluidPage(
-    tags$head(tags$style(appcss)),
+    tags$head(tags$style(appcss),
+	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins",
+		       	rel="stylesheet")
+	      ),
     # includeCSS("./www/base.css"),
     # includeCSS("./www/accordion.css"),
     waiter::use_waiter(), 
