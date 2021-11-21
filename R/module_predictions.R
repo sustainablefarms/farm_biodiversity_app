@@ -20,7 +20,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                       tagList(
                       tags$h1("Bird Diversity"),
                       tags$h3("Step 2: Results of Scenario 1"),
-                      tags$p("We've estimated occupancy for sixty birds based",
+                      tags$p("We've estimated occupancy for sixty birds in your woodlands",
                              "based on the information you provided in the previous step.")
                       )
                     } else {
@@ -29,7 +29,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                       tags$h3("Step 4: Review comparison"),
                       tags$p("You've reached the final step in", paste0(appname,"."),
                             "Here you can compare the results of Scenario 1 and Scenario 2",
-                            "to estimate the potential for bird diversity on your farm")
+                            "to estimate the potential for bird diversity in your farm's woodlands.")
                       )
                     },
                     tags$p(tags$em(uiOutput(ns("warn"), inline = TRUE)))
