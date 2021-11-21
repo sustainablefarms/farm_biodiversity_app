@@ -67,6 +67,10 @@ tabwrapper <- function(){tabsetPanel(
 }
 
 outerpage <- function(){fluidPage(
+    #class settings to make content full height when landing page too short
+    #based on this example: https://getbootstrap.com/docs/5.0/examples/cover/
+    class = "h-100", #need to do this for html and body (the parents of this div).
+    class = "d-flex flex-column",
     tags$head(tags$style(appcss),
 	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins|Inter", rel="stylesheet")
 	      ),

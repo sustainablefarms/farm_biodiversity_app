@@ -37,6 +37,7 @@ navstatusbar <- function(id = NULL){
 footercontent <- function(id = NULL){
   ns <- NS(id)
   tags$div(
+    class = "mt-auto", #to place at bottom of screen
   fluidRow(
     style = paste("background-color:", appcolors[["Dark Green"]]), #try to get using bs_get_variables
     #class = fixed-bottom means it overlays other content
