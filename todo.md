@@ -5,16 +5,28 @@ output:
 ---
 # Refactoring
 + before video
-  + fonts
   + logo
   + reset modal
   + Ange's user feedback - difficult questions
+  + save + close w error
+
++ Important from Ange's feedback
+  + intro says that is only for BGGW or planting
+  + does not produce a complete bird list
+  + clearer definition of canopy cover not needed?
+  + explain why slider for WCF only goes to 20%
+  + highlight link between midstorey and Noisy Miners
+  + make clear that estimates are only for wooded areas, not the surrounding paddocks
+  + FAQs section
+  + in report and elsewhere not that the app does not look at the open spaces, just the woodlands
 
 + functionality
   + save and close plot that moves page if info not filled in but is otherwise a proper save and close button
   + FAQs
+    + what if the 3km canopy cover is all from a single large patch?
   + relative occupancy plot
   + leaflet takes a long time to load still, can I have a leaflet loading screen? Might have to be by hand: https://davidruvolo51.github.io/shinytutorials/tutorials/leaflet-loading-screens/
+  + redirection pages
 
 + CHECK THAT STATS WORK FOR THE 5 VULNERABLE SPECIES
 
@@ -32,6 +44,10 @@ output:
  + fonts - Sofia Pro is what  used by SF. It appears to be free for commercial used. I've downloaded it as a font-face kit (woff) from https://www.cufonfonts.com/font/sofia-pro. Examples of its use are in the downloaded zip, but it doesn't appear to work in that html.
     + include a fallback as per https://www.w3schools.com/css/css_font_websafe.asp
     + or include the font files directly: https://www.w3schools.com/cssref/css3_pr_font-face_rule.asp
+ + highlight the vulnerable species in the graphs using a different color or something
+ + check that text is *larger* than old birdchecker
+ + instructions for citing birdcaste *ask David*
+ + the i icon from font awesome isn't displayed correctly on my iridium browser - could be better to use svg of the icon directly
 
 + words
   + Check throughout consistency of headings – whether they are sentence case, or first letter capitalised 
