@@ -2,6 +2,7 @@ headercontent <- function(id = NULL){
   ns <- NS(id)
   fluidRow( #using fluidRow here instead of something plain so that the negative space of columns is organised
   class='header',
+  class = "mb-auto", # to center material between footer and header 
   style = 'background-color: #FFFFFF', # style = 'background-color: inherit'
   tags$div(class = "clearfix",
     tags$div(class = "float-start",
