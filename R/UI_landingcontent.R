@@ -60,8 +60,8 @@ landingpage <- function(id = NULL){
 	        tags$p(
 	         appname,
 	         "is a scenario planning tool for biodiversity on farms.",
-	         "Using decades of data on more than sixty birds,", appname,
-	         "indicates which birds may live in woodlands on your farm in spring",
+	         "Using decades of data,", appname,
+	         "indicates which of sixty birds may live in woodlands on your farm in spring",
 	         "and demonstrates the potential for biodiversity in a range of scenarios."
 	        ),
 	        tags$p("The estimates created by", appname,
