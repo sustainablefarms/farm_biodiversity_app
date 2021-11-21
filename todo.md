@@ -11,12 +11,9 @@ output:
   + save + close w error
 
 + Important from Ange's feedback
-  + intro says that is only for BGGW or planting
-  + does not produce a complete bird list
-  + clearer definition of canopy cover not needed?
-  + explain why slider for WCF only goes to 20%
-  + highlight link between midstorey and Noisy Miners
-  + make clear that estimates are only for wooded areas, not the surrounding paddocks
+  + clearer definition of canopy cover not needed? Put in About?
+  + explain why slider for WCF only goes to 20% - Put in About?
+  + __highlight link between midstorey and Noisy Miners - what is the link?__
   + FAQs section
   + in report and elsewhere not that the app does not look at the open spaces, just the woodlands
 
