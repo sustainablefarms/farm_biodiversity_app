@@ -2,7 +2,6 @@ headercontent <- function(id = NULL){
   ns <- NS(id)
   fluidRow( #using fluidRow here instead of something plain so that the negative space of columns is organised
   class='header',
-  class = "mb-auto", # to center material between footer and header 
   style = 'background-color: #FFFFFF', # style = 'background-color: inherit'
   tags$div(class = "clearfix",
     tags$div(class = "float-start",
@@ -38,7 +37,7 @@ navstatusbar <- function(id = NULL){
 footercontent <- function(id = NULL){
   ns <- NS(id)
   tags$div(
-    class = "mt-auto", #to place at bottom of screen
+    class = "mt-auto", #to center material above footer, away from the footer
   fluidRow(
     style = paste("background-color:", appcolors[["Dark Green"]]), #try to get using bs_get_variables
     #class = fixed-bottom means it overlays other content

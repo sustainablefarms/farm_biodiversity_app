@@ -86,7 +86,9 @@ outerpage <- function(){fluidPage(
     leaflet::leafletOutput("loadleaflet", height = "0px", width = "0px"), #so leaflet scripts are loaded
     plotly::plotlyOutput("loadplotly", height = "0px", width = "0px"), #so plotly is loaded
     headercontent(),
-    tags$div(id = "lp", landingpage()),
+    tags$div(id = "lp", landingpage(),
+             class = "mt-auto", # to center material between footer and header 
+	     ),
     tags$div(id = "tw", class = "visually-hidden", 
              navstatusbar(),
              tags$div(class = "mx-2", tabwrapper())),
