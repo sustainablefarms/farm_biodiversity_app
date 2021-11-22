@@ -95,6 +95,8 @@ accitem <- accordion_item("Your region", id = ns("acc"),
   return(accitem)
 }
 
+
+
 selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
   moduleServer(
     id,
@@ -165,7 +167,9 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
       output$regionsleaflet <- leaflet::renderLeaflet({
         wleaflet$show()
 	      on.exit(wleaflet$hide())
-        regionplot_leaflet()
+        m <- regionplot_leaflet()
+	showNotification("leaflet finished")
+	m
       })
       # update selected_region based on leaflet click
       observe({
@@ -293,7 +297,9 @@ app_selectlocation <- function(){
   shinyApp(
     {bootstrapPage(
       shinyjs::useShinyjs(),
-      includeCSS("./www/base.css"),
+    tags$head(tags$style(appcss),
+	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins|Inter", rel="stylesheet")
+	      ),
       fluidRow(selectlocationUI("location")),
       theme = bslib::bs_theme(version = 5, "lumen"))
     },
