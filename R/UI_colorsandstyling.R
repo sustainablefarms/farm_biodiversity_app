@@ -14,6 +14,7 @@ apptheme <- function(){
   theme <- bslib::bs_theme(version = 5, "lumen",
 		"btn-focus-box-shadow" = "none",
 		"btn-box-shadow" = "none",
+		"btn-close-color" = appcolors[["Dark Green"]],
                 "accordion-button-color" = appcolors[["Dark Green"]],
                 "accordion-button-active-bg" = "#FFFFFF",
                 "accordion-border-color" = appcolors[["Green 50"]],

@@ -17,7 +17,10 @@ headercontent <- function(id = NULL){
                                  "data-bs-toggle"="modal", 
                                  "data-bs-target"="#guideModal"),
              guidemodal(),
-             actionButton_notdfl(ns("restartmodal"), "Restart", icon = icon("redo")))
+             actionButton_notdfl(ns("restartmodal"), "Restart", icon = icon("redo"),
+				 "data-bs-toggle" = "modal",
+				 "data-bs-target" = "#restartModal"),
+             restartModal())
   ),
   )}
 
@@ -119,28 +122,38 @@ landingpage <- function(id = NULL){
 #     )
 # }
 
-restartmodaldialog <- function(){
-  modalDialog(
-          title = tags$div(class = "clearfix",
-                    tags$h2("Are you sure you want to Restart?", class = "float-start"),
-                    tags$button(type = "button", class = "btn-close float-end", `aria-label` = "Cancel", `data-dismiss` = "modal", 
-                                `data-bs-dismiss` = "modal"),
-                  ),
-          tags$div(class = "body", 
-                   "Restarting the app will clear your farm data and results.",
-                   "You will be redirected to the launch page of", paste0(appname, ".")),
-          footer = tagList(
-            tags$button(type = "button", class = "btn btn-outline-primary", `data-dismiss` = "modal", 
-                        `data-bs-dismiss` = "modal", `aria-label` = "Cancel", "Cancel"),
-            actionButton_notdfl(inputId = "restart", label = "I want to restart", class = "btn-primary",
-                         `data-dismiss` = "modal", `data-bs-dismiss` = "modal", `aria-label` = "Restart")
-          ),
-          easyClose = TRUE,
-          fade = TRUE
-          # tags$div(class = "clearfix", tags$div(class = "float-end",
 
-          # ))
-          )
+restartModal <- function(){
+tags$div(class="modal fade",
+         id="restartModal",
+         tabindex="-1",
+         "aria-labelledby"="restartModal",
+         "aria-hidden"="true",
+  tags$div(class = "modal-dialog",
+    tags$div(class = "modal-content",
+      tags$div(class = "modal-header",
+	       style = "border-bottom: none;",
+        tags$h2("Are you sure you want to Restart?"),
+	tags$button(type="button",
+		    class="btn-close",
+		    `data-bs-dismiss`="modal",
+		    `aria-label`="Close")
+        ),
+      tags$div(class = "modal-body body",
+        "Restarting the app will clear your farm data and results.",
+        "You will be redirected to the launch page of", paste0(appname, "."),
+        ),
+      tags$div(class = "modal-footer justify-content-end",
+	       style = "border-top: none;",
+        tags$button(type = "button", class = "btn btn-outline-primary", `data-dismiss` = "modal", 
+                   `data-bs-dismiss` = "modal", `aria-label` = "Cancel", "Cancel"),
+        actionButton_notdfl(inputId = "restart", label = "I want to restart", class = "btn-primary",
+                   `data-dismiss` = "modal", `data-bs-dismiss` = "modal", `aria-label` = "Restart")
+         
+      )
+    )
+  )
+)
 }
 
 
