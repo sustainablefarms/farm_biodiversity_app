@@ -6,7 +6,6 @@ output:
 # Refactoring
 + before video
   + logo
-  + reset modal
   + Ange's user feedback - difficult questions
   + save + close w error
 

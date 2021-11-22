@@ -12,3 +12,22 @@
       }
     }
 </script>
+
+<script>
+function spin_event(el, x) {
+  console.log('spin event added');
+  var mymap = this;
+  mymap.on('layerremove', function(e) {
+    console.log('layerremove fired');
+    mymap.spin(true);
+  });
+  mymap.on('load', function(e) {
+    console.log('load fired');
+    mymap.spin(true);
+  });
+  mymap.on('layeradd', function(e) {
+    console.log('layeradd fired');
+    mymap.spin(false);
+  });
+}
+</script>

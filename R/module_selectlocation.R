@@ -167,10 +167,16 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
       output$regionsleaflet <- leaflet::renderLeaflet({
         wleaflet$show()
 	      on.exit(wleaflet$hide())
-        m <- regionplot_leaflet()
+        m <- regionplot_leaflet_init()
 	showNotification("leaflet finished")
 	m
       })
+      observeEvent(input$selectbox , {#add the polygons
+	showNotification("adding polygons")
+        leaflet::leafletProxy("regionsleaflet") %>%
+	  regionplot_leaflet_addpolys()
+      }, ignoreInit = FALSE, ignoreNULL = FALSE)
+
       # update selected_region based on leaflet click
       observe({
         p <- input$regionsleaflet_shape_click
@@ -298,7 +304,8 @@ app_selectlocation <- function(){
     {bootstrapPage(
       shinyjs::useShinyjs(),
     tags$head(tags$style(appcss),
-	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins|Inter", rel="stylesheet")
+	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins|Inter", rel="stylesheet"),
+              includeHTML("./www/extra.html"),
 	      ),
       fluidRow(selectlocationUI("location")),
       theme = bslib::bs_theme(version = 5, "lumen"))

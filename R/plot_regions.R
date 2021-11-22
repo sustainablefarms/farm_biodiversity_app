@@ -27,20 +27,8 @@ registerPlugin <- function(map, plugin) {
 }
 
 # Note: Ctrl-Shift-J opens the javascript console in the browser
-spin_event <- "function(el, x) {
-  console.log('spin event added');
-  var mymap = this;
-  mymap.on('layerremove', function(e) {
-    console.log('layerremove fired');
-    mymap.spin(true);
-  });
-  mymap.on('layeradd', function(e) {
-    console.log('layeradd fired');
-    mymap.spin(false);
-  });
-}"
 
-regionplot_leaflet <- function(){
+regionplot_leaflet_init <- function(){
   leaflet::leaflet(regionpolygons_4326,
                    options = leaflet::leafletOptions(
                      zoomControl = FALSE
@@ -48,12 +36,18 @@ regionplot_leaflet <- function(){
     leaflet::addTiles() %>%
     registerPlugin(spinPlugin) %>%
     registerPlugin(leafletspinPlugin) %>%
-    htmlwidgets::onRender(spin_event) %>%
+    htmlwidgets::onRender("spin_event") %>% #calls the function
+    leaflet::clearShapes()
+}
+
+regionplot_leaflet_addpolys <- function(obj){
+  obj %>%
     leaflet::clearShapes() %>%
     leaflet::addPolygons(
       # popup = ~SA2_NAME16,
       label = ~SA2_NAME16,
-      highlightOptions = leaflet::highlightOptions(color = "red")
+      highlightOptions = leaflet::highlightOptions(color = "red"),
+      data = regionpolygons_4326
     )
 }
 
