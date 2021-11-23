@@ -22,8 +22,7 @@ selectlocationUI <- function(id){
 	       fluidRow(
 	       column(width = 6, 
 		      tags$div(class = "position-relative",
-			tags$div(id = ns("leafletspinner"), 
-				 class = "position-absolute h-100 w-100",
+			tags$div(class = "position-absolute h-100 w-100",
 				 tags$div(class="position-absolute top-50 start-50 spinner-border"),
 				 style = "z-index: 1001;",
 				 style = "opacity: 80%;"),
