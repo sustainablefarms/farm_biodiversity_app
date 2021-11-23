@@ -172,9 +172,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
         
       # leaflet map operations
       output$regionsleaflet <- leaflet::renderLeaflet({
-        m <- regionplot_leaflet_init()
-	showNotification("leaflet finished")
-	m
+        regionplot_leaflet()
       })
 
       # update selected_region based on leaflet click

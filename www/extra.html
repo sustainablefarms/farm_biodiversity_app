@@ -14,24 +14,8 @@
 </script>
 
 <script>
-function spin_event(el, x) {
-  console.log('spin event added');
-  //$('#S1in-loc-leafletspinner').addClass("visually-hidden");
-  console.log(el.previousElementSibling);
+function removeleafletspinner(el, x) {
   $(el.previousElementSibling).addClass("visually-hidden");	
-  this.whenReady(function(){console.log("leafletready")});
-  var mymap = this;
-  mymap.on('layerremove', function(e) {
-    console.log('layerremove fired');
-    //mymap.spin(true);
-  });
-  mymap.on('load', function(e) {
-    console.log('load fired');
-    //mymap.spin(true);
-  });
-  mymap.on('layeradd', function(e) {
-    console.log('layeradd fired');
-    //mymap.spin(false);
-  });
+  el.previousElementSibling.remove();	
 }
 </script>

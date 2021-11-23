@@ -17,6 +17,7 @@ Imports:
     sf,
     ggbeeswarm,
     shinyWidgets,
+    htmlwidgets,
     httr,
     sass,
     geojsonsf,
