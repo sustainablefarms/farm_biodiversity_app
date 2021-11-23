@@ -7,7 +7,6 @@ selectlocationUI <- function(id){
   
   ns <- NS(id)
   internals <-  tagList(
-	 waiter::use_waiter(),
 	 twocolumns(
 	   heading = "Select your region",
 	   left = tagList(tags$p(appname, "uses your region to estimate your farm's climate."),
