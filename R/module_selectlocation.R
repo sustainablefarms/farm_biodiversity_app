@@ -168,22 +168,14 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
       # disable if nothing selected
       observe({shinyjs::toggleState(id = "save", isTruthy(selected_region()))})
 
-      wleaflet <- waiter::Waiter$new(id = ns("regionsleaflet"))
 
         
       # leaflet map operations
       output$regionsleaflet <- leaflet::renderLeaflet({
-        wleaflet$show()
-	      on.exit(wleaflet$hide())
         m <- regionplot_leaflet_init()
 	showNotification("leaflet finished")
 	m
       })
-      observeEvent(input$selectbox , {#add the polygons
-	showNotification("adding polygons")
-        leaflet::leafletProxy("regionsleaflet") %>%
-	  regionplot_leaflet_addpolys()
-      }, ignoreInit = FALSE, ignoreNULL = FALSE)
 
       # update selected_region based on leaflet click
       observe({

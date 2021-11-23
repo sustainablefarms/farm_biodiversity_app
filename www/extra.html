@@ -16,7 +16,9 @@
 <script>
 function spin_event(el, x) {
   console.log('spin event added');
-  $('#S1in-loc-leafletspinner').addClass("visually-hidden");
+  //$('#S1in-loc-leafletspinner').addClass("visually-hidden");
+  console.log(el.previousElementSibling);
+  $(el.previousElementSibling).addClass("visually-hidden");	
   this.whenReady(function(){console.log("leafletready")});
   var mymap = this;
   mymap.on('layerremove', function(e) {
