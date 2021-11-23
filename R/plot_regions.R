@@ -37,7 +37,12 @@ regionplot_leaflet_init <- function(){
     registerPlugin(spinPlugin) %>%
     registerPlugin(leafletspinPlugin) %>%
     htmlwidgets::onRender("spin_event") %>% #calls the function
-    leaflet::clearShapes()
+    leaflet::clearShapes() %>%
+    leaflet::addPolygons(
+      # popup = ~SA2_NAME16,
+      label = ~SA2_NAME16,
+      highlightOptions = leaflet::highlightOptions(color = "red")
+    )
 }
 
 regionplot_leaflet_addpolys <- function(obj){

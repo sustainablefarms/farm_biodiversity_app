@@ -16,11 +16,11 @@
 <script>
 function spin_event(el, x) {
   console.log('spin event added');
+  $('#S1in-loc-leafletspinner').addClass("visually-hidden");
   this.whenReady(function(){console.log("leafletready")});
   var mymap = this;
   mymap.on('layerremove', function(e) {
     console.log('layerremove fired');
-    $('#S1in-loc-regionsleaflet').addClass("visually-hidden");
     //mymap.spin(true);
   });
   mymap.on('load', function(e) {
@@ -29,7 +29,6 @@ function spin_event(el, x) {
   });
   mymap.on('layeradd', function(e) {
     console.log('layeradd fired');
-    $('#S1in-loc-regionsleaflet').removeClass("visually-hidden");
     //mymap.spin(false);
   });
 }

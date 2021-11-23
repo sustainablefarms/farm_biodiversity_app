@@ -20,7 +20,15 @@ selectlocationUI <- function(id){
 	                   multiple = FALSE,
 	                   width = "100%"),
 	       fluidRow(
-	       column(width = 6, leaflet::leafletOutput(ns("regionsleaflet"))),
+	       column(width = 6, 
+		      tags$div(class = "position-relative",
+			tags$div(id = ns("leafletspinner"), 
+				 class = "position-absolute h-100 w-100",
+				 tags$div(class="position-absolute top-50 start-50 spinner-border"),
+				 style = "z-index: 1001;",
+				 style = "opacity: 80%;"),
+		        leaflet::leafletOutput(ns("regionsleaflet")))
+		      ),
 	       column(width = 6, tags$div(style = "align: center;", textOutput(ns("regionname"), inline = TRUE)),
 	              plotOutput(ns("map"), width = "100%")))
 	     )
