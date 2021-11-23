@@ -2,7 +2,6 @@
 predictionsUI <- function(id, refisaverage = TRUE){
   ns <- NS(id)
   tagList(
-    includeHTML("./www/extra.html"), #has the toggleexpand function
     # the following enables bootstrap 3's inbuilt tooltips
     tags$script("$(function () {
         $('[data-toggle=tooltip]').tooltip()
@@ -343,7 +342,8 @@ app_predictions <- function(){
     {fluidPage(
       predictionsUI("pred", refisaverage = TRUE),
       theme = apptheme(),
-      tags$head(tags$style(appcss))
+      tags$head(tags$style(appcss),
+                includeHTML("./www/extra.html")), #has the toggleexpand function
       )
       },
            function(input, output, session){

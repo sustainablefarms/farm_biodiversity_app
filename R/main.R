@@ -72,7 +72,8 @@ outerpage <- function(){fluidPage(
     class = "h-100", #need to do this for html and body (the parents of this div).
     class = "d-flex flex-column",
     tags$head(tags$style(appcss),
-	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins|Inter", rel="stylesheet")
+	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins|Inter", rel="stylesheet"),
+              includeHTML("./www/extra.html"), #has the toggleexpand function
 	      ),
     # includeCSS("./www/base.css"),
     # includeCSS("./www/accordion.css"),
