@@ -45,7 +45,7 @@ if (params$loadexampledata){
   current_values <- cval
   refisaverage <- refisaverage
 }
-predcontext <- predictions_morecontext(cpred$species_prob_current, rpred$spec_prob, refisaverage)
+predcontext <- predictions_morecontext(cpred$spec_prob, rpred$spec_prob, refisaverage)
 
 # covarnicenames_tbl <- read.csv("./data/nicecovarnames.csv", header = TRUE)
 covarnicenames <- covarnicenames_tbl$NiceName
@@ -118,10 +118,10 @@ The region of these patches was: `r current_values$selected_region`.
 # The 10 Most Likely Species on Your Farm
 ```{r storyprep}
 # the following already loaded inside the app - so its local directory is known
-# urls <- get_birdlife_url(row.names(data$species_prob_current))
+# urls <- get_birdlife_url(row.names(data$spec_prob))
 # stories <- readRDS("data/birdstories.rds")
 # imgfilenames <- readRDS("data/imgfilenames.rds")
-topten <- order(cpred$species_prob_current[, "median"], decreasing = TRUE)[1:10]
+topten <- order(cpred$spec_prob[, "median"], decreasing = TRUE)[1:10]
 imagetexfun <- function(specinfo){
   imagetex <- paste0("\\includegraphics[width=1\\linewidth, height = 1\\linewidth, keepaspectratio]{",
                gsub("\\.[^.]*$", "", specinfo$imgfilename),
@@ -148,7 +148,7 @@ buildspeclatex_imagestory <- function(specname){
 ```
 
 ```{r makelatexincludes_10mostlikely, results='asis'}
-for (specname in row.names(cpred$species_prob_current)[topten]){
+for (specname in row.names(cpred$spec_prob)[topten]){
   cat(buildspeclatex_imagestory(specname))
 }
 ```
@@ -158,7 +158,7 @@ for (specname in row.names(cpred$species_prob_current)[topten]){
 # The 10 Least Likely Species on Your Farm
 Of the birds in the model, the 10 least likely species to reside in your Box Gum Grassy Woodland patches are below.
 ```{r bottomten, results='asis'}
-bottomten <- order(cpred$species_prob_current[, "median"], decreasing = FALSE)[1:10]
+bottomten <- order(cpred$spec_prob[, "median"], decreasing = FALSE)[1:10]
 buildspeclatex_justimage <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
   imagetex <- imagetexfun(speciesinfo[specinforow,])
@@ -177,7 +177,7 @@ buildspeclatex_justimage <- function(specname){
   return(out)
 }
 cat(" \\begin{center} ")
-for (specname in row.names(cpred$species_prob_current)[bottomten]){
+for (specname in row.names(cpred$spec_prob)[bottomten]){
   cat(buildspeclatex_justimage(specname))
 }
 cat(" \\end{center} ")
@@ -189,7 +189,7 @@ cat(" \\end{center} ")
 ```{r superbparrotinfo, results='asis'}
 texs <- lapply(consstatus$CommonName, function(specname){
   probs <- paste("The", specname, consstatus[specname, "statussummary"],
-          onespecwords(specname, cpred$species_prob_current,
+          onespecwords(specname, cpred$spec_prob,
                        refpredictions = rpred$spec_prob,
                        refisaverage = refisaverage))
   imagewstory <- buildspeclatex_imagestory(specname)
@@ -206,7 +206,7 @@ There is a 95% chance that the \emph{true} occupancy probability is within the e
 We computed both estimate and error bars by taking the maximum of the occupancy probability of all patches.
 
 ```{r species_on_farm, fig.height = 20, fig.width = 7, out.width = "100%"}
-all_prob(tocommon(cpred$species_prob_current)) %>%
+all_prob(tocommon(cpred$spec_prob)) %>%
               order_y(.data[["Body Length"]]) %>%
   add_error() %>%
   add_label_onright() 

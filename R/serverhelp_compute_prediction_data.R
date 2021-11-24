@@ -1,17 +1,17 @@
-tocommon <- function(species_prob_current){ #this function only changes column names and adds species name as a column
-  colnam <- colnames(species_prob_current)
-  colnames(species_prob_current) <- dplyr::case_when(
+tocommon <- function(spec_prob){ #this function only changes column names and adds species name as a column
+  colnam <- colnames(spec_prob)
+  colnames(spec_prob) <- dplyr::case_when(
     colnam == "median" ~ "value",
     TRUE ~ colnam
   )
 
-  sp_current <- data.frame(species = rownames(species_prob_current), species_prob_current)
+  sp_current <- data.frame(species = rownames(spec_prob), spec_prob)
   return(sp_current)
 }
 
-todifferent <- function(species_prob_current, species_prob_ref){
-  colnam <- colnames(species_prob_current)
-  colnames(species_prob_current) <- dplyr::case_when(
+todifferent <- function(spec_prob, species_prob_ref){
+  colnam <- colnames(spec_prob)
+  colnames(spec_prob) <- dplyr::case_when(
     colnam == "median" ~ "value",
     TRUE ~ colnam
   )
@@ -21,10 +21,10 @@ todifferent <- function(species_prob_current, species_prob_ref){
     TRUE ~ colnam
   )
   
-  species_prob_current <- data.frame(species = rownames(species_prob_current), value = species_prob_current[, "value"])
+  spec_prob <- data.frame(species = rownames(spec_prob), value = spec_prob[, "value"])
   species_prob_ref <- data.frame(species = rownames(species_prob_ref), value = species_prob_ref[, "value"])
   
-  sp_diff <- dplyr::inner_join(species_prob_current, species_prob_ref, by = "species", suffix = c(".cur", ".ref"))
+  sp_diff <- dplyr::inner_join(spec_prob, species_prob_ref, by = "species", suffix = c(".cur", ".ref"))
   sp_diff$value <- sp_diff$value.cur / sp_diff$value.ref
   return(sp_diff)
 }

@@ -26,7 +26,7 @@ allprob_plot_UI <- function(id, refisaverage = TRUE){
 }
 
 allprob_plot_Server <- function(id, 
-                    species_prob_current,
+                    spec_prob,
                     refpredictions,
                     refisaverage = TRUE){
   moduleServer(
@@ -34,12 +34,12 @@ allprob_plot_Server <- function(id,
     function(input, output, session){
         ns <- session$ns
         rootplt <- reactive({
-          validate(need(species_prob_current(), label = ""))
-          all_prob(tocommon(species_prob_current()))
+          validate(need(spec_prob(), label = ""))
+          all_prob(tocommon(spec_prob()))
         })
         
         output$plot <- plotly::renderPlotly({
-          validate(need(species_prob_current(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
+          validate(need(spec_prob(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
           validate(need(input$yorder, ""))
           out <- rootplt()
           if (input$showerror){
@@ -60,7 +60,7 @@ allprob_plot_Server <- function(id,
 
 app_allprob_plot <- function(){
   main_app_prep()
-  species_prob_current <- reactiveVal(readRDS("./predictions.rds")$species_prob_current)
+  spec_prob <- reactiveVal(readRDS("./predictions.rds")$spec_prob)
   
   shinyApp(
     {fluidPage(
@@ -71,6 +71,6 @@ app_allprob_plot <- function(){
     },
     function(input, output, session){
       allprob_plot_Server("allspec", 
-                        species_prob_current)
+                        spec_prob)
     })
 }

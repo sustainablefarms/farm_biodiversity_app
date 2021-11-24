@@ -163,7 +163,7 @@ server <- function(input, output, session) {
                     report_path,
                     refisaverage = TRUE) 
   pred2out <- predictionsServer("pred2", cval2,
-                    reactive(pred1out()$species_prob_current),
+                    reactive(pred1out()$spec_prob),
                     model_data,
                     report_path,
                     refisaverage = FALSE) 
@@ -236,7 +236,7 @@ server <- function(input, output, session) {
 	    buildreport(cval = cval1(), 
 		    cpred = pred1out(),
 		    rval = NULL,
-		    rpred = list(spec_prob = species_prob_mean, richness = NULL),  #or pred2out()$species_prob_current
+		    rpred = list(spec_prob = species_prob_mean, richness = NULL),  #or pred2out()$spec_prob
 		    refisaverage = TRUE,
 		    file = file) 
       }

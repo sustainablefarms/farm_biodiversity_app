@@ -171,7 +171,7 @@ predictionsServer <- function(id,
     function(input, output, session){
       data <- reactiveValues(
         Xocc = NULL,
-        species_prob_current = NULL,
+        spec_prob = NULL,
         species_richness = NULL,
         toptennames = NULL,
         speciesinfo_topten = NULL,
@@ -190,10 +190,10 @@ predictionsServer <- function(id,
       
       # draw species plots
       mostlikely_plot_Server("mlp", 
-                             reactive({datar()$species_prob_current}),
+                             reactive({datar()$spec_prob}),
                              refpredictions
                              )
-      allprob_plot_Server("allprob", reactive(datar()$species_prob_current))
+      allprob_plot_Server("allprob", reactive(datar()$spec_prob))
       allrel_plot_Server("allrel", reactive(datar()$spec_different))
         
       
@@ -248,9 +248,9 @@ predictionsServer <- function(id,
       #vulnerable species
       lapply(consstatus$CommonName, function(specname){
         output[[gsub("(-| )", "", specname)]] <- renderText({
-          validate(need(datar()$species_prob_current, ""))
+          validate(need(datar()$spec_prob, ""))
           c("The", specname, consstatus[specname, "statussummary"],
-            onespecwords(specname, datar()$species_prob_current, refpredictions(), refisaverage = refisaverage)
+            onespecwords(specname, datar()$spec_prob, refpredictions(), refisaverage = refisaverage)
             )
         })
       })
@@ -269,7 +269,7 @@ predictionsServer <- function(id,
       output$downloaddata <- downloadHandler(
         filename = "predictions.csv",
         content = function(file) {
-          outdata <- datar()$species_prob_current
+          outdata <- datar()$spec_prob
           outdata <- cbind(Species = rownames(outdata), as.data.frame(outdata))
           colnames(outdata)[colnames(outdata) == "median"] <- "Predicted Probability"
           colnames(outdata)[colnames(outdata) == "bestsite"] <- "Patch"
@@ -302,7 +302,7 @@ predictionsServer <- function(id,
           contentType = "rds")
       }
       
-      reactive(datar()[c("species_prob_current", "species_richness")])
+      reactive(datar()[c("spec_prob", "species_richness")])
     })
 }
 

@@ -35,23 +35,23 @@ mostlikely_plot_UI <- function(id, refisaverage = TRUE){
 }
 
 mostlikely_plot_Server <- function(id, 
-                    species_prob_current,
+                    spec_prob,
                     refpredictions,
                     refisaverage = TRUE){
   moduleServer(
     id,
     function(input, output, session){
         ns <- session$ns
-        # req(data$species_prob_current)
+        # req(data$spec_prob)
         output$common_species <- plotly::renderPlotly({
-          validate(need(species_prob_current(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          prob_top10(tocommon(species_prob_current()), 
+          validate(need(spec_prob(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
+          prob_top10(tocommon(spec_prob()), 
                                 showerrorbars = FALSE)
         })
         
         output$common_species_err <- plotly::renderPlotly({
-          validate(need(species_prob_current(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          prob_top10(tocommon(species_prob_current()), 
+          validate(need(spec_prob(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
+          prob_top10(tocommon(spec_prob()), 
                                 showerrorbars = TRUE)
         })
         
@@ -84,7 +84,7 @@ mostlikely_plot_Server <- function(id,
 
 app_mostlikely_plot <- function(){
   main_app_prep()
-  species_prob_current <- reactiveVal(readRDS("./predictions.rds")$species_prob_current)
+  spec_prob <- reactiveVal(readRDS("./predictions.rds")$spec_prob)
   refpredictions <- reactiveVal(value = species_prob_mean)
   
   shinyApp(
@@ -96,7 +96,7 @@ app_mostlikely_plot <- function(){
     },
     function(input, output, session){
       mostlikely_plot_Server("mlp", 
-                        species_prob_current,
+                        spec_prob,
                         refpredictions,
                         refisaverage = FALSE)
     })

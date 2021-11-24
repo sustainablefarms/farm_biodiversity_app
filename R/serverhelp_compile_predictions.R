@@ -7,7 +7,7 @@ compile_predictions <- function(current_values, refpredictions, refisaverage = T
                                                                        model_data$XoccProcess$scale,
                                                                        model_data$XoccColNames)})
   print(modwXocc$data$Xocc)
-  data$species_prob_current <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwXocc)
+  data$spec_prob <- msod::poccupancy_margotherspeciespmaxsite.jsodm_lv(modwXocc)
   species_richness_raw <- rbind(compute_richness(model_data, data$Xocc),
                                  reference = sum(refpredictions[, "median"])) 
   category_name <- c(
@@ -18,17 +18,17 @@ compile_predictions <- function(current_values, refpredictions, refisaverage = T
   category_name_f <- factor(category_name, levels = category_name, ordered = TRUE)
   species_richness_raw$category <- category_name_f[rownames(species_richness_raw)]
   data$species_richness <- species_richness_raw
-  data <- c(data, predictions_morecontext(data$species_prob_current, refpredictions, refisaverage))
+  data <- c(data, predictions_morecontext(data$spec_prob, refpredictions, refisaverage))
   return(data)
 }
 
-predictions_morecontext <- function(species_prob_current, refpredictions, refisaverage){
+predictions_morecontext <- function(spec_prob, refpredictions, refisaverage){
   data <- list()
-  data$spec_different <- todifferent(species_prob_current, refpredictions)
-  topten <- order(species_prob_current[, "median"], decreasing = TRUE)[1:10]
-  botten <- order(species_prob_current[, "median"], decreasing = FALSE)[1:10]
-  data$toptennames <- row.names(species_prob_current)[topten]
-  data$speciesinfo_topten <- speciesinfo[row.names(species_prob_current)[topten], ]
-  data$speciesinfo_botten <- speciesinfo[row.names(species_prob_current)[botten], ]
+  data$spec_different <- todifferent(spec_prob, refpredictions)
+  topten <- order(spec_prob[, "median"], decreasing = TRUE)[1:10]
+  botten <- order(spec_prob[, "median"], decreasing = FALSE)[1:10]
+  data$toptennames <- row.names(spec_prob)[topten]
+  data$speciesinfo_topten <- speciesinfo[row.names(spec_prob)[topten], ]
+  data$speciesinfo_botten <- speciesinfo[row.names(spec_prob)[botten], ]
   return(data)
 }
