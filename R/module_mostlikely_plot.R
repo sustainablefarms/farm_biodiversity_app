@@ -45,28 +45,24 @@ mostlikely_plot_Server <- function(id,
         # req(data$species_prob_current)
         output$common_species <- plotly::renderPlotly({
           validate(need(species_prob_current(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          on.exit(session$sendCustomMessage("plotfinished", TRUE))
           prob_top10(tocommon(species_prob_current()), 
                                 showerrorbars = FALSE)
         })
         
         output$common_species_err <- plotly::renderPlotly({
           validate(need(species_prob_current(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          on.exit(session$sendCustomMessage("plotfinished", TRUE))
           prob_top10(tocommon(species_prob_current()), 
                                 showerrorbars = TRUE)
         })
         
         output$common_species_ref <- plotly::renderPlotly({
           validate(need(refpredictions(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          on.exit(session$sendCustomMessage("plotfinished", TRUE))
           prob_top10(tocommon(refpredictions()), 
                                 showerrorbars = FALSE)
         })
         
         output$common_species_ref_err <- plotly::renderPlotly({
           validate(need(refpredictions(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
-          on.exit(session$sendCustomMessage("plotfinished", TRUE))
           prob_top10(tocommon(refpredictions()), 
                                 showerrorbars = TRUE)
         })

@@ -41,7 +41,6 @@ allprob_plot_Server <- function(id,
         output$plot <- plotly::renderPlotly({
           validate(need(species_prob_current(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
           validate(need(input$yorder, ""))
-          on.exit(session$sendCustomMessage("plotfinished", TRUE))
           out <- rootplt()
           if (input$showerror){
             out <- out %>% add_error()
