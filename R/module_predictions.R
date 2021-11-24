@@ -73,7 +73,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                                 )
                                               })
                                      )),
-                            tags$div(class = "datalabels", "All photographs curtesty of",
+                            tags$div(class = "datalabels", "All photographs curtesy of",
                               tags$a("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
                               "Click on each photo to view attribution.")
                             )
@@ -102,7 +102,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                            "estimates the occupancy probability of five species of conservation concern."),
                            right = tagList(
                             lapply(consstatus$CommonName, function(specname) vulnerablespecUI(ns, specname)),
-                            tags$div(class = "datalabels", "All photographs curtesty of",
+                            tags$div(class = "datalabels", "All photographs curtesy of",
                               tags$a("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
                               "Click on each photo to view attribution.")
                             )
