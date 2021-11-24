@@ -48,7 +48,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                         if (refisaverage){"Scenario 1"}else{"Scenario 2"},
                         "if all the woodland areas had a minimal (2%) or a large amount (20%) of nearby woody cover."
                         )),
-               right = plotOutput(ns("species_richness"), height = "250px", width = "100%")
+               right = plotOutput(ns("species_richness"), height = "250px", width = "100%") %>% waiter::withWaiter()
     )
     ),
     tags$div(class = "clearfix", tags$div(class =  "float-end", 
@@ -62,7 +62,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                             infotext("Select a bird for more details")
                           ),
                           right = tagList(
-                            mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage),
+                            mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage) %>% waiter::withWaiter(), 
                             tags$div(style="text-align: center",
                                      tags$div(class="row row-cols-3 row-cols-md-5 g-2 justify-content-center",
                                               lapply(1:10, function(idx) {
@@ -116,7 +116,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
 			       tags$div(class = "bodysmall", proboccplotdescription),
 			       infotext("Select from the list to reorder the figure.")
 			       ),
-                           right = tagList(allprob_plot_UI(ns("allprob"), refisaverage = refisaverage),
+                           right = tagList(allprob_plot_UI(ns("allprob"), refisaverage = refisaverage) %>% waiter::withWaiter(),
                                            tags$div(class = "datalabels",
                                                   "Length and weight data from",
                                                   tags$a(href = "https://www.nature.com/articles/sdata201561",
