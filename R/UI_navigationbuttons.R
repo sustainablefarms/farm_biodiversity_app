@@ -33,7 +33,7 @@ out1_foot <- function(){
     cenhead = "Download the full report", cenbody = HTML(
       "Download a full report on the birds that are likely to live in your farm's woodland.",
       "This report will include a comparison between your farm and bird occupancy in an average woodland area."),
-    cenfoot = downloadButton("out1_product", "Download Report", 
+    cenfoot = downloadButton_notdfl("out1_product", "Download Report", 
                                   style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
                                   style = "color: #FFFFFF; width: 100%;",
                                   class = "py-3" ),
@@ -50,7 +50,7 @@ out2_foot <- function(){
     leftfoot = actionButton_notdfl("out2_back", "Back", class = "btn-outline-primary py-3", width = "100%"),
     cenhead = "Download the full report", cenbody = HTML("Download a full report on the birds that are likely to live in your farm's woodland.",
                                   "This report will include comparison between Scenario 1 and Scenario 2."),
-    cenfoot = downloadButton("out2_product", "Download Report",  
+    cenfoot = downloadButton_notdfl("out2_product", "Download Report",  
                                   style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
                                   style = "color: #FFFFFF; width: 100%;",
                                   class = "py-3" ),
