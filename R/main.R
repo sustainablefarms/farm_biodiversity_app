@@ -241,6 +241,23 @@ server <- function(input, output, session) {
 		    file = file) 
       }
   )
+  output$out2_product <- downloadHandler(
+      filename = "report.pdf",
+      content = function(file) {
+        id <- showNotification(
+          "Rendering report...",
+          duration = NULL,
+          closeButton = FALSE
+        )
+        on.exit(removeNotification(id), add = TRUE)
+	    buildreport(cval = cval2(), 
+		    cpred = pred2out(),
+		    rval = cval1(),
+		    rpred = pred1out(),  
+		    refisaverage = FALSE,
+		    file = file) 
+      }
+  )
 
 
   # bookmarking 
