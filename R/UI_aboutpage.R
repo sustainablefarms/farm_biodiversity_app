@@ -7,7 +7,11 @@ tags$div(class="modal fade",
   tags$div(class = "modal-dialog modal-fullscreen",
     tags$div(class = "modal-content",
       tags$div(class = "modal-header",
-        tags$h2("About", appname)
+        tags$h2("About", appname),
+	tags$button(type="button",
+		    class="btn-close",
+		    `data-bs-dismiss`="modal",
+		    `aria-label`="Close")
         ),
       tags$div(class = "modal-body",
         aboutcontent()

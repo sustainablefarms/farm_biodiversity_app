@@ -34,7 +34,7 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
                  tags$b("Remnant woodland"), "is Box Gum Grassy Woodland that has never been cleared.",
                  tags$b("Planted woodland"), "is assumed to be eucalypt-dominated,",
                  "established at least three years ago by planting tubestock or by direct seeding, and fenced at the time of planting."),
-          tags$p(tags$a("Learn more about planting woodlands", href = "??"), tags$em("Do we have something suitable on the SF website?"))
+	  faqlink(faqid = "whatisawoodland", "Learn more about planting woodlands")
        )
     ),
     

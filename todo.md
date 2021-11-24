@@ -3,34 +3,50 @@ output:
   pdf_document: default
   html_document: default
 ---
+
++ questions: 
+  + acknowledgements: UX and UI consultants CRE8IVE
+  + v wide screens: max width 1400px
+  + be consistent with warnings - choose notifications in the bottom right or otherwise
+
 # Refactoring
 + before video
-  + logo
   + Ange's user feedback - difficult questions
   + save + close w error
+  + images try cropping - ask birdlifephotography, if not, do scaling
+    + might be easier for birdlifephotography - ask them, send them the link
+  + size of columns above navigation buttons
+  + wide screens
+  + get report working
 
 + Important from Ange's feedback
   + clearer definition of canopy cover not needed? Put in About?
   + explain why slider for WCF only goes to 20% - Put in About?
-  + __highlight link between midstorey and Noisy Miners - what is the link?__
+  + __highlight link between midstorey and Noisy Miners - what is the link?__ Ask Richard Beggs [Suzannah]
   + FAQs section
   + in report and elsewhere not that the app does not look at the open spaces, just the woodlands
 
 + functionality
+  + link to FAQs
   + save and close plot that moves page if info not filled in but is otherwise a proper save and close button
   + FAQs
     + what if the 3km canopy cover is all from a single large patch?
+    + try to avoid repeating content
+  + About - purpose of the app, key features/attributes, business case, ambition, why does the app exist. Top level, purpose driven
+  + User Guide - is how to use the app. For the user.
+  + FAQs: Specific content that answers a question
   + relative occupancy plot
-  + leaflet takes a long time to load still, can I have a leaflet loading screen? Might have to be by hand: https://davidruvolo51.github.io/shinytutorials/tutorials/leaflet-loading-screens/
   + redirection pages
 
 + CHECK THAT STATS WORK FOR THE 5 VULNERABLE SPECIES
 
 + styling 1d
- + content slightly wider than screen,
+ + be considerate of spacing
+ + add % symbols on the labels and update text labels for the WCF sliders
  + on thin screens columns that finish with an infotext have it overlaid by content of the next column.
  + shorter lines between navbar icons - so they work on phones
- + make content much thinner for large desktop screens
+ + icons on buttons
+ + delete patch icon
  + the bird carousel is formatted poorly,
  + modals are formatted a bit poorly,
  + the buttons at bottom of the prediction tabs need neater description formatting, 
@@ -42,8 +58,9 @@ output:
     + or include the font files directly: https://www.w3schools.com/cssref/css3_pr_font-face_rule.asp
  + highlight the vulnerable species in the graphs using a different color or something
  + check that text is *larger* than old birdchecker
- + instructions for citing birdcaste *ask David*
+ + instructions for citing birdcast *ask David*
  + the i icon from font awesome isn't displayed correctly on my iridium browser - could be better to use svg of the icon directly
+ + extra info text for the patch selection map
 
 + words
   + Check throughout consistency of headings – whether they are sentence case, or first letter capitalised 
@@ -53,29 +70,18 @@ output:
 + report 1d
 + polishing (days)
   + google analytics
-  + waiters for the plots
-  + waiter for leaflet regions (or at least letting rest of app get on with it)
+  + waiters for the prediction plots
 
 + send to aus|smc?
 
 # High Priority:
-+ Cleaner use and description for references
-+ types of farms in More Information. Could get from the 2010 Lindenmayer book? Talks about wheat sheep belt, and more
-+ a notification when reference is updated, and when things change.
 + a warning that javascript is required
-+ tooltips that work on phones: accordions
 + make 50m gap language clearer - see email with Ange
-+ the species info about sensitivity into the species descriptions?
-+ change 'must be provided' backup to something else for species estimate summaries
 + compute_richness use poccupancy_margotherspeciespmaxsite() -- see a branch
-+ map like clicking: see https://github.com/leaflet-extras/leaflet-providers and https://developers.arcgis.com/documentation/mapping-apis-and-services/deployment/basemap-attribution/ for attribution instructions. I think it will work!!
-
 
 Regular Priority:
 + make ggplot in more detail and reports same color scheme as summary online
 + set wvc for patch based on region
-+ From Richard Beggs: references require some thought. Maybe a notification when you change things, and when you set the reference.
-+ climate_modal() -> modal_climateplot()
 + onespecwords() -> onespec_occdesc()
 + patchincompletewarn() -> attrincomplete()
 + vulnerablespeciesUI() -> avulnerablespeciesUI()
