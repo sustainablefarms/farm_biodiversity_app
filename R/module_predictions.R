@@ -64,7 +64,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                           right = tagList(
                             mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage),
                             tags$div(style="text-align: center",
-                                     tags$div(class="row row-cols-1 row-cols-md-5 g-4",
+                                     tags$div(class="row row-cols-3 row-cols-md-5 g-2 justify-content-center",
                                               lapply(1:10, function(idx) {
                                                 tags$div(class = "col", 
                                                   actionLink(ns(paste0("ml_gallery_", idx)),
