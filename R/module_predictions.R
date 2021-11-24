@@ -150,7 +150,10 @@ predictionsUI <- function(id, refisaverage = TRUE){
       fluidRow(
         column(width = 6,
           if (isTRUE(getOption("shiny.testmode"))){
-            downloadButton(ns("downloaddataverbose"), "Verbose Prediction Data", class = "download_badge")
+	    tagList(
+            downloadButton(ns("downloaddataverbose"), "Verbose Prediction Data", class = "download_badge"),
+            downloadButton(ns("downloaddataref"), "Reference Prediction Data", class = "download_badge")
+	    )
           }
                )
       )
@@ -305,6 +308,12 @@ predictionsServer <- function(id,
           filename = "predictions.rds",
           content = function(file) {
             saveRDS(datar(), file)
+          },
+          contentType = "rds")
+        output$downloaddataref <- downloadHandler(
+          filename = "refpredictions.rds",
+          content = function(file) {
+            saveRDS(refpredictions(), file)
           },
           contentType = "rds")
       }
