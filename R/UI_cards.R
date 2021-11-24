@@ -6,7 +6,7 @@ card_imgoverlay <- function(src, height = NULL, width = NULL, overlaytxt = "Card
 	   style = "border-radius: 0; border: none;",
 	   style = paste0("background-color:", appcolors[["Green 10"]], ";"),
     tags$img(src = src, class="card-img", alt="", height = height,
-	     style = "object-fit: contain; border-radius: 0;"),
+	     style = "object-fit: contain; border-radius: inherit;"),
     tags$div(class="card-img-overlay",
       bodysmall(overlaytxt, style="color:#FFFFFF;")
     )
