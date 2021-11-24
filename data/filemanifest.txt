@@ -54,6 +54,7 @@ NAMESPACE
 ./R/UI_carousel.R
 ./R/UI_colorsandstyling.R
 ./R/UI_extratags.R
+./R/UI_FAQs.R
 ./R/UI_infotext.R
 ./R/UI_landingcontent.R
 ./R/UI_linknewtab.R
