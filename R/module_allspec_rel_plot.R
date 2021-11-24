@@ -16,7 +16,7 @@ allrel_plot_UI <- function(id){
                     )
         )
     ),
-      plotly::plotlyOutput(ns("plot"), height = "1000px")
+      plotly::plotlyOutput(ns("plot"), height = "1000px") %>% waiter::withWaiter()
   )
 }
 

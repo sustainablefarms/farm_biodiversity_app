@@ -21,7 +21,7 @@ allprob_plot_UI <- function(id, refisaverage = TRUE){
                        right = FALSE,
                        inline = TRUE))
     ),
-      plotly::plotlyOutput(ns("plot"), height = "1000px")
+      plotly::plotlyOutput(ns("plot"), height = "1000px") %>% waiter::withWaiter()
   )
 }
 

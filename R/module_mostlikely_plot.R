@@ -25,10 +25,10 @@ mostlikely_plot_UI <- function(id, refisaverage = TRUE){
                        inline = TRUE))
     ),
     tabsetPanel(
-      tabPanelBody("current", plotly::plotlyOutput(ns("common_species"), height = "300px")),
-      tabPanelBody("current_err", plotly::plotlyOutput(ns("common_species_err"), height = "300px")),
-      tabPanelBody("ref", plotly::plotlyOutput(ns("common_species_ref"), height = "300px")),
-      tabPanelBody("ref_err", plotly::plotlyOutput(ns("common_species_ref_err"), height = "300px")),
+      tabPanelBody("current", plotly::plotlyOutput(ns("common_species"), height = "300px") %>% waiter::withWaiter()),
+      tabPanelBody("current_err", plotly::plotlyOutput(ns("common_species_err"), height = "300px") %>% waiter::withWaiter()),
+      tabPanelBody("ref", plotly::plotlyOutput(ns("common_species_ref"), height = "300px") %>% waiter::withWaiter()),
+      tabPanelBody("ref_err", plotly::plotlyOutput(ns("common_species_ref_err"), height = "300px") %>% waiter::withWaiter()),
       id = ns("mostlikelytabs"),
       type = "hidden")
   )

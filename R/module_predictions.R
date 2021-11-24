@@ -7,10 +7,6 @@ predictionsUI <- function(id, refisaverage = TRUE){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
-    tags$script('
-      function bgyellow(item){
-        item.style.backgroundColor = "yellow";
-      }'),
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
     
     fluidRow(class = "justify-content-center",
@@ -48,7 +44,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                         if (refisaverage){"Scenario 1"}else{"Scenario 2"},
                         "if all the woodland areas had a minimal (2%) or a large amount (20%) of nearby woody cover."
                         )),
-               right = plotOutput(ns("species_richness"), height = "250px", width = "100%") %>% waiter::withWaiter()
+               right = plotOutput(ns("species_richness"), height = "250px") %>% waiter::withWaiter()
     )
     ),
     tags$div(class = "clearfix", tags$div(class =  "float-end", 
@@ -62,7 +58,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                             infotext("Select a bird for more details")
                           ),
                           right = tagList(
-                            mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage) %>% waiter::withWaiter(), 
+                            mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage), 
                             tags$div(style="text-align: center",
                                      tags$div(class="row row-cols-3 row-cols-md-5 g-2 justify-content-center",
                                               lapply(1:10, function(idx) {
@@ -116,7 +112,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
 			       tags$div(class = "bodysmall", proboccplotdescription),
 			       infotext("Select from the list to reorder the figure.")
 			       ),
-                           right = tagList(allprob_plot_UI(ns("allprob"), refisaverage = refisaverage) %>% waiter::withWaiter(),
+                           right = tagList(allprob_plot_UI(ns("allprob"), refisaverage = refisaverage),
                                            tags$div(class = "datalabels",
                                                   "Length and weight data from",
                                                   tags$a(href = "https://www.nature.com/articles/sdata201561",
@@ -266,22 +262,6 @@ predictionsServer <- function(id,
         })
       })
       
-      # All species plots
-      wprob <- waiter::Waiter$new(id = ns("allspecies"))
-      output$allspecies <- renderPlot({
-        wprob$show()
-        on.exit(wprob$hide())
-        on.exit(session$sendCustomMessage("plotfinished", TRUE))
-        plot_allspeciesprob(datar()$species_prob_current)
-      })
-      
-      wrel <- waiter::Waiter$new(id = ns("allspeciesrel"))
-      output$allspeciesrel <- renderPlot({
-        wrel$show()
-        on.exit(wrel$hide())
-        on.exit(session$sendCustomMessage("plotfinished", TRUE))
-        plot_allspeciesrel(datar()$spec_different)
-      })
       
       output$downloaddata <- downloadHandler(
         filename = "predictions.csv",
