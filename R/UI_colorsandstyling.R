@@ -26,6 +26,7 @@ apptheme <- function(){
   6: $spacer * 6,
   7: $spacer * 12,
 );",
+                "card-border-radius" = "0",
                 "accordion-button-color" = appcolors[["Dark Green"]],
                 "accordion-button-active-bg" = "#FFFFFF",
                 "accordion-border-color" = appcolors[["Green 50"]],

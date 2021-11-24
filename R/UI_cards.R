@@ -3,12 +3,13 @@
 card_imgoverlay <- function(src, height = NULL, width = NULL, overlaytxt = "Card title"){
   tags$div(class ="card text-white ratio ratio-4x3",
            style=if (is.null(width)){NULL} else {paste0("width: ", width, ";")},
-	   style = "border-radius: 0; border: none;",
+	   style = "border: none;",
 	   style = paste0("background-color:", appcolors[["Green 10"]], ";"),
     tags$img(src = src, class="card-img", alt="", height = height,
-	     style = "object-fit: contain; border-radius: inherit;"),
+	     style = "object-fit: contain;"),
     tags$div(class="card-img-overlay",
-      bodysmall(overlaytxt, style="color:#FFFFFF;")
+      bodysmall(class = "position-absolute top-50 translate-middle", 
+		overlaytxt, style="color:#FFFFFF;")
     )
   )
 }
