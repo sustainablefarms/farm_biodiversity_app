@@ -34,7 +34,7 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
                  tags$b("Remnant woodland"), "is Box Gum Grassy Woodland that has never been cleared.",
                  tags$b("Planted woodland"), "is assumed to be eucalypt-dominated,",
                  "established at least three years ago by planting tubestock or by direct seeding, and fenced at the time of planting."),
-	  faqlink(faqid = "whatisawoodland", "Learn more about planting woodlands")
+	  faqlink(faqid = "whatisawoodland", "Learn more")
        )
     ),
     
@@ -73,7 +73,7 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
            "BirdLife Australia"),
     "for a profile of Noisy Miners." 
     ),
-  tags$p(tags$a("Learn more", href = "??"), tags$em("Do we have something suitable on the SF website?"))
+    faqlink(faqid = "nmmidstorey", "Learn more")
 )
 
 )
