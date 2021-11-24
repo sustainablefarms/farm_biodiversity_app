@@ -7,10 +7,12 @@ predictionsUI <- function(id, refisaverage = TRUE){
         $('[data-toggle=tooltip]').tooltip()
       })"
     ),
-    tags$script('
-      function bgyellow(item){
-        item.style.backgroundColor = "yellow";
-      }'),
+    tags$script("
+      Shiny.addCustomMessageHandler('plotfinished', function(state){
+	alert('Image is loaded');
+	$('.specimg').each(function(index){$( this ).attr('src', $( this ).attr('data-src'))});
+      });
+    "),
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
     
     fluidRow(class = "justify-content-center",
@@ -264,23 +266,6 @@ predictionsServer <- function(id,
             easyClose = TRUE
           ))
         })
-      })
-      
-      # All species plots
-      wprob <- waiter::Waiter$new(id = ns("allspecies"))
-      output$allspecies <- renderPlot({
-        wprob$show()
-        on.exit(wprob$hide())
-        on.exit(session$sendCustomMessage("plotfinished", TRUE))
-        plot_allspeciesprob(datar()$species_prob_current)
-      })
-      
-      wrel <- waiter::Waiter$new(id = ns("allspeciesrel"))
-      output$allspeciesrel <- renderPlot({
-        wrel$show()
-        on.exit(wrel$hide())
-        on.exit(session$sendCustomMessage("plotfinished", TRUE))
-        plot_allspeciesrel(datar()$spec_different)
       })
       
       output$downloaddata <- downloadHandler(

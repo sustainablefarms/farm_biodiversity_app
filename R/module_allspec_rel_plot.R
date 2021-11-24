@@ -35,6 +35,7 @@ allrel_plot_Server <- function(id,
         output$plot <- plotly::renderPlotly({
           validate(need(rootplt(), label = "")) # could also use req here. Moved outside so that shinytest doesn't when no predictions
           validate(need(input$yorder, ""))
+          on.exit(session$sendCustomMessage("plotfinished", TRUE))
           out <- rootplt()
           if (input$yorder %in% c("species")){# these need descending
             out <- out %>%
