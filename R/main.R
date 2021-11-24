@@ -157,13 +157,13 @@ server <- function(input, output, session) {
 
   
   ## PREDICTIONS
-  pred1arr <- predictionsServer("pred1", cval1,
+  pred1out <- predictionsServer("pred1", cval1,
                     reactiveVal(species_prob_mean),
                     model_data,
                     report_path,
                     refisaverage = TRUE) 
-  predictionsServer("pred2", cval2,
-                    pred1arr,
+  pred2out <- predictionsServer("pred2", cval2,
+                    reactive(pred1out()$species_prob_current),
                     model_data,
                     report_path,
                     refisaverage = FALSE) 
@@ -223,8 +223,27 @@ server <- function(input, output, session) {
            )
   })
 
+  # make reports
+  output$out1_product <- downloadHandler(
+      filename = "report.pdf",
+      content = function(file) {
+        id <- showNotification(
+          "Rendering report...",
+          duration = NULL,
+          closeButton = FALSE
+        )
+        on.exit(removeNotification(id), add = TRUE)
+	    buildreport(cval = cval1(), 
+		    cpred = pred1out(),
+		    rval = NULL,
+		    rpred = list(spec_prob = species_prob_mean, richness = NULL),  #or pred2out()$species_prob_current
+		    refisaverage = TRUE,
+		    file = file) 
+      }
+  )
+
+
   # bookmarking 
-  # appendinputids() #for recording input ids - an observer
   observeEvent({
     c(input$hidestartpage,
       input$maintabs,

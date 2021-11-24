@@ -6,3 +6,7 @@ actionButton_notdfl <- function(...){
   htmltools::tagQuery(out)$removeClass("btn-default")$allTags()
 }
 
+downloadButton_notdfl <- function(...){
+  out <- downloadButton(...)
+  htmltools::tagQuery(out)$removeClass("btn-default")$allTags()
+}

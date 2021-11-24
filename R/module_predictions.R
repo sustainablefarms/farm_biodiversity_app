@@ -276,22 +276,6 @@ predictionsServer <- function(id,
           write.csv(outdata, file, row.names = FALSE)
         })
       
-      output$downloadreport <- downloadHandler(
-        filename = "report.pdf",
-        content = function(file) {
-          id <- showNotification(
-            "Rendering report...",
-            duration = NULL,
-            closeButton = FALSE
-          )
-          on.exit(removeNotification(id), add = TRUE)
-          rmarkdown::render(input = report_path, 
-                            params = list(loadexampledata = FALSE),
-                            output_file = file,
-                            envir = new.env(parent = environment())
-          )
-        }
-      )
       
       output$warn <- renderUI({
         validate(need(current_values()$locationcomplete & current_values()$allpatchcomplete, ""))
@@ -318,7 +302,7 @@ predictionsServer <- function(id,
           contentType = "rds")
       }
       
-      reactive(datar()$species_prob_current)
+      reactive(datar()[c("species_prob_current", "species_richness")])
     })
 }
 

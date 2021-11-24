@@ -13,7 +13,7 @@ header-includes:
   \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
   \usepackage{tikz}
   \usetikzlibrary{calc}
-  \graphicspath{{../www/}}  #to get report to build with images change this to ../www/
+  \graphicspath{{www/}}  #to get report to build with images change this to ../www/
 ---
 
 \begin{tikzpicture}[overlay, remember picture]
@@ -41,11 +41,12 @@ if (params$loadexampledata){
   refpredictions <- readRDS("refpredictions.rds")
   refisaverage <- TRUE
 } else {
-  data <- isolate(reactiveValuesToList(datar()))
-  refpredictions <- isolate(refpredictions())
-  current_values <- isolate(current_values())
-  refisaverage <- isolate(refisaverage())
+  cpred <- cpred
+  current_values <- cval
+  refisaverage <- refisaverage
 }
+predcontext <- predictions_morecontext(cpred$species_prob_current, rpred$spec_prob, refisaverage)
+
 # covarnicenames_tbl <- read.csv("./data/nicecovarnames.csv", header = TRUE)
 covarnicenames <- covarnicenames_tbl$NiceName
 names(covarnicenames) <- covarnicenames_tbl$TechName
@@ -82,7 +83,7 @@ For ease of use, the year was set to 2018 as year does not have much impact on t
 
 \begin{center}
 ```{r displaypatchprops}
-patchprops <- t(newXocc_fromselected(current_values))
+patchprops <- t(newXocc_fromselected(cval))
 makeniceprops <- function(patchprops, ...){
   patchprops[row.names(patchprops) %in% c("MaxTWarmMonth.lt", "MinTColdMonth.lt"), ] <-   # convert temperatures back to celcius
     patchprops[row.names(patchprops) %in% c("MaxTWarmMonth.lt", "MinTColdMonth.lt"), ] / 10
@@ -120,7 +121,7 @@ The region of these patches was: `r current_values$selected_region`.
 # urls <- get_birdlife_url(row.names(data$species_prob_current))
 # stories <- readRDS("data/birdstories.rds")
 # imgfilenames <- readRDS("data/imgfilenames.rds")
-topten <- order(data$species_prob_current[, "median"], decreasing = TRUE)[1:10]
+topten <- order(cpred$species_prob_current[, "median"], decreasing = TRUE)[1:10]
 imagetexfun <- function(specinfo){
   imagetex <- paste0("\\includegraphics[width=1\\linewidth, height = 1\\linewidth, keepaspectratio]{",
                gsub("\\.[^.]*$", "", specinfo$imgfilename),
@@ -147,7 +148,7 @@ buildspeclatex_imagestory <- function(specname){
 ```
 
 ```{r makelatexincludes_10mostlikely, results='asis'}
-for (specname in row.names(data$species_prob_current)[topten]){
+for (specname in row.names(cpred$species_prob_current)[topten]){
   cat(buildspeclatex_imagestory(specname))
 }
 ```
@@ -157,7 +158,7 @@ for (specname in row.names(data$species_prob_current)[topten]){
 # The 10 Least Likely Species on Your Farm
 Of the birds in the model, the 10 least likely species to reside in your Box Gum Grassy Woodland patches are below.
 ```{r bottomten, results='asis'}
-bottomten <- order(data$species_prob_current[, "median"], decreasing = FALSE)[1:10]
+bottomten <- order(cpred$species_prob_current[, "median"], decreasing = FALSE)[1:10]
 buildspeclatex_justimage <- function(specname){
   specinforow <- which(speciesinfo$species == specname)
   imagetex <- imagetexfun(speciesinfo[specinforow,])
@@ -176,7 +177,7 @@ buildspeclatex_justimage <- function(specname){
   return(out)
 }
 cat(" \\begin{center} ")
-for (specname in row.names(data$species_prob_current)[bottomten]){
+for (specname in row.names(cpred$species_prob_current)[bottomten]){
   cat(buildspeclatex_justimage(specname))
 }
 cat(" \\end{center} ")
@@ -188,8 +189,8 @@ cat(" \\end{center} ")
 ```{r superbparrotinfo, results='asis'}
 texs <- lapply(consstatus$CommonName, function(specname){
   probs <- paste("The", specname, consstatus[specname, "statussummary"],
-          onespecwords(specname, data$species_prob_current,
-                       refpredictions = refpredictions,
+          onespecwords(specname, cpred$species_prob_current,
+                       refpredictions = rpred$spec_prob,
                        refisaverage = refisaverage))
   imagewstory <- buildspeclatex_imagestory(specname)
   return(c(imagewstory, probs, "\n"))
@@ -204,8 +205,8 @@ There is a 95% chance that the \emph{true} occupancy probability is within the e
 
 We computed both estimate and error bars by taking the maximum of the occupancy probability of all patches.
 
-```{r species_on_farm, fig.height = 8, fig.width = 7, out.width = "100%"}
-all_prob(tocommon(data$species_prob_current)) %>%
+```{r species_on_farm, fig.height = 20, fig.width = 7, out.width = "100%"}
+all_prob(tocommon(cpred$species_prob_current)) %>%
               order_y(.data[["Body Length"]]) %>%
   add_error() %>%
   add_label_onright() 
@@ -216,7 +217,7 @@ all_prob(tocommon(data$species_prob_current)) %>%
 Below shows the ratio of species occupancy probability at their favoured patch to the reference occupancy probability. Beneath is the reference information.
 
 ```{r relativetomeansite, fig.height = 20, fig.width = 7}
-all_rel(data$spec_different) %>%
+all_rel(predcontext$spec_different) %>%
   order_y(.data[["Body Length"]])
 ```
 
@@ -225,10 +226,10 @@ all_rel(data$spec_different) %>%
 \begin{center}
 \scriptsize
 ```{r refregion, results='asis'}
-refRegion <- data$reference$region
 if (refisaverage){
   cat("These reference attributes were the default reference values, which were based on the average of our data. \\\\")
 } else {
+  refRegion <- refval$selected_region
   cat("The reference patch(es) were in the region:",
       refRegion,
       "\\\\")
@@ -238,14 +239,14 @@ if (refisaverage){
 if (refisaverage){
   refpatchprops <- makeniceprops(t(new_data_mean))
 } else {
-  refpatchprops <- makeniceprops(t(data$reference$Xocc))
+  refpatchprops <- makeniceprops(t(newXocc_fromselected(refval)))
 }
 knitr::kable(refpatchprops, digits = 3,
       format = "latex",
       booktabs = TRUE,
       row.names = TRUE,
       col.names = paste("Patch", 1:ncol(refpatchprops)))
-all_prob(tocommon(refpredictions)) %>%
+all_prob(tocommon(rpred$spec_prob)) %>%
               order_y(.data[["Body Length"]]) %>%
   add_error() %>%
   add_label_onright() 
@@ -264,7 +265,7 @@ According to the statistical model behind these estimates for a single patch, th
 
 \begin{center}
 ```{r specrich,  fig.height = 4, fig.width = 8, out.width = "80%"}
-richness_plot(data$species_richness, labelnudge = -0.25)
+richness_plot(cpred$species_richness, labelnudge = -0.25)
 ```
 \end{center}
 
