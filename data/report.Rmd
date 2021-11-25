@@ -198,20 +198,16 @@ There is a 95% chance that the \emph{true} occupancy probability is within the e
 
 We computed both estimate and error bars by taking the maximum of the occupancy probability of all patches.
 
-```{r species_on_farm, fig.height = 20, fig.width = 7, out.width = "100%"}
-all_prob(tocommon(cpred$spec_prob)) %>%
-              order_y(.data[["Body Length"]]) %>%
-  add_error() %>%
-  add_label_onright() 
+```{r species_on_farm, fig.height = 8, fig.width = 7, out.width = "100%"}
+plot_allspeciesprob(cpred$spec_prob)
 ```
 
 \clearpage
 # Occupancy Probability Relative to the Reference
 Below shows the ratio of species occupancy probability at their favoured patch to the reference occupancy probability. Beneath is the reference information.
 
-```{r relativetomeansite, fig.height = 20, fig.width = 7}
-all_rel(predcontext$spec_different) %>%
-  order_y(.data[["Body Length"]])
+```{r relativetomeansite, fig.height = 8, fig.width = 7}
+plot_allspeciesrel(predcontext$spec_different)
 ```
 
 \clearpage
@@ -239,10 +235,8 @@ knitr::kable(refpatchprops, digits = 3,
       booktabs = TRUE,
       row.names = TRUE,
       col.names = paste("Patch", 1:ncol(refpatchprops)))
-all_prob(tocommon(rpred$spec_prob)) %>%
-              order_y(.data[["Body Length"]]) %>%
-  add_error() %>%
-  add_label_onright() 
+plot_allspeciesprob(rpred$spec_prob) +
+  ggtitle("Reference Occupancy Probability")
 ```
 \end{center}
 
