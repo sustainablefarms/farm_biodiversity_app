@@ -4,9 +4,9 @@ headercontent <- function(id = NULL){
   class='header',
   style = 'background-color: #FFFFFF', # style = 'background-color: inherit'
   tags$div(class = "clearfix",
-    tags$div(class = "float-start",
-             tags$a(href = "http://sustainablefarms.org.au/", tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px")), 
-             tags$span(class = "apptitle", appname)
+    tags$div(class = "float-start apptitle",
+          HTML('<a href="http://sustainablefarms.org.au/"><img src="SF simple logo.svg" alt="" height="34.11px"></a>'),
+             appname
              ),
     tags$div(class = "float-end",
              actionButton_notdfl(ns("about"), "About",
@@ -58,8 +58,8 @@ footercontent <- function(id = NULL){
 landingpage <- function(id = NULL){
   ns <- NS(id)
 	tagList(
-	tags$main(class = "text-center", 
-	          tags$a(href = "http://sustainablefarms.org.au/", tags$img(src = "Sustainable Farms logo RGB.png", alt = "logo", width = "100px")), 
+	tags$main(class = "text-center",
+          HTML('<a href="http://sustainablefarms.org.au/"><img src="SF simple logo.svg" alt="" height="34.11px"></a>'),
 	          tags$span(class = "apptitle", appname)),
 	tags$h2(class = "text-center", "Indicating birdlife on farms"),
 	fluidRow(class = "justify-content-center",
@@ -86,15 +86,11 @@ landingpage <- function(id = NULL){
 	         )
 	        ),
 	        tags$div(class = "py-5",
-  	        tags$a(class = "text-center mx-3",
-  	               href = "http://sustainablefarms.org.au/",
-  	               tags$img(src = "Sustainable Farms logo RGB.png",
-  	                        alt = "sflogo",
-  	                        height = "100px"),
-  	               ""),
+  	        tags$span(class = "text-center mx-3",
+          HTML('<a href="http://sustainablefarms.org.au/"><img src="Sustainable Farms logo RGB.png" alt="Sustainable Farms" height="34.11px"></a>')),
   	        tags$span(class = "text-center mx-5",
   	               tags$img(src = "ANU_Primary_Horizontal_GoldBlack.svg",
-  	                        alt = "ANUlogo",
+  	                        alt = "ANU",
   	                        height = "100px",
   	                        "min-width" = "250px")),
 	        )
