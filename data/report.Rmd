@@ -13,7 +13,7 @@ header-includes:
   \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
   \usepackage{tikz}
   \usetikzlibrary{calc}
-  \graphicspath{{www/}}  #to get report to build with images change this to ../www/
+  \graphicspath{{../www/}}  #to get report to build with images change this to ../www/
 ---
 
 \begin{tikzpicture}[overlay, remember picture]
@@ -252,7 +252,7 @@ According to the statistical model behind these estimates for a single patch, th
 
 \begin{center}
 ```{r specrich,  fig.height = 4, fig.width = 8, out.width = "80%"}
-richness_plot(cpred$species_richness, labelnudge = -0.25)
+richness_plot_pdf(cpred$species_richness)
 ```
 \end{center}
 
