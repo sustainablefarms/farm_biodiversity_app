@@ -27,6 +27,8 @@ output:
   + in report and elsewhere not that the app does not look at the open spaces, just the woodlands
 
 + functionality
+  + resolve the bug with leaflet for woodland patches after going back
+  + the err1 about the 23% to 29% being counted as a 29% increase for a vulnerable species
   + link to FAQs
   + save and close plot that moves page if info not filled in but is otherwise a proper save and close button
   + FAQs
@@ -61,6 +63,10 @@ output:
  + instructions for citing birdcast *ask David*
  + the i icon from font awesome isn't displayed correctly on my iridium browser - could be better to use svg of the icon directly
  + extra info text for the patch selection map
+ + photo attribution for least likely species
+
+err1: https://sustfarm.shinyapps.io/birdbio_dev4/?_inputs_&maintabs=%22out2%22&_values_&sp=590&sr=%22Rutherglen%22&lp=false&s2at=%7B%22wn%22%3A%5B6%2C6.5%5D%2C%22wr%22%3A%5B5.6%2C5.5%5D%2C%22p%22%3A%5B1%2C2%5D%2C%22r%22%3A%5B1%2C0%5D%2C%22n%22%3A%5B1%2C1%5D%7D&ip=590&s1at=%7B%22wn%22%3A%5B5.2%5D%2C%22wr%22%3A%5B5.6%5D%2C%22p%22%3A%5B1%5D%2C%22r%22%3A%5B1%5D%2C%22n%22%3A%5B1%5D%7D&ir=%22Rutherglen%22#pred2-occallrel_body
+Grey-crowned babbler
 
 + words
   + Check throughout consistency of headings – whether they are sentence case, or first letter capitalised 
