@@ -108,6 +108,21 @@ The region of these patches was: `r cval$selected_region`.
 
 \emph{Precipitation seasonality} is the ratio of the standard deviation of monthly precipitation over the mean monthly precipitation, expressed as a percentage.
 
+# Expected Number of Species
+
+Below presents estimates of the average number of species occupying the `r if (nrow(cval$patchattr_tbl) > 1){"patches"} else {"patch"}` specified `Your Estimate'.
+Also shown are estimates of the average number of species if `r if (nrow(cval$patchattr_tbl) > 1){"all patches have"} else {"the patch has"}` woody cover within 500m equal to 2% ('Less woody canopy nearby') or equal to 20% ('More woody canopy nearby').
+The estimated average number of species in the reference scenario ('Reference') is also shown.
+
+Due to the species in `r appname`, these estimates should be viewed as an estimate of the average number of sedentary, common, and land-based bird species occupying the `r if (nrow(cval$patchattr_tbl) > 1){"patches"} else {"patch"}`.
+According to the statistical model behind these estimates for a single patch, the actual number of species could vary by 8 from the estimated average.
+
+\begin{center}
+```{r specrich,  fig.height = 4, fig.width = 8, out.width = "80%"}
+richness_plot_pdf(cpred$species_richness)
+```
+\end{center}
+
 # The 10 Most Likely Species on Your Farm
 ```{r storyprep}
 # the following already loaded inside the app - so its local directory is known
@@ -241,20 +256,6 @@ plot_allspeciesprob(rpred$spec_prob) +
 \end{center}
 
 \clearpage
-# Expected Number of Species
-
-Below presents estimates of the average number of species occupying the `r if (nrow(cval$patchattr_tbl) > 1){"patches"} else {"patch"}` specified `Your Estimate'.
-Also shown are estimates of the average number of species if `r if (nrow(cval$patchattr_tbl) > 1){"all patches have"} else {"the patch has"}` woody cover within 500m equal to 2% ('Less woody canopy nearby') or equal to 20% ('More woody canopy nearby').
-The estimated average number of species in the reference scenario ('Reference') is also shown.
-
-Due to the species in `r appname`, these estimates should be viewed as an estimate of the average number of sedentary, common, and land-based bird species occupying the `r if (nrow(cval$patchattr_tbl) > 1){"patches"} else {"patch"}`.
-According to the statistical model behind these estimates for a single patch, the actual number of species could vary by 8 from the estimated average.
-
-\begin{center}
-```{r specrich,  fig.height = 4, fig.width = 8, out.width = "80%"}
-richness_plot_pdf(cpred$species_richness)
-```
-\end{center}
 
 
 

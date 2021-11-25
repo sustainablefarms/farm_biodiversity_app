@@ -13,6 +13,9 @@ plot_allspeciesprob <- function(species_prob_current){
     geom_bar(stat = "identity", show.legend = FALSE) +
     geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.5) +
     coord_flip(clip = "off") +
+    scale_fill_gradient(aesthetics = "fill",
+                        low = appcolors[["Green 10"]],
+                        high = appcolors[["Dark Green"]]) +
     scale_x_discrete(name = "Increasing Body Length ---->") +
     scale_y_continuous(name = "Occupancy Probability", limits = c(0, 1), expand = expansion(),
                        breaks = seq(0, 1, by = 0.25),

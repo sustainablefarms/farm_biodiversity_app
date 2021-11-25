@@ -58,7 +58,7 @@ richness_plot <- function(species_richness, labeltextsize = 20, labelnudge = -1)
 richness_plot_pdf <- function(species_richness){
   richness_plot_root(species_richness) + 
     geom_text(aes(x = category, y = E,
-                  label = formatC(E, digits = 0, format = "f")),
+                  label = formatC(E, digits = 1, format = "f")),
               hjust = 0,
               nudge_y = 0.1,
               show.legend = FALSE) +
@@ -74,6 +74,6 @@ richness_plot_pdf <- function(species_richness){
           panel.grid.major.y = element_blank(),
           plot.background = element_rect(fill = NA, colour = NA),
           # panel.background = element_rect(fill = NA, colour = NA),
-          panel.border = element_blank()
+          panel.border = element_rect(fill = NA, color = "grey")
     )
 }

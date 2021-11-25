@@ -17,18 +17,26 @@ plot_allspeciesrel <- function(spec_different){
     dplyr::rename(`Common Name` = species) %>%
     dplyr::mutate(`Common Name` = paste(`Common Name`, format(round(value, 2), digits = 2, scientific = FALSE))) %>%
     ordfactby(`Common Name`, `Body Length`) %>%
-    ggplot(aes(x = `Common Name`, y = value, fill = value)) +
+    ggplot(aes(x = `Common Name`, y = value, fill = value, 
+               linetype = value > 1)) +
     geom_hline(yintercept = 1) +
-    geom_bar(stat = "identity", show.legend = FALSE) +
+    geom_bar(stat = "identity", show.legend = FALSE, color = "black") +
     coord_flip(clip = "off") +
     scale_x_discrete(name = "Increasing Body Length ---->") +
     scale_y_continuous(name = "Ratio", 
                        trans = trans) +
-    scale_fill_continuous(trans = trans) +
+    # scale_fill_continuous(trans = trans) +
+    scale_linetype_manual(values = c(3, 0), limits = c(FALSE, TRUE)) + 
+    scale_fill_gradient(aesthetics = "fill",
+                        trans = trans,
+                        low = appcolors[["Green 10"]],
+                        high = appcolors[["Dark Green"]]) +
     # scale_fill_distiller(palette = "BrBG", trans = "log10", direction = 1) +
     ggtitle("Relative Occupancy Probability") +
     theme_minimal() +
     theme(legend.position = "none",
+          panel.grid.minor.x = element_blank(),
+          panel.grid.minor.y = element_blank(),
           panel.border = element_rect(fill = NA, color = "grey"))
 }
 
