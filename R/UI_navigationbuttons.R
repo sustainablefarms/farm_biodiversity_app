@@ -3,27 +3,25 @@ buttonfooter3 <- function(
   cenhead, cenbody, cenfoot,
   righthead, rightbody, rightfoot
 ){
-  fluidRow(class = "align-items-end",
+  fluidRow(class = "row-cols-1 row-cols-lg-3",
            style="margin-top: 2rem; margin-bottom: 2rem;",
-    column(4, class = "text-center",
-      tags$div(style = "background-color: #FFFFFF", class = "p-4",
-        tags$h2(lefthead, class="mb-4"),
-        tags$div(class = "bodysmall text-center", leftbody)),
-      tags$div(leftfoot, class = "my-2")
-      ),
-    column(4, class = "text-center",
-           tags$div(style = "background-color: #FFFFFF", class = "p-4",
-                    tags$h2(cenhead, class="mb-4"),
-                    tags$div(class = "bodysmall text-center", cenbody)),
-           tags$div(cenfoot, class = "my-2")
-    ),
-    column(4, class = "text-center",
-           tags$div(style = "background-color: #FFFFFF", class = "p-4",
-                    tags$h2(righthead, class="mb-4"),
-                    tags$div(class = "bodysmall text-center", rightbody)),
-           tags$div(rightfoot, class = "my-2")
-    )
+    navigationcard(lefthead, leftbody, leftfoot),
+    navigationcard(cenhead, cenbody, cenfoot),
+    navigationcard(righthead, rightbody, rightfoot)
   )
+}
+
+navigationcard <- function(head, body, foot){
+    tags$div(class = "col text-center", 
+     tags$div(class = "card h-100", style = "background: none; border: none;",
+      tags$div(class = "card-body p-0", 
+      tags$div(style = "background-color: #FFFFFF", class = "p-4 h-100",
+        tags$h2(head, class="mb-4"),
+        tags$div(class = "bodysmall text-center", body))),
+      tags$div(class = "card-footer px-0",
+	       style = "background: none; border: none;",
+	       tags$div(foot, class = "my-2")))
+      )
 }
 
 out1_foot <- function(){
