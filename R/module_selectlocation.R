@@ -269,7 +269,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
   output$annprec.lt.region <- renderText({
     validate(need(selected_region(), ""))
     climate_row <- which(climate.lt$label == selected_region())
-    sprintf("(long term average for %s: %imm)",
+    sprintf("Long term average for %s: %imm",
             selected_region(),
             climate.lt$AnnPrec[climate_row])
   })
