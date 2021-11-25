@@ -92,7 +92,7 @@ outerpage <- function(){fluidPage(
 	     ),
     tags$div(id = "tw", class = "visually-hidden", 
              navstatusbar(),
-             tags$div(class = "mx-1 mx-md-2 mx-xl-6 mx-xxl-7", tabwrapper())),
+             tags$div(class = "mx-1 mx-xxl-auto container-xxl", tabwrapper())),
     footercontent(),
     title = appname,
     theme = apptheme()

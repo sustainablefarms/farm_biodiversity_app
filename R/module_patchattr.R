@@ -244,7 +244,11 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
           },
           error = function(e) {
             latlonerror(e$message)
-            latlonerror_short("Please select a location")
+	    if (grepl("(^Lat|Lon)", e$message)){
+              latlonerror_short("Please select a location")
+	    } else if (grepl("^Year", e$message)){
+              latlonerror_short("Please choose a year")
+	    }
             pc_woody500m_latlon(NULL)
             pc_woody3000m_latlon(NULL)
             return(e)
