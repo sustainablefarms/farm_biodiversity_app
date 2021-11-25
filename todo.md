@@ -11,11 +11,7 @@ output:
 
 # Refactoring
 + before video
-  + Ange's user feedback - difficult questions
   + save + close w error
-  + images try cropping - ask birdlifephotography, if not, do scaling
-    + might be easier for birdlifephotography - ask them, send them the link
-  + size of columns above navigation buttons
   + wide screens
   + get report working
 
