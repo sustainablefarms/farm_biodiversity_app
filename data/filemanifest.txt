@@ -37,6 +37,7 @@ NAMESPACE
 ./R/prep_load_model_data.R
 ./R/prep_traits.R
 ./R/serverhelp_bookmarking.R
+./R/serverhelp_buildreport.R
 ./R/serverhelp_checkcvals.R
 ./R/serverhelp_compile_predictions.R
 ./R/serverhelp_compute_prediction_data.R
