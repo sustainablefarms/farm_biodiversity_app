@@ -12,7 +12,7 @@ twocolumns <- function(
     column(width = 9,
            right
     ),
-    class = "my-1",
+    class = "my-3",
     ...
   )
 }

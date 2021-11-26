@@ -38,7 +38,20 @@ tags$div(
       accordion_item(title = "Another question", id = ns("anotherq"), "to fill"),
       accordion_item(title = "Another question", id = ns("anotherq"), "to fill"),
       accordion_item(title = "Noisy Miners and Midstorey", id = ns("nmmidstorey"),
-                    "to fill"
+  tags$p(
+		"Noisy Miners are native honeyeaters that have increased in abundance in recent decades.",
+		"The absence of Noisy Miners is often an indication of a healthy woodland vegetation structure.",
+		"Noisy Miners defend whole patches of woodland cooperatively,",
+	        "and their aggression prevents other small bird species from living in their patch.",
+	  "You can discourage Noisy Miners by increasing the amount of midstorey (woody plants 2-10m in height), such as through underplanting with wattles, tea-trees, bottlebrushes, and other native shrubs."
+		),
+  tags$p(
+    "Noisy Miners are easy to recognise by their bright yellow eyes and beak, and their persistent, raucous call.",
+    "Visit",
+    tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
+           "BirdLife Australia"),
+    "for a profile of Noisy Miners." 
+    )
       )
    )
 )

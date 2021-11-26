@@ -54,7 +54,7 @@ footercontent <- function(id = NULL){
   fluidRow(
     style = paste("background-color:", appcolors[["Dark Green"]]), #try to get using bs_get_variables
     #class = fixed-bottom means it overlays other content
-    column(6, style = "color: #FFFFFF;", HTML("&copy;", "Sustainable Farms 2021"), style = "text-align: left;"),
+    column(6, style = "color: #FFFFFF;", "A product of the", linknewtab("ANU Sustainable Farms initiative"), style = "text-align: left;"),
     column(6, style = "color: #FFFFFF; text-align: right",
 	   "By Kassel Hingee and the team.", "Version", appversion)
   )
@@ -79,7 +79,7 @@ landingpage <- function(id = NULL){
 	         "and demonstrates the potential for biodiversity in a range of scenarios."
 	        ),
 	        tags$p("The estimates created by", appname,
-	               "are designed for remnant Box Gum grassy woodland or planted eucalypt woodland",
+	               "are designed for remnant Box Gum Grassy Woodland or planted eucalypt woodland",
 	               "that is within livestock grazing or mixed farms on the lower inland slopes of the Great Dividing Range,",
 	               "from Benalla in Victoria to Dubbo in NSW."),
 

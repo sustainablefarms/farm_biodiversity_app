@@ -10,8 +10,26 @@ output:
   + be consistent with warnings - choose notifications in the bottom right or otherwise
 
 # Refactoring
-+ before video
++ before video (Monday morning)
+  + can the icons be seen on Ange's computer?
+    + i
+    + plus
+      + font awesome 5
+   + Ange: dell on Chrome
+   + Suzannah: dell on Chrome
+  + tagline
+  + words
+    + location
+    + parts of 
   + save + close w error
+  + bird modal
+  + vulnerable species cards, with explanation
+    + relative: decreasing <-------> increasing
+  + relative input: order by for the y index
+  + use the bigger SF logo
+  + improve delete woodland area button
+
++ error - selected input box for region and then clicked a region map
 
 + Important from Ange's feedback
   + clearer definition of canopy cover not needed? Put in About?
@@ -70,6 +88,9 @@ Grey-crowned babbler
 + words
   + Check throughout consistency of headings – whether they are sentence case, or first letter capitalised 
   + capilisation of Box Gum, Eucalypt etc
+  + "representative year"
+  + info thing to say click on a bird photo
+  + 
 
 
 + report 1d

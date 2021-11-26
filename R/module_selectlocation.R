@@ -53,10 +53,10 @@ selectlocationUI <- function(id){
 	              ))
 	     )
 	   },
-	   list("Annual Minimum<br>Temperature",
-	        "Annual Maximum<br>Temperature",
-	        "Summer<br>Precipitation",
-	        "Winter<br>Precipitation"),
+	   list("Average Winter Minimum Temperature",
+	        "Average Summer Maximum Temperature",
+	        "Average Summer Precipitation",
+	        "Average Winter Precipitation"),
 	   list("mintemp",
 	        "maxtemp",
 	        "precip_warm",

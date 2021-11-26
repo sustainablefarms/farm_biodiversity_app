@@ -59,20 +59,8 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
                   class = "datalabels",
                   HTML("&copy;Con Boekel 2016 BirdLife Photography"))
   ),
-  tags$p(
-		"Noisy Miners are native honeyeaters that have increased in abundance in recent decades.",
-		"The absence of Noisy Miners is often an indication of a healthy woodland vegetation structure.",
-		"Noisy Miners defend whole patches of woodland cooperatively,",
-	        "and their aggression prevents other small bird species from living in their patch.",
-	  "You can discourage Noisy Miners by increasing the amount of midstorey (woody plants 2-10m in height), such as through underplanting with wattles, tea-trees, bottlebrushes, and other native shrubs."
-		),
-  tags$p(
-    "Noisy Miners are easy to recognise by their bright yellow eyes and beak, and their distinctive squawk.",
-    "Visit",
-    tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
-           "BirdLife Australia"),
-    "for a profile of Noisy Miners." 
-    ),
+  tags$p("Noisy Miners are native honeyeaters that are usually found in woodlands that lack midstory vegetation (shrubs and small trees 2-10m in height). In woodlands without midstory, Noisy Miners are able to see and attack smaller birds, excluding them from the area."),
+  tags$p("Noisy miners are used here as an indication of woodland vegetation structure. They are easy to recognise by their bright yellow eyes and beak, and their persistent, raucous call."),
     faqlink(faqid = "nmmidstorey", "Learn more")
 )
 
@@ -86,14 +74,14 @@ twocolumns(heading = "Woody cover",
     tags$p("Bird occupancy depends heavily on the amount of woody vegetation cover",
    "(foliage cover greater than 2m high)",
     "within the woodland area and in the surrounding landscape."),
-    tags$p("Estimate woody cover in and around your woodland area by identifying the location of your patch."),
+    tags$p("Estimate woody cover in and around your woodland area by identifying its location on the map."),
     infotext("Zoom to your farm and click to place a pin on the map, or enter latitude and longitude.",
              "Select a representative year for your farm (between 1990 and 2019), then load woody vegetation cover amounts for this woodland area.",
              ),
   ),
   right = tagList(fluidRow(
-    column(4, 
       tags$h3("Select location"),
+    column(4, 
       uiOutput(ns("latlonerror_short")),
       textInput(ns("lon"), "Longitude", value = attributes$usedlon, width = '100%',
                 placeholder = ""),
@@ -106,10 +94,12 @@ twocolumns(heading = "Woody cover",
                 min = 1990,
                 max = 2019),
       tags$div(
+	style = "display: -webkit-inline-flex;",
         actionButton_notdfl(ns("getwoodycanopy"), "Load woody cover", class = "btn-primary"),
         tags$span(id = ns("tickplace"),
-            style = "width: 2rem; height: 2rem; background-color: #BBBBBB; vertical-align: middle;",
-            style = "margin-left: 1rem; position: relative")
+            style = "width: 2rem; height: 2rem; vertical-align: middle;",
+            style = "margin-top: auto; margin-bottom: auto;",
+            style = "margin-left: 0.25rem; position: relative; display: inline;")
       )
     ),
     column(8, leaflet_UI(ns("leaflet"))),
