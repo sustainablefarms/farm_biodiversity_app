@@ -43,7 +43,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
 tabwrapper <- function(){tabsetPanel(
     tabPanelBody(value = "in1",
              predictors_UI("S1in", isS2 = FALSE),
-             fluidRow(style="margin-top: 2rem; margin-bottom: 2rem;",
+             fluidRow(class = "my-5",
 		      column(6, actionButton_notdfl("in1_back", "Back", class = "btn-outline-primary py-3", width = "100%")),
                       column(6, actionButton_notdfl("in1_next", "Next", class = "btn-primary py-3", width = "100%")))
     ),
@@ -53,7 +53,7 @@ tabwrapper <- function(){tabsetPanel(
     ),
     tabPanelBody(value = "in2",
              predictors_UI("S2in", isS2 = TRUE),
-             fluidRow(style="margin-top: 2rem; margin-bottom: 2rem;",
+             fluidRow(class = "my-5",
 		      column(6, actionButton_notdfl("in2_back", "Back", class = "btn-outline-primary py-3", width = "100%")),
                       column(6, actionButton_notdfl("in2_next", "Next", class = "btn-primary py-3", width = "100%")))
     ),

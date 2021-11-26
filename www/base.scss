@@ -356,6 +356,15 @@ a {
 }
 
 // remove the underline for accordion buttons
+.accordion-item {
+  border: 1px solid $primary !important;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.accordion-button {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
 .accordion-button:not(.collapsed) {
   box-shadow: none;
 }

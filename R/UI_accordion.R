@@ -51,7 +51,7 @@ accordion_item_header <- function(id, title,
                                   opentype = NULL){
    tags$h2(class = "accordion-header", id = id,
      do.call(tags$button, 
-      args = c(list(class = "accordion-button collapsed", class = opentype, type = "button",
+      args = c(list(class = "accordion-button h2 my-0 collapsed", class = opentype, type = "button",
 	     `aria-expanded`= aria_expanded),
 	     toggle_attr(bodyid),
 	     title))

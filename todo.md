@@ -42,6 +42,7 @@ output:
  + lower case box gum and eucalypt
  + "i" icon for info text doesn't show up on Suzannah's computer
  + be considerate of spacing
+ + convert About, User Guide etc to a hamburger menu for mobiles?
  + add % symbols on the labels and update text labels for the WCF sliders
  + on thin screens columns that finish with an infotext have it overlaid by content of the next column.
  + shorter lines between navbar icons - so they work on phones
