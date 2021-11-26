@@ -64,7 +64,7 @@ footercontent <- function(id = NULL){
 landingpage <- function(id = NULL){
   ns <- NS(id)
 	tagList(
-	tags$div(class="text-center",
+	tags$div(class="text-center py-3",
 	  tags$img(src="SFsimple_title.svg", height = "34.08px",
 		   alt = appname, class = "apptitle",
 		   style = "vertical-align: unset;")),
