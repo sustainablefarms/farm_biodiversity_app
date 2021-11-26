@@ -1,16 +1,16 @@
 allprob_plot_UI <- function(id, refisaverage = TRUE){
   ns <- NS(id)
-  yorder_choices <- c("Length" = "Body Length",#values corresponds to column names in df
-                      "Weight" = "Body Mass",
-                      "Alphabetical" = "species",
-                      "Occupancy Probability" = "value")
+  yorder_choices <- c("Sort by length" = "Body Length",#values corresponds to column names in df
+                      "Sort by weight" = "Body Mass",
+                      "Sort alphabetically" = "species",
+                      "Sort by occupancy probability" = "value")
   tagList(
     tags$div(class = "clearfix",
       tags$div(class = "float-start", 
         selectInput(ns("yorder"),
                     label = "",
                     choices = yorder_choices,
-                    selected = "Length"
+                    selected = "Body Length"
                     )
         ),
       tags$div(class =  "float-end", 

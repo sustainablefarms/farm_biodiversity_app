@@ -1,18 +1,18 @@
 allrel_plot_UI <- function(id){
   ns <- NS(id)
-  yorder_choices <- c("Length" = "Body Length",#values corresponds to column names in df
-                      "Weight" = "Body Mass",
-                      "Alphabetical" = "species",
-                      "Relative Occupancy Probability" = "value",
-                      "Scenario 1 Occupancy Probability" = "value.ref",
-                      "Scenario 2 Occupancy Probability" = "value.cur")
+  yorder_choices <- c("Sort by length" = "Body Length",#values corresponds to column names in df
+                      "Sort by weight" = "Body Mass",
+                      "Sort alphabetically" = "species",
+                      "Sort by relative occupancy probability" = "value",
+                      "Sort by occupancy probability in Scenario 1" = "value.ref",
+                      "Sort by occupancy probability in Scenario 2" = "value.cur")
   tagList(
     tags$div(class = "clearfix",
       tags$div(class = "float-start", 
         selectInput(ns("yorder"),
                     label = "",
                     choices = yorder_choices,
-                    selected = "Length"
+                    selected = "Body Length"
                     )
         )
     ),

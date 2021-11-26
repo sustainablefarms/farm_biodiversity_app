@@ -30,7 +30,7 @@ out1_foot <- function(){
     leftfoot = actionButton_notdfl("out1_back", 
 			            tagList(icon("angle-left", class = "me-2"), "Back"),
 				   class = "btn-outline-primary py-3", width = "100%"),
-    cenhead = "Download the full report", cenbody = HTML(
+    cenhead = "Download a report", cenbody = HTML(
       "Download a full report on the birds that are likely to live in your farm's woodland.",
       "This report will include a comparison between your farm and bird occupancy in an average woodland area."),
     cenfoot = downloadButton_notdfl("out1_product", "Download Report", 
@@ -52,7 +52,7 @@ out2_foot <- function(){
     leftfoot = actionButton_notdfl("out2_back", 
 			            tagList(icon("angle-left", class = "me-2"), "Back"),
 				   class = "btn-outline-primary py-3", width = "100%"),
-    cenhead = "Download the full report", cenbody = HTML("Download a full report on the birds that are likely to live in your farm's woodland.",
+    cenhead = "Download a report", cenbody = HTML("Download a full report on the birds that are likely to live in your farm's woodland.",
                                   "This report will include comparison between Scenario 1 and Scenario 2."),
     cenfoot = downloadButton_notdfl("out2_product", "Download Report",  
                                   style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
@@ -60,7 +60,7 @@ out2_foot <- function(){
                                   class = "py-3" ),
     righthead = "Estimation Complete", rightbody = HTML(
                          "Congratulations! You have completed all the steps in", paste0(appname, "."),
-                         "Visit the Sustainable Farms website for more guidance on supporting sustainable and profitable agriculture."),
+                         "Visit the Sustainable Farms website for more guidance on managing natural assets to support biodiversity and productivity on farms."),
     rightfoot = 
       tags$a(href = "https://www.sustainablefarms.org.au",
 	     style="width:100%;",

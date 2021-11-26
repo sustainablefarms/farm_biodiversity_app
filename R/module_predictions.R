@@ -15,8 +15,8 @@ predictionsUI <- function(id, refisaverage = TRUE){
                       tagList(
                       tags$h1("Bird Diversity"),
                       tags$h3("Step 2: Results of Scenario 1"),
-                      tags$p("We've estimated occupancy for sixty birds in your woodlands",
-                             "based on the information you provided in the previous step.")
+                      tags$p("We've estimated occupancy for sixty species of birds the woodland on your farm",
+                             "based on the information you provided in step 1.")
                       )
                     } else {
                       tagList(
@@ -24,7 +24,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                       tags$h3("Step 4: Review comparison"),
                       tags$p("You've reached the final step in", paste0(appname,"."),
                             "Here you can compare the results of Scenario 1 and Scenario 2",
-                            "to estimate the potential for bird diversity in your farm's woodlands.")
+                            "to estimate the potential for bird diversity in woodlands on your farm.")
                       )
                     },
                     tags$p(tags$em(uiOutput(ns("warn"), inline = TRUE)))
@@ -36,10 +36,11 @@ predictionsUI <- function(id, refisaverage = TRUE){
     tags$h4("Expected Number of Species"),
     twocolumns(heading = NULL,
                left = tagList(
-                 tags$p("The upper bars are estimates of the expected number of species that occupy at least one woodland area in your farm",
+                 tags$p("The upper bars are estimates of the expected number of species that occupy at least one woodland area on your farm",
                         if (refisaverage){
-				"(Scenario 1) or the average woodland area in our data (Average)."
-			}else{"under Scenario 1 or Scenario 2."},
+				"(Scenario 1) compared to the average woodland area in our data (Average)."
+			}else{"under Scenario 1 or Scenario 2."}),
+		tags$p(
                         "The lower two bars are estimates for",
                         if (refisaverage){"Scenario 1"}else{"Scenario 2"},
                         "if all the woodland areas had a minimal (2%) or a large amount (20%) of nearby woody cover."
@@ -55,7 +56,12 @@ predictionsUI <- function(id, refisaverage = TRUE){
                twocolumns(heading = "The 10 most likely species.",
                           left = tags$div(class = "bodysmall",
                             proboccplotdescription,
-                            infotext("Select a bird for more details")
+                            infotext("Click a bird photo for more details"),
+			    infotext(
+			      if (refisaverage) {"Toggle between Scenario 1 and Average to see how woodlands on your farm compare with the average"
+			      } else {
+				 "Toggle between Scenario 2 and Scenario 1 to see how woodlands your farm compare in each scenario."}
+				     )
                           ),
                           right = tagList(
                             mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage), 
@@ -105,12 +111,12 @@ predictionsUI <- function(id, refisaverage = TRUE){
                 )
                 ),
               if (refisaverage){
-              accordion_item(title = "Occupancy Probability of All Species", id = ns("occall"),
+              accordion_item(title = "Occupancy Probability for all Species", id = ns("occall"),
                 twocolumns(heading = "Estimates of occupancy probability for every species",
                            left = 
 			     tagList(
 			       tags$div(class = "bodysmall", proboccplotdescription),
-			       infotext("Select from the list to reorder the figure.")
+			       infotext("Select from the list to reorder the bird species.")
 			       ),
                            right = tagList(allprob_plot_UI(ns("allprob"), refisaverage = refisaverage),
                                            tags$div(class = "datalabels",
