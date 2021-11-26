@@ -85,8 +85,8 @@ landingpage <- function(id = NULL){
 
 	        tags$div(class = "my-3", style = "height: 6rem; width = 100%; position: relative",
 	         tags$div(id = ns("startbuttonlocation"),
-	           class = "position-absolute top-50 start-50 translate-middle",
 	           tags$div(id = ns("startspinner"), 
+	             class = "position-absolute top-50 start-50 translate-middle",
 	             tags$div(class = "spinner-border", style = "width: 2rem; height: 2rem;"),
 	             tags$div(class = "text-center datalabels", "Loading")
 	           )

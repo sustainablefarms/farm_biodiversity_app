@@ -112,7 +112,10 @@ server <- function(input, output, session) {
   removeUI(selector = paste0("#", ns("startspinner")))
   insertUI(selector = paste0("#", ns("startbuttonlocation")),
            where = "afterBegin",
-           ui = actionButton_notdfl("hidestartpage", "Start", class = "position-absolute btn-primary translate-middle"))
+           ui = actionButton_notdfl("hidestartpage", tagList("Start", icon("angle-right", class = "ms-2")),
+	   class = "position-absolute top-50 start-50 translate-middle py-3",
+	   width = "80%",
+           class = "btn-primary"))
   observeEvent(input$hidestartpage, {
     landingpagestatus(closelandingpage())
     shinyjs::addClass(class = "visually-hidden", selector = "#lp")
