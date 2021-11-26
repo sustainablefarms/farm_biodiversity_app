@@ -92,14 +92,13 @@ landingpage <- function(id = NULL){
 	           )
 	         )
 	        ),
-	        tags$div(class = "py-5",
-  	        tags$span(class = "text-center mx-3",
-          HTML('<a href="http://sustainablefarms.org.au/"><img src="Sustainable Farms logo RGB.png" alt="Sustainable Farms" width="100px"></a>')),
-  	        tags$span(class = "text-center mx-5",
-  	               tags$img(src = "ANU_Primary_Horizontal_GoldBlack.svg",
+	        tags$div(class = "justify-content-center",
+          HTML('<a class="m-5" href="http://sustainablefarms.org.au/"><img src="Sustainable Farms logo RGB.png" alt="Sustainable Farms" width="100px"></a>'),
+  	        tags$img(src = "ANU_Primary_Horizontal_GoldBlack.svg",
+				class = "m-5",
   	                        alt = "ANU",
   	                        height = "100px",
-  	                        "min-width" = "250px")),
+  	                        "min-width" = "250px"),
 	        )
 	 ))
 	)
