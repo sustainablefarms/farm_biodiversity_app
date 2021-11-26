@@ -7,10 +7,35 @@ parsechar <- function(charstring, label){ #label used for the error message
 checkfinalwcfs <- function(wcfs){
   if (!is.null(wcfs)){
     if (any(wcfs < 2) | any(wcfs > 20)){
+      warnstart <-sprintf("Warning: Woody vegetation cover at the selected location is outside the capabilities of the %s model.", appname)
+      warnend <- paste("Treat results from", appname, "with an extra degree of caution.")
+      # wcfs[[1]] < 2, wcfs[[2]] < 2, both (and none > 20)
+      # wcfs[[1]] > 20, wcfs[[2]] > 20, both
+      # others would be much rarer, print a more generic
+      specwarn <- NULL
+      if (any(wcfs < 2) & all(wcfs <= 20)){
+         if (all(wcfs < 2)){
+      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m and %3.1f%% of the area within 3km. This are too low for accurate estimates.", wcfs[[1]], wcfs[[2]])
+	 } else if (wcfs[[1]] < 2){
+      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m, which is too low for accurate estimates.", wcfs[[1]])
+	 } else if (wcfs[[2]] < 2){
+      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within within 3km, which is too low for accurate estimates.", wcfs[[2]])
+	 }
+      }
+      if (any(wcfs > 20) & all(wcfs >= 2)){
+         if (all(wcfs > 20)){
+      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m and %3.1f%% of the area within 3km. This are too high for accurate estimates.", wcfs[[1]], wcfs[[2]])
+	 } else if (wcfs[[1]] > 20){
+      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m, which is too high for accurate estimates.", wcfs[[1]])
+	 } else if (wcfs[[2]] > 20){
+      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within within 3km, which is too high for accurate estimates.", wcfs[[2]])
+	 }
+      }
+      if (is.null(specwarn)){
+      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m and %3.1f%% of the area within 3km.", wcfs[[1]], wcfs[[2]])
+      }
       warning(simpleWarning(
-        paste(sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m and %3.1f%% of the area within 3km.", wcfs[[1]], wcfs[[2]]),
-              "At least one of these percentages is outside the capabilities of the model.",
-              "Treat any estimates of bird occupancy with an extra degree of caution.")
+	paste(warnstart, specwarn, warnend)
       ))
     }
   }
