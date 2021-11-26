@@ -48,7 +48,7 @@ rsconnect::deployApp(appName = "birdbio_dev4", appFileManifest = "./data/fileman
 
 If the app doesn't run as expected, logs kept by shinyapps.io can be accessed from the shinyapps.io (account dashboard)[https://www.shinyapps.io/admin/#/dashboard], these can help diagnose the problem when it isn't occurring when running the app offline.
 
-Once the app is running correctly on shinyapps.io, deploy the app under the release name, which is currently 'bird_checker'.
+Once the app is running correctly on shinyapps.io, deploy the app under the release name, which is currently 'BirdCast'.
 
 ```
 rsconnect::deployApp(appName = "BirdCast", appFileManifest = "./data/filemanifest.txt")
