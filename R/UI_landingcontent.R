@@ -1,27 +1,33 @@
 headercontent <- function(id = NULL){
   ns <- NS(id)
   fluidRow( #using fluidRow here instead of something plain so that the negative space of columns is organised
-  class='header',
+  class='header px-2 py-3',
   style = 'background-color: #FFFFFF', # style = 'background-color: inherit'
   tags$div(class = "clearfix",
     tags$div(class = "float-start",
-          HTML('<a class="apptitle" href="http://sustainablefarms.org.au/"><img src="SF simple logo.svg" alt="" height="32.94px" style="vertical-align: unset;"></a>'),
-	          tags$span(class = "apptitle", appname),
-	  tags$img(src="SFsimple_title.svg", height = "34.08px"),
-    tags$div(class = "float-end",
+	  tags$img(src="SFsimple_title.svg", height = "34.08px",
+		   alt = appname, class = "apptitle",
+  		   style = "vertical-align: unset;")),
+    tags$div(class = "float-end mt-1",
              actionButton_notdfl(ns("about"), "About",
+				 style = paste0("color: ", appcolors[["Dark Green"]], ";"),
                                  "data-bs-toggle"="modal", 
                                  "data-bs-target"="#aboutModal"),
              aboutModalDialog(),
              actionButton_notdfl(ns("guide"), "User Guide",
+				 style = paste0("color: ", appcolors[["Dark Green"]], ";"),
                                  "data-bs-toggle"="modal", 
                                  "data-bs-target"="#guideModal"),
              guidemodal(),
              actionButton_notdfl(ns("faqs"), "FAQs",
+				 style = paste0("color: ", appcolors[["Dark Green"]], ";"),
                                  "data-bs-toggle"="modal", 
                                  "data-bs-target"="#faqModal"),
              faqmodal(),
              actionButton_notdfl(ns("restartmodal"), "Restart", icon = icon("redo"),
+				 style = paste0("color: ", appcolors[["Dark Green"]], ";"),
+				 style = paste0("border-color: ", appcolors[["Dark Green"]], ";"),
+				 style = "border-width: 1px;",
 				 "data-bs-toggle" = "modal",
 				 "data-bs-target" = "#restartModal"),
              restartModal())
@@ -58,9 +64,10 @@ footercontent <- function(id = NULL){
 landingpage <- function(id = NULL){
   ns <- NS(id)
 	tagList(
-	tags$main(class = "text-center",
-          HTML('<a class="apptitle" style="font-size: 54px;" href="http://sustainablefarms.org.au/"><img src="SF simple logo.svg" alt="" height="54.13px" style="vertical-align: unset;"></a>'),
-	          tags$span(class = "apptitle", appname, style = "font-size:54px")),
+	tags$div(class="text-center",
+	  tags$img(src="SFsimple_title.svg", height = "34.08px",
+		   alt = appname, class = "apptitle",
+		   style = "vertical-align: unset;")),
 	tags$h2(class = "text-center", "Indicating birdlife on farms"),
 	fluidRow(class = "justify-content-center",
 	 column(6, class = "text-center",
