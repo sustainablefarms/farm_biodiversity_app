@@ -4,10 +4,10 @@ headercontent <- function(id = NULL){
   class='header',
   style = 'background-color: #FFFFFF', # style = 'background-color: inherit'
   tags$div(class = "clearfix",
-    tags$div(class = "float-start apptitle",
-          HTML('<a href="http://sustainablefarms.org.au/"><img src="SF simple logo.svg" alt="" height="34.11px"></a>'),
-             appname
-             ),
+    tags$div(class = "float-start",
+          HTML('<a class="apptitle" href="http://sustainablefarms.org.au/"><img src="SF simple logo.svg" alt="" height="32.94px" style="vertical-align: unset;"></a>'),
+	          tags$span(class = "apptitle", appname),
+	  tags$img(src="SFsimple_title.svg", height = "34.08px"),
     tags$div(class = "float-end",
              actionButton_notdfl(ns("about"), "About",
                                  "data-bs-toggle"="modal", 
@@ -59,8 +59,8 @@ landingpage <- function(id = NULL){
   ns <- NS(id)
 	tagList(
 	tags$main(class = "text-center",
-          HTML('<a href="http://sustainablefarms.org.au/"><img src="SF simple logo.svg" alt="" height="34.11px"></a>'),
-	          tags$span(class = "apptitle", appname)),
+          HTML('<a class="apptitle" style="font-size: 54px;" href="http://sustainablefarms.org.au/"><img src="SF simple logo.svg" alt="" height="54.13px" style="vertical-align: unset;"></a>'),
+	          tags$span(class = "apptitle", appname, style = "font-size:54px")),
 	tags$h2(class = "text-center", "Indicating birdlife on farms"),
 	fluidRow(class = "justify-content-center",
 	 column(6, class = "text-center",
@@ -87,7 +87,7 @@ landingpage <- function(id = NULL){
 	        ),
 	        tags$div(class = "py-5",
   	        tags$span(class = "text-center mx-3",
-          HTML('<a href="http://sustainablefarms.org.au/"><img src="Sustainable Farms logo RGB.png" alt="Sustainable Farms" height="34.11px"></a>')),
+          HTML('<a href="http://sustainablefarms.org.au/"><img src="Sustainable Farms logo RGB.png" alt="Sustainable Farms" width="100px"></a>')),
   	        tags$span(class = "text-center mx-5",
   	               tags$img(src = "ANU_Primary_Horizontal_GoldBlack.svg",
   	                        alt = "ANU",
