@@ -100,6 +100,9 @@ tagList(
          modalslidelink(rootid, idx)
        })
   )),
+  tags$div(class = "datalabels", "All photographs curtesy of",
+    tags$a("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
+    "Click on each photo to view attribution."),
   tags$div(class="modal fade",
          id=paste0(rootid, "_m"), #_m for modal
          tabindex="-1",

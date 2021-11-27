@@ -65,21 +65,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
 			    ),
 			  right = mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage)),
                twocolumns(left = infotext("Click a bird photo for more details"),
-                          right = tagList(
-                            tags$div(style="text-align: center",
-                                     tags$div(class="row row-cols-3 row-cols-md-5 g-2 justify-content-center",
-                                              lapply(1:10, function(idx) {
-                                                tags$div(class = "col", 
-                                                  actionLink(ns(paste0("ml_gallery_", idx)),
-                                                    uiOutput(ns(paste0("ml_", idx)))
-                                                  )
-                                                )
-                                              })
-                                     )),
-                            tags$div(class = "datalabels", "All photographs curtesy of",
-                              tags$a("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
-                              "Click on each photo to view attribution.")
-                            )
+                          right = arr_modalslidelink(ns("ml"))
                          )
                 ),
               accordion_item(title = "Least likely species", id = ns("leastlikely"),
@@ -216,20 +202,11 @@ predictionsServer <- function(id,
       lapply(1:10, function(idx){
         output[[paste0("ml_", idx)]] <- renderUI({
           validate(need(datar()$speciesinfo_topten, ""))
-          specinfo <- datar()$speciesinfo_topten
-          card_imgoverlay(specinfo$imgfilename[idx],
-                          overlaytxt = specinfo$species[idx])
-        })
-      })
-      # ml gallery
-      lapply(1:10, function(idx){
-        observeEvent(input[[paste0("ml_gallery_", idx)]], {
-          showModal(modalDialog(
-            bird_gallery(id = "carouselmostlikely", 
-                         datar()$speciesinfo_topten[1:10, ]),
-            size = "l",
-            easyClose = TRUE
-          ))
+          specinfo <- datar()$speciesinfo_topten[idx, ]
+	  removeslidecontent(ns("ml"), idx)
+	  insertslidecontent(ns("ml"), idx, specinfo)
+          card_imgoverlay(specinfo$imgfilename,
+                          overlaytxt = specinfo$species)
         })
       })
       
