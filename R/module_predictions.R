@@ -204,17 +204,16 @@ predictionsServer <- function(id,
       lapply(1:10, function(idx){
         output[[paste0("ll_", idx)]] <- renderUI({
           validate(need(datar()$speciesinfo_botten, ""))
-          specinfo <- datar()$speciesinfo_botten
-          card_imgoverlay(specinfo$imgfilename[idx],
-                          overlaytxt = specinfo$species[idx])
-        })
-      })
-      # ll carousel slides
-      lapply(1:10, function(idx){
-        output[[paste0("ll", "_slide_", idx)]] <- renderUI({
-          validate(need(datar()$speciesinfo_botten, ""))
           specinfo <- datar()$speciesinfo_botten[idx, ]
-	  specslide_quick(specinfo)
+	  removeUI(selector = paste0("#", ns("ll"), "_slide_", idx, "_content"), #ll carousel slide refresh
+	           immediate = TRUE)
+	  insertUI(selector = paste0("#", ns("ll"), "_slide_", idx), 
+		   where = "afterBegin",
+                   ui = tags$div(id = paste0(ns("ll"), "_slide_", idx, "_content"),
+	                         specslide_quick(specinfo)),
+		   immediate = TRUE)
+          card_imgoverlay(specinfo$imgfilename,
+                          overlaytxt = specinfo$species)
         })
       })
       

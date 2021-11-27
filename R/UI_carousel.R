@@ -110,7 +110,7 @@ tagList(
       tags$div(class = "modal-body body",
 	carousel(id = paste0(rootid, "_m", "_c"), # _c for carousel
 	  lapply(1:10, function(idx){
-	    uiOutput(outputId=paste0(rootid, "_slide_", idx))
+	    tags$div(id = paste0(rootid, "_slide_", idx))
           }) 
 	) 
       )
