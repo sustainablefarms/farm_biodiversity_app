@@ -111,8 +111,14 @@ h4 {
   background: #bfbfbf;
   border: #bfbfbf;
 }
+/* sliderInput customisation. Based on Data Labels style Important needed to override RangeSlider.css -- the setting here seem to be mapped to bootstrap.min.css rather than anything else */
 .irs-grid-text {
-  color: #858585;
+  //color: #858585;
+  //color: initial;
+  font-family: Inter, sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 10px !important;
+  line-height: 14px !important;
 }
 .irs-grid-pol{
   background: $primary;
@@ -120,6 +126,10 @@ h4 {
 .irs-single {
   color: white !important;
   background: $primary !important;
+  font-family: Inter, sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 10px !important;
+  line-height: 14px !important;
 }
 .irs-from {
   color: #858585;
@@ -244,9 +254,6 @@ h4 {
 	float: right;
 }
 
-.modal-lg {
-  width: 80%
-}
 
 .carousel-inner {
  position:static;
@@ -336,6 +343,7 @@ text-align: left;
 }
 
 .datalabels {
+  font-family: Inter, sans-serif;
   font-size:10px;
   line-height: 14px;
 }
@@ -441,3 +449,4 @@ a {
   background: #80B2B3;
 }
 }
+

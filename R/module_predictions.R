@@ -53,18 +53,19 @@ predictionsUI <- function(id, refisaverage = TRUE){
     ))),
     accordion(ns("predacc"),
               accordion_item(title = "Most likely species", id = ns("mostlikely"),
-               twocolumns(heading = "The 10 most likely species.",
+	       twocolumns(heading = "The 10 most likely species.",
                           left = tags$div(class = "bodysmall",
+			    paste("Of the sixty birds estimated by", paste0(appname, ","), "these birds are most likely to occupy woodland areas on your farm."),
                             proboccplotdescription,
-                            infotext("Click a bird photo for more details"),
 			    infotext(
 			      if (refisaverage) {"Toggle between Scenario 1 and Average to see how woodlands on your farm compare with the average"
 			      } else {
 				 "Toggle between Scenario 2 and Scenario 1 to see how woodlands your farm compare in each scenario."}
 				     )
-                          ),
+			    ),
+			  right = mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage)),
+               twocolumns(left = infotext("Click a bird photo for more details"),
                           right = tagList(
-                            mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage), 
                             tags$div(style="text-align: center",
                                      tags$div(class="row row-cols-3 row-cols-md-5 g-2 justify-content-center",
                                               lapply(1:10, function(idx) {

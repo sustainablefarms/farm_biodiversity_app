@@ -115,20 +115,24 @@ twocolumns(heading = "Woody cover",
   tags$h3("Woody cover amounts"),
   # 500m WCF
   tags$div(
-    tags$html(tags$span("Nearby woody cover: % area woody cover within 500m of the centre of the woodland area, including cover inside the woodland")),
+    tags$div(class = "bodysmall", "Nearby Woody Cover"),
+    tags$div(class = "datalabels", "Percentage area of woody cover within 500m of the centre of the woodland area (including cover inside the woodland area)"),
     sliderInput(label = NULL,
                 inputId = ns("pc_woody500m"),
                 min = 2, max = 20, step = 0.5,
                 width = "100%",
+		post = "%",
                 value = attributes$woody500m)
   ),
   #3000m WCF
   tags$div(
-    tags$html(tags$span("Regional woody cover: % area woody cover within 3km of  the centre of woodland area)")),
+    tags$div(class = "bodysmall", "Regional Woody Cover"),
+    tags$div(class = "datalabels", "Percentage area of woody cover within 3km of the woodland area"),
     sliderInput(label = NULL,
                 inputId = ns("pc_woody3000m"),
                 min = 2, max = 20, step = 0.5,
                 width = "100%",
+		post = "%",
                 value = attributes$woody3000m)
   )
   )
@@ -140,7 +144,7 @@ acc_item <- accordion_item(title = paste("Woodland area", pid),
     internals,
     footer = tagList(
       actionButton_notdfl(ns("delete"), "Delete woodland area", icon = icon("trash"),
-                   class = "btn-danger"),
+		   style = "color: #F4511E; background-color: #fcdcd2;"),
       do.call(actionButton_notdfl,
         args = c(list(ns("cancel"), "Cancel", class = "btn-outline-primary"),
              toggle_attr(paste0(ns("accitem"), "_body"))
