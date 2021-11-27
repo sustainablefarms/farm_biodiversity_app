@@ -1,6 +1,7 @@
 infotext <- function(...){
   tags$div(
-    class = "infotext clearfix float-start",
-    style = "margin: auto;",
-    tags$span(class = "bodysmall", ...))
+    class = "infotext bodysmall",
+    tags$span(style = "margin-top: auto; margin-bottom: auto;",
+      ...)
+    )
 }

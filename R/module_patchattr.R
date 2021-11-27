@@ -95,7 +95,7 @@ twocolumns(heading = "Woody cover",
                 max = 2019),
       tags$div(
 	style = "display: -webkit-inline-flex;",
-        actionButton_notdfl(ns("getwoodycanopy"), "Load woody cover", class = "btn-primary"),
+        actionButton_notdfl(ns("getwoodycanopy"), "Load woody cover", class = "btn-primary", style = "flex: 1;"),
         tags$span(id = ns("tickplace"),
             style = "width: 2rem; height: 2rem; vertical-align: middle;",
             style = "margin-top: auto; margin-bottom: auto;",
