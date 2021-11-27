@@ -58,19 +58,19 @@ specslide_quick <- function(specinfo){
 
 specslide <- function(title, heading, img, cpyrht, story){
   tagList(
-    tags$h2(title),
+    tags$div(class = "modal-header",
+	style = "border-bottom: none;",
+	tags$h2(title),
 	tags$button(type="button",
 		    class="btn-close",
 		    `data-bs-dismiss`="modal",
-		    `aria-label`="Close"),
-    fluidRow(
-      column(3,
+		    `aria-label`="Close")),
+    tags$div(class = "clearfix",
+      tags$div(class = "col-md-3 float-md-start mb-3 ms-md-3",
              img,
              cpyrht),
-      column(9,
-        tags$body(heading),
-        tags$div(bodysmall(story))
-      )
+      tags$body(heading),
+      tags$div(class = "bodysmall", story)
     )
   )
 }
