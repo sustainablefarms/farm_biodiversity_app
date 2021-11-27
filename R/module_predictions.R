@@ -91,15 +91,13 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                       tags$div(class="row row-cols-1 row-cols-md-5 g-4",
                                                lapply(1:10, function(idx) {
                                                  tags$div(class = "col", 
-                                                          actionLink(ns(paste0("ll_gallery_", idx)),
 								     "data-bs-toggle"="modal",
-								     "data-bs-target"="#carousel_ll",
+								     "data-bs-target"=paste0("#", ns("ll_m")),
 								     tags$div(
-								     "data-bs-target"="#carousel_ll_c",
+								     "data-bs-target"=paste0("#", ns("ll_m"), "_c"),
 								     "data-bs-slide-to" = as.character(idx - 1),
                                                                      uiOutput(ns(paste0("ll_", idx))),
 									      )
-                                                          )
                                                  )
                                                })
                                       )),
@@ -229,16 +227,8 @@ predictionsServer <- function(id,
       # ll gallery
       output$birdgal_ll <- renderUI({
 	validate(need(datar()$speciesinfo_botten, ""))
-        birdgalleryModal(id = "carousel_ll", 
+        birdgalleryModal(id = ns("ll_m"), 
                          datar()$speciesinfo_botten[1:10, ])
-      })
-      lapply(10:1, function(idx){
-        observeEvent(input[[paste0("ll_gallery_", idx)]], {
-          showModal(
-            birdgalleryModal(id = "carousel_ll", 
-                         datar()$speciesinfo_botten[1:10, ])
-          )
-        })
       })
       
       # ml images
