@@ -86,9 +86,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                 twocolumns(heading = "The 10 least likely species.",
                            left = tags$p("Of the sixty birds estimated by ", paste0(appname, ","), "these birds are least likely to occupy woodland in your farm.",
                            "Rare birds, migratory birds, and water birds are not estimated by ", paste0(appname, ".")),
-                           right = tagList(
-			     arr_modalslidelink(ns("ll")),
-			     uiOutput(outputId=ns("birdgal_ll")))
+                           right = arr_modalslidelink(ns("ll"))
                  )
                 ),
               accordion_item(title = "Vulnerable species", id = ns("vulspec"),
@@ -212,10 +210,9 @@ predictionsServer <- function(id,
         })
       })
       # ll gallery
-      output$birdgal_ll <- renderUI({
+      output$ll_carouselplaceholder <- renderUI({
 	validate(need(datar()$speciesinfo_botten, ""))
-        birdgalleryModal(id = ns("ll_m"), 
-                         datar()$speciesinfo_botten[1:10, ])
+	bird_carousel(paste0(ns("ll"), "_m","_c"), datar()$speciesinfo_botten[1:10, ]) #_c for carousel
       })
       
       # ml images

@@ -37,7 +37,7 @@ tags$div(id = id, class = "carousel carousel-dark slide", `data-bs-ride`="carous
   )
 )}
 
-bird_gallery <- function(id, specinfotable){
+bird_carousel <- function(id, specinfotable){
   specinfolist <- split(specinfotable, 1:nrow(specinfotable))
   specinfoslides <- lapply(specinfolist, function(info){
     components <- specinfocomponents(info)
@@ -51,6 +51,8 @@ bird_gallery <- function(id, specinfotable){
   carousel(id = id,
            slidecontents = specinfoslides)
 }
+
+bird_gallery <- bird_carousel
 
 specslide <- function(title, heading, img, cpyrht, story){
   tagList(
@@ -89,12 +91,27 @@ tags$div(class="modal fade",
 
 
 arr_modalslidelink <- function(rootid){
+tagList(
   tags$div(style="text-align: center",
     tags$div(class="row row-cols-1 row-cols-md-5 g-4",
        lapply(1:10, function(idx) {
          modalslidelink(rootid, idx)
        })
-  ))
+  )),
+  tags$div(class="modal fade",
+         id=paste0(rootid, "_m"), #_m for modal
+         tabindex="-1",
+         "aria-labelledby"=paste0(rootid, "_m"),
+         "aria-hidden"="true",
+   tags$div(class = "modal-dialog",
+    tags$div(class = "modal-content",
+      tags$div(class = "modal-body body",
+	uiOutput(outputId=paste0(rootid, "_carouselplaceholder"))
+      )
+    )
+   )
+  )
+)
 }
 
 modalslidelink <- function(rootid, idx){
