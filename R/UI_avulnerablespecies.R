@@ -1,6 +1,6 @@
 vulnerablespecUI <- function(ns, specname, idx, ...){
   fluidRow(
-    class = "align-items-center",
+    class = "align-items-center my-2",
     column(3,
       style = "text-align: center;",
       modalslidelink(ns("vs"), idx, 
@@ -9,7 +9,7 @@ vulnerablespecUI <- function(ns, specname, idx, ...){
       ),
     column(9,
 	class = "bodysmall",
-        textOutput(ns(gsub("(-| )", "", specname)), inline = TRUE),
+        uiOutput(ns(gsub("(-| )", "", specname))),
         ...
     )
   )

@@ -80,7 +80,7 @@ specslide <- function(title, heading, img, cpyrht, story){
       tags$div(class = "float-md-start me-2",
              img,
              cpyrht),
-      tags$body(heading),
+      tags$div(class = "bodyusual", heading),
       tags$div(class = "bodysmall", story)
     )
   )

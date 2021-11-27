@@ -70,15 +70,17 @@ predictionsUI <- function(id, refisaverage = TRUE){
                 ),
               accordion_item(title = "Least likely species", id = ns("leastlikely"),
                 twocolumns(heading = "The 10 least likely species.",
-                           left = tags$p("Of the sixty birds estimated by ", paste0(appname, ","), "these birds are least likely to occupy woodland in your farm.",
+                           left = tagList(tags$p("Of the sixty birds estimated by ", paste0(appname, ","), "these birds are least likely to occupy woodland in your farm.",
                            "Rare birds, migratory birds, and water birds are not estimated by ", paste0(appname, ".")),
+                            infotext("Click a bird photo for more details")),
                            right = arr_modalslidelink(ns("ll"))
                  )
                 ),
               accordion_item(title = "Vulnerable species", id = ns("vulspec"),
                 twocolumns(heading = "Vulnerable and threatened species",
-                           left = tags$div(appname,
+                           left = tagList(tags$div(appname,
                                            "estimates the occupancy probability of five species of conservation concern."),
+                            infotext("Click a bird photo for more details")),
                            right = tagList(
                             lapply(1:nrow(consstatus), function(idx) vulnerablespecUI(ns, consstatus$CommonName[idx], idx)),
                             tags$div(class = "datalabels", "All photographs curtesy of",
@@ -215,13 +217,17 @@ predictionsServer <- function(id,
       lapply(1:nrow(consstatus), function(idx){
         specname <- consstatus$CommonName[idx]
 	specinfo <- speciesinfo[specname, ]
-        output[[gsub("(-| )", "", specname)]] <- renderText({
+        output[[gsub("(-| )", "", specname)]] <- renderUI({
           validate(need(datar()$spec_prob, ""))
           removeslidecontent(ns("vs"), idx)	   
-          insertslidecontent(ns("vs"), idx, specinfo)	   
-          c("The", specname, consstatus[specname, "statussummary"],
+          insertslidecontent(ns("vs"), idx, specinfo)
+	tagList(
+          tags$div(class = "bodyusual", gsub("<br>", " ", specinfo$shortstory)),
+          tags$div(class = "bodysmall",
+		   "The", specname, consstatus[specname, "statussummary"],
             onespecwords(specname, datar()$spec_prob, refpredictions(), refisaverage = refisaverage)
-            )
+	    )
+          )
         })
       })
       
