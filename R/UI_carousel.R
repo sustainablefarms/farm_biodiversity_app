@@ -4,8 +4,8 @@ carousel <- function(id,
                      slidecontents){
   nslides <- length(slidecontents)
   stopifnot(nslides >= 2)
-tags$div(id = id, class = "carousel carousel-dark slide", `data-bs-ride`="carousel",
-  tags$div(class = "carousel-inner",
+tags$div(id = id, class = "carousel carousel-dark slide", `data-bs-ride`="carousel", `data-bs-interval`="false",
+  tags$div(class = "carousel-inner mb-2",
            tags$div(class = "carousel-item active",
 		    id = paste0(id,1),
                     slidecontents[[1]]),
@@ -45,12 +45,10 @@ bird_carousel <- function(id, specinfotable){
            slidecontents = specinfoslides)
 }
 
-bird_gallery <- bird_carousel
-
 specslide_quick <- function(specinfo){
-  components <- specinfocomponents(specinfo)
+  components <- specinfocomponents(specinfo, height = "224px")
   specslide(title = specinfo$species,
-              heading = HTML(specinfo$shortstory),
+              heading = gsub("<br>", " ", specinfo$shortstory),
               img = components$img,
               cpyrht = components$cpyrht,
               story = specinfo$story)
@@ -66,6 +64,7 @@ specslide <- function(title, heading, img, cpyrht, story){
 		    `data-bs-dismiss`="modal",
 		    `aria-label`="Close")),
     tags$div(class = "clearfix",
+	     style = "height: 250px; overflow: scroll;",
       tags$div(class = "col-md-3 float-md-start mb-3 ms-md-3",
              img,
              cpyrht),
@@ -74,23 +73,6 @@ specslide <- function(title, heading, img, cpyrht, story){
     )
   )
 }
-
-birdgalleryModal <- function(id, specinfotable){
-tags$div(class="modal fade",
-         id=id,
-         tabindex="-1",
-         "aria-labelledby"=id,
-         "aria-hidden"="true",
-  tags$div(class = "modal-dialog",
-    tags$div(class = "modal-content",
-      tags$div(class = "modal-body body",
-	bird_gallery(paste0(id,"_c"), specinfotable)
-      )
-    )
-  )
-)
-}
-
 
 arr_modalslidelink <- function(rootid){
 tagList(
@@ -113,7 +95,7 @@ modalcarousel <- function(rootid, slidenum){
          tabindex="-1",
          "aria-labelledby"=paste0(rootid, "_m"),
          "aria-hidden"="true",
-   tags$div(class = "modal-dialog",
+   tags$div(class = "modal-dialog modal-lg",
     tags$div(class = "modal-content",
       tags$div(class = "modal-body body",
 	carousel(id = paste0(rootid, "_m", "_c"), # _c for carousel
