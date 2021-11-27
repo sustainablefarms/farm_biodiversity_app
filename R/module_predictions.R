@@ -205,13 +205,8 @@ predictionsServer <- function(id,
         output[[paste0("ll_", idx)]] <- renderUI({
           validate(need(datar()$speciesinfo_botten, ""))
           specinfo <- datar()$speciesinfo_botten[idx, ]
-	  removeUI(selector = paste0("#", ns("ll"), "_slide_", idx, "_content"), #ll carousel slide refresh
-	           immediate = TRUE)
-	  insertUI(selector = paste0("#", ns("ll"), "_slide_", idx), 
-		   where = "afterBegin",
-                   ui = tags$div(id = paste0(ns("ll"), "_slide_", idx, "_content"),
-	                         specslide_quick(specinfo)),
-		   immediate = TRUE)
+	  removeslidecontent(ns("ll"), idx)
+	  insertslidecontent(ns("ll"), idx, specinfo)
           card_imgoverlay(specinfo$imgfilename,
                           overlaytxt = specinfo$species)
         })

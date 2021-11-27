@@ -109,9 +109,7 @@ tagList(
     tags$div(class = "modal-content",
       tags$div(class = "modal-body body",
 	carousel(id = paste0(rootid, "_m", "_c"), # _c for carousel
-	  lapply(1:10, function(idx){
-	    tags$div(id = paste0(rootid, "_slide_", idx))
-          }) 
+	  lapply(1:10, function(idx){slideplaceholder(rootid, idx)})
 	) 
       )
     )
@@ -131,4 +129,21 @@ modalslidelink <- function(rootid, idx){
       uiOutput(paste0(rootid, "_", idx)),
     )
   )
+}
+
+slideplaceholder <- function(rootid, idx){
+  tags$div(id = paste0(rootid, "_slide_", idx))
+}
+insertslidecontent <- function(rootid, idx, specinfo, session = getDefaultReactiveDomain()){
+	  insertUI(selector = paste0("#", rootid, "_slide_", idx), 
+		   where = "afterBegin",
+                   ui = tags$div(id = paste0(rootid, "_slide_", idx, "_content"),
+	                         specslide_quick(specinfo)),
+		   immediate = TRUE,
+	  session = session)
+}
+removeslidecontent <- function(rootid, idx, session = getDefaultReactiveDomain()){
+	  removeUI(selector = paste0("#", rootid, "_slide_", idx, "_content"), #ll carousel slide refresh
+	           immediate = TRUE,
+	           session = session)
 }
