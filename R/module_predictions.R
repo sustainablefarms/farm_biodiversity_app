@@ -80,10 +80,11 @@ predictionsUI <- function(id, refisaverage = TRUE){
                            left = tags$div(appname,
                                            "estimates the occupancy probability of five species of conservation concern."),
                            right = tagList(
-                            lapply(consstatus$CommonName, function(specname) vulnerablespecUI(ns, specname)),
+                            lapply(1:nrow(consstatus), function(idx) vulnerablespecUI(ns, consstatus$CommonName[idx], idx)),
                             tags$div(class = "datalabels", "All photographs curtesy of",
                               tags$a("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
-                              "Click on each photo to view attribution.")
+                              "Click on each photo to view attribution."),
+                            modalcarousel(ns("vs"), nrow(consstatus))
                             )
                 )
                 ),
@@ -211,22 +212,16 @@ predictionsServer <- function(id,
       })
       
       #vulnerable species
-      lapply(consstatus$CommonName, function(specname){
+      lapply(1:nrow(consstatus), function(idx){
+        specname <- consstatus$CommonName[idx]
+	specinfo <- speciesinfo[specname, ]
         output[[gsub("(-| )", "", specname)]] <- renderText({
           validate(need(datar()$spec_prob, ""))
+          removeslidecontent(ns("vs"), idx)	   
+          insertslidecontent(ns("vs"), idx, specinfo)	   
           c("The", specname, consstatus[specname, "statussummary"],
             onespecwords(specname, datar()$spec_prob, refpredictions(), refisaverage = refisaverage)
             )
-        })
-      })
-      lapply(consstatus$CommonName, function(specname){
-        observeEvent(input[[paste0("v_gallery_", gsub("(-| )", "", specname))]], {
-          showModal(modalDialog(
-            bird_gallery(id = "carousel_v", 
-                         speciesinfo[consstatus$CommonName, ]),
-            size = "l",
-            easyClose = TRUE
-          ))
         })
       })
       

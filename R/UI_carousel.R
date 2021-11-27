@@ -103,6 +103,11 @@ tagList(
   tags$div(class = "datalabels", "All photographs curtesy of",
     tags$a("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
     "Click on each photo to view attribution."),
+  modalcarousel(rootid, 10)
+)
+}
+
+modalcarousel <- function(rootid, slidenum){
   tags$div(class="modal fade",
          id=paste0(rootid, "_m"), #_m for modal
          tabindex="-1",
@@ -112,16 +117,15 @@ tagList(
     tags$div(class = "modal-content",
       tags$div(class = "modal-body body",
 	carousel(id = paste0(rootid, "_m", "_c"), # _c for carousel
-	  lapply(1:10, function(idx){slideplaceholder(rootid, idx)})
+	  lapply(1:slidenum, function(idx){slideplaceholder(rootid, idx)})
 	) 
       )
     )
    )
   )
-)
 }
 
-modalslidelink <- function(rootid, idx){
+modalslidelink <- function(rootid, idx, content = uiOutput(paste0(rootid, "_", idx))){
   tags$div(class = "col", 
     "data-bs-toggle"="modal",
     "data-bs-target"=paste0("#", rootid, "_m"),
@@ -129,7 +133,7 @@ modalslidelink <- function(rootid, idx){
     tags$div(
       "data-bs-target"=paste0("#", rootid, "_m", "_c"),
       "data-bs-slide-to" = as.character(idx - 1),
-      uiOutput(paste0(rootid, "_", idx)),
+      content,
     )
   )
 }
