@@ -276,7 +276,8 @@ h4 {
   display: -webkit-inline-flex;
   background-color: #c5e2f2; /* an approx 85% lighter form of #399cd3 */
   padding: 0.5rem;
-  margin: auto;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem; 
   max-width: 100%;
 }
 .infotext::before {
