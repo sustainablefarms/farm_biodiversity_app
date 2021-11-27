@@ -209,10 +209,13 @@ predictionsServer <- function(id,
                           overlaytxt = specinfo$species[idx])
         })
       })
-      # ll gallery
-      output$ll_carouselplaceholder <- renderUI({
-	validate(need(datar()$speciesinfo_botten, ""))
-	bird_carousel(paste0(ns("ll"), "_m","_c"), datar()$speciesinfo_botten[1:10, ]) #_c for carousel
+      # ll carousel slides
+      lapply(1:10, function(idx){
+        output[[paste0("ll", "_slide_", idx)]] <- renderUI({
+          validate(need(datar()$speciesinfo_botten, ""))
+          specinfo <- datar()$speciesinfo_botten[idx, ]
+	  specslide_quick(specinfo)
+        })
       })
       
       # ml images

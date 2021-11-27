@@ -39,20 +39,22 @@ tags$div(id = id, class = "carousel carousel-dark slide", `data-bs-ride`="carous
 
 bird_carousel <- function(id, specinfotable){
   specinfolist <- split(specinfotable, 1:nrow(specinfotable))
-  specinfoslides <- lapply(specinfolist, function(info){
-    components <- specinfocomponents(info)
-    specslide(title = info$species,
-              heading = HTML(info$shortstory),
-              img = components$img,
-              cpyrht = components$cpyrht,
-              story = info$story)
-  })
+  specinfoslides <- lapply(specinfolist, specslide_quick)
   
   carousel(id = id,
            slidecontents = specinfoslides)
 }
 
 bird_gallery <- bird_carousel
+
+specslide_quick <- function(specinfo){
+  components <- specinfocomponents(specinfo)
+  specslide(title = specinfo$species,
+              heading = HTML(specinfo$shortstory),
+              img = components$img,
+              cpyrht = components$cpyrht,
+              story = specinfo$story)
+}
 
 specslide <- function(title, heading, img, cpyrht, story){
   tagList(
@@ -106,7 +108,11 @@ tagList(
    tags$div(class = "modal-dialog",
     tags$div(class = "modal-content",
       tags$div(class = "modal-body body",
-	uiOutput(outputId=paste0(rootid, "_carouselplaceholder"))
+	carousel(id = paste0(rootid, "_m", "_c"), # _c for carousel
+	  lapply(1:10, function(idx){
+	    uiOutput(outputId=paste0(rootid, "_slide_", idx))
+          }) 
+	) 
       )
     )
    )
