@@ -8,7 +8,7 @@
 .accordion-button.edit {
   &:not(.collapsed) {
     &::after {
-      background-image: escape-svg($accordion-button-active-icon);
+      background-image: escape-svg(url('data:image/svg+xml, <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M14 1L19 6L6 19H1V14L14 1Z" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </svg>'));
       transform: $accordion-icon-transform;
       opacity: 0.5;
     }
@@ -21,8 +21,13 @@
     content: "";
     opacity: 1;
     transition: opacity 1s ease;
-    background-image: escape-svg($accordion-button-icon);
+    background-image: escape-svg(url('data:image/svg+xml, <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M14 1L19 6L6 19H1V14L14 1Z" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </svg>'));
     background-repeat: no-repeat;
+    background-color: $primary;
+    background-position: center;
+    border-radius: 5px;
+    width: 34px;
+    height: 34px;
   }
 
 }
@@ -30,9 +35,15 @@
 .accordion-button.plus {
   &:not(.collapsed) {
     &::after {
-      background-image: none;
+      background-image: escape-svg(url('data:image/svg+xml, <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M12 5V19" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> <path d="M5 12H19" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </svg>'));
       transform: none;
       opacity: 1;
+      background-repeat: no-repeat;
+      background-color: $primary;
+      background-position: center;
+      border-radius: 5px;
+      width: 34px;
+      height: 34px;
     }
   }
 
@@ -40,13 +51,11 @@
   &::after {
     flex-shrink: 0;
     margin-left: auto;
+    content: "";
     opacity: 1;
     transition: opacity 1s ease;
-    font-family: 'FontAwesome 5 Free';
-    content: "\f067";
-    text-color: $primary;
-    background-image: none;
-    background-repeat: none;
+    background-image: escape-svg($accordion-button-active-icon);
+    background-repeat: no-repeat;
   }
 
 }

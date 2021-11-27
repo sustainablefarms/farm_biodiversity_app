@@ -4,7 +4,7 @@ selectpatch_UI <- function(id){
   div(id = ns("placeholder")),
   actionButton_notdfl(ns("addpatch"), "Add a woodland area",
                class = "accordion-button my-2 plus",
-               style = "border-style: dashed; border-width: medium; border-color: #80B2B3; background-color: #FFFFFF;",
+               style = "border-style: dashed; border-width: 1px; border-color: #80B2B3; background-color: #FFFFFF;",
                style = "margin-top: 1rem;")
   )
 }

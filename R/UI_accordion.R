@@ -135,7 +135,7 @@ expanditem <- function(itemtags){
   # first add show to the body
   tagstr <- htmltools::tagQuery(itemtags)$find(".accordion-collapse.collapse")$addClass("show")$resetSelected()
   # change the button
-  tagstr <- tagstr$find(".accordion-button")$removeAttrs("aria-expanded")$addAttrs("aria-expanded" = "true")$resetSelected()
+  tagstr <- tagstr$find(".accordion-button")$removeAttrs("aria-expanded")$addAttrs("aria-expanded" = "true")$removeClass("collapsed")$resetSelected()
   return(tagstr$allTags())
 }
 
