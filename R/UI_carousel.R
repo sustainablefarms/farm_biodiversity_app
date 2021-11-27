@@ -46,11 +46,23 @@ bird_carousel <- function(id, specinfotable){
 }
 
 specslide_quick <- function(specinfo){
-  components <- specinfocomponents(specinfo, height = "224px")
+  cpyrht <- tags$div(style = "font-size: 70%",
+                     linknewtab(href = paste0("https://birdlifephotography.org.au/index.php/show-image?return=search&single&id=", specinfo$birdlife_id),
+                                HTML(paste0("&copy;", gsub("birdlifephotography.org.au", "", specinfo$copyrightholder))),
+                                class = "cpyrhtlink"))
+  img <- linknewtab(
+    href = specinfo$url,
+    class = "imglink",
+    style="text-align: center",
+    tags$img(src = gsub(".*/data/birdlifeimgs/", "", specinfo$imgfilename),
+             id = specinfo$species,
+             class = "specimg",
+	     style = "max-width: 224px; max-height: 224px;",
+             alt = specinfo$species))
   specslide(title = specinfo$species,
               heading = gsub("<br>", " ", specinfo$shortstory),
-              img = components$img,
-              cpyrht = components$cpyrht,
+              img = img,
+              cpyrht = cpyrht,
               story = specinfo$story)
 }
 
@@ -64,8 +76,8 @@ specslide <- function(title, heading, img, cpyrht, story){
 		    `data-bs-dismiss`="modal",
 		    `aria-label`="Close")),
     tags$div(class = "clearfix",
-	     style = "height: 250px; overflow: scroll;",
-      tags$div(class = "col-md-3 float-md-start mb-3 ms-md-3",
+	     style = "height: 300px; overflow: scroll;",
+      tags$div(class = "float-md-start me-2",
              img,
              cpyrht),
       tags$body(heading),
