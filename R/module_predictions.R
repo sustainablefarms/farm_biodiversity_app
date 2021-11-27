@@ -87,20 +87,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                            left = tags$p("Of the sixty birds estimated by ", paste0(appname, ","), "these birds are least likely to occupy woodland in your farm.",
                            "Rare birds, migratory birds, and water birds are not estimated by ", paste0(appname, ".")),
                            right = tagList(
-                             tags$div(style="text-align: center",
-                                      tags$div(class="row row-cols-1 row-cols-md-5 g-4",
-                                               lapply(1:10, function(idx) {
-                                                 tags$div(class = "col", 
-								     "data-bs-toggle"="modal",
-								     "data-bs-target"=paste0("#", ns("ll_m")),
-								     tags$div(
-								     "data-bs-target"=paste0("#", ns("ll_m"), "_c"),
-								     "data-bs-slide-to" = as.character(idx - 1),
-                                                                     uiOutput(ns(paste0("ll_", idx))),
-									      )
-                                                 )
-                                               })
-                                      )),
+			     arr_modalslidelink(ns("ll")),
 			     uiOutput(outputId=ns("birdgal_ll")))
                  )
                 ),

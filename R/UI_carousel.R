@@ -86,3 +86,26 @@ tags$div(class="modal fade",
   )
 )
 }
+
+
+arr_modalslidelink <- function(rootid){
+  tags$div(style="text-align: center",
+    tags$div(class="row row-cols-1 row-cols-md-5 g-4",
+       lapply(1:10, function(idx) {
+         modalslidelink(rootid, idx)
+       })
+  ))
+}
+
+modalslidelink <- function(rootid, idx){
+  tags$div(class = "col", 
+    "data-bs-toggle"="modal",
+    "data-bs-target"=paste0("#", rootid, "_m"),
+    style = "cursor: pointer;",
+    tags$div(
+      "data-bs-target"=paste0("#", rootid, "_m", "_c"),
+      "data-bs-slide-to" = as.character(idx - 1),
+      uiOutput(paste0(rootid, "_", idx)),
+    )
+  )
+}
