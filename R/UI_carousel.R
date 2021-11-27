@@ -7,9 +7,11 @@ carousel <- function(id,
 tags$div(id = id, class = "carousel carousel-dark slide", `data-bs-ride`="carousel",
   tags$div(class = "carousel-inner",
            tags$div(class = "carousel-item active",
+		    id = paste0(id,1),
                     slidecontents[[1]]),
            lapply(2:nslides, function(idx){
              tags$div(class = "carousel-item",
+		      id = paste0(id,idx),
                       slidecontents[[idx]])
            })
            ),

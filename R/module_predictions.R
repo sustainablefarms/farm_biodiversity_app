@@ -92,9 +92,13 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                                lapply(1:10, function(idx) {
                                                  tags$div(class = "col", 
                                                           actionLink(ns(paste0("ll_gallery_", idx)),
-                                                                     uiOutput(ns(paste0("ll_", idx))),
 								     "data-bs-toggle"="modal",
-								     "data-bs-target"="#carousel_ll"
+								     "data-bs-target"="#carousel_ll",
+								     tags$div(
+								     "data-bs-target"="#carousel_ll_c",
+								     "data-bs-slide-to" = as.character(idx - 1),
+                                                                     uiOutput(ns(paste0("ll_", idx))),
+									      )
                                                           )
                                                  )
                                                })
