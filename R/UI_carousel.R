@@ -53,6 +53,10 @@ bird_gallery <- function(id, specinfotable){
 specslide <- function(title, heading, img, cpyrht, story){
   tagList(
     tags$h2(title),
+	tags$button(type="button",
+		    class="btn-close",
+		    `data-bs-dismiss`="modal",
+		    `aria-label`="Close"),
     fluidRow(
       column(3,
              img,
@@ -63,4 +67,20 @@ specslide <- function(title, heading, img, cpyrht, story){
       )
     )
   )
+}
+
+birdgalleryModal <- function(id, specinfotable){
+tags$div(class="modal fade",
+         id=id,
+         tabindex="-1",
+         "aria-labelledby"=id,
+         "aria-hidden"="true",
+  tags$div(class = "modal-dialog",
+    tags$div(class = "modal-content",
+      tags$div(class = "modal-body body",
+	bird_gallery(paste0(id,"_c"), specinfotable)
+      )
+    )
+  )
+)
 }

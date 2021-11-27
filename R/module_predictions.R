@@ -60,7 +60,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
 			    infotext(
 			      if (refisaverage) {"Toggle between Scenario 1 and Average to see how woodlands on your farm compare with the average"
 			      } else {
-				 "Toggle between Scenario 2 and Scenario 1 to see how woodlands your farm compare in each scenario."}
+				 "Toggle between Scenario 2 and Scenario 1 to see how woodlands on your farm compare in each scenario."}
 				     )
 			    ),
 			  right = mostlikely_plot_UI(ns("mlp"), refisaverage = refisaverage)),
@@ -86,17 +86,20 @@ predictionsUI <- function(id, refisaverage = TRUE){
                 twocolumns(heading = "The 10 least likely species.",
                            left = tags$p("Of the sixty birds estimated by ", paste0(appname, ","), "these birds are least likely to occupy woodland in your farm.",
                            "Rare birds, migratory birds, and water birds are not estimated by ", paste0(appname, ".")),
-                           right = 
+                           right = tagList(
                              tags$div(style="text-align: center",
                                       tags$div(class="row row-cols-1 row-cols-md-5 g-4",
                                                lapply(1:10, function(idx) {
                                                  tags$div(class = "col", 
                                                           actionLink(ns(paste0("ll_gallery_", idx)),
-                                                                     uiOutput(ns(paste0("ll_", idx)))
+                                                                     uiOutput(ns(paste0("ll_", idx))),
+								     "data-bs-toggle"="modal",
+								     "data-bs-target"="#carousel_ll"
                                                           )
                                                  )
                                                })
-                                      ))
+                                      )),
+			     uiOutput(outputId=ns("birdgal_ll")))
                  )
                 ),
               accordion_item(title = "Vulnerable species", id = ns("vulspec"),
@@ -220,14 +223,17 @@ predictionsServer <- function(id,
         })
       })
       # ll gallery
+      output$birdgal_ll <- renderUI({
+	validate(need(datar()$speciesinfo_botten, ""))
+        birdgalleryModal(id = "carousel_ll", 
+                         datar()$speciesinfo_botten[1:10, ])
+      })
       lapply(10:1, function(idx){
         observeEvent(input[[paste0("ll_gallery_", idx)]], {
-          showModal(modalDialog(
-            bird_gallery(id = "carousel_ll", 
-                         datar()$speciesinfo_botten[1:10, ]),
-            size = "l",
-            easyClose = TRUE
-          ))
+          showModal(
+            birdgalleryModal(id = "carousel_ll", 
+                         datar()$speciesinfo_botten[1:10, ])
+          )
         })
       })
       
