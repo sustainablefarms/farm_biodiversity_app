@@ -388,7 +388,7 @@ a {
 
 // for making columns equal height
 .row.display-flex {
-  display: flex;
+  display: -webkit-flex;
   flex-wrap: wrap;
 }
 .row.display-flex > [class*='col-'] {
