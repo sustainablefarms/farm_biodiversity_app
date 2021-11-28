@@ -40,23 +40,24 @@ selectlocationUI <- function(id){
 	 tags$div(class="row row-cols-1 row-cols-md-4 g-4",
 	   mapply(function(name, uiid){
 	     column(3, 
-	     tags$div(class = "card",
+	     tags$div(class = "card h-100",
 	              style = paste("background-color:", appcolors[["Green 10"]], ";"),
 	              style = "border-radius: 0;",
 	              style = "border-bottom-style: none; border-left-style:none; border-right-style: none;",
 	              style = paste("border-color: ", appcolors[["Dark Green"]], ";"),
-	              tags$div(class = "card-body bodysmall",
-	                       style = paste("color:", appcolors[["Dark Green"]], ";"),
+	              tags$div(class = "card-body d-flex align-items-center", tags$div(
+	                       tags$div(class = "bodysmall",
+			       style = paste("color:", appcolors[["Dark Green"]], ";"),
 	                       style = "text-align: center;",
-	                       HTML(name),
-			       uiOutput(ns(uiid))
-	              ))
+	                       HTML(name)),
+			       uiOutput(ns(uiid), style = "text-align: center;")
+	              )))
 	     )
 	   },
-	   list("Average Winter Minimum Temperature",
-	        "Average Summer Maximum Temperature",
-	        "Average Summer Precipitation",
-	        "Average Winter Precipitation"),
+	   list("Average winter minimum temperature",
+	        "Average summer maximum Temperature",
+	        "Average summer precipitation",
+	        "Average winter precipitation"),
 	   list("mintemp",
 	        "maxtemp",
 	        "precip_warm",
