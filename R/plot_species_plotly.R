@@ -197,5 +197,38 @@ all_rel <- function(df){
     fixed_layout() %>%
     add_tooltips() %>%
     add_label_onsignside()
-  p
+  p %>%
+    plotly::add_annotations(text = " ", #this creates the right size of empty space above plot
+                            showarrow = FALSE,
+                            x=0, xanchor = "left",
+                            y=nrow(df)) %>%
+    plotly::add_annotations(text = "More likely in S.2-->",
+                            showarrow = FALSE,
+                            font = list(family = "Inter",
+                                        color = appcolors[["Dark Green"]]),
+                            x=0, xanchor = "left",
+                            y=1, yref = "paper") %>%
+    plotly::add_annotations(text = "<-- Less likely in S.2",
+                            showarrow = FALSE,
+                            font = list(family = "Inter",
+                                        color = appcolors[["Dark Green"]]),
+                            x=0, xanchor = "right",
+                            y=1, yref = "paper") %>%
+    plotly::layout(shapes = list(plotlyvline(0)))
+}
+
+# plotly vline as per https://stackoverflow.com/questions/34093169/horizontal-vertical-line-in-plotly/34097929#34097929
+plotlyvline <- function(x = 0, color = "black") {
+  list(
+    type = "line", 
+    y0 = 0, 
+    y1 = 1, 
+    yref = "paper",
+    x0 = x, 
+    x1 = x, 
+    layer = "below",
+    line = list(color = color,
+                dash = "dot",
+                width = 1)
+  )
 }
