@@ -1,5 +1,7 @@
 onespecwords <- function(specname, species_prob_current, refpredictions, refisaverage = FALSE){
   relativeimprovement <- (species_prob_current[specname, "median"]/refpredictions[specname, "median"]) - 1
+  linimprovement <- (species_prob_current[specname, "median"] - refpredictions[specname, "median"])
+  improvement <- linimprovement
   out <- paste(
     paste(appname, "estimates that there is a",
         sprintf("%0.*f%%",
@@ -16,9 +18,9 @@ onespecwords <- function(specname, species_prob_current, refpredictions, refisav
 	),
     paste(
       sprintf("This is a %0.*f%% %s in occupancy probability",
-              switch(as.character(abs(relativeimprovement) > 0.01), "TRUE" = 0, "FALSE" = 2),
-              abs(relativeimprovement) * 100,
-              switch(as.character(relativeimprovement < 0),
+              switch(as.character(abs(improvement) > 0.01), "TRUE" = 0, "FALSE" = 2),
+              abs(improvement) * 100,
+              switch(as.character(improvement < 0),
                      "TRUE" = "reduction",
                      "FALSE" = "increase")),
       "compared to the estimate for",
