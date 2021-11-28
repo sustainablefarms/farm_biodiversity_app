@@ -254,7 +254,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
     validate(need(ltclim_fordisplay()$PrecWarmQ.lt, ""))
     tags$b(class = "bodylarge",
            style = paste("color:", appcolors[["Dark Green"]], ";"),
-    HTML(paste0(round(ltclim_fordisplay()$PrecWarmQ.lt * 0.1, 1),
+    HTML(paste0(round(ltclim_fordisplay()$PrecWarmQ.lt, 1),
                 "mm")))
   })
   
@@ -262,7 +262,7 @@ selectlocationServer <- function(id, selected_region_outer, AnnPrec.YfA_outer){
     validate(need(ltclim_fordisplay()$PrecColdQ.lt, ""))
     tags$b(class = "bodylarge",
            style = paste("color:", appcolors[["Dark Green"]], ";"),
-    HTML(paste0(round(ltclim_fordisplay()$PrecColdQ.lt * 0.1, 1),
+    HTML(paste0(round(ltclim_fordisplay()$PrecColdQ.lt, 1),
                 "mm")))
   })
     
