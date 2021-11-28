@@ -59,8 +59,10 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
                   class = "datalabels",
                   HTML("&copy;Con Boekel 2016 BirdLife Photography"))
   ),
-  tags$p("Noisy Miners are native honeyeaters that are usually found in woodlands that lack midstory vegetation (shrubs and small trees 2-10m in height). In woodlands without midstory, Noisy Miners are able to see and attack smaller birds, excluding them from the area."),
-  tags$p("Noisy miners are used here as an indication of woodland vegetation structure. They are easy to recognise by their bright yellow eyes and beak, and their persistent, raucous call."),
+  tags$p("Noisy Miners are native honeyeaters that are usually found in",
+	tags$b("woodlands that lack midstorey vegetation"),
+       "(shrubs and small trees 2-10m in height). In woodlands without midstorey, Noisy Miners are able to see and attack smaller birds, excluding them from the area.",
+ "They are easy to recognise by their bright yellow eyes and beak, and their persistent, raucous call."),
     faqlink(faqid = "nmmidstorey", "Learn more")
 )
 
@@ -86,12 +88,9 @@ twocolumns(heading = "Woody cover",
                 placeholder = ""),
       textInput(ns("lat"), "Latitude", value = attributes$usedlat, width = '100%',
                 placeholder = ""),
-      numericInput(ns("yearforcanopy"), "Representative year", 
-                value = attributes$usedyear, 
-                width = '100%',
-                step = 1,
-                min = 1990,
-                max = 2019),
+      selectInput(ns("yearforcanopy"), "Representative year",
+		  choices = c("", 2019:1990),
+		  selected = if (isTruthy(attributes$usedyear)){attributes$usedyear}else{""}),
       tags$div(
 	style = "display: -webkit-inline-flex;",
         actionButton_notdfl(ns("getwoodycanopy"), "Load woody cover", class = "btn-primary", style = "flex: 1;"),
