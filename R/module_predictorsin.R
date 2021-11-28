@@ -8,7 +8,7 @@ predictors_UI <- function(id, isS2 = TRUE){
         tagList(
           tags$h1("Create a new scenario"),
           tags$h3("Step 3: Modify your farm to create a comparison"),
-          tags$p("Use this step to increase woody vegetation cover,",
+          tags$p("Use this step to change your region, increase woody vegetation cover,",
                   "add or remove woodland areas,",
                   "and add or remove Noisy Miners.",
                  "This information will form Scenario 2.")

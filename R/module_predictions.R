@@ -117,7 +117,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                                           "A ratio greater than 1 means the bird is", tags$em("more"), "likely to occupy your farm in Scenario 2 than Scenario 1.",
                                                           "A ratio of '1' means the bird is", tags$em("equally"), "likely to occupy your farm in Scenario 2 and Scenario 1.",
                                                           "A ratio smaller than 1 means the bird is", tags$em("less"), "likely to occupy your farm in Scenario 2 compared to Scenario 1."),
-			       infotext("Select from the list to reorder the figure.")
+			       infotext("Select from the list to reorder the bird species.")
                                                       ),
                                         right = tagList(allrel_plot_UI(ns("allrel")),
                                                         tags$div(class = "datalabels",

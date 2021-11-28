@@ -37,7 +37,7 @@ out1_foot <- function(){
                                   style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
                                   style = "color: #FFFFFF; width: 100%;",
                                   class = "py-3" ),
-    righthead = "Create a Comparison", rightbody = HTML(
+    righthead = "Create a comparison", rightbody = HTML(
       "Go to the next step to create a second comparison scenario for your farm.",
       "For example, what birds might live on your farm if you increase woody vegetation cover?"),
     rightfoot = actionButton_notdfl("out1_next",
@@ -58,7 +58,7 @@ out2_foot <- function(){
                                   style = paste0("background-color: ", appcolors[["Bright Blue"]], ";"),
                                   style = "color: #FFFFFF; width: 100%;",
                                   class = "py-3" ),
-    righthead = "Estimation Complete", rightbody = HTML(
+    righthead = "Estimation complete", rightbody = HTML(
                          "Congratulations! You have completed all the steps in", paste0(appname, "."),
                          "Visit the Sustainable Farms website for more guidance on managing natural assets to support biodiversity and productivity on farms."),
     rightfoot = 

@@ -11,23 +11,8 @@ output:
 
 # Refactoring
 + before video (Monday morning)
-  + can the icons be seen on Ange's computer?
-    + i
-    + plus
-      + font awesome 5
-   + Ange: dell on Chrome
-   + Suzannah: dell on Chrome
   + tagline
-  + words
-    + location
-    + parts of 
   + save + close w error
-  + bird modal
-  + vulnerable species cards, with explanation
-    + relative: decreasing <-------> increasing
-  + relative input: order by for the y index
-  + use the bigger SF logo
-  + improve delete woodland area button
 
 + error - selected input box for region and then clicked a region map
 
@@ -55,10 +40,8 @@ output:
 + CHECK THAT STATS WORK FOR THE 5 VULNERABLE SPECIES
 
 + styling 1d
- + spacing around ANU icon
- + new logo with title
  + lower case box gum and eucalypt
- + "i" icon for info text doesn't show up on Suzannah's computer
+ + midstorey vs midstory
  + be considerate of spacing
  + convert About, User Guide etc to a hamburger menu for mobiles?
  + add % symbols on the labels and update text labels for the WCF sliders
