@@ -208,7 +208,7 @@ all_rel <- function(df){
                                         color = appcolors[["Dark Green"]]),
                             x=0, xanchor = "left",
                             y=1, yref = "paper") %>%
-    plotly::add_annotations(text = "<-- Less likely in S.2",
+    plotly::add_annotations(text = "<-- More likely in S.1",
                             showarrow = FALSE,
                             font = list(family = "Inter",
                                         color = appcolors[["Dark Green"]]),
