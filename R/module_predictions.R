@@ -83,7 +83,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                             infotext("Click a bird photo for more details")),
                            right = tagList(
                             lapply(1:nrow(consstatus), function(idx) vulnerablespecUI(ns, consstatus$CommonName[idx], idx)),
-                            tags$div(class = "datalabels", "All photographs curtesy of",
+                            tags$div(class = "datalabels", "All photographs courtesy of",
                               tags$a("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
                               "Click on each photo to view attribution."),
                             modalcarousel(ns("vs"), nrow(consstatus))

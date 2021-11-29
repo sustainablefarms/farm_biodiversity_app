@@ -94,7 +94,7 @@ tagList(
          modalslidelink(rootid, idx)
        })
   )),
-  tags$div(class = "datalabels", "All photographs curtesy of",
+  tags$div(class = "datalabels", "All photographs courtesy of",
     tags$a("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
     "Click on each photo to view attribution."),
   modalcarousel(rootid, 10)
