@@ -29,7 +29,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
     
     tags$div(style = "background-color: #FFFFFF;",
     tags$div(class = "p-3",
-    tags$h4("Expected Number of Species"),
+    tags$h4("Expected number of species"),
     twocolumns(heading = NULL,
                left = tagList(
                  tags$p("The upper bars are estimates of the expected number of species that occupy at least one woodland area on your farm",
@@ -89,7 +89,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                 )
                 ),
               if (refisaverage){
-              accordion_item(title = "Occupancy Probability for all Species", id = ns("occall"),
+              accordion_item(title = "Occupancy Probability for all species", id = ns("occall"),
                 twocolumns(heading = "Estimates of occupancy probability for every species",
                            left = 
 			     tagList(
