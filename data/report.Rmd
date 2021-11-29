@@ -1,5 +1,5 @@
 ---
-title: "Species Estimates"
+title: "BirdCast Report"
 params:
   loadexampledata: TRUE
 output: 
@@ -13,15 +13,15 @@ header-includes:
   \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
   \usepackage{tikz}
   \usetikzlibrary{calc}
-  \graphicspath{{www/}}  #to get report to build with images change this to ../www/
+  \graphicspath{{www/}}  #to get report to build with images change this to ../www/. For on shinyapps.io use www/
 ---
 
 \begin{tikzpicture}[overlay, remember picture]
 \node[anchor=north west, %anchor is upper left corner of the graphic
-      xshift=2.4cm, %shifting around
+      xshift=2cm, %shifting around
       yshift=-2cm] 
      at (current page.north west) %left upper corner of the page
-     {\includegraphics[width=3cm]{Sustainable Farms logo RGB.png}}; 
+     {\includegraphics[width=6cm]{Sustainable Farms logo RGB.png}}; 
 \end{tikzpicture}
 
 
@@ -51,28 +51,32 @@ techcovar2nicename <- function(techcovarnames){
 
 Welcome to a detailed report of species occupancy estimates for the Box Gum Grassy Woodland patches on your farm.
 We hope you enjoy it.
-In the next section you'll find the information we used to estimate the occupancy probabilities.
-Then you'll find pictures of the 10 most likely species across your patches.
-Later you'll see 
-the 10 least likely species across your patches, 
-a paragraph on the vulnerable Superb Parrot,
-and the occupancy probability of every species in our model arranged by body length \href{https://www.nature.com/articles/sdata201561}{(Garnett et al. Scientific Data 2, 2015)}.
+In the first section you'll find a summary of the information you provided, and which `r appname` used to estimate the bird occupancy probabilities of woodlands on your farm.
+The second section contains estimates of expected species richness.
+In the third and fourth sections, the report outlines the ten most likely and ten least likely birds across your woodland patches.
+The report also includes information on vulnerable species that may be found in your area, and an indication of how likely they are to be found in your woodland patches. 
+Finally, the report lists the occupancy probability, for your farm's woodland patches in spring, of every species in `r appname`.
 
-This report was generated at `r Sys.time()` from version `r appversion` of the Sustainable Farm's `r appname` (`r appurl`).
+```{r currtime, include = FALSE}
+now <- Sys.time()
+currtime <- format(now, format = "%d %B %Y at %H:%M", tz="Australia/NSW")
+```
 
-# The Patch Properites Used for Estimation
+This report was generated on `r currtime` from version `r appversion` of the Sustainable Farm's `r appname` (`r appurl`).
+
+# Properties of woodland areas used for estimation
 The estimates of bird occupancy in this report were based on the below properties of Box Gum Grassy Woodland patches.
 The long term climate information was extracted for the region you selected from the \href{https://www.worldclim.org/data/bioclim.html}{WorldClim} (version 1.4) climate database.
 We used the centre of your region for this.
 
 The maximum and minimum temperature, summer and winter precipitation, and precipitation seasonality of the prior 12 months had little affect on species occupancy in our fitted model, and were set to the average of our data.
 The average temperature of the prior 12 months was set to the long term average to make the app easier to use.
-The precipitation in the prior 12 months was supplied by you.
+The precipitation of the previous 12 months defaulted to your region's historical yearly average, but could be modified by you.
 
-You also provided the 
-woody vegetation cover within 500m and 3km, whether the patch is a remnant, and the presence of Noisy Miners.
+You also provided latitude and longitude, and a representative year, to enable `r appname` to determine woody cover within 500m and 3km.
+You also specified whether the area is a remnant, and the presence of Noisy Miners.
 
-For ease of use, the year was set to 2018 as year does not have much impact on the species occupancy according to our model (we suspect this is due to other time-varying predictors like woody vegetation canopy and rainfall).
+The model behind `r appname` has a year input that was used for statistical investigation, however this input has little influence and we it to 2018. The representative year used to estimate woody cover is much more influential of bird occupancy.
 
 \begin{center}
 ```{r displaypatchprops}
@@ -99,7 +103,7 @@ knitr::kable(makeniceprops(patchprops),
       format = "latex",
       booktabs = TRUE,
       row.names = TRUE,
-      col.names = paste("Patch", 1:ncol(patchprops)))
+      col.names = paste("Area", 1:ncol(patchprops)))
 ```
 
 The region of these patches was: `r cval$selected_region`.
@@ -108,14 +112,18 @@ The region of these patches was: `r cval$selected_region`.
 
 \emph{Precipitation seasonality} is the ratio of the standard deviation of monthly precipitation over the mean monthly precipitation, expressed as a percentage.
 
-# Expected Number of Species
+# Expected number of species
 
-Below presents estimates of the average number of species occupying the `r if (nrow(cval$patchattr_tbl) > 1){"patches"} else {"patch"}` specified `Your Estimate'.
-Also shown are estimates of the average number of species if `r if (nrow(cval$patchattr_tbl) > 1){"all patches have"} else {"the patch has"}` woody cover within 500m equal to 2% ('Less woody canopy nearby') or equal to 20% ('More woody canopy nearby').
-The estimated average number of species in the reference scenario ('Reference') is also shown.
+Below presents estimates of the average number of species at least one woodland area on your farm.
+The upper bars are estimates of the expected number of species that occupy at least one woodland area on your farm
+`r if (refisaverage){"(Scenario 1) compared to the average woodland area in our data (Average)."}else{"under Scenario 1 or Scenario 2."}`
+
+The lower two bars are estimates for
+`r if (refisaverage){"Scenario 1"}else{"Scenario 2"}`
+if all the woodland areas had a minimal (2%) or a large amount (20%) of nearby woody cover.
 
 Due to the species in `r appname`, these estimates should be viewed as an estimate of the average number of sedentary, common, and land-based bird species occupying the `r if (nrow(cval$patchattr_tbl) > 1){"patches"} else {"patch"}`.
-According to the statistical model behind these estimates for a single patch, the actual number of species could vary by 8 from the estimated average.
+According to the statistical model behind these estimates for a single woodland area, the actual number of species could vary by 8 from the estimated average.
 
 \begin{center}
 ```{r specrich,  fig.height = 4, fig.width = 8, out.width = "80%"}
@@ -123,7 +131,7 @@ richness_plot_pdf(cpred$species_richness)
 ```
 \end{center}
 
-# The 10 Most Likely Species on Your Farm
+# The 10 most likely species on your farm
 ```{r storyprep}
 # the following already loaded inside the app - so its local directory is known
 # urls <- get_birdlife_url(row.names(data$spec_prob))
@@ -163,7 +171,7 @@ for (specname in row.names(cpred$spec_prob)[topten]){
 
 \newpage
 
-# The 10 Least Likely Species on Your Farm
+# The 10 least likely species on your farm
 Of the birds in the model, the 10 least likely species to reside in your Box Gum Grassy Woodland patches are below.
 ```{r bottomten, results='asis'}
 bottomten <- order(cpred$spec_prob[, "median"], decreasing = FALSE)[1:10]
@@ -192,7 +200,7 @@ cat(" \\end{center} ")
 ```
 
 \clearpage
-# Vulnerable Species
+# Vulnerable species
 
 ```{r superbparrotinfo, results='asis'}
 texs <- lapply(consstatus$CommonName, function(specname){
@@ -207,26 +215,32 @@ a <- lapply(texs, cat)
 ```
 
 \clearpage
-# Occupancy Probability of Every Species in the Model
+# Occupancy probability of every species in the model
 Below is the estimated probability of each species in the model occupying at least one Box Gum Grassy Woodland patch on your farm.
-There is a 95% chance that the \emph{true} occupancy probability is within the error bars, assuming our model is correct (the uncertainty is due to uncertainty of model parameter values).
+There is a 95% chance that the \emph{true} occupancy probability is within the error bars, assuming our model is correct (the uncertainty is due to uncertainty  in the parameters of the fitted model).
 
 We computed both estimate and error bars by taking the maximum of the occupancy probability of all patches.
+The species are arranged by body length \href{https://www.nature.com/articles/sdata201561}{(Garnett et al. Scientific Data 2, 2015)}.
 
 ```{r species_on_farm, fig.height = 8, fig.width = 7, out.width = "100%"}
 plot_allspeciesprob(cpred$spec_prob)
 ```
 
 \clearpage
-# Occupancy Probability Relative to the Reference
-Below shows the ratio of species occupancy probability at their favoured patch to the reference occupancy probability. Beneath is the reference information.
+`r if (refisaverage){"# Occupancy probability relative to the average"}else{"# Occupancy probability relative to Scenario 1"}`
+Below shows the ratio of species occupancy probability to the occupancy probability in
+`r if (refisaverage){"an average woodland area."}else{"in Scenario 1."}`
+Beneath is 
+`r if (refisaverage){"the properties of the average woodland area."}else{"is the Scenario 1 information."}`
+
 
 ```{r relativetomeansite, fig.height = 8, fig.width = 7}
 plot_allspeciesrel(predcontext$spec_different)
 ```
 
 \clearpage
-## Reference Attributes and Species Probabilities
+## `r paste("Attributes and species probabilities of", if (refisaverage){"the average woodland area"}else{"Scenario 1"})`
+
 \begin{center}
 \scriptsize
 ```{r refregion, results='asis'}

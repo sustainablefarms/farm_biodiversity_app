@@ -12,7 +12,6 @@ output:
 # Refactoring
 + before video (Monday morning)
   + tagline
-  + save + close w error
 
 + error - selected input box for region and then clicked a region map
 
@@ -54,8 +53,10 @@ Grey-crowned babbler
 
 + words
   + "representative year"
+  + acknowledge Richard Beggs
 
 + report 1d
+  + State of Australia strange appostrophe direction
 + polishing (days)
   + google analytics
   + waiters for the prediction plots

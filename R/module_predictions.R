@@ -220,9 +220,9 @@ predictionsServer <- function(id,
           removeslidecontent(ns("vs"), idx)	   
           insertslidecontent(ns("vs"), idx, specinfo)
 	tagList(
-          tags$div(class = "bodyusual", gsub("<br>", " ", specinfo$shortstory)),
           tags$div(class = "bodysmall",
 		   "The", specname, consstatus[specname, "statussummary"],
+            gsub("<br>", " ", specinfo$shortstory),
             onespecwords(specname, datar()$spec_prob, refpredictions(), refisaverage = refisaverage)
 	    )
           )

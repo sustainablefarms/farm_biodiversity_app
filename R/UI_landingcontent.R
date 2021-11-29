@@ -74,14 +74,13 @@ landingpage <- function(id = NULL){
 	        tags$p(
 	         appname,
 	         "is a scenario planning tool for biodiversity on farms.",
-	         "Using decades of data,", appname,
-	         "indicates which of sixty birds may live in woodlands on your farm in spring",
+	         "Using decades of data on more than sixty birds,", appname,
+	         "indicates which birds may live in woodlands on your farm in spring",
 	         "and demonstrates the potential for biodiversity in a range of scenarios."
 	        ),
-	        tags$p("The estimates created by", appname,
-	               "are designed for remnant Box Gum Grassy Woodland or planted eucalypt woodland",
-	               "that is within livestock grazing or mixed farms on the lower inland slopes of the Great Dividing Range,",
-	               "from Benalla in Victoria to Dubbo in NSW."),
+	        tags$p("The bird occupancy estimates created by", appname,
+	               "are suitable for remnant Box Gum Grassy Woodland or planted eucalypt woodland",
+	               "on grazing or mixed farms in the NSW South West Slopes and parts of the Central West, Murray-Riverina and North East Victoria."),
 
 	        tags$div(class = "my-3", style = "height: 6rem; width = 100%; position: relative",
 	         tags$div(id = ns("startbuttonlocation"),

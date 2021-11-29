@@ -58,7 +58,7 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
                   class = "datalabels",
                   HTML("&copy;Con Boekel 2016 BirdLife Photography"))
   ),
-  tags$p("Noisy Miners are native honeyeaters that are usually found in",
+  tags$p("Noisy Miners are aggressive native honeyeaters that are usually found in",
 	tags$b("woodlands that lack midstorey vegetation"),
        "(shrubs and small trees 2-10m in height). In woodlands without midstorey, Noisy Miners are able to see and attack smaller birds, excluding them from the area.",
  "They are easy to recognise by their bright yellow eyes and beak, and their persistent, raucous call."),

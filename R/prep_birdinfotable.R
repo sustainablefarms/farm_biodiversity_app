@@ -18,6 +18,11 @@ prep_birdinfotable <- function(){
   return(specinfoframe)
 }
 
+# infotable <- readRDS("./data/birdinfotable.rds")
+# shortstories <- read.csv("./data/species_shortstory.csv", check.names = FALSE, row.names = 1)
+# infotable$shortstory <- shortstories[rownames(infotable), 1]
+# saveRDS(infotable, "./data/birdinfotable.rds")
+
 load_birdinfotable <- function(){
   infotable <- readRDS("./data/birdinfotable.rds")
   infotable$imgfilename <- paste0("lowres-", infotable$imgfilename)

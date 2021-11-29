@@ -27,7 +27,7 @@ main_app_prep <- function(){  # loads things into global environment, prepares r
   if (!isTRUE(getOption("shiny.testmode"))){
     appversion <<- as.character(packageVersion(packageName()))
   } else {appversion <<- "0.9"} #so that the same version number appears in all shinytest snapshot tests
-  appurl <<- "https://sustfarm.shinyapps.io/bird_checker/"
+  appurl <<- "https://sustfarm.shinyapps.io/BirdCast/"
   covarnicenames_tbl <<- read.csv("./data/nicecovarnames.csv", header = TRUE)
   apptempdir <<- tempdir()
   report_path <<- paste0(apptempdir, "/", "report.Rmd") #file location assumes host is a unix machine
