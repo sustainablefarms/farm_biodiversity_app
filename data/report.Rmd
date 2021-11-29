@@ -8,7 +8,7 @@ output:
     keep_tex: yes
     number_sections: yes
     toc: yes
-    toc_depth: 2
+    toc_depth: 1
 header-includes:
   \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
   \usepackage{tikz}
@@ -76,7 +76,7 @@ The precipitation of the previous 12 months defaulted to your region's historica
 You also provided latitude and longitude, and a representative year, to enable `r appname` to determine woody cover within 500m and 3km.
 You also specified whether the area is a remnant, and the presence of Noisy Miners.
 
-The model behind `r appname` has a year input that was used for statistical investigation, however this input has little influence and we it to 2018. The representative year used to estimate woody cover is much more influential of bird occupancy.
+The model behind `r appname` has a year input that was used for statistical investigation, however this input has little influence and we set it to 2018 in `r appname`. The representative year used to estimate woody cover has a much stronger influence on the estimates of bird occupancy.
 
 \begin{center}
 ```{r displaypatchprops}
@@ -172,7 +172,7 @@ for (specname in row.names(cpred$spec_prob)[topten]){
 \newpage
 
 # The 10 least likely species on your farm
-Of the birds in the model, the 10 least likely species to reside in your Box Gum Grassy Woodland patches are below.
+Of the birds in `r appname`, the 10 least likely species to reside in your Box Gum Grassy Woodland patches are below.
 ```{r bottomten, results='asis'}
 bottomten <- order(cpred$spec_prob[, "median"], decreasing = FALSE)[1:10]
 buildspeclatex_justimage <- function(specname){
@@ -215,8 +215,8 @@ a <- lapply(texs, cat)
 ```
 
 \clearpage
-# Occupancy probability of every species in the model
-Below is the estimated probability of each species in the model occupying at least one Box Gum Grassy Woodland patch on your farm.
+# Occupancy probability of every species in `r appname` 
+Below is the estimated probability of each species in `r appname` occupying at least one Box Gum Grassy Woodland patch on your farm.
 There is a 95% chance that the \emph{true} occupancy probability is within the error bars, assuming our model is correct (the uncertainty is due to uncertainty  in the parameters of the fitted model).
 
 We computed both estimate and error bars by taking the maximum of the occupancy probability of all patches.
