@@ -3,10 +3,6 @@ predictionsUI <- function(id, refisaverage = TRUE){
   ns <- NS(id)
   tagList(
     # the following enables bootstrap 3's inbuilt tooltips
-    tags$script("$(function () {
-        $('[data-toggle=tooltip]').tooltip()
-      })"
-    ),
     plotly::plotlyOutput(ns("plotlybug"), height = "0px"),
     
     fluidRow(class = "justify-content-center",
@@ -47,10 +43,12 @@ predictionsUI <- function(id, refisaverage = TRUE){
                         )),
                right = plotOutput(ns("species_richness"), height = "250px") %>% waiter::withWaiter()
     )
-    ),
-    tags$div(class = "clearfix", tags$div(class =  "float-end", 
+    )),
+    tags$div(class = "clearfix mt-4", 
+	     style = "margin-bottom: -0.5rem;",
+	     tags$div(class =  "float-end", 
        accordion_showhideall(ns("predacc"))
-    ))),
+    )),
     accordion(ns("predacc"),
               accordion_item(title = "Most likely species", id = ns("mostlikely"),
 	       twocolumns(heading = "The 10 most likely species.",
