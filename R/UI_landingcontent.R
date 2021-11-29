@@ -1,7 +1,7 @@
 headercontent <- function(id = NULL){
   ns <- NS(id)
   fluidRow( #using fluidRow here instead of something plain so that the negative space of columns is organised
-  class='header px-2 mt-5 mb-3',
+  class='header px-2 py-3',
   style = 'background-color: #FFFFFF', # style = 'background-color: inherit'
   tags$div(class = "clearfix",
     tags$div(class = "float-start",
@@ -64,7 +64,7 @@ footercontent <- function(id = NULL){
 landingpage <- function(id = NULL){
   ns <- NS(id)
 	tagList(
-	tags$div(class="text-center py-3",
+	tags$div(class="text-center mt-5 mb-3",
 	  tags$img(src="SFsimple_title.svg", height = "34.08px",
 		   alt = appname, class = "apptitle",
 		   style = "vertical-align: unset;")),
