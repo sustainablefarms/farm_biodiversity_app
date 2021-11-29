@@ -33,8 +33,7 @@ patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't 
                  "with similar vegetation structure throughout.",
                  tags$b("Remnant woodland"), "is Box Gum Grassy Woodland that has never been cleared.",
                  tags$b("Planted woodland"), "is assumed to be eucalypt-dominated,",
-                 "established at least three years ago by planting tubestock or by direct seeding, and fenced at the time of planting."),
-	  faqlink(faqid = "whatisawoodland", "Learn more")
+                 "established at least three years ago by planting tubestock or by direct seeding, and fenced at the time of planting.")
        )
     ),
     
