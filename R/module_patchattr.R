@@ -148,7 +148,7 @@ acc_item <- accordion_item(title = paste("Woodland area", pid),
              toggle_attr(paste0(ns("accitem"), "_body"))
              )),
       tags$a(href = paste0("#", ns("accitem")),
-	     actionButton_notdfl(ns("savenearly"), "Save and Close", class = "btn-primary")),
+	     actionButton_notdfl(ns("savenearly"), "Save and Close", class = "btn-primary", style = "opacity: 0.5;")),
       do.call(actionButton_notdfl,
               args = c(list(ns("save"), "Save and Close", class = "btn-primary"),
                        toggle_attr(paste0(ns("accitem"), "_body"))
