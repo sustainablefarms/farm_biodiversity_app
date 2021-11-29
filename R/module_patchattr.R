@@ -147,6 +147,8 @@ acc_item <- accordion_item(title = paste("Woodland area", pid),
         args = c(list(ns("cancel"), "Cancel", class = "btn-outline-primary"),
              toggle_attr(paste0(ns("accitem"), "_body"))
              )),
+      tags$a(href = paste0("#", ns("accitem")),
+	     actionButton_notdfl(ns("savenearly"), "Save and Close", class = "btn-primary")),
       do.call(actionButton_notdfl,
               args = c(list(ns("save"), "Save and Close", class = "btn-primary"),
                        toggle_attr(paste0(ns("accitem"), "_body"))
@@ -331,8 +333,17 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
       }, ignoreInit = TRUE)
       
       # checks
-      observe({shinyjs::toggleState(id = "save", 
-                 condition = (isTruthy(input$nm) & isTruthy(input$woodlandtype)))})
+      observe({
+	shinyjs::toggleClass(id = "save", 
+	  class = "visually-hidden",
+          condition = !(isTruthy(input$nm) & isTruthy(input$woodlandtype)))
+	shinyjs::toggleClass(id = "savenearly", 
+	  class = "visually-hidden",
+          condition = (isTruthy(input$nm) & isTruthy(input$woodlandtype)))
+      })
+      observeEvent(input$savenearly, {
+	showNotification("Please specify woodland type and Noisy Miner presence", type = "error")
+      }, ignoreNULL = TRUE, ignoreInit = TRUE)
       
   observeEvent(c(input$save, input$delete), {
     session$doBookmark()
@@ -368,12 +379,11 @@ app_patchattr <- function(){
   attributes <- list(woody500m = 3.5, woody3000m = 8.2)
 
   shinyApp(    {fluidPage(
-    tags$script("$(function () {
-          $('[data-toggle=tooltip]').tooltip()
-        })"),
-    includeCSS("./www/base.css"),
-    tags$div(id = "placeholder"),
-    theme = bslib::bs_theme(version = 5, "lumen"))
+    tags$head(tags$style(appcss),
+	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins|Inter", rel="stylesheet"),
+              includeHTML("./www/extra.html"), #has the toggleexpand function
+	      ),
+    tags$div(id = "placeholder"))
   },
            function(input, output, session){
              presentindicator <- reactiveVal(0)

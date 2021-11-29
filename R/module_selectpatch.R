@@ -84,10 +84,11 @@ app_selectpatch <- function(){
   
   shinyApp(
     {fluidPage(
-      includeCSS("./www/base.css"),
-      includeCSS("./www/accordion.css"),
-      fluidRow(selectpatch_UI("patch")),
-      theme = bslib::bs_theme(version = 5, "lumen"))
+      tags$head(tags$style(appcss),
+	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins|Inter", rel="stylesheet"),
+              includeHTML("./www/extra.html"), #has the toggleexpand function
+	      ),
+      fluidRow(selectpatch_UI("patch")))
     },
     function(input, output, session){
       selected_region <- reactiveVal("")
