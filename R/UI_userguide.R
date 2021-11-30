@@ -38,6 +38,10 @@ modalfooter_bigback <- function(){
 guidebody <- function(){
 tags$div(
     class = "container-md justify-content-center",
+    tags$p(style="text-align: center;",
+	   class="bodyusual",
+	   "Please watch the instructional video below.",
+	   "Please go to the \"About\" page for information on the model inside", appname, "and a summary of", paste0(appname, ".")), 
     tags$iframe(title = "Instructional video",
 		src = "https://player.vimeo.com/video/651423729?h=303aec19d3",
 	        width = "640",
@@ -45,18 +49,58 @@ tags$div(
 		frameborder="0",
 	       	allowfullscreen="true",
 	       	style="display:block; margin: 0 auto;"),
-  tags$p(
-	 tags$em("How to get estimates:"),
-	 "Enter your farm's region (left), the rainfall in the 12 months prior to spring you're interested in (lower left), and the number of woodland patches (top right). For each patch, click on the patch button to set the nearby and regional woody canopy amount for the year, whether the patch is a remnant, and whether Noisy Miners reside in the patch.",
-	 "These attributes can be changed at any time.",
-	 "The app will then generate estimates of what bird species might reside in your patches."
-        ),
-  tags$p(
-	 tags$em("How to make comparisons:"),
-	 "Set a reference farm (bottom right of app), or use the default. Then look at the reference expected species richness and the relative occupancy probability."
-        ),
-  
-  tags$div(class='subheader', tags$h3("QUESTIONS AND BUGS")),
-  tags$p("For questions, help and bugs, please email Kassel at Kassel.Hingee@anu.edu.au")
+  tags$h3("Navigation"),
+  tags$p(class = "bodysmall",
+	 appname, "has four steps:",
+         tags$ol(
+           tags$li("Your farm"),
+	   tags$li("Bird diversity"),
+	   tags$li("Create a new scenario"),
+	   tags$li("Compare bird diversity"),
+		 ),
+	"Navigate between these by using the next and back buttons at the bottom of each step.",
+	"Restart", appname, "by clicking on the restart button at the top."
+	),
+
+  tags$h3("Step 1: Your farm"),
+  tags$p("In step 1 click on \"your region\" and then select your farm's region from the map or box.",
+	 "The region is used to provide climatological information to the model in", paste0(appname, "."),
+	 "You may also choose to alter the default recent rainfall for your farm."),
+  tags$p("Input properties of the woodland areas you would like to be included in estimates of bird occupancy.",
+	"If you have more than one woodland area then use the \"add a woodland area\" button to enter them into", paste0(appname, ".")),
+  tags$p("In", appname, "we term the information from this first step", tags$em("Scenario 1.")),
+
+  tags$h3("Step 2: Bird diversity"),
+  tags$p("View estimates of the change of bird species occupying at least one of your woodland areas.",
+	 "When there are multiple woodland areas, the estimates are the maximum of the occupancy probability estimates for the individual areas.",
+	 "Margins of error are available for some of the figures.",
+	 "If the modelling assumptions are correct, then there is a 95% chance that the true occupancy probability is within the margin of error."),
+  tags$p("Please be aware that these estimate do not apply to the non-wooded area of your farm."),
+  tags$p("Click on photos to view descriptions of birds from",
+	linknewtab(href="birdlife.org.au", "BirdLife Australia.")),
+
+  tags$h3("Step 3: Create a new scenario"),
+  tags$p("The information in step 3 is pre-populated with the Scenario 1 information.",
+	 "Alter the information here to create a second scenario,",
+	 tags$em("Scenario 2.")),
+
+  tags$h3("Step 4: Compare bird diversity"),
+  tags$p("Comparison of estimates for Scenario 1 and Scenario 2 are presented here.",
+	 "The relative occupancy probability section shows, as a ratio, how much more likely each species is in Scenario 2 compared to Scenario 1.",
+	 "You can use the back button to change Scenario 2."),
+  tags$h3("Results"),
+  tags$p("Bird species occupancy estimates are displayed in step 2 and step 4.",
+	 "You can download pdf reports of the estimates in both steps.",
+	 "Tables (in .csv format) can be download for the sections on occupancy probability for all species or relative occupancy probability."),
+   tags$p("You may also like to save the url to return to", appname, "later.",
+	  "Your information and results will usually be saved, however",
+	  "occasionally new versions of", appname, "will invalidate previously saved urls."),
+
+  tags$h3("Questions and Bugs"),
+  tags$p("We have answered selected questions on the FAQ page.",
+	 "For further queries, help and issues, please email the Sustainable Farms team at",
+	 linknewtab(href = "mailto:sustainablefarms@anu.edu.au",
+	            "sustainablefarms@anu.edu.au"),
+	".") 
 )
 }
