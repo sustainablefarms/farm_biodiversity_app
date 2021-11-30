@@ -19,17 +19,3 @@ function removeleafletspinner(el, x) {
   el.previousElementSibling.remove();	
 }
 </script>
-
-<script>
-function faqscrollview(id){
-  console.log("Starting FAQ script test")
-  $(document.getElementById('faqwrap')).removeClass("visually-hidden")
-
-  var bodies = document.getElementById(id).getElementsByClassName("accordion-collapse");
-  $(bodies).collapse("show");
-
-  document.getElementById(id).scrollIntoView();
-}
-</script>
-
-<!-- this works after faqscrollview runs document.getElementById('nmrecog').scrollIntoView(true) -->
