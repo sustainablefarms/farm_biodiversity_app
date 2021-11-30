@@ -1,6 +1,6 @@
 <script>
   function toggleexpand(el, accordid){
-      var bodies = document.getElementById(accordid).getElementsByClassName("accordion-collapseyy");
+      var bodies = document.getElementById(accordid).getElementsByClassName("accordion-collapse");
       if (el.getAttribute("expanded") == "true"){
         $(bodies).collapse("hide");
         el.setAttribute("expanded", false);
