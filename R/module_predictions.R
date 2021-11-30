@@ -249,7 +249,7 @@ predictionsServer <- function(id,
           colnames(cpred)[colnames(cpred) == "lower"] <- "S.2 LOWER LIMIT est. occupancy probability"
           colnames(cpred)[colnames(cpred) == "upper"] <- "S.2 UPPER LIMIT est. occupancy probability"
           rpred <- refpredictions()[, c("lower", "median", "upper")]
-          colnames(rpred)[colnames(rpred) == "median"] <- "S.1 Est. occupancy probability"
+          colnames(rpred)[colnames(rpred) == "median"] <- "S.1 est. occupancy probability"
           colnames(rpred)[colnames(rpred) == "lower"] <- "S.1 LOWER LIMIT est. occupancy probability"
           colnames(rpred)[colnames(rpred) == "upper"] <- "S.1 UPPER LIMIT est. occupancy probability"
           write.csv(cbind(cpred, rpred), file, row.names = FALSE)
