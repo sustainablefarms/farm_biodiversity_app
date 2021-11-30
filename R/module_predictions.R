@@ -107,7 +107,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                 footer = downloadButton(ns("downloaddata"), "Download Probability Table", style = paste("color:", appcolors[["Dark Green"]], ";"))
                 )
               } else {
-              accordion_item(title = "Relative Occupancy Probability", id = ns("occallrel"),
+              accordion_item(title = "Relative occupancy probability", id = ns("occallrel"),
                              twocolumns(heading = "Estimates of occupancy probability relative to Scenario 1.",
                                         left = tags$div(tags$p("Shown is the ratio of occupancy probability in Scenario 2 over the occupancy probability in Scenario 1.",
                                                           "For example, if the Superb Parrot is twice as likely to live in your farm's woodland in Scenario 2 compared to Scenario 1, then the Superb Parrot will have a ratio of '2' shown here."),
@@ -231,13 +231,28 @@ predictionsServer <- function(id,
       
       
       output$downloaddata <- downloadHandler(
-        filename = "predictions.csv",
+        filename = paste0(appname, "S1estimates.csv"),
         content = function(file) {
-          outdata <- datar()$spec_prob
+          outdata <- datar()$spec_prob[, c("lower", "median", "upper")]
           outdata <- cbind(Species = rownames(outdata), as.data.frame(outdata))
-          colnames(outdata)[colnames(outdata) == "median"] <- "Predicted Probability"
-          colnames(outdata)[colnames(outdata) == "bestsite"] <- "Patch"
+          colnames(outdata)[colnames(outdata) == "median"] <- "S.1. est. occupancy probability"
+          colnames(outdata)[colnames(outdata) == "lower"] <- "S.1. LOWER LIMIT est. occupancy probability"
+          colnames(outdata)[colnames(outdata) == "upper"] <- "S.1. UPPER LIMIT est. occupancy probability"
           write.csv(outdata, file, row.names = FALSE)
+        })
+      output$downloaddata_rel <- downloadHandler(
+        filename = paste0(appname, "S2S1estimates.csv"),
+        content = function(file) {
+          cpred <- datar()$spec_prob[, c("lower", "median", "upper")]
+          cpred <- cbind(Species = rownames(cpred), as.data.frame(cpred))
+          colnames(cpred)[colnames(cpred) == "median"] <- "S.2 est. occupancy probability"
+          colnames(cpred)[colnames(cpred) == "lower"] <- "S.2 LOWER LIMIT est. occupancy probability"
+          colnames(cpred)[colnames(cpred) == "upper"] <- "S.2 UPPER LIMIT est. occupancy probability"
+          rpred <- refpredictions()[, c("lower", "median", "upper")]
+          colnames(rpred)[colnames(rpred) == "median"] <- "S.1 Est. occupancy probability"
+          colnames(rpred)[colnames(rpred) == "lower"] <- "S.1 LOWER LIMIT est. occupancy probability"
+          colnames(rpred)[colnames(rpred) == "upper"] <- "S.1 UPPER LIMIT est. occupancy probability"
+          write.csv(cbind(cpred, rpred), file, row.names = FALSE)
         })
       
       
