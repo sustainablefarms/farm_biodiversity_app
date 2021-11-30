@@ -61,13 +61,12 @@ NAMESPACE
 ./R/UI_infotext.R
 ./R/UI_landingcontent.R
 ./R/UI_linknewtab.R
-./R/UI_morehelpmodal.R
 ./R/UI_navigationbuttons.R
 ./R/UI_patchdesc.R
 ./R/UI_proboccplotdescription.R
 ./R/UI_radiobuttonsgroup.R
-./R/UI_specimageOut.R
 ./R/UI_twocolumns.R
+./R/UI_userguide.R
 ./R/UI_warn_badinputs.R
 ./R/UI_WCFdesc.R
 ./www/lowres-01bfcebc08515ff6510277eeacee6e31.jpg
