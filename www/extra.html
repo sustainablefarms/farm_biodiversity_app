@@ -1,6 +1,6 @@
 <script>
   function toggleexpand(el, accordid){
-      var bodies = document.getElementById(accordid).getElementsByClassName("accordion-collapse");
+      var bodies = document.getElementById(accordid).getElementsByClassName("accordion-collapseyy");
       if (el.getAttribute("expanded") == "true"){
         $(bodies).collapse("hide");
         el.setAttribute("expanded", false);
@@ -19,3 +19,24 @@ function removeleafletspinner(el, x) {
   el.previousElementSibling.remove();	
 }
 </script>
+
+<script>
+function faqscrollview(id){
+  console.log("Starting FAQ script test")
+  var myModal = new bootstrap.Modal(document.getElementById('faqModal'))
+  myModal.show()
+
+  var bodies = document.getElementById(id).getElementsByClassName("accordion-collapse");
+  $(bodies).collapse("show");
+
+  document.getElementById(id).scrollIntoView();
+}
+</script>
+<script>
+var nmrecogEl = document.getElementById('nmrecog');
+nmrecogEl.addEventListener('shown.bs.collapse', function(event){
+  console.log("scrolling to view");
+  document.getElementById('nmrecog').scrollIntoView();
+})
+</script>
+

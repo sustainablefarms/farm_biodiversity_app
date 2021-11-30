@@ -90,13 +90,7 @@ tags$p('Noisy Miners are a honeyeater, smaller in size than another common honey
 }
 
 faqlink <- function(faqid, ...){
-            tags$span(tags$a(...,
-                        href = paste0("#", faqid),        
-                        "data-bs-toggle"="collapse",
-                        "data-bs-target"= paste0("#", faqid, "_body"),
-                        "aria-controls" = faqid
-			),
-                        "data-bs-toggle"="modal", 
-                        "data-bs-target"="#faqModal"
+            tags$a(...,
+		   onclick="faqscrollview('nmrecog')"
                         )
 }
