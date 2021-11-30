@@ -89,7 +89,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                 )
                 ),
               if (refisaverage){
-              accordion_item(title = "Occupancy Probability for all species", id = ns("occall"),
+              accordion_item(title = "Occupancy probability for all species", id = ns("occall"),
                 twocolumns(heading = "Estimates of occupancy probability for every species",
                            left = 
 			     tagList(
@@ -231,7 +231,7 @@ predictionsServer <- function(id,
       
       
       output$downloaddata <- downloadHandler(
-        filename = paste0(appname, "S1estimates.csv"),
+        filename = paste0(appname, "_S1_estimates.csv"),
         content = function(file) {
           outdata <- datar()$spec_prob[, c("lower", "median", "upper")]
           outdata <- cbind(Species = rownames(outdata), as.data.frame(outdata))
@@ -241,7 +241,7 @@ predictionsServer <- function(id,
           write.csv(outdata, file, row.names = FALSE)
         })
       output$downloaddata_rel <- downloadHandler(
-        filename = paste0(appname, "S2S1estimates.csv"),
+        filename = paste0(appname, "_S2S1_estimates.csv"),
         content = function(file) {
           cpred <- datar()$spec_prob[, c("lower", "median", "upper")]
           cpred <- cbind(Species = rownames(cpred), as.data.frame(cpred))
