@@ -14,6 +14,7 @@ tags$div(class="modal fade",
 		    `aria-label`="Close")
         ),
       tags$div(class = "modal-body",
+        style = paste("background-color:", appcolors[["Green 10"]], ";"),
         guidebody()
         ),
       modalfooter_bigback()
