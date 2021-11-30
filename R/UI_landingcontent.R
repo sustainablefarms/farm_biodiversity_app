@@ -23,7 +23,7 @@ headercontent <- function(id = NULL){
 				 style = paste0("color: ", appcolors[["Dark Green"]], ";"),
                                  "data-bs-toggle"="modal", 
                                  "data-bs-target"="#faqModal"),
-             faqmodal(),
+             # faqmodal(),
              actionButton_notdfl(ns("restartmodal"), "Restart", icon = icon("redo"),
 				 style = paste0("color: ", appcolors[["Dark Green"]], ";"),
 				 style = paste0("border-color: ", appcolors[["Dark Green"]], ";"),

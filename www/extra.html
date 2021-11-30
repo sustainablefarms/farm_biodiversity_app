@@ -23,20 +23,12 @@ function removeleafletspinner(el, x) {
 <script>
 function faqscrollview(id){
   console.log("Starting FAQ script test")
-  var myModal = new bootstrap.Modal(document.getElementById('faqModal'))
-  myModal.show()
+  $(document.getElementById('faqwrap')).removeClass("visually-hidden")
 
   var bodies = document.getElementById(id).getElementsByClassName("accordion-collapse");
   $(bodies).collapse("show");
 
   document.getElementById(id).scrollIntoView();
 }
-</script>
-<script>
-var nmrecogEl = document.getElementById('nmrecog');
-nmrecogEl.addEventListener('shown.bs.collapse', function(event){
-  console.log("scrolling to view");
-  document.getElementById('nmrecog').scrollIntoView();
-})
 </script>
 

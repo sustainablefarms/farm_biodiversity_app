@@ -76,14 +76,14 @@ tags$p('The estimates of foliage cover used by', appname, 'can differ between ye
    'This is because the presence of Noisy Miners is correlated in the data with a lack of some small birds, so their presence or absence is vital to estimating which birds might be present in a woodland area.')),
 
 ############### Recognising NMs ###############################################
-
       accordion_item(title = "Recognising Noisy Miners", id = ns("nmrecog"),
 tags$p('Noisy Miners are a honeyeater, smaller in size than another common honeyeater of the region, Red Wattlebirds. Noisy Miners are easy to recognise by their bright yellow eyes and beak, and by their persistent, raucous call. They are generally not shy of people so if they are present in a woodland area, you are likely to be able to see or hear them easily.'),
     tags$p("Visit",
     tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
            "BirdLife Australia"),
     "for a profile of Noisy Miners." 
-    )
+    ),
+    tags$div(id = "nmbottom")
       )
    )
 )
@@ -91,6 +91,7 @@ tags$p('Noisy Miners are a honeyeater, smaller in size than another common honey
 
 faqlink <- function(faqid, ...){
             tags$a(...,
+		   href = "#",
 		   onclick="faqscrollview('nmrecog')"
                         )
 }
