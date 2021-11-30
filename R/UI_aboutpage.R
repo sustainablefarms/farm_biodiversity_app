@@ -24,7 +24,8 @@ tags$div(class="modal fade",
 }
 
 aboutcontent <- function(){
-	tagList(
+tags$div(
+    class = "container-md justify-content-center",
   tags$p(appname, "is a free webtool for estimating the primarily native bird biodiversity within the NSW South Western Slopes bioregion, which is roughly the lower inland slopes of the Great Dividing Range, from Benalla in Victoria to Dubbo in NSW.",
 	 appname, "estimates the chance of occupancy", tags$em("(Occupancy Probability)"), "in remnant Box Gum Grassy Woodlands or planted woodlands in spring for 60 of the most commonly encountered bird species.",
 	 "Five species of conservation concern are included in these estimates: Brown Treecreepers, Diamond Firetail, Dusky Woodswallow, Grey-crowned Babbler and Superb Parrot.",
