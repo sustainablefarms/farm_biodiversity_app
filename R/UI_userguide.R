@@ -35,7 +35,10 @@ modalfooter_bigback <- function(){
   )
 }      
       
-guidebody <- function(){tagList(
+guidebody <- function(){
+tags$div(
+    class = "container-md justify-content-center",
+  HTML('<iframe title="vimeo-player" src="https://player.vimeo.com/video/651423729?h=303aec19d3" width="640" height="360" frameborder="0" allowfullscreen style="display:block; margin: 0 auto;"></iframe>'),
   tags$p(
 	 tags$em("How to get estimates:"),
 	 "Enter your farm's region (left), the rainfall in the 12 months prior to spring you're interested in (lower left), and the number of woodland patches (top right). For each patch, click on the patch button to set the nearby and regional woody canopy amount for the year, whether the patch is a remnant, and whether Noisy Miners reside in the patch.",
