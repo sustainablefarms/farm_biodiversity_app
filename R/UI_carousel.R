@@ -67,7 +67,8 @@ specslide_quick <- function(specinfo){
 }
 
 specslide <- function(title, heading, img, cpyrht, story){
-  tagList(
+  tags$div(
+    style = "height: 400px; overflow: scroll;",
     tags$div(class = "modal-header",
 	style = "border-bottom: none;",
 	tags$h2(title),
@@ -76,7 +77,6 @@ specslide <- function(title, heading, img, cpyrht, story){
 		    `data-bs-dismiss`="modal",
 		    `aria-label`="Close")),
     tags$div(class = "clearfix",
-	     style = "height: 300px; overflow: scroll;",
       tags$div(class = "float-md-start me-2",
              img,
              cpyrht),
