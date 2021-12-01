@@ -146,7 +146,12 @@ acc_item <- accordion_item(title = paste("Woodland area", pid),
         args = c(list(ns("cancel"), "Cancel", class = "btn-outline-primary"),
              toggle_attr(paste0(ns("accitem"), "_body"))
              )),
-      uiOutput(ns("savewrap"), inline = TRUE),
+      actionLink(ns("savewrap"),
+      label = do.call(actionButton_notdfl,
+              args = c(list(ns("save"), "Save and Close", class = "btn-primary"),
+                       toggle_attr(paste0(ns("accitem"), "_body"))
+              ))
+      )
       ),
     footerdflt = "none",
     opentype = "edit"
@@ -325,37 +330,18 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
         presentindicator(NULL)
         savedvals(NULL)
       }, ignoreInit = TRUE)
-
-     do.call(actionButton_notdfl,
-              args = c(list(ns("save"), "Save and Close", class = "btn-primary"),
-                       toggle_attr(paste0(ns("accitem"), "_body"))
-              ))
       
       # checks
-      saveerrnotification <- reactiveVal()
-      output$savewrap <- renderUI({
-	if (isTruthy(input$nm) & isTruthy(input$woodlandtype)){
-          savehtml <- do.call(actionButton_notdfl,
-               args = c(list(ns("save"), "Save and Close", class = "btn-primary"),
-               toggle_attr(paste0(ns("accitem"), "_body"))
-               ))
-	} else if (isTruthy(input$nm) & (!isTruthy(input$woodlandtype))){
-	  saveerrnotification("Please specify woodland type")
-          savehtml <- tags$a(href = paste0("#", ns("wtheading")),
-            actionButton_notdfl(ns("savenearly"), "Save and Close", class = "btn-primary", style = "opacity: 0.5;"))
+      observe({shinyjs::toggleState(id = "save", 
+                 condition = (isTruthy(input$nm) & isTruthy(input$woodlandtype)))})
+      observeEvent(input$savewrap, { #error messages even when 'save' is disabled
+	if (isTruthy(input$nm) & (!isTruthy(input$woodlandtype))){
+	  showNotification("Please specify woodland type", type = "error")
 	} else if ((!isTruthy(input$nm)) & isTruthy(input$woodlandtype)){
-	  saveerrnotification("Please specify Noisy Miner presence")
-          savehtml <- tags$a(href = paste0("#", ns("nmheading")),
-            actionButton_notdfl(ns("savenearly"), "Save and Close", class = "btn-primary", style = "opacity: 0.5;"))
-        } else {
-	  saveerrnotification("Please specify both woodland type and Noisy Miner presence")
-          savehtml <- tags$a(href = paste0("#", ns("accitem")),
-            actionButton_notdfl(ns("savenearly"), "Save and Close", class = "btn-primary", style = "opacity: 0.5;"))
+	  showNotification("Please specify Noisy Miner presence", type = "error")
+        } else if ((!isTruthy(input$nm)) & (!isTruthy(input$woodlandtype))){
+	  showNotification("Please specify both woodland type and Noisy Miner presence", type = "error")
         }
-      savehtml
-      })
-      observeEvent(input$savenearly, {
-	showNotification(saveerrnotification(), type = "error")
       }, ignoreNULL = TRUE, ignoreInit = TRUE)
       
   observeEvent(c(input$save, input$delete), {
