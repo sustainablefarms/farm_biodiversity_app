@@ -11,7 +11,6 @@ richness_plot_root <- function(species_richness){
   scale_y_continuous(expand = c(0, 0)) +
   expand_limits(
     y = c(0, max(25, species_richness$E * 1.1))) +
-  scale_x_discrete(position = "bottom") +
   scale_fill_gradient(aesthetics = "fill",
                       low = appcolors[["Green 10"]],
                       high = appcolors[["Dark Green"]]) +
@@ -27,6 +26,8 @@ richness_plot <- function(species_richness, labeltextsize = 20, labelnudge = -1)
   names(textcolours) <- species_richness$category
   
   plot <- richness_plot_root(species_richness) +  
+  scale_x_discrete(labels = function(x) gsub('(.{1,15})(\\s|$)', '\\1\n', x), #15 characters long and leaves a new line at the end
+  position = "bottom") +
   geom_text(aes(x = category, y = E,
                 label = formatC(E, digits = 0, format = "f"),
                 colour = category),
@@ -57,6 +58,7 @@ richness_plot <- function(species_richness, labeltextsize = 20, labelnudge = -1)
 
 richness_plot_pdf <- function(species_richness){
   richness_plot_root(species_richness) + 
+    scale_x_discrete(position = "bottom") +
     geom_text(aes(x = category, y = E,
                   label = formatC(E, digits = 1, format = "f")),
               hjust = 0,
