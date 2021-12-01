@@ -146,12 +146,7 @@ acc_item <- accordion_item(title = paste("Woodland area", pid),
         args = c(list(ns("cancel"), "Cancel", class = "btn-outline-primary"),
              toggle_attr(paste0(ns("accitem"), "_body"))
              )),
-      tags$a(href = paste0("#", ns("accitem")),
-	     actionButton_notdfl(ns("savenearly"), "Save and Close", class = "btn-primary", style = "opacity: 0.5;")),
-      do.call(actionButton_notdfl,
-              args = c(list(ns("save"), "Save and Close", class = "btn-primary"),
-                       toggle_attr(paste0(ns("accitem"), "_body"))
-              ))
+      uiOutput(ns("savewrap"), inline = TRUE),
       ),
     footerdflt = "none",
     opentype = "edit"
@@ -330,15 +325,24 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
         presentindicator(NULL)
         savedvals(NULL)
       }, ignoreInit = TRUE)
+
+     do.call(actionButton_notdfl,
+              args = c(list(ns("save"), "Save and Close", class = "btn-primary"),
+                       toggle_attr(paste0(ns("accitem"), "_body"))
+              ))
       
       # checks
-      observe({
-	shinyjs::toggleClass(id = "save", 
-	  class = "visually-hidden",
-          condition = !(isTruthy(input$nm) & isTruthy(input$woodlandtype)))
-	shinyjs::toggleClass(id = "savenearly", 
-	  class = "visually-hidden",
-          condition = (isTruthy(input$nm) & isTruthy(input$woodlandtype)))
+      output$savewrap <- renderUI({
+        if (!(isTruthy(input$nm) & isTruthy(input$woodlandtype))){
+          savehtml <- tags$a(href = paste0("#", ns("accitem")),
+            actionButton_notdfl(ns("savenearly"), "Save and Close", class = "btn-primary", style = "opacity: 0.5;"))
+        } else {
+          savehtml <- do.call(actionButton_notdfl,
+               args = c(list(ns("save"), "Save and Close", class = "btn-primary"),
+               toggle_attr(paste0(ns("accitem"), "_body"))
+               ))
+        }
+      savehtml
       })
       observeEvent(input$savenearly, {
 	showNotification("Please specify woodland type and Noisy Miner presence", type = "error")
