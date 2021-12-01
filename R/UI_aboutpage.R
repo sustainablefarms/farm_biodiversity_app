@@ -28,8 +28,8 @@ tags$div(
     class = "container-md justify-content-center",
   tags$h3("Summary", style = paste("color:", appcolors[["Dark Green"]], ";")),
   tags$p(appname, "is a free webtool for estimating the primarily native bird biodiversity within the NSW South Western Slopes bioregion, which is roughly the lower inland slopes of the Great Dividing Range, from Benalla in Victoria to Dubbo in NSW.",
-	 "This region includes parts of the Central West, Murray-Riverina and North East Victoria.",
-	 appname, "estimates the chance of occupancy", tags$em("(Occupancy Probability)"), "in remnant Box Gum Grassy Woodlands or planted eucalypt woodlands in spring for 60 of the most commonly encountered bird species.",
+	 "This region includes parts of the Central West, Murray-Riverina and north east Victoria.",
+	 appname, "estimates the chance of occupancy", tags$em("(occupancy probability)"), "in spring of sixty birds species in remnant Box Gum Grassy Woodlands or planted eucalypt woodlands on grazing or mixed farms.",
 	 "Five species of conservation concern are included in these estimates: Brown Treecreepers, Diamond Firetail, Dusky Woodswallow, Grey-crowned Babbler and Superb Parrot.",
 	 appname, "also includes visualisations, data exports and reports for printing.",
 	 "Estimates by", appname, "have the potential to describe bird biodiversity dividends from some management actions",
@@ -49,7 +49,7 @@ tags$div(
   tags$p(appname, "is based on a large statistical model for the occupancy of 62 bird species in individual woodland areas.",
     "The model accounts for detection difficulty and interspecies interaction",
     linknewtab(href = "https://doi.org/10.1002/ecy.2754",
-	       "[Tobler et al. 2019],"),
+	       "(Tobler et al. 2019),"),
     "although interspecies interaction is is not included in", appname, "due to its high computational burden.",
     "To create this model we used expert bird surveys at 453 different patches of remnant Box Gum Grassy Woodland and 65 different patches of planted woodland.",
     "These survey sites were located primarily in the NSW South Western Slopes bioregion, with a lesser number of surveys at location up to the Queensland-NSW border.",
@@ -90,7 +90,7 @@ tags$p(appname, "was created using", linknewtab(href = "https://cran.r-project.o
 	 "The UX and UI design consultants were CRE8IVE."),
 tags$p("This work was partly funded by the Meat and Livestock Association.",
        "Woody cover amounts can be loaded within", appname, "thanks to the ANU Centre for Water and Landscape Dynamics with technical support gratefully received from Pablo Larraondo.",
-       "Photographs and descriptions of birds have been generously provided by BirdLife Australia and BirdLife Australia Photography."),
+       "Photographs and descriptions of birds have been generously provided by BirdLife Australia and BirdLife Australia Photography, respectively."),
 tags$h3("Species in", appname, style = paste("color:", appcolors[["Dark Green"]], ";")),
 includeHTML("./www/speciestable.html")
   )
