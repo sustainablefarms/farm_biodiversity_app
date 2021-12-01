@@ -425,8 +425,8 @@ a {
   content: '';
   position: absolute;
   top: 1rem;
-  left: calc(-10vw - 10px - 5.0833px + 2px); //the 5.0833 is the white space between the list items, not sure why it is there
-  width: calc(10vw + 10px);
+  left: calc(-10vw - 10px - 5.0833px + 2px); //the 5.0833 is the white space between the list items, not sure why it is there. The 2px is half the width of the numbers
+  width: calc(10vw + 10px);  //5px + 5px for the extra 5px on left and right margin
   height: 1px;
   background: #80B2B3;
 }
