@@ -50,7 +50,7 @@ tags$div(
 	       	allowfullscreen="true",
 	       	style="display:block; margin: 0 auto;"),
   tags$h3("Navigation", style = paste("color:", appcolors[["Dark Green"]], ";")),
-  tags$p(class = "bodysmall",
+  tags$p(
 	 appname, "has four steps:",
          tags$ol(
            tags$li("Your farm"),
