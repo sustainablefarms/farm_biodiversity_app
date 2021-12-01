@@ -45,7 +45,7 @@ selectlocationUI <- function(id){
 	              style = "border-radius: 0;",
 	              style = "border-bottom-style: none; border-left-style:none; border-right-style: none;",
 	              style = paste("border-color: ", appcolors[["Dark Green"]], ";"),
-	              tags$div(class = "card-body d-flex align-items-center", tags$div(
+	              tags$div(class = "card-body d-flex justify-content-center", tags$div(
 	                       tags$div(class = "bodysmall",
 			       style = paste("color:", appcolors[["Dark Green"]], ";"),
 	                       style = "text-align: center;",
