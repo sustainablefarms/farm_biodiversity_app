@@ -135,7 +135,7 @@ NAMESPACE
 ./www/Sustainable Farms logo RGB.png
 ./www/SF simple logo.svg
 ./www/SFsimple_title.svg
-./www/ANU_Primary_Horizontal_GoldBlack.svg
+./www/ANU_Secondary_Horizontal_GoldBlack.svg
 ./www/speciestable.html
 ./www/google-analytics.html
 ./www/extra.html

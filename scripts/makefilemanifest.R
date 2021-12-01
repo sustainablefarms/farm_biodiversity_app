@@ -10,7 +10,7 @@ wwwfiles2 <- paste0("./www/", c(
   "Sustainable Farms logo RGB.png",
   "SF simple logo.svg",
   "SFsimple_title.svg",
-  "ANU_Primary_Horizontal_GoldBlack.svg",
+  "ANU_Secondary_Horizontal_GoldBlack.svg",
   "speciestable.html",
   "google-analytics.html",
   "extra.html",
