@@ -41,7 +41,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                         if (refisaverage){"Scenario 1"}else{"Scenario 2"},
                         "if all the woodland areas had a minimal (2%) or a large amount (20%) of nearby woody cover."
                         )),
-               right = plotOutput(ns("species_richness"), height = "250px") %>% waiter::withWaiter()
+               right = tags$div(style = "min-width: 230px;", plotOutput(ns("species_richness"), height = "250px") %>% waiter::withWaiter())
     )
     )),
     tags$div(class = "clearfix mt-4", 

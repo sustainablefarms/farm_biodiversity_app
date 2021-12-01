@@ -10,7 +10,7 @@ richness_plot_root <- function(species_richness){
   geom_bar(stat = "identity") +
   scale_y_continuous(expand = c(0, 0)) +
   expand_limits(
-    y = c(0, max(25, species_richness$E * 1.1))) +
+    y = c(0, max(20, species_richness$E * 1.1))) +
   scale_x_discrete(position = "bottom") +
   scale_fill_gradient(aesthetics = "fill",
                       low = appcolors[["Green 10"]],
@@ -38,7 +38,7 @@ richness_plot <- function(species_richness, labeltextsize = 20, labelnudge = -1)
   scale_color_discrete(type = textcolours) + 
   theme(legend.position = "none",
         axis.title = element_blank(),
-        axis.text.y = element_text(size = 12, hjust = 0,
+        axis.text.y = element_text(size = 12, hjust = 0, vjust = 0.5,
                                    colour = appcolors[["Dark Green"]]), #hjust arranges labels to be left justified
         axis.ticks.y = element_blank(),
         axis.ticks.x = element_blank(),
