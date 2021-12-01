@@ -96,6 +96,12 @@ tags$div(
 	  "Your information and results will usually be saved, however",
 	  "occasionally new versions of", appname, "will invalidate previously saved urls."),
 
+  tags$h3("Referencing", appname, style = paste("color:", appcolors[["Dark Green"]], ";")),
+  tags$p("We have a publication planned. Until then please reference", appname, "as:",
+  tags$br(),
+  "Sustainable Farms, ", tags$em(paste0(appname, ",")), "version", paste0(appversion, ","), appurl, "",
+  "Accessed", format(Sys.time(), format = "%d %B %Y.", tz="Australia/NSW")),
+
   tags$h3("Questions and Bugs", style = paste("color:", appcolors[["Dark Green"]], ";")),
   tags$p("We have answered selected questions on the FAQ page.",
 	 "For further queries, help and issues, please email the Sustainable Farms team at",
