@@ -9,6 +9,7 @@ allrel_plot_UI <- function(id){
   tagList(
     tags$div(class = "clearfix",
       tags$div(class = "float-start", 
+	       style = "max-width: 100%",
         selectInput(ns("yorder"),
                     label = "",
                     choices = yorder_choices,
