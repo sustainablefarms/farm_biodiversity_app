@@ -63,7 +63,7 @@ specslide_quick <- function(specinfo){
               heading = gsub("<br>", " ", specinfo$shortstory),
               img = img,
               cpyrht = cpyrht,
-              story = specinfo$story)
+              story = paste(gsub("Words from", "Description from", specinfo$story), "Heading text derived from", paste0(appname, "'s"), "model."))
 }
 
 specslide <- function(title, heading, img, cpyrht, story){
