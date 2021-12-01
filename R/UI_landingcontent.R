@@ -80,7 +80,7 @@ landingpage <- function(id = NULL){
 	        ),
 	        tags$p("The bird occupancy estimates created by", appname,
 	               "are suitable for remnant Box Gum Grassy Woodland or planted eucalypt woodland",
-	               "on grazing or mixed farms in the NSW South West Slopes and parts of the Central West, Murray-Riverina and North East Victoria."),
+	               "on grazing or mixed farms in the NSW South West Slopes and parts of the Central West, Murray-Riverina and north east Victoria."),
 
 	        tags$div(class = "my-3", style = "height: 6rem; width = 100%; position: relative",
 	         tags$div(id = ns("startbuttonlocation"),
