@@ -414,9 +414,9 @@ a {
   color: transparent;
   position: relative;
   margin-top: 0;
-  margin-right: calc(5vw + 5px);
+  margin-right: calc(3vw + 5px);
   margin-bottom: 0;
-  margin-left: calc(5vw + 5px);
+  margin-left: calc(3vw + 5px);
   background-image: escape-svg(url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1.5rem" height="1.5rem" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="#026666"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093l3.473-4.425a.267.267 0 0 1 .02-.022z"/></g></svg>'));
 }
 
@@ -425,8 +425,8 @@ a {
   content: '';
   position: absolute;
   top: 1rem;
-  left: calc(-10vw - 10px - 5.0833px + 2px); //the 5.0833 is the white space between the list items, not sure why it is there. The 2px is half the width of the numbers
-  width: calc(10vw + 10px);  //5px + 5px for the extra 5px on left and right margin
+  left: calc(-6vw - 10px - 5.0833px + 2px); //the 5.0833 is the white space between the list items, not sure why it is there. The 2px is half the width of the numbers
+  width: calc(6vw + 10px);  //5px + 5px for the extra 5px on left and right margin
   height: 1px;
   background: #80B2B3;
 }
