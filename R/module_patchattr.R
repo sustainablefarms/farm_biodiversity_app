@@ -1,5 +1,5 @@
 # patch attributes module
-patchattr_UI <- function(ns, pid, attributes){ #ns rather than id because don't want to add namespace since generating withing Server
+patchattr_UI <- function(ns, pid, attributes, patchcomplete = TRUE){ #ns rather than id because don't want to add namespace since generating withing Server
   inwoodlandtype <- if (is.null(attributes$IsRemnant)){
     character(0)
   } else if (attributes$IsRemnant){
@@ -148,7 +148,9 @@ acc_item <- accordion_item(title = paste("Woodland area", pid),
              )),
       actionLink(ns("savewrap"),
       label = do.call(actionButton_notdfl,
-              args = c(list(ns("save"), "Save and Close", class = "btn-primary"),
+              args = c(list(ns("save"), "Save and Close", 
+			    class = "btn-primary"),
+		       if (patchcomplete){list()}else{list(class = "disabled", disabled = "")},
                        toggle_attr(paste0(ns("accitem"), "_body"))
               ))
       )
@@ -177,7 +179,7 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
         savedvals(NULL)
         if (isTruthy(presentindicator())){
           if (is.numeric(presentindicator())){
-              newUI <- patchattr_UI(ns, pid, defaultpatchvalues)
+              newUI <- patchattr_UI(ns, pid, defaultpatchvalues, patchcomplete = FALSE)
               insertUI(selector,
                        where = "beforeBegin",
                        ui = newUI
@@ -186,7 +188,8 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
           }
           if (is.list(presentindicator())){
             newattr <- presentindicator()
-            newUI <- patchattr_UI(ns, pid, newattr)
+	    patchcomplete <- isTruthy(newattr$nm) & isTruthy(newattr$woodlandtype)
+            newUI <- patchattr_UI(ns, pid, newattr, patchcomplete = patchcomplete)
             insertUI(selector,
                      where = "beforeBegin",
                      ui = newUI
