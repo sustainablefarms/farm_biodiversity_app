@@ -92,12 +92,12 @@ landingpage <- function(id = NULL){
 	         )
 	        ),
 	        tags$div(class = "justify-content-center",
-          HTML('<a class="m-5" href="http://sustainablefarms.org.au/"><img src="Sustainable Farms logo RGB.png" alt="Sustainable Farms" height="116px" style="margin-top: -8px; margin-bottom: -8px;"></a>'), #negative margins to account for the white space around the SF logo content.
-  	        tags$img(src = "ANU_Primary_Horizontal_GoldBlack.svg",
-				class = "m-5",
+          HTML('<a class="mx-md-4" href="http://sustainablefarms.org.au/"><img src="Sustainable Farms logo RGB.png" alt="Sustainable Farms" height="116px" style="margin-top: -8px; margin-bottom: -8px;"></a>'), #negative margins to account for the white space around the SF logo content.
+  	        tags$img(src = "ANU_Secondary_Horizontal_GoldBlack.svg",
+				class = "my-4 mx-md-4",
   	                        alt = "ANU",
   	                        height = "100px",
-  	                        "min-width" = "250px"),
+  	                        "min-width" = "100px"),
 	        )
 	 ))
 	)
@@ -145,7 +145,7 @@ tags$div(class="modal fade",
 		    `aria-label`="Close")
         ),
       tags$div(class = "modal-body body",
-        "Restarting the app will clear your farm data and results.",
+        "Restarting", appname, "will clear your farm data and results.",
         "You will be redirected to the launch page of", paste0(appname, "."),
         ),
       tags$div(class = "modal-footer justify-content-end",
