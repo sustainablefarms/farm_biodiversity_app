@@ -6,7 +6,8 @@ allprob_plot_UI <- function(id, refisaverage = TRUE){
                       "Sort by occupancy probability" = "value")
   tagList(
     tags$div(class = "clearfix",
-      tags$div(class = "float-start", 
+      tags$div(class = "float-start",
+	       style = "max-width: 100%",
         selectInput(ns("yorder"),
                     label = "",
                     choices = yorder_choices,
