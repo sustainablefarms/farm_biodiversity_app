@@ -102,6 +102,11 @@ h4 {
   color: black;
 }
 
+// stopes -10px top margins for button groups and radio
+.shiny-options-group {
+   margin-top: unset !important;
+}
+
 // the !important flags are needed here because ion.RangeSlider.css is loaded close to last - appears to be after this css is loaded currently
 .irs-bar{
   background: $primary !important;
