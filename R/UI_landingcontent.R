@@ -63,6 +63,21 @@ footercontent <- function(id = NULL){
   )
 }
 
+elevatorpitch <- function(){
+tagList(
+tags$p(
+  appname,
+  "is a scenario planning tool for biodiversity on farms.",
+  "Using decades of data on more than sixty birds,", appname,
+  "indicates which birds may live in woodlands on your farm in spring",
+  "and demonstrates the potential for biodiversity in a range of scenarios."
+),
+tags$p("The bird occupancy estimates created by", appname,
+       "are suitable for remnant Box Gum Grassy Woodland or planted eucalypt woodland",
+       "on grazing or mixed farms in the NSW South West Slopes and parts of the Central West, Murray-Riverina and north east Victoria.")
+)
+}
+
 landingpage <- function(id = NULL){
   ns <- NS(id)
 	tagList(
@@ -73,17 +88,7 @@ landingpage <- function(id = NULL){
 	tags$h2(class = "text-center", "Indicating birdlife on farms"),
 	fluidRow(class = "justify-content-center",
 	 column(6, class = "text-center",
-	        tags$p(
-	         appname,
-	         "is a scenario planning tool for biodiversity on farms.",
-	         "Using decades of data on more than sixty birds,", appname,
-	         "indicates which birds may live in woodlands on your farm in spring",
-	         "and demonstrates the potential for biodiversity in a range of scenarios."
-	        ),
-	        tags$p("The bird occupancy estimates created by", appname,
-	               "are suitable for remnant Box Gum Grassy Woodland or planted eucalypt woodland",
-	               "on grazing or mixed farms in the NSW South West Slopes and parts of the Central West, Murray-Riverina and north east Victoria."),
-
+                elevatorpitch(),
 	        tags$div(class = "my-3", style = "height: 6rem; width = 100%; position: relative",
 	         tags$div(id = ns("startbuttonlocation"),
 	           tags$div(id = ns("startspinner"), 

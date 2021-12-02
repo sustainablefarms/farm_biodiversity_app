@@ -26,6 +26,10 @@ tags$div(class="modal fade",
 aboutcontent <- function(){
 tags$div(
     class = "container-md justify-content-center",
+
+  tags$div(class = "bodylarge", 
+	   elevatorpitch()),
+
   tags$h3("Summary", style = paste("color:", appcolors[["Dark Green"]], ";")),
   tags$p(appname, "is a free webtool for estimating the primarily native bird biodiversity within the NSW South Western Slopes bioregion, which is roughly the lower inland slopes of the Great Dividing Range, from Benalla in Victoria to Dubbo in NSW.",
 	 "This region includes parts of the Central West, Murray-Riverina and north east Victoria.",
