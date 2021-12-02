@@ -82,7 +82,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                            right = tagList(
                             lapply(1:nrow(consstatus), function(idx) vulnerablespecUI(ns, consstatus$CommonName[idx], idx)),
                             tags$div(class = "datalabels", "All photographs courtesy of",
-                              tags$a("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
+                              linknewtab("BirdLife Photography.", href = "https://birdlifephotography.org.au"), 
                               "Click on each photo to view attribution."),
                             modalcarousel(ns("vs"), nrow(consstatus))
                             )
@@ -99,7 +99,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                            right = tagList(allprob_plot_UI(ns("allprob"), refisaverage = refisaverage),
                                            tags$div(class = "datalabels",
                                                   "Length and weight data from",
-                                                  tags$a(href = "https://www.nature.com/articles/sdata201561",
+                                                  linknewtab(href = "https://www.nature.com/articles/sdata201561",
                                                              "Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015).")
                                                   )
                               )
@@ -120,7 +120,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                                         right = tagList(allrel_plot_UI(ns("allrel")),
                                                         tags$div(class = "datalabels",
                                                                "Length and weight data from",
-                                                               tags$a(href = "https://www.nature.com/articles/sdata201561",
+                                                               linknewtab(href = "https://www.nature.com/articles/sdata201561",
                                                                           "Garnett et al. (Biological, ecological, conservation and legal information for all species and subspecies of Australian bird. Scientific Data 2, 2015).")
                                                                )
                                         )

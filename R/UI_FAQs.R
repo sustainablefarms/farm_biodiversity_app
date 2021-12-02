@@ -40,10 +40,10 @@ tags$div(
              "Liao et al. IJAEOG, 2020)."),
        'Keep in mind that even trees with dense canopies still allow light through, affecting cover estimates.'),
 	tags$p(appname, 'utilises estimates for woody cover obtained from satellite photography by the',
-      tags$a("ANU Centre for Water and Landscape Dynamics.", href = "http://wald.anu.edu.au/"),
+      linknewtab("ANU Centre for Water and Landscape Dynamics.", href = "http://wald.anu.edu.au/"),
       "See",
-      tags$a(href = 'http://anuwald.science/tree', "Tree Change portal"), 
-      "and ", tags$a(href = "https://doi.org/10.1016/j.jag.2020.102209",
+      linknewtab(href = 'http://anuwald.science/tree', "Tree Change portal"), 
+      "and ", linknewtab(href = "https://doi.org/10.1016/j.jag.2020.102209",
                      "Liao et al. (IJAEOG, 2020).")),
       tags$p('Box Gum Grassy Woodland is a highly disturbed ecosystem and this tool is based on agricultural landscapes. As such the woody cover estimates are capped at 20%, which encapsulates 90% of the data used to develop the model. If your woody cover estimates are above this, treat the results with an extra degree of caution.'),
       tags$p('For context, typical woody cover for Australian temperate woodlands is',
@@ -80,7 +80,7 @@ tags$p('The estimates of foliage cover used by', appname, 'can differ between ye
       accordion_item(title = "Recognising Noisy Miners", id = ns("nmrecog"),
 tags$p('Noisy Miners are a honeyeater, smaller in size than another common honeyeater of the region, Red Wattlebirds. Noisy Miners are easy to recognise by their bright yellow eyes and beak, and by their persistent, raucous call. They are generally not shy of people so if they are present in a woodland area, you are likely to be able to see or hear them easily.'),
     tags$p("Visit",
-    tags$a(href="https://birdlife.org.au/bird-profile/noisy-miner",
+    linknewtab(href="https://birdlife.org.au/bird-profile/noisy-miner",
            "BirdLife Australia"),
     "for a profile of Noisy Miners." 
     )
@@ -90,7 +90,7 @@ tags$p('Noisy Miners are a honeyeater, smaller in size than another common honey
 }
 
 faqlink <- function(faqid, ...){
-            tags$span(tags$a(...,
+            tags$span(linknewtab(...,
                         href = paste0("#", faqid),        
                         "data-bs-toggle"="collapse",
                         "data-bs-target"= paste0("#", faqid, "_body"),

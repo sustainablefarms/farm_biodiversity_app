@@ -2,7 +2,7 @@
 linknewtab <- function(...){
   tags$a(
     target = "_blank",
-    rel = "noreferrer noopener",
+    rel = "noopener",
     ...
   )
 }

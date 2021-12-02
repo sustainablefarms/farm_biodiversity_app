@@ -68,7 +68,7 @@ selectlocationUI <- function(id){
   	 ),
 	 tags$div(class = "datalabels",
 	          "Climate data estimated by",
-	          tags$a(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
+	          linknewtab(href = "https://www.worldclim.org/data/v1.4/worldclim14.html", "worldclim.org"))
 	     )),
 	 twocolumns(heading = "Recent rainfall",
 	            left = tagList(tags$p(class = "bodysmall",

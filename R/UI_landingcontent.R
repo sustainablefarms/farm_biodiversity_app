@@ -54,7 +54,9 @@ footercontent <- function(id = NULL){
   fluidRow(
     style = paste("background-color:", appcolors[["Dark Green"]]), #try to get using bs_get_variables
     #class = fixed-bottom means it overlays other content
-    column(6, style = "color: #FFFFFF;", "A product of the", linknewtab("ANU Sustainable Farms initiative"), style = "text-align: left;"),
+    column(6, style = "color: #FFFFFF;", "A product of the", 
+	   linknewtab("ANU Sustainable Farms initiative", href = "http://sustainablefarms.org.au/", style = "color: inherit; text-decoration: inherit;"),
+	   style = "text-align: left;"),
     column(6, style = "color: #FFFFFF; text-align: right",
 	   "By Kassel Hingee and the team.", "Version", appversion)
   )
@@ -92,7 +94,7 @@ landingpage <- function(id = NULL){
 	         )
 	        ),
 	        tags$div(class = "justify-content-center",
-          HTML('<a class="mx-md-4" href="http://sustainablefarms.org.au/"><img src="Sustainable Farms logo RGB.png" alt="Sustainable Farms" height="116px" style="margin-top: -8px; margin-bottom: -8px;"></a>'), #negative margins to account for the white space around the SF logo content.
+          HTML('<a class="mx-md-4" target="_blank" href="http://sustainablefarms.org.au/"><img src="Sustainable Farms logo RGB.png" alt="Sustainable Farms" height="116px" style="margin-top: -8px; margin-bottom: -8px;"></a>'), #negative margins to account for the white space around the SF logo content.
   	        tags$img(src = "ANU_Secondary_Horizontal_GoldBlack.svg",
 				class = "my-4 mx-md-4",
   	                        alt = "ANU",
