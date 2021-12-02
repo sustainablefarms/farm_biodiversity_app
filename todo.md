@@ -5,20 +5,30 @@ output:
 ---
 
 # High Priority
-+ user guide
-  + User Guide - is how to use the app. For the user.
-+ About
-  + About - purpose of the app, key features/attributes, business case, ambition, why does the app exist. Top level, purpose driven
-+ fix FAQs
-+ mobile compatibility
-+ href links to new tab (1 hour)
-+ test on mobile, safari, firefox and chrome, on mac and windows
-+ be consistent with warnings - choose notifications in the bottom right or otherwise
-+ get table downloads working
++ test on windows
++ be consistent with warnings - choose notifications in the bottom right or otherwise - need to change this around the loading of woody cover
++ error: Error in <Anonymous>: arguments imply differing number of rows: 0, 1
+  + in newXocc_fromselecteda
++ error: Warning: Error in [.data.frame: undefined columns selected
+  + also in newXocc_fromselected
++ representative year
++ 
 
 
 # Less Priority
++ at locationS - About page
++ bold 'found in' woodlands that lack midstorey
+_ <p> --> <span> for woodland type
++ auto panning/zooming to the selected region isn't working well.
++ +/- in map is on top of selectize in patch attributes. Set its z-index to 1001 or higher
++ make some tests
++ sort by length selectize with padding that can't be found: .form-group add margin-top: -1rem
++ estimation complete: restart, go back to change your scenarios, visit SF website, go out and look at your birds! We hope you find some of the birds on your farm.
++ include A comparison between Scenario 1 and Scenario 2.
++ photo of Noisy Miner into the FAQ
 
+
++ show the little heading on the polygons for prepopulated regions
 + error - selected input box for region and then clicked a region map
   + I couldn't replicate this
 
@@ -34,29 +44,21 @@ output:
   + spinners for the other prediction plots
 
 + styling 1d
- + smaller ANU logo (use compact version)
- + href to SF farms for bottom left link
- + all links start new tabs
  + be considerate of spacing
  + convert About, User Guide etc to a hamburger menu for mobiles?
- + on thin screens columns that finish with an infotext have it overlaid by content of the next column.
- + shorter lines between navbar icons - so they work on phones
  + a few margin and color things, 
  + check that text is *larger* than old birdchecker
 
 + words
   + "representative year"
-  + acknowledge 
-    + Richard Beggs
-    + acknowledgements: UX and UI consultants CRE8IVE
-    + MLA and Sustainable farms
   + in report and elsewhere note that the app does not look at the open spaces, just the woodlands
-  + instructions for citing birdcast - until a paper is published
+  + User Guide - is how to use the app. For the user.
++ About
+  + About - purpose of the app, key features/attributes, business case, ambition, why does the app exist. Top level, purpose driven
 
 + report 1d
   + State of Australia strange appostrophe direction
 + polishing (days)
-  + google analytics
   + waiters for the prediction plots
 
 + send to aus|smc?
