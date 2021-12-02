@@ -16,6 +16,7 @@ output:
 
 
 # Less Priority
++ make idle timeout 30min
 + at locationS - About page
 + bold 'found in' woodlands that lack midstorey
 _ <p> --> <span> for woodland type
@@ -26,7 +27,11 @@ _ <p> --> <span> for woodland type
 + estimation complete: restart, go back to change your scenarios, visit SF website, go out and look at your birds! We hope you find some of the birds on your farm.
 + include A comparison between Scenario 1 and Scenario 2.
 + photo of Noisy Miner into the FAQ
++ update readme and help
++ prepopulated selectlocation need to have the polygon highlighted on the leaflet map
++ info on richness calculation - it is just the sum of estimated occupancy probabilities
 
++ BirdCast fonts in the pdf, with tagline
 
 + show the little heading on the polygons for prepopulated regions
 + error - selected input box for region and then clicked a region map
