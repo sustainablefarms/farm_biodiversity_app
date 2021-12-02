@@ -89,11 +89,13 @@ accitem <- accordion_item("Your region", id = ns("acc"),
                           internals,
                           footer = tagList(
                             do.call(actionButton_notdfl,
-                                    args = c(list(ns(paste0("cancel")), "Cancel", class = "btn-outline-primary"),
+                                    args = c(list(ns(paste0("cancel")), "Cancel", class = "btn-outline-primary",
+		                                  onclick = paste0("scrollupby('", ns("acc"), "_body","')")),
                                              toggle_attr(paste0(ns("acc"), "_body"))
                                     )),
                             do.call(actionButton_notdfl,
-                                    args = c(list(ns(paste0("save")), "Save and Close", class = "btn-primary"),
+                                    args = c(list(ns(paste0("save")), "Save and Close", class = "btn-primary",
+		                                  onclick = paste0("scrollupby('", ns("acc"), "_body","')")),
                                              toggle_attr(paste0(ns("acc"), "_body"))
                                     ))
                           ),
