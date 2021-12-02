@@ -1,43 +1,49 @@
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DW3G9MGL96"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2YJP12Y16C"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-DW3G9MGL96', {cookie_flags: 'SameSite=None;Secure'});
+  gtag('config', 'G-2YJP12Y16C', {cookie_flags: 'SameSite=None;Secure'});
 
 $(document).ready(function(){
-  $("#pred-moredetail").on('click', function(e) {
-      gtag('event', 'viewmoredetail', {
+  $("#hidestartpage").on('click', function(e) {
+      gtag('event', 'start', {
+                              'event_category': 'button',
+                              'event_label': $(this).attr("id")});
+  });
+  $("#in1_next").on('click', function(e) {
+      gtag('event', 'to_pred1', {
+                              'event_category': 'button',
+                              'event_label': $(this).attr("id")});
+  });
+  $("#in2_next").on('click', function(e) {
+      gtag('event', 'to_pred2', {
                               'event_category': 'button',
                               'event_label': $(this).attr("id")});
   });
   
-  $("#pred-downloaddata").on('click', function(e) {
-      gtag('event', 'downloadcsv', {
+  $("#pred1-downloaddata").on('click', function(e) {
+      gtag('event', 'pred1_ downloadcsv', {
+                              'event_category': 'download',
+                              'event_label': $(this).attr("id")});
+  });
+  $("#pred2-downloaddata_rel").on('click', function(e) {
+      gtag('event', 'pred2_downloadcsv', {
+                              'event_category': 'download',
+                              'event_label': $(this).attr("id")});
+  });
+  $("#out1_product").on('click', function(e) {
+      gtag('event', 'pred1_downloadreport', {
                               'event_category': 'download',
                               'event_label': $(this).attr("id")});
   });
   
-  $("#pred-downloadreport").on('click', function(e) {
-      gtag('event', 'downloadreport', {
+  $("#out2_product").on('click', function(e) {
+      gtag('event', 'pred2_downloadreport', {
                               'event_category': 'download',
                               'event_label': $(this).attr("id")});
-  });
-  
-  $("#pred-savetoreference").on('click', function(e) {
-      gtag('event', 'updatereference', {
-                              'event_category': 'button',
-                              'event_label': $(this).attr("id")});
-  });
-  
-  $("#pred-usedefaultreference").on('change', function(){
-      gtag('event', 'switchreference', {
-                              'event_category': 'switch',
-                              'event_label': $(this).attr("id"),
-                              'value': Boolean($(this).children("input:checked").val())
-      });
   });
   
 });
