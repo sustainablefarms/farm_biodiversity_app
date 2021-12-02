@@ -14,6 +14,13 @@
 </script>
 
 <script>
+function scrollupby(id){
+  var hgt = document.getElementById(id).scrollHeight;
+  window.scrollBy(0, -hgt);
+}
+</script>
+
+<script>
 function removeleafletspinner(el, x) {
   $(el.previousElementSibling).addClass("visually-hidden");	
   el.previousElementSibling.remove();	

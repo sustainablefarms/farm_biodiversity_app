@@ -69,7 +69,8 @@ accordion_item_body <- function(..., id="collapseOne", aria_labelledby = "headin
         "Back to top"),
       do.call(tags$button, args = c(
         list(class = "btn btn-primary",
-             type = "button"),
+             type = "button",
+	     onclick=paste0("scrollupby('",id,"')")),
         toggle_attr(id),
          "Close"))
     )
