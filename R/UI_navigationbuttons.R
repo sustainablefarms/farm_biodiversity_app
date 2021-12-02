@@ -62,10 +62,11 @@ out2_foot <- function(){
                          "Congratulations! You have completed all the steps in", paste0(appname, "."),
                          "Visit the Sustainable Farms website for more guidance on managing natural assets to support biodiversity and productivity on farms."),
     rightfoot = 
-      tags$a(href = "https://www.sustainablefarms.org.au",
+      linknewtab(href = "https://www.sustainablefarms.org.au",
+        actionButton_notdfl("tosustfarms",
+	     "Go to Sustainable Farms",
 	     style="width:100%;",
-	     type="button",
-	     class="btn btn-primary py-3",
-	     "Go to Sustainable Farms")
+	     class="btn btn-primary py-3")
+	)
   )
 }
