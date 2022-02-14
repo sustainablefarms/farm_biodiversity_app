@@ -162,9 +162,6 @@ server <- function(input, output, session) {
   
   # populating Scenario 2
   observeEvent(input$out1_next, {
-    inregion(NULL) #to make sure reset happens
-    inAnnPrec.YfA(NULL) #to make sure reset happens
-    inattr(NULL)  #to make sure reset happens
     inregion(cval1()$selected_region)
     inAnnPrec.YfA(cval1()$AnnPrec.YfA)
     inattr(cval1()$patchattr_tbl)
