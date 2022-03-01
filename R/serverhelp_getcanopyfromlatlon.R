@@ -47,8 +47,8 @@ canopyfromlatlon <- function(lon, lat, year){
   point <- sf::st_point(x = c(lon, lat), dim = "XY")
   pointwcrs <- sf::st_sf(sf::st_sfc(point, crs = 4326))
  
-  within500m <- cloudget(pointwcrs, 500, year)
-  within3000m <- cloudget(pointwcrs, 3000, year)
+  within500m <- cloudget(pointwcrs, 500) %>% extractayear(year)
+  within3000m <- cloudget(pointwcrs, 3000) %>% extractayear(year)
   # threddsget(pointwcrs, 500, 2018:2019) #errors currently!
 
   out <- c(within500m, within3000m) 
@@ -57,7 +57,7 @@ canopyfromlatlon <- function(lon, lat, year){
   return(out)
 }
 
-cloudget <- function(pointwcrs, bufferdist, year){
+cloudget <- function(pointwcrs, bufferdist){
   # compute the buffer polygon
   pointAA <- sf::st_transform(pointwcrs, 3577) #to GDA94 / Aust Albers so that buffers in metres make sense
   buf <- sf::st_transform(sf::st_buffer(pointAA, dist = bufferdist), crs = 4326)
@@ -75,8 +75,7 @@ cloudget <- function(pointwcrs, bufferdist, year){
   )
   values_allyears <- httr::content(returned, type = "text/csv", encoding = "UTF-8",
                              col_names = c("Year", "WCF"), col_types = "id") # the server sends back all years
-  if (!(year %in% values_allyears$Year)){stop(simpleError("Year not available."))}
-  return(extractayear(values_allyears, year))
+  return(values_allyears)
 }
 
 threddsget <- function(pointwcrs, bufferdist, years){ # errors currently - produce NA values when should be good values!
@@ -89,5 +88,6 @@ threddsget <- function(pointwcrs, bufferdist, years){ # errors currently - produ
 }
 
 extractayear <- function(obj, year){
+  if (!(year %in% obj$Year)){stop(simpleError("Year not available."))}
   obj[obj$Year == year, "WCF"]
 }
