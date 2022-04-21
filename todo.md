@@ -5,17 +5,26 @@ output:
 ---
 
 # High Priority
-+ test on windows
++ one the steps said estimate the occupancy of 60 birds - sounds like 60 birds predicted to live in the patch
++ include a date for the version in the about page
 + be consistent with warnings - choose notifications in the bottom right or otherwise - need to change this around the loading of woody cover
 + error: Error in <Anonymous>: arguments imply differing number of rows: 0, 1
   + in newXocc_fromselecteda
 + error: Warning: Error in [.data.frame: undefined columns selected
   + also in newXocc_fromselected
 + representative year
-+ 
++ misleading words 'estimated occupancy for 60 birds'
++ look for any regions of poor residuals or LVs
++ add coppiced regrowth (or remove from data set), planting age to model
++ LV/residuals based on sa2 region
++ a model with better detection components
++ look at residuals and LV for Grey-crowned Babbler and Superb Parrot
++ Increasing in likelihood Superb Parrot
++ Reset on pressing out1_next??
 
 
 # Less Priority
++ Include the 'interpreting outputs of BirdCast' section from the manuscript in the User Guide itself
 + make idle timeout 30min
 + at locationS - About page
 + bold 'found in' woodlands that lack midstorey
@@ -30,6 +39,7 @@ _ <p> --> <span> for woodland type
 + update readme and help
 + prepopulated selectlocation need to have the polygon highlighted on the leaflet map
 + info on richness calculation - it is just the sum of estimated occupancy probabilities
++ waiting thingy for downloading probability table
 
 + BirdCast fonts in the pdf, with tagline
 
@@ -100,10 +110,6 @@ Regular Priority:
 + __test on other woodlands__
 
 # Outputs
-+ remove 'patch' column from downloaded table
-
-
-# Outputs: More Detail
 
 # Other
 + __Get onto SF website__
@@ -115,5 +121,5 @@ Regular Priority:
 + show birds of particular body size
 + multiple named references
 + Example pictures of woody canopy
-
++ better relative plots
  
