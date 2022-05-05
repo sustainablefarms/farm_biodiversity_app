@@ -211,7 +211,12 @@ server <- function(input, output, session) {
   observeEvent(input$out1_back, {updateTabsetPanel(session, inputId = "maintabs", "in1")}, ignoreInit = TRUE)
   observeEvent(input$out1_next, {updateTabsetPanel(session, inputId = "maintabs", "in2")}, ignoreInit = TRUE)
   
-  observeEvent(input$in2_back, {updateTabsetPanel(session, inputId = "maintabs", "out1")}, ignoreInit = TRUE)
+  observeEvent(input$in2_back, {
+    updateTabsetPanel(session, inputId = "maintabs", "out1")
+    inregion(NULL) #reset Scenario 2
+    inattr(NULL) #reset Scenario 2
+    inAnnPrec.YfA(NULL) #reset Scenario 2
+    }, ignoreInit = TRUE)
   observeEvent(input$in2_next, {
     assessments <- checkcvals(cval2())
     if (length(assessments) > 0){
