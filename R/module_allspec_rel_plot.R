@@ -55,10 +55,11 @@ app_allrel_plot <- function(){
   
   shinyApp(
     {fluidPage(
-      includeCSS("./www/base.css"),
+      tags$head(tags$style(appcss),
+                includeHTML("./www/extra.html")),
       plotly::plotlyOutput("plotlybug", height = "0px"),
       allrel_plot_UI("allspec"),
-      theme = bslib::bs_theme(version = 5, "lumen"))
+      theme = apptheme())
     },
     function(input, output, session){
       allrel_plot_Server("allspec", 
