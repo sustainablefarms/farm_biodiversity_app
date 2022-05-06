@@ -62,7 +62,7 @@ now <- Sys.time()
 currtime <- format(now, format = "%d %B %Y at %H:%M", tz="Australia/NSW")
 ```
 
-This report was generated on `r currtime` from version `r appversion` of the Sustainable Farm's `r appname` (`r appurl`).
+This report was generated on `r currtime` from version `r appversion` (`r format(appdate, "%b %Y")`) of the Sustainable Farm's `r appname` (`r appurl`).
 
 # Properties of woodland areas used for estimation
 The estimates of bird occupancy in this report were based on the below properties of Box Gum Grassy Woodland patches.
