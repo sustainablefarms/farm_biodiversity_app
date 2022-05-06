@@ -99,7 +99,7 @@ tags$div(
   tags$h3("Referencing", appname, style = paste("color:", appcolors[["Dark Green"]], ";")),
   tags$p("We have a publication planned. Until then please reference", appname, "as:",
   tags$br(),
-  "Sustainable Farms, ", tags$em(paste0(appname, ",")), "version", paste0(appversion, ","), appurl, "",
+  "Sustainable Farms, ", tags$em(paste0(appname, ",")), "version", paste0(appversion, ","), paste0(format(appdate, "%b %Y"), ","), appurl, ".",
   "Accessed", format(Sys.time(), format = "%d %B %Y.", tz="Australia/NSW")),
 
   tags$h3("Questions and Bugs", style = paste("color:", appcolors[["Dark Green"]], ";")),
