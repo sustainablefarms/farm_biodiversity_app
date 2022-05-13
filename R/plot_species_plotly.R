@@ -77,16 +77,17 @@ plot_ly_youtside_adj <- function(df){
   df$pattern_shape <- dplyr::case_when(
     df$scenario == "value.cur" ~ "",
     TRUE ~ "x")
-  plt <- plot_ly(data = df %>% dplyr::filter(scenario == "value.cur")) %>% #initiate plot
-    add_trace(type = "bar",  #make a bar plot
+  plt <- plot_ly() %>% #initiate plot
+    add_trace(data = df %>% dplyr::filter(scenario == "value.ref"),
+              width = 0.2,
+              type = "bar",  #make a bar plot
               y = ~species,
               x = ~value,
-              marker = list(color = ~pal(value),
-                            pattern = list(shape = ~pattern_shape,
-                                           fillmode = "overlay")),
+              marker = list(color = "grey"),
               showlegend = FALSE
     ) %>%
-    add_trace(data = df %>% dplyr::filter(scenario == "value.ref"),
+    add_trace(data = df %>% dplyr::filter(scenario == "value.cur"),
+              width = 0.2,
               type = "bar",  #make a bar plot
               y = ~species,
               x = ~value,
@@ -94,13 +95,14 @@ plot_ly_youtside_adj <- function(df){
                             pattern = list(shape = ~pattern_shape,
                                            fillmode = "overlay")),
               showlegend = FALSE
-    )
+    ) 
 
   plt %>%
     plotly::layout(
       yaxis = list(title = "", visible = TRUE, type = "category",
                    color = appcolors[["Dark Green"]]),
-      barmode = "group"
+      barmode = "group",
+      bargap = 0.5
     )
 }
 
