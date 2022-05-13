@@ -7,6 +7,9 @@ output:
 # High Priority
 + update version number and date
 + better relative plots
++ clean up plotting files for all species plots (currently very confusing)
++ stop using devtools::load_all()
++ populate a readme that makes more sense
 
 + After selecting a location without saving it, then restarting, there is an error in the zoom of the region and the leaflet map
   + seems like the error is associated with 'output$S1in-loc-map'
