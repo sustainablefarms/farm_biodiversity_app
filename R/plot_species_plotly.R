@@ -59,6 +59,51 @@ plot_ly_youtside <- function(df, log2 = FALSE){
     )
 }
 
+plot_ly_youtside_adj <- function(df){
+  traits <- get("traits", envir = globalenv())
+  df <- dplyr::left_join(df, traits, by = c(species = "Common Name")) %>%
+    select(-value) %>% #for this table the value is the ratio
+    tidyr::pivot_longer(c(value.cur, value.ref), names_to = "scenario", values_to = "value")
+  df$label <- paste0(formatC(df$value, format = "fg", 2))
+  df$tooltip <- speciesinfo[df$species, "shortstory"]
+  pal <- scales::col_numeric(c(appcolors[["Green 10"]], appcolors[["Dark Green"]]),
+                             domain = c(df$value, df$value))
+  textcolcut <- mean(range(df$value))
+  palopp <- function(values){
+    cols <- rep("#FFFFFF", length(value))
+    cols[values < textcolcut] <- appcolors[["Dark Green"]]
+    return(cols)
+  }
+  df$pattern_shape <- dplyr::case_when(
+    df$scenario == "value.cur" ~ "",
+    TRUE ~ "x")
+  plt <- plot_ly(data = df %>% dplyr::filter(scenario == "value.cur")) %>% #initiate plot
+    add_trace(type = "bar",  #make a bar plot
+              y = ~species,
+              x = ~value,
+              marker = list(color = ~pal(value),
+                            pattern = list(shape = ~pattern_shape,
+                                           fillmode = "overlay")),
+              showlegend = FALSE
+    ) %>%
+    add_trace(data = df %>% dplyr::filter(scenario == "value.ref"),
+              type = "bar",  #make a bar plot
+              y = ~species,
+              x = ~value,
+              marker = list(color = ~pal(value),
+                            pattern = list(shape = ~pattern_shape,
+                                           fillmode = "overlay")),
+              showlegend = FALSE
+    )
+
+  plt %>%
+    plotly::layout(
+      yaxis = list(title = "", visible = TRUE, type = "category",
+                   color = appcolors[["Dark Green"]]),
+      barmode = "group"
+    )
+}
+
 fixed_layout <- function(p){
   p %>%
   plotly::layout(xaxis = list(visible = FALSE, fixedrange = TRUE),
