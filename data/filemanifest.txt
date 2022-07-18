@@ -69,6 +69,7 @@ NAMESPACE
 ./R/UI_userguide.R
 ./R/UI_warn_badinputs.R
 ./R/UI_WCFdesc.R
+./www/hingee2022_title.png
 ./www/lowres-01bfcebc08515ff6510277eeacee6e31.jpg
 ./www/lowres-073b8b49ba4ddf30d92e2a8ba78ec2f2.jpg
 ./www/lowres-0bf91d8801fc01b57d56ee2a3b98a50a.jpg
