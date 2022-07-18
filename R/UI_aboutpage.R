@@ -76,11 +76,18 @@ tags$p(appname, "was created using", linknewtab(href = "https://cran.r-project.o
        ),
   
   tags$h3("Further information", style = paste("color:", appcolors[["Dark Green"]], ";")),
-  tags$p("A manuscript for scientific publication is under development.",
-	 "The source code for", appname, "is available at",
-	 linknewtab(href = "github.com/sustainablefarms/farm_biodiversity_app",
-		    "github.com/sustainablefarms/farm_biodiversity_app")),
-  tags$p("For further queries, help and issues, please see the FAQ page and User Guide, or email the Sustainable Farms team at",
+  tags$p("The journal Ecological Management and Restoration has published an introduction to", appname),
+  tags$div(class = "justify-content-center text-center",
+    tags$a(taget = "_blank", href="https://onlinelibrary.wiley.com/doi/abs/10.1111/emr.12556",
+           tags$img(src = "hingee2022_title.png", alt="A bird occupancy estimator for land practitioners in the NSW South Western Slopes bioregion",
+                    class="img-fluid")
+           )
+    ),
+  tags$p("The source code for", appname, "is available at",
+  linknewtab(href = "github.com/sustainablefarms/farm_biodiversity_app",
+           "github.com/sustainablefarms/farm_biodiversity_app"),
+  ".", 
+  "For further queries, help and issues, please see the FAQ page and User Guide, or email the Sustainable Farms team at",
 	 linknewtab(href = "mailto:sustainablefarms@anu.edu.au",
 	            "sustainablefarms@anu.edu.au"),
 	"."),
