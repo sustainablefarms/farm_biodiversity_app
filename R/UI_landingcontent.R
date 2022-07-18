@@ -99,7 +99,7 @@ landingpage <- function(id = NULL){
 	         )
 	        ),
 	        tags$div(class = "justify-content-center",
-          HTML('<a class="mx-md-4" target="_blank" href="http://sustainablefarms.org.au/"><img src="Sustainable Farms logo RGB.png" alt="Sustainable Farms" height="116px" style="margin-top: -8px; margin-bottom: -8px;"></a>'), #negative margins to account for the white space around the SF logo content.
+          HTML('<a class="mx-md-4" target="_blank" rel="noreferrer noopener" href="http://sustainablefarms.org.au/"><img src="Sustainable Farms logo RGB.png" alt="Sustainable Farms" height="116px" style="margin-top: -8px; margin-bottom: -8px;"></a>'), #negative margins to account for the white space around the SF logo content.
   	        tags$img(src = "ANU_Secondary_Horizontal_GoldBlack.svg",
 				class = "my-4 mx-md-4",
   	                        alt = "ANU",
