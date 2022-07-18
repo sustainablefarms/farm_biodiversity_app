@@ -79,7 +79,10 @@ tags$p(appname, "was created using", linknewtab(href = "https://cran.r-project.o
   tags$p("The journal Ecological Management and Restoration has published an introduction to", appname),
   tags$div(class = "justify-content-center text-center",
     tags$a(taget = "_blank", href="https://onlinelibrary.wiley.com/doi/abs/10.1111/emr.12556",
-           tags$img(src = "hingee2022_title.png", alt="A bird occupancy estimator for land practitioners in the NSW South Western Slopes bioregion",
+           tags$img(src = "hingee2022_title.png",
+                    alt="A bird occupancy estimator for land practitioners in the NSW South Western Slopes bioregion",
+                    width="90%",
+                    style="max-width:600px",
                     class="img-fluid")
            )
     ),
