@@ -86,7 +86,13 @@ plot_ly_youtside_adj <- function(df){
               marker = list(line = list(color = ~pal(value),
                                         width = 2),
                             color = "#FFFFFF"),
-              showlegend = FALSE
+              showlegend = FALSE,
+          hoverinfo = TRUE, #formats the tooltips
+          hovertext = ~label, #from provided data
+          hoverlabel = list(bgcolor = "white",
+                            font = list(color = "black",
+                                        size = 12)),
+          hovertemplate = paste('S1: %{hovertext}<extra></extra>')
     ) %>%
     add_trace(data = df %>% dplyr::filter(scenario == "value.cur"),
               width = 0.2,
@@ -96,7 +102,13 @@ plot_ly_youtside_adj <- function(df){
               marker = list(color = ~pal(value),
                             pattern = list(shape = ~pattern_shape,
                                            fillmode = "overlay")),
-              showlegend = FALSE
+              showlegend = FALSE,
+          hoverinfo = TRUE, #formats the tooltips
+          hovertext = ~label, #from provided data
+          hoverlabel = list(bgcolor = "white",
+                            font = list(color = "black",
+                                        size = 12)),
+          hovertemplate = paste('S2: %{hovertext}<extra></extra>')
     ) 
 
   plt %>%
@@ -105,7 +117,8 @@ plot_ly_youtside_adj <- function(df){
                    color = appcolors[["Dark Green"]]),
       barmode = "group",
       bargap = 0.5
-    )
+    ) %>%
+    fixed_layout() #removes buttons and things
 }
 
 fixed_layout <- function(p){
