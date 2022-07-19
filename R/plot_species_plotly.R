@@ -83,7 +83,9 @@ plot_ly_youtside_adj <- function(df){
               type = "bar",  #make a bar plot
               y = ~species,
               x = ~value,
-              marker = list(color = "grey"),
+              marker = list(line = list(color = ~pal(value),
+                                        width = 2),
+                            color = "#FFFFFF"),
               showlegend = FALSE
     ) %>%
     add_trace(data = df %>% dplyr::filter(scenario == "value.cur"),
