@@ -27,8 +27,8 @@ NAMESPACE
 ./R/module_predictorsin.R
 ./R/module_selectlocation.R
 ./R/module_selectpatch.R
-./R/plot_allspeciesprob.R
-./R/plot_allspeciesrel.R
+./R/plot_report_allspeciesprob.R
+./R/plot_report_allspeciesrel.R
 ./R/plot_regions.R
 ./R/plot_richness_ggplot.R
 ./R/plot_species_plotly.R
