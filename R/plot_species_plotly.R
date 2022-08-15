@@ -78,22 +78,6 @@ plot_ly_youtside_adj <- function(df){
     df$scenario == "value.cur" ~ "",
     TRUE ~ "x")
   plt <- plot_ly() %>% #initiate plot
-    add_trace(data = df %>% dplyr::filter(scenario == "value.ref"),
-              width = 0.2,
-              type = "bar",  #make a bar plot
-              y = ~species,
-              x = ~value,
-              marker = list(line = list(color = ~pal(value),
-                                        width = 2),
-                            color = "#FFFFFF"),
-              showlegend = FALSE,
-          hoverinfo = TRUE, #formats the tooltips
-          hovertext = ~label, #from provided data
-          hoverlabel = list(bgcolor = "white",
-                            font = list(color = "black",
-                                        size = 12)),
-          hovertemplate = paste('S1: %{hovertext}<extra></extra>')
-    ) %>%
     add_trace(data = df %>% dplyr::filter(scenario == "value.cur"),
               width = 0.2,
               type = "bar",  #make a bar plot
@@ -109,7 +93,23 @@ plot_ly_youtside_adj <- function(df){
                             font = list(color = "black",
                                         size = 12)),
           hovertemplate = paste('S2: %{hovertext}<extra></extra>')
-    ) 
+    ) %>% 
+    add_trace(data = df %>% dplyr::filter(scenario == "value.ref"),
+              width = 0.2,
+              type = "bar",  #make a bar plot
+              y = ~species,
+              x = ~value,
+              marker = list(line = list(color = ~pal(value),
+                                        width = 2),
+                            color = "#FFFFFF"),
+              showlegend = FALSE,
+          hoverinfo = TRUE, #formats the tooltips
+          hovertext = ~label, #from provided data
+          hoverlabel = list(bgcolor = "white",
+                            font = list(color = "black",
+                                        size = 12)),
+          hovertemplate = paste('S1: %{hovertext}<extra></extra>')
+    )
 
   plt %>%
     plotly::layout(
