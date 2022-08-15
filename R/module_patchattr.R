@@ -28,7 +28,7 @@ patchattr_UI <- function(ns, pid, attributes, patchcomplete = TRUE){ #ns rather 
                       )
        ),
        right = tags$div(class = "p-3", style = paste("background-color:", appcolors[["Green 10"]], ";"),
-          tags$p(appname,
+          tags$span(appname,
 		 "requires", tags$b("woodland areas"), "that are between approximately 1 and 10 hectares in size",
                  "with similar vegetation structure throughout.",
                  tags$b("Remnant woodland"), "is Box Gum Grassy Woodland that has never been cleared.",
@@ -58,8 +58,8 @@ patchattr_UI <- function(ns, pid, attributes, patchcomplete = TRUE){ #ns rather 
                   class = "datalabels",
                   HTML("&copy;Con Boekel 2016 BirdLife Photography"))
   ),
-  tags$p("Noisy Miners are aggressive native honeyeaters that are usually found in",
-	tags$b("woodlands that lack midstorey vegetation"),
+  tags$p("Noisy Miners are aggressive native honeyeaters that are usually",
+	tags$b("found in woodlands that lack midstorey vegetation"),
        "(shrubs and small trees 2-10m in height). In woodlands without midstorey, Noisy Miners are able to see and attack smaller birds, excluding them from the area.",
  "They are easy to recognise by their bright yellow eyes and beak, and their persistent, raucous call."),
     faqlink(faqid = "nmmidstorey", "Learn more")

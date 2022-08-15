@@ -56,7 +56,7 @@ tags$div(
 	       "(Tobler et al. 2019),"),
     "although interspecies interaction is is not included in", appname, "due to its high computational burden.",
     "To create this model we used expert bird surveys at 453 different patches of remnant Box Gum Grassy Woodland and 65 different patches of planted woodland.",
-    "These survey sites were located primarily in the NSW South Western Slopes bioregion, with a lesser number of surveys at location up to the Queensland-NSW border.",
+    "These survey sites were located primarily in the NSW South Western Slopes bioregion, with a lesser number of surveys at locations up to the Queensland-NSW border.",
     "The sites were surveyed in spring, spanning a timeframe of 17 years.",
     "A total of 5189 bird surveys were conducted."),
 

@@ -72,6 +72,9 @@ Directories:
    + `main` contains the main UI and server function for the app.
    + `module_` files contain individual modules used in the app, most also contain a function for running the modules in standalone (very useful for development).
    + `UI_` files contain functions or objects for creating purely UI components in the app
+    + `UI_userguide.R` contains the user guide information, which is how to use BirdCast, for the user.
+    + `UI_aboutpage.R` contains information on the purpose of BirdCast, key features/attributes, business case, ambition, why does the app exist etc. It is top level, purpose driven.
+     
    + `plot_` files contain function for plotting (which are typically then used in a outputPlot or outputPlotly call)
    + `prep_` files are used for preparing or loading data, usually at the start of the app
    + `serverhelp_` files are used by R in the server functions to help obtain, compute, sort, and modify covariate values or prediction information. `compute_prediction_data` does the core work of generating occupancy probability estimates
