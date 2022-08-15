@@ -13,11 +13,13 @@ plot_ly_yinside <- function(df){
               x = ~value,
               marker = list(color = ~pal(value)),
               showlegend = FALSE,
-              text = ~species,
+              text = ~species
+    ) %>%
+  style(
               textposition = "inside",
               insidetextanchor = "start",
               insidetextfont = list(color = ~palopp(value))
-    )
+  )
   plt %>%
     plotly::layout(
       yaxis = list(visible = FALSE, type = "category")
@@ -59,77 +61,6 @@ plot_ly_youtside <- function(df, log2 = FALSE){
     )
 }
 
-plot_ly_youtside_adj <- function(df){
-  traits <- get("traits", envir = globalenv())
-  df <- dplyr::left_join(df, traits, by = c(species = "Common Name")) %>%
-    select(-value) %>% #for this table the value is the ratio
-    tidyr::pivot_longer(c(value.cur, value.ref), names_to = "scenario", values_to = "value")
-  df$label <- paste0(formatC(df$value, format = "fg", 2))
-  df$tooltip <- speciesinfo[df$species, "shortstory"]
-  pal <- scales::col_numeric(c(appcolors[["Green 10"]], appcolors[["Dark Green"]]),
-                             domain = c(df$value, df$value))
-  textcolcut <- mean(range(df$value))
-  palopp <- function(values){
-    cols <- rep("#FFFFFF", length(value))
-    cols[values < textcolcut] <- appcolors[["Dark Green"]]
-    return(cols)
-  }
-  df$pattern_shape <- dplyr::case_when(
-    df$scenario == "value.cur" ~ "",
-    TRUE ~ "x")
-  plt <- plot_ly() %>% #initiate plot
-    add_trace(data = df %>% dplyr::filter(scenario == "value.cur"),
-              width = 0.2,
-              type = "bar",  #make a bar plot
-              y = ~species,
-              x = ~value,
-              marker = list(color = ~pal(value),
-                            pattern = list(shape = ~pattern_shape,
-                                           fillmode = "overlay")),
-              showlegend = FALSE,
-          hoverinfo = TRUE, #formats the tooltips
-          hovertext = ~label, #from provided data
-          hoverlabel = list(bgcolor = "white",
-                            font = list(color = "black",
-                                        size = 12)),
-          hovertemplate = paste('S2: %{hovertext}<extra></extra>')
-    ) %>% 
-    add_trace(data = df %>% dplyr::filter(scenario == "value.ref"),
-              width = 0.2,
-              type = "bar",  #make a bar plot
-              y = ~species,
-              x = ~value,
-              marker = list(line = list(color = ~pal(value),
-                                        width = 2),
-                            color = "#FFFFFF"),
-              showlegend = FALSE,
-          hoverinfo = TRUE, #formats the tooltips
-          hovertext = ~label, #from provided data
-          hoverlabel = list(bgcolor = "white",
-                            font = list(color = "black",
-                                        size = 12)),
-          hovertemplate = paste('S1: %{hovertext}<extra></extra>')
-    )
-
-  plt %>%
-    plotly::layout(
-      yaxis = list(title = "", visible = TRUE, type = "category",
-                   color = appcolors[["Dark Green"]]),
-      barmode = "group",
-      bargap = 0.5
-    ) %>%
-    fixed_layout() #removes buttons and things
-}
-
-fixed_layout <- function(p){
-  p %>%
-  plotly::layout(xaxis = list(visible = FALSE, fixedrange = TRUE),
-                 yaxis = list(fixedrange = TRUE),
-                 dragmode = FALSE,
-                 margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
-    hide_colorbar()  %>%
-    plotly::config(displayModeBar = FALSE)
-}
 
 add_tooltips <- function(p){
   df <- plotly_data(p)
@@ -221,6 +152,23 @@ order_y <- function(p, orderby){ # orderby uses tidyselect
                         categoryarray = ~ord))
 }
 
+# plotly vline as per https://stackoverflow.com/questions/34093169/horizontal-vertical-line-in-plotly/34097929#34097929
+plotlyvline <- function(x = 0, color = "black") {
+  list(
+    type = "line", 
+    y0 = 0, 
+    y1 = 1, 
+    yref = "paper",
+    x0 = x, 
+    x1 = x, 
+    layer = "below",
+    line = list(color = color,
+                dash = "dot",
+                width = 1)
+  )
+}
+
+##### Functions Called in App #####
 prob_top10 <- function(df, showerrorbars = TRUE){
   set.seed(1)
   df <- topnrows(df, 10, "value")
@@ -238,6 +186,7 @@ prob_top10 <- function(df, showerrorbars = TRUE){
   p <- p %>% add_label_onright()
   p
 }
+
 
 all_prob <- function(df){
   traits <- get("traits", envir = globalenv())
@@ -279,18 +228,74 @@ all_rel <- function(df){
     plotly::layout(shapes = list(plotlyvline(0)))
 }
 
-# plotly vline as per https://stackoverflow.com/questions/34093169/horizontal-vertical-line-in-plotly/34097929#34097929
-plotlyvline <- function(x = 0, color = "black") {
-  list(
-    type = "line", 
-    y0 = 0, 
-    y1 = 1, 
-    yref = "paper",
-    x0 = x, 
-    x1 = x, 
-    layer = "below",
-    line = list(color = color,
-                dash = "dot",
-                width = 1)
-  )
+plot_ly_youtside_adj <- function(df){
+  traits <- get("traits", envir = globalenv())
+  df <- dplyr::left_join(df, traits, by = c(species = "Common Name")) %>%
+    select(-value) %>% #for this table the value is the ratio
+    tidyr::pivot_longer(c(value.cur, value.ref), names_to = "scenario", values_to = "value")
+  df$label <- paste0(formatC(df$value, format = "fg", 2))
+  df$tooltip <- speciesinfo[df$species, "shortstory"]
+  pal <- scales::col_numeric(c(appcolors[["Green 10"]], appcolors[["Dark Green"]]),
+                             domain = c(df$value, df$value))
+  textcolcut <- mean(range(df$value))
+  palopp <- function(values){
+    cols <- rep("#FFFFFF", length(value))
+    cols[values < textcolcut] <- appcolors[["Dark Green"]]
+    return(cols)
+  }
+  df$pattern_shape <- dplyr::case_when(
+    df$scenario == "value.cur" ~ "",
+    TRUE ~ "x")
+  plt <- plot_ly() %>% #initiate plot
+    add_trace(data = df %>% dplyr::filter(scenario == "value.cur"),
+              width = 0.2,
+              type = "bar",  #make a bar plot
+              y = ~species,
+              x = ~value,
+              marker = list(color = ~pal(value),
+                            pattern = list(shape = ~pattern_shape,
+                                           fillmode = "overlay")),
+              showlegend = FALSE,
+          hoverinfo = TRUE, #formats the tooltips
+          hovertext = ~label, #from provided data
+          hoverlabel = list(bgcolor = "white",
+                            font = list(color = "black",
+                                        size = 12)),
+          hovertemplate = paste('S2: %{hovertext}<extra></extra>')
+    ) %>% 
+    add_trace(data = df %>% dplyr::filter(scenario == "value.ref"),
+              width = 0.2,
+              type = "bar",  #make a bar plot
+              y = ~species,
+              x = ~value,
+              marker = list(line = list(color = ~pal(value),
+                                        width = 2),
+                            color = "#FFFFFF"),
+              showlegend = FALSE,
+          hoverinfo = TRUE, #formats the tooltips
+          hovertext = ~label, #from provided data
+          hoverlabel = list(bgcolor = "white",
+                            font = list(color = "black",
+                                        size = 12)),
+          hovertemplate = paste('S1: %{hovertext}<extra></extra>')
+    )
+
+  plt %>%
+    plotly::layout(
+      yaxis = list(title = "", visible = TRUE, type = "category",
+                   color = appcolors[["Dark Green"]]),
+      barmode = "group",
+      bargap = 0.5
+    ) %>%
+    fixed_layout() #removes buttons and things
+}
+
+fixed_layout <- function(p){
+  p %>%
+  plotly::layout(xaxis = list(visible = FALSE, fixedrange = TRUE),
+                 yaxis = list(fixedrange = TRUE),
+                 dragmode = FALSE,
+                 margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
+    hide_colorbar()  %>%
+    plotly::config(displayModeBar = FALSE)
 }
