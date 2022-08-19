@@ -5,8 +5,12 @@ output:
 ---
 
 # High Priority
++ check that Ngambri Ngunnawal acknowledged
 + update version number and date
 + better relative plots
+   + clean up the plotly plotting functions
+   + enable sorting and error bars
+   + switch between plots (and switch words): ratio vs adjacent
 + clean up plotting files for all species plots (currently very confusing)
 + stop using devtools::load_all()
 + populate a readme that makes more sense

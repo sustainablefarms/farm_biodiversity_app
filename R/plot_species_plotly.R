@@ -1,59 +1,10 @@
-plot_ly_yinside <- function(df){
-  pal <- scales::col_numeric(c(appcolors[["Green 10"]], appcolors[["Dark Green"]]),
-                             domain = df$value)
-  textcolcut <- mean(range(df$value))
-  palopp <- function(values){
-    cols <- rep("#FFFFFF", length(values))
-    cols[values < textcolcut] <- appcolors[["Dark Green"]]
-    return(cols)
-  }
-  plt <- plot_ly(data = df) %>% #initiate plot
-    add_trace(type = "bar",  #make a bar plot
-              y = ~species,
-              x = ~value,
-              marker = list(color = ~pal(value)),
-              showlegend = FALSE,
-              text = ~species
-    ) %>%
-  style(
-              textposition = "inside",
-              insidetextanchor = "start",
-              insidetextfont = list(color = ~palopp(value))
-  )
-  plt %>%
-    plotly::layout(
-      yaxis = list(visible = FALSE, type = "category")
-    )
-}
-
 plot_ly_youtside <- function(df, log2 = FALSE){
   df$tooltip <- speciesinfo[df$species, "shortstory"]
   if (log2){
     df$value <- log2(df$value)
-    df$pattern_shape <- dplyr::case_when(
-      df$value >= 0 ~ "",
-      TRUE ~ "x")
-  } else {
-    df$pattern_shape = ""
   }
   
-  pal <- scales::col_numeric(c(appcolors[["Green 10"]], appcolors[["Dark Green"]]),
-                             domain = df$value)
-  textcolcut <- mean(range(df$value))
-  palopp <- function(values){
-    cols <- rep("#FFFFFF", length(values))
-    cols[values < textcolcut] <- appcolors[["Dark Green"]]
-    return(cols)
-  }
-  plt <- plot_ly(data = df) %>% #initiate plot
-    add_trace(type = "bar",  #make a bar plot
-              y = ~species,
-              x = ~value,
-              marker = list(color = ~pal(value),
-                            pattern = list(shape = ~pattern_shape,
-                                           fillmode = "overlay")),
-              showlegend = FALSE
-    )
+  plt <- plot_ly_colorbarsbyvalue(df)
   plt %>%
     plotly::layout(
       yaxis = list(title = "", visible = TRUE, type = "category",
@@ -236,7 +187,7 @@ plot_ly_youtside_adj <- function(df){
   df$label <- paste0(formatC(df$value, format = "fg", 2))
   df$tooltip <- speciesinfo[df$species, "shortstory"]
   pal <- scales::col_numeric(c(appcolors[["Green 10"]], appcolors[["Dark Green"]]),
-                             domain = c(df$value, df$value))
+                             domain = df$value)
   textcolcut <- mean(range(df$value))
   palopp <- function(values){
     cols <- rep("#FFFFFF", length(value))
