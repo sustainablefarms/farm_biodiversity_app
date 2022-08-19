@@ -197,18 +197,9 @@ plot_ly_youtside_adj <- function(df){
   df$pattern_shape <- dplyr::case_when(
     df$scenario == "value.cur" ~ "",
     TRUE ~ "x")
-  plt <- plot_ly() %>% #initiate plot
-    add_trace(data = df %>% dplyr::filter(scenario == "value.cur"),
-              width = 0.2,
-              type = "bar",  #make a bar plot
-              y = ~species,
-              x = ~value,
-              marker = list(color = ~pal(value),
-                            pattern = list(shape = ~pattern_shape,
-                                           fillmode = "overlay")),
-              showlegend = FALSE,
-          hoverinfo = TRUE, #formats the tooltips
-          hovertext = ~label, #from provided data
+  plt <- plot_ly_colorbarsbyvalue(df %>% dplyr::filter(scenario == "value.cur")) %>%
+    style(
+          #hoverinfo = TRUE, #formats the tooltips overridden by hovertemplate
           hoverlabel = list(bgcolor = "white",
                             font = list(color = "black",
                                         size = 12)),
