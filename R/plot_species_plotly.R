@@ -20,11 +20,8 @@ plot_ly_youtside <- function(df, log2 = FALSE){
 add_tooltips <- function(p){
   df <- plotly_data(p)
   p %>%
-    style(hoverinfo = TRUE,
+    style(
         hovertext = df$tooltip,
-        hoverlabel = list(bgcolor = "white",
-                          font = list(color = "black",
-                                      size = 12)),
         hovertemplate = paste('%{hovertext}<extra></extra>'))
 }
 
@@ -154,7 +151,7 @@ all_prob <- function(df){
   p
 }
 
-all_rel <- function(df){
+all_rel_ratio <- function(df){
   traits <- get("traits", envir = globalenv())
   df <- dplyr::left_join(df, traits, by = c(species = "Common Name"))
   df$label <- paste0(formatC(df$value, format = "fg", 2))
@@ -183,10 +180,10 @@ all_rel <- function(df){
     plotly::layout(shapes = list(plotlyvline(0)))
 }
 
-plot_ly_youtside_adj <- function(df){
+all_rel_adj <- function(df){
   traits <- get("traits", envir = globalenv())
   df <- dplyr::left_join(df, traits, by = c(species = "Common Name")) %>%
-    select(-value) %>% #for this table the value is the ratio
+    select(-value) %>% #for this table the value is the ratio, which we don't want
     tidyr::pivot_longer(c(value.cur, value.ref), names_to = "scenario", values_to = "value")
   df$label <- paste0(formatC(df$value, format = "fg", 2))
   df$tooltip <- speciesinfo[df$species, "shortstory"]
@@ -194,26 +191,13 @@ plot_ly_youtside_adj <- function(df){
   plt <- plot_ly() %>%
     add_trace_colorbarsbyvalue(data = df %>% dplyr::filter(scenario == "value.cur"), pal = pal) %>%
     style(
-          #hoverinfo = TRUE, #formats the tooltips overridden by hovertemplate
-          hoverlabel = list(bgcolor = "white",
-                            font = list(color = "black",
-                                        size = 12)),
-          hovertemplate = paste('S2: %{hovertext}<extra></extra>')
+          hovertemplate = paste('S2: %{hovertext}<extra></extra>') #overrides hoverinfo = FALSE
     ) %>% 
     add_trace_colorbarsbyvalue(data = df %>% dplyr::filter(scenario == "value.ref"), pal = pal) %>%
-    style( traces = 2,
-              # width = 0.2,
-              # type = "bar",  #make a bar plot
-              # y = ~species,
-              # x = ~value,
-              marker.line.width = 2, #shortcut updates
-              marker.color = "#FFFFFF",
-              showlegend = FALSE,
-          hoverinfo = TRUE, #formats the tooltips
-          hovertext = ~label, #from provided data
-          hoverlabel = list(bgcolor = "white",
-                            font = list(color = "black",
-                                        size = 12)),
+    style(traces = 2,
+          marker.line.width = 2, #shortcut updates
+          marker.color = "#FFFFFF",
+          showlegend = FALSE,
           hovertemplate = paste('S1: %{hovertext}<extra></extra>')
     )
 
@@ -230,7 +214,7 @@ plot_ly_youtside_adj <- function(df){
 fixed_layout <- function(p){
   p %>%
   plotly::layout(xaxis = list(visible = FALSE, fixedrange = TRUE),
-                 yaxis = list(fixedrange = TRUE),
+                 yaxis = list(fixedrange = TRUE, type = "category"),
                  dragmode = FALSE,
                  margin = list(l = 0, r = 0, t = 0, b = 0)) %>%
     hide_colorbar()  %>%

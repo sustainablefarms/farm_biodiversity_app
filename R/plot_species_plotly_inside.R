@@ -14,6 +14,9 @@ add_trace_colorbarsbyvalue <- function(p, data, pal = defaultpal(data$value)){
               text = ~species,
               textposition = "none", #turns off text display
               hovertext = ~label, #from provided data
+              hoverlabel = list(bgcolor = "white",
+                                font = list(color = "black",
+                                            size = 12)),
               hoverinfo = "none" #but turn hovering off by default
     )
   return(plt)
@@ -41,7 +44,8 @@ plot_ly_yinside <- function(df){
   )
 
   plt %>%
+    fixed_layout() %>%
     plotly::layout(
-      yaxis = list(visible = FALSE, type = "category")
+      yaxis = list(visible = FALSE)
     )
 }
