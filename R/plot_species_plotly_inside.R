@@ -1,18 +1,15 @@
 # create plotly plot of bars of the 'value' column. Coloured by the 'value' column too.
-plot_ly_colorbarsbyvalue <- function(df){
-  df$pattern_shape <- dplyr::case_when(
-    df$value >= 0 ~ "",
-    TRUE ~ "x")
-  pal <- scales::col_numeric(c(appcolors[["Green 10"]], appcolors[["Dark Green"]]),
-                             domain = df$value)
-  plt <- plot_ly() %>% #initiate plot
-    add_trace(data = df,
+add_trace_colorbarsbyvalue <- function(p, data, pal = defaultpal(data$value)){
+  if (!("pattern_shape" %in% names(data))){data$pattern_shape <- ""}
+  plt <- p %>% #initiate plot
+    add_trace(data = data,
               type = "bar",  #make a bar plot
               y = ~species,
               x = ~value,
               marker = list(color = ~pal(value),
                             pattern = list(shape = ~pattern_shape,
-                                           fillmode = "overlay")),
+                                           fillmode = "overlay"),
+                            line = list(color = ~pal(value))),
               showlegend = FALSE,
               text = ~species,
               textposition = "none", #turns off text display
@@ -22,6 +19,12 @@ plot_ly_colorbarsbyvalue <- function(df){
   return(plt)
 }
 
+defaultpal <- function(value){
+  pal <- scales::col_numeric(c(appcolors[["Green 10"]], appcolors[["Dark Green"]]),
+                             domain = value)
+  return(pal)
+}
+
 plot_ly_yinside <- function(df){
   textcolcut <- mean(range(df$value))
   palopp <- function(values){
@@ -29,7 +32,8 @@ plot_ly_yinside <- function(df){
     cols[values < textcolcut] <- appcolors[["Dark Green"]]
     return(cols)
   }
-  plt <- plot_ly_colorbarsbyvalue(df) %>%
+  plt <- plot_ly() %>%
+    add_trace_colorbarsbyvalue(df) %>%
   style(
               textposition = "inside",
               insidetextanchor = "start",

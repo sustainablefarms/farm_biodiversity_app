@@ -30,6 +30,7 @@ allrel_plot_Server <- function(id,
         # req(data$species_prob_current)
         rootplt <- reactive({
           validate(need(spec_different(), label = ""))
+          # all_rel(spec_different())
           plot_ly_youtside_adj(spec_different())
         })
         

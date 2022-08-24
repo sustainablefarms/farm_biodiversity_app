@@ -2,9 +2,13 @@ plot_ly_youtside <- function(df, log2 = FALSE){
   df$tooltip <- speciesinfo[df$species, "shortstory"]
   if (log2){
     df$value <- log2(df$value)
+    df$pattern_shape <- dplyr::case_when(
+      df$value >= 0 ~ "",
+      TRUE ~ "x")
   }
   
-  plt <- plot_ly_colorbarsbyvalue(df)
+  plt <- plot_ly() %>%
+    add_trace_colorbarsbyvalue(df)
   plt %>%
     plotly::layout(
       yaxis = list(title = "", visible = TRUE, type = "category",
@@ -186,12 +190,9 @@ plot_ly_youtside_adj <- function(df){
     tidyr::pivot_longer(c(value.cur, value.ref), names_to = "scenario", values_to = "value")
   df$label <- paste0(formatC(df$value, format = "fg", 2))
   df$tooltip <- speciesinfo[df$species, "shortstory"]
-  pal <- scales::col_numeric(c(appcolors[["Green 10"]], appcolors[["Dark Green"]]),
-                             domain = df$value)
-  df$pattern_shape <- dplyr::case_when(
-    df$scenario == "value.cur" ~ "",
-    TRUE ~ "x")
-  plt <- plot_ly_colorbarsbyvalue(df %>% dplyr::filter(scenario == "value.cur")) %>%
+  pal <- defaultpal(df$value)
+  plt <- plot_ly() %>%
+    add_trace_colorbarsbyvalue(data = df %>% dplyr::filter(scenario == "value.cur"), pal = pal) %>%
     style(
           #hoverinfo = TRUE, #formats the tooltips overridden by hovertemplate
           hoverlabel = list(bgcolor = "white",
@@ -199,14 +200,14 @@ plot_ly_youtside_adj <- function(df){
                                         size = 12)),
           hovertemplate = paste('S2: %{hovertext}<extra></extra>')
     ) %>% 
-    add_trace(data = df %>% dplyr::filter(scenario == "value.ref"),
-              width = 0.2,
-              type = "bar",  #make a bar plot
-              y = ~species,
-              x = ~value,
-              marker = list(line = list(color = ~pal(value),
-                                        width = 2),
-                            color = "#FFFFFF"),
+    add_trace_colorbarsbyvalue(data = df %>% dplyr::filter(scenario == "value.ref"), pal = pal) %>%
+    style( traces = 2,
+              # width = 0.2,
+              # type = "bar",  #make a bar plot
+              # y = ~species,
+              # x = ~value,
+              marker.line.width = 2, #shortcut updates
+              marker.color = "#FFFFFF",
               showlegend = FALSE,
           hoverinfo = TRUE, #formats the tooltips
           hovertext = ~label, #from provided data
