@@ -188,12 +188,6 @@ plot_ly_youtside_adj <- function(df){
   df$tooltip <- speciesinfo[df$species, "shortstory"]
   pal <- scales::col_numeric(c(appcolors[["Green 10"]], appcolors[["Dark Green"]]),
                              domain = df$value)
-  textcolcut <- mean(range(df$value))
-  palopp <- function(values){
-    cols <- rep("#FFFFFF", length(value))
-    cols[values < textcolcut] <- appcolors[["Dark Green"]]
-    return(cols)
-  }
   df$pattern_shape <- dplyr::case_when(
     df$scenario == "value.cur" ~ "",
     TRUE ~ "x")

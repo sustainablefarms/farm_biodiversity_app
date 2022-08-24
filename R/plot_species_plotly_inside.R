@@ -5,8 +5,9 @@ plot_ly_colorbarsbyvalue <- function(df){
     TRUE ~ "x")
   pal <- scales::col_numeric(c(appcolors[["Green 10"]], appcolors[["Dark Green"]]),
                              domain = df$value)
-  plt <- plot_ly(data = df) %>% #initiate plot
-    add_trace(type = "bar",  #make a bar plot
+  plt <- plot_ly() %>% #initiate plot
+    add_trace(data = df,
+              type = "bar",  #make a bar plot
               y = ~species,
               x = ~value,
               marker = list(color = ~pal(value),
