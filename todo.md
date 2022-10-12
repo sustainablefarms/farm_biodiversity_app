@@ -16,6 +16,7 @@ output:
 + stop using devtools::load_all()
 + populate a readme that makes more sense
 + redirection pages for birdchecker - check if anyone is using birdchecker first
++ turn off resetting scenario 2 when going back then forward - something about the web browser automatically selects the radio buttons :(.
 
 + After selecting a location without saving it, then restarting, there is an error in the zoom of the region and the leaflet map
   + seems like the error is associated with 'output$S1in-loc-map'
