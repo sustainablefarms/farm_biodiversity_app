@@ -5,6 +5,7 @@ output:
 ---
 
 # High Priority
++ errors need to say please "select and CONFIRM"" region etc.
 + check that Ngambri Ngunnawal acknowledged
 + update version number and date
 + better relative plots
