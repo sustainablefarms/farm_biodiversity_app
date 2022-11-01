@@ -5,6 +5,18 @@ test_that("WCF buffers can be fetched using latitude and longitude", {
   expect_equal(wcfs$`3000m`, 1.04, tol = 0.01)
 })
 
+test_that("POST file request works", {
+  json <- readLines("./tests/testthat/demojson.txt")[[1]]
+  returned <- httr::POST(
+    url = "https://australia-southeast1-wald-1526877012527.cloudfunctions.net/tree-change-drill",
+    body = json
+  )  
+  values_allyears <- httr::content(returned, type = "text/csv", encoding = "UTF-8",
+                                   col_names = c("Year", "WCF"), col_types = "id") # the server sends back all years
+  expect_equal(values_allyears[values_allyears$Year == 2018, "WCF", drop = TRUE],
+               1.04, tol = 0.01)
+})
+
 test_that("WCF buffers for 2020 are not strangely large", {
   point <- sf::st_point(x = c(146.3333, -34.3333), dim = "XY")
   pointwcrs <- sf::st_sf(sf::st_sfc(point, crs = 4326))
@@ -34,4 +46,5 @@ test_that("WCF buffers for 2020 are strangely large from THREDDS", {
   within3000m_baseline <- mean(within3000m$WCF[within3000m$Year != 2020])
   within3000m_baseline_sd <- sd(within3000m$WCF[within3000m$Year != 2020])
   expect_gt(abs(within3000m$WCF[within3000m$Year == 2020] - within3000m_baseline), 2 * within3000m_baseline_sd)
-  })
+  })  
+  
