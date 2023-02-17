@@ -5,15 +5,12 @@ output:
 ---
 
 # High Priority
-+ one the steps said estimate the occupancy of 60 birds - sounds like 60 birds predicted to live in the patch
-+ include a date for the version in the about page
 + be consistent with warnings - choose notifications in the bottom right or otherwise - need to change this around the loading of woody cover
 + error: Error in <Anonymous>: arguments imply differing number of rows: 0, 1
   + in newXocc_fromselecteda
 + error: Warning: Error in [.data.frame: undefined columns selected
   + also in newXocc_fromselected
 + representative year
-+ misleading words 'estimated occupancy for 60 birds'
 + look for any regions of poor residuals or LVs
 + add coppiced regrowth (or remove from data set), planting age to model
 + LV/residuals based on sa2 region

@@ -11,7 +11,7 @@ predictionsUI <- function(id, refisaverage = TRUE){
                       tagList(
                       tags$h1("Bird Diversity"),
                       tags$h3("Step 2: Results of Scenario 1"),
-                      tags$p("We've estimated occupancy for sixty species of birds the woodland on your farm",
+                      tags$p("We've estimated occupancy probability for sixty species of birds the woodland on your farm",
                              "based on the information you provided in step 1.")
                       )
                     } else {
