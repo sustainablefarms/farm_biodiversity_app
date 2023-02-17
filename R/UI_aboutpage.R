@@ -73,6 +73,8 @@ tags$p(appname, "was created using", linknewtab(href = "https://cran.r-project.o
        linknewtab(href = "https://ggplot2.tidyverse.org/", "Wickham,"),
        linknewtab(href = "https://bookdown.org/yihui/rmarkdown-cookbook", "Xie et al.,"),
        linknewtab(href = "https://CRAN.R-project.org/package=leaflet", "Cheng et al.)"),
+       ".",
+       "This is version", appversion, "of Sustainable Farm's", paste0(appname, ".")
        ),
   
   tags$h3("Further information", style = paste("color:", appcolors[["Dark Green"]], ";")),

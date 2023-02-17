@@ -40,7 +40,7 @@ tags$div(
     class = "container-md justify-content-center",
     tags$p(style="text-align: center;",
 	   class="bodyusual",
-	   "Please watch the video below for instructions on navigating and using", paste0(appname, "."),
+	   "Please watch the video below for instructions on navigating and using", paste0(appname, ":"),
 	   "Go to the About page for a summary of", paste0(appname, ".")), 
     tags$iframe(title = "Instructional video",
 		src = "https://player.vimeo.com/video/651423729?h=303aec19d3",
@@ -97,10 +97,10 @@ tags$div(
 	  "occasionally new versions of", appname, "will invalidate previously saved urls."),
 
   tags$h3("Referencing", appname, style = paste("color:", appcolors[["Dark Green"]], ";")),
-  tags$p("We have a publication planned. Until then please reference", appname, "as:",
-  tags$br(),
-  "Sustainable Farms, ", tags$em(paste0(appname, ",")), "version", paste0(appversion, ","), appurl, "",
-  "Accessed", format(Sys.time(), format = "%d %B %Y.", tz="Australia/NSW")),
+  tags$p("The journal article below describes", paste0(appname, ","),
+         "so please reference it when referencing", paste0(appname, ".")),
+  tags$p("Hingee, K.L., Lindenmayer, D.B., Florance, D. and Siegrist, A. (2022), A bird occupancy estimator for land practitioners in the NSW South Western Slopes bioregion. Ecol Manag Restor, 23: 184-193.",
+     linknewtab(href = "https://doi.org/10.1111/emr.12556", "https://doi.org/10.1111/emr.12556")),
 
   tags$h3("Questions and Bugs", style = paste("color:", appcolors[["Dark Green"]], ";")),
   tags$p("We have answered selected questions on the FAQ page.",
