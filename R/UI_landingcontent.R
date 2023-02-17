@@ -66,6 +66,7 @@ footercontent <- function(id = NULL){
 elevatorpitch <- function(){
 tagList(
 tags$p(
+  "Sustainable Farm's",
   appname,
   "is a scenario planning tool for biodiversity on farms.",
   "Using decades of data on more than sixty birds,", appname,
