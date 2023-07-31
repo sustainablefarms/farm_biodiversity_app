@@ -47,11 +47,11 @@ canopyfromlatlon <- function(lon, lat, year){
   point <- sf::st_point(x = c(lon, lat), dim = "XY")
   pointwcrs <- sf::st_sf(sf::st_sfc(point, crs = 4326))
  
-  within500m <- cloudget(pointwcrs, 500) %>% extractayear(year)
-  within3000m <- cloudget(pointwcrs, 3000) %>% extractayear(year)
+  within500m <- threddsget(pointwcrs, 500, year)
+  within3000m <- threddsget(pointwcrs, 3000, year)
   # threddsget(pointwcrs, 500, 2018:2019) #errors currently!
 
-  out <- c(within500m, within3000m) 
+  out <- data.frame(within500m, within3000m) 
   names(out) <- c("500m", "3000m")
   if (any(out == -9999)){stop(simpleError("Data is missing for this location."))}
   return(out)
@@ -83,6 +83,7 @@ threddsget <- function(pointwcrs, bufferdist, years){ # errors currently - produ
   pointAA <- sf::st_transform(pointwcrs, 3577) #to GDA94 / Aust Albers so that buffers in metres make sense
   buf <- sf::st_buffer(pointAA, dist = (bufferdist + 50) * 1.3)
   
+  browser()
   wcf <- sflddata::woody_vals_buffer(buf, pointAA, years, bufferdist)
   return(wcf)
 }
