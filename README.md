@@ -30,6 +30,8 @@ Note that installing many R packages in one go can often have issues. This seems
 
 ### Deploy the App to shinyapps.io
 
+*A common source of my errors is forgetting to include new files in `./data/filemanifest.txt` which means they don't get uploaded to `shinyapps.io`.*
+
 1. Install 'msod'. There is one package 'msod', not listed in the DESCRIPTION file as a dependency. This is because it is only on github. It must be installed using `remotes::install_github()`, and for compatibility a particular git commit must be used. This allows `rsconnect` to correctly determine where to get it from when loading the app on shinyapps.io . To install 'msod' run the following:
 
 ```
@@ -59,6 +61,9 @@ The broad reactive flow of the whole app is:
 location selected -> rainfall selected/update + patch attributes -> list of values (cval) -> predictions
 
 ## Files and Directories
+
+*A common source of my errors is forgetting to include new files in `./data/filemanifest.txt` which means they don't get uploaded to `shinyapps.io`.*
+
 Files in the root directory:
  + app.R contains the call to run the main app
  + DESCRIPTION a file that describes the repository as if it is an R package. This is useful for `rsconnect` and deploying the shinyapps.io

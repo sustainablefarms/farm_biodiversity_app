@@ -16,6 +16,7 @@ NAMESPACE
 ./data/consstatus.rds
 ./data/model_data.rds
 ./data/traits.rds
+./data/austilecodes.txt
 ./R/_disable_autoload.R
 ./R/main.R
 ./R/module_allspec_plot.R
@@ -69,6 +70,8 @@ NAMESPACE
 ./R/UI_userguide.R
 ./R/UI_warn_badinputs.R
 ./R/UI_WCFdesc.R
+./R/readWCFstyleNetCDF.R
+./R/serverhelp_woodycoverbricks.R
 ./www/hingee2022_title.png
 ./www/lowres-01bfcebc08515ff6510277eeacee6e31.jpg
 ./www/lowres-073b8b49ba4ddf30d92e2a8ba78ec2f2.jpg
