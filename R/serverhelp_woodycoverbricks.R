@@ -70,10 +70,8 @@ tilereader_WCF <- function(filename){
 #' The projection of the returned raster is EPSG:3577, which is GDA94.
 #'  Extent of the returned value is a rectangle, and pixel values outside `spobj` are included.
 fetch_brick_Albers <- function(spobj, years, get_tile_filenames = get_bggwtile_filenames, tilereader = bggwtilereader){
-  if (!any(grepl("Spatial.*", class(spobj)))){
-    spobj <- sf::as_Spatial(spobj)
-  }
-  spobj <- sp::spTransform(spobj, sp::CRS("+init=epsg:3577"))
+  spobj <- sf::st_as_sf(spobj)
+  spobj <- sf::st_transform(spobj, crs = 3577)
   roi <- raster::extent(spobj)
   
   #tile codes:
@@ -116,12 +114,13 @@ fetch_brick_Albers <- function(spobj, years, get_tile_filenames = get_bggwtile_f
 
 #' @title Intersecting Albers Australian Tile Codes
 #' @description Given a spatial object returns the tile codes for Albers Tiles used by Geoscience Australia and others
-#' @param spobj an sp object
+#' @param sfobj an sp object
 #' @return a named vector of tile codes
 #' @export
-get_tilecodes <- function(spobj){
-  spobj <- sp::spTransform(spobj, sp::CRS("+init=epsg:3577")) #transform to the correct projection
-  roi <- raster::extent(spobj)
+get_tilecodes <- function(sfobj){
+  sfobj <- sf::st_as_sf(sfobj)
+  sfobj <- sf::st_transform(sfobj, 3577) #transform to the correct projection
+  roi <- raster::extent(sfobj)
   
   tilestep <- 100000
   lxmin <- floor(roi@xmin / tilestep) * tilestep #lowest xmin
