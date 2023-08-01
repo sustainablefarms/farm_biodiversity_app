@@ -19,11 +19,10 @@ fetch_woody_cover_meanbuffer <- function(pts, years, buffers){
   # do special thing to particular values
   woody_b[woody_b == 157] <- 0
   woody_b[woody_b > 100] <- NA # I don't know what the other values above 100 mean, and if there are any
-  
   wcfproportions_l <- lapply(buffers, function(buff){
-    out <- raster::extract(woody_b, pts_sp, buffer = buff,
+    out <- terra::extract(woody_b, sf::st_buffer(pts_3577, buff), 
                            fun = mean,
-                           small = TRUE, na.rm = TRUE, df = TRUE)
+                           touches = FALSE, na.rm = TRUE, raw = FALSE)
     cbind(buffer = buff, out[, -1, drop = TRUE]) #-1 removes the ID column
   })
   names(wcfproportions_l) <- buffers
@@ -72,7 +71,7 @@ tilereader_WCF <- function(filename){
 fetch_brick_Albers <- function(spobj, years, get_tile_filenames = get_bggwtile_filenames, tilereader = bggwtilereader){
   spobj <- sf::st_as_sf(spobj)
   spobj <- sf::st_transform(spobj, crs = 3577)
-  roi <- raster::extent(spobj)
+  roi <- terra::ext(spobj)
   
   #tile codes:
   tilecodes <- get_tilecodes(spobj)
@@ -91,22 +90,22 @@ fetch_brick_Albers <- function(spobj, years, get_tile_filenames = get_bggwtile_f
     r.l <- lapply(filelist, tilereader)
     
     names(r.l) <- years
-    r.l_crop <- lapply(r.l, raster::crop, y = roi, snap = "out")
+    r.l_crop <- lapply(r.l, terra::crop, y = roi, snap = "out")
     
     # warning: I think the following bricks get saved to rasterOptions()$tmpdir when RAM runs out
-    bs <- raster::brick(r.l_crop)
+    bs <- terra::rast(r.l_crop)
     names(bs) <- years
     return(bs)}
   b.l <- lapply(tilecodes, brickfortile) 
   
   # merge bricks
-  b <- Reduce(raster::merge, b.l)
+  b <- Reduce(terra::merge, b.l)
   names(b) <- years
-  sp::proj4string(b) <- sp::CRS("+init=epsg:3577")
+  terra::crs(b) <- "epsg:3577"
   
   # if missing tiles, extend raster with zero values
   if (length(missingtiles) > 0){
-    b <- raster::extend(b, roi, value = NA, snap = "out")    
+    b <- terra::extend(b, roi, fill = NA, snap = "out")    
   }
   return(b)
 }
@@ -120,14 +119,14 @@ fetch_brick_Albers <- function(spobj, years, get_tile_filenames = get_bggwtile_f
 get_tilecodes <- function(sfobj){
   sfobj <- sf::st_as_sf(sfobj)
   sfobj <- sf::st_transform(sfobj, 3577) #transform to the correct projection
-  roi <- raster::extent(sfobj)
+  roi <- sf::st_bbox(sfobj)
   
   tilestep <- 100000
-  lxmin <- floor(roi@xmin / tilestep) * tilestep #lowest xmin
-  xmins <- seq(lxmin, -1 + ceiling(roi@xmax / tilestep) * tilestep,
+  lxmin <- floor(roi$xmin / tilestep) * tilestep #lowest xmin
+  xmins <- seq(lxmin, -1 + ceiling(roi$xmax / tilestep) * tilestep,
                by = tilestep)
-  lymin <- floor(roi@ymin / tilestep) * tilestep #lowest ymin
-  ymins <- seq(lymin, -1 + ceiling(roi@ymax / tilestep) * tilestep,
+  lymin <- floor(roi$ymin / tilestep) * tilestep #lowest ymin
+  ymins <- seq(lymin, -1 + ceiling(roi$ymax / tilestep) * tilestep,
                by = tilestep)
   
   xmin_v_ymin <- expand.grid(xmin = xmins, ymin = ymins)

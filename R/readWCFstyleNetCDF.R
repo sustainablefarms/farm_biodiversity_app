@@ -55,10 +55,11 @@ raster_wcflike <- function(file, varname){
   
   # if xstep > 0 and ystep < 0 then printing the varvals matrix using regular method displays values as they are arranged geographically
   if ((xstep > 0) & (ystep < 0)){
-    ras <- raster::raster(varvals,
-         xmn = xstart, xmx = xstart + xstep * ncol(varvals),
-         ymn = ystart + ystep * nrow(varvals), ymx = ystart,
-         crs = emptysf_withcrs)
+    extobj <- terra::ext(xstart, xstart + xstep * ncol(varvals),
+               ystart + ystep * nrow(varvals), ystart)
+    ras <- terra::rast(varvals,
+                       extent = extobj,
+                       crs = sf::st_crs(emptysf_withcrs)$proj4string)
   } else {
     stop("Only implemented for xstep > 0 and ystep < 0")
   }
