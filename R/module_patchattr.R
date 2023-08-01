@@ -228,7 +228,7 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
         input$getwoodycanopy
         }) %>% debounce(5000) # to stop heaps of clicking doing things
       observeEvent(getwoodycanopy_d(), {
-        session$sendCustomMessage("getwoodycanopyfromlatlon", "nothing")
+        session$sendCustomMessage("getwoodycanopyfromlatlon", "nothing") # for google tracking
         latlonerror("")
         latlonerror_short("")
         wcfs <- tryCatch(
