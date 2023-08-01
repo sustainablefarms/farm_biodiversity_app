@@ -84,7 +84,7 @@ threddsget <- function(pointwcrs, bufferdist, years){ # errors currently - produ
   buf <- sf::st_buffer(pointAA, dist = (bufferdist + 50) * 1.3)
   
   browser()
-  wcf <- sflddata::woody_vals_buffer(buf, pointAA, years, bufferdist)
+  wcf <- woody_vals_buffer(buf, pointAA, years, bufferdist)
   return(wcf)
 }
 
