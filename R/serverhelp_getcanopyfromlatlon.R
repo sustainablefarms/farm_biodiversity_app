@@ -19,7 +19,7 @@ checkfinalwcfs <- function(wcfs){
 	 } else if (wcfs[[1]] < 2){
       specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m, which is too low for accurate estimates.", wcfs[[1]])
 	 } else if (wcfs[[2]] < 2){
-      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within within 3km, which is too low for accurate estimates.", wcfs[[2]])
+      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 3km, which is too low for accurate estimates.", wcfs[[2]])
 	 }
       }
       if (any(wcfs > 20) & all(wcfs >= 2)){
@@ -28,7 +28,7 @@ checkfinalwcfs <- function(wcfs){
 	 } else if (wcfs[[1]] > 20){
       specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m, which is too high for accurate estimates.", wcfs[[1]])
 	 } else if (wcfs[[2]] > 20){
-      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within within 3km, which is too high for accurate estimates.", wcfs[[2]])
+      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 3km, which is too high for accurate estimates.", wcfs[[2]])
 	 }
       }
       if (is.null(specwarn)){
