@@ -41,18 +41,17 @@ fetch_woody_cover_brick <- function(spobj, years, rootdir = "[fillmismatch]http:
 }
 
 get_tile_filenames_WCF <- function(tilecode, years, rootdir = NULL){
-  filelist <- sflddata:::build_filename_list(rootdir,
-                                  tilecode,
+  filelist <-               paste0(rootdir, "/",
+                                  tilecode, "/",
                                   paste0("fc_metrics_", tilecode, "_"),
-                                  years,
+                                  years, 
                                   # ".nc#fillmismatch", #this code at the end get around the data type and fill value mismatch errors
-                                  ".nc", 
-                                  namesep = "")
+                                  ".nc")
   return(filelist)
 }
 
 tilereader_WCF <- function(filename){
-  ras <- withCallingHandlers(sflddata:::raster_wcflike(filename, varname = "WCF"),
+  ras <- withCallingHandlers(raster_wcflike(filename, varname = "WCF"),
                              warning = function(w){
                                if (grepl("cannot process these parts of the CRS", w$message))
                                  tryInvokeRestart("muffleWarning") 

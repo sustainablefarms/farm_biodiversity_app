@@ -83,7 +83,6 @@ threddsget <- function(pointwcrs, bufferdist, years){ # errors currently - produ
   pointAA <- sf::st_transform(pointwcrs, 3577) #to GDA94 / Aust Albers so that buffers in metres make sense
   buf <- sf::st_buffer(pointAA, dist = (bufferdist + 50) * 1.3)
   
-  browser()
   wcf <- woody_vals_buffer(buf, pointAA, years, bufferdist)
   return(wcf)
 }
