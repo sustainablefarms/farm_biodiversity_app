@@ -50,6 +50,8 @@ rsconnect::deployApp(appName = "birdbio_dev4", appFileManifest = "./data/fileman
 
 If the app doesn't run as expected, logs kept by shinyapps.io can be accessed from the shinyapps.io (account dashboard)[https://www.shinyapps.io/admin/#/dashboard], these can help diagnose the problem when it isn't occurring when running the app offline.
 
+Note that a 2GB instance is required on shinyapps.io for the threddsget() method of obtaining woody cover fractions.
+
 Once the app is running correctly on shinyapps.io, deploy the app under the release name, which is currently 'BirdCast'.
 
 ```
