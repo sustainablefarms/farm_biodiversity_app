@@ -229,9 +229,9 @@ plot_allspeciesprob(cpred$spec_prob)
 \clearpage
 `r if (refisaverage){"# Occupancy probability relative to the average"}else{"# Occupancy probability relative to Scenario 1"}`
 Below shows the ratio of species occupancy probability to the occupancy probability in
-`r if (refisaverage){"an average woodland area."}else{"in Scenario 1."}`
+`r if (refisaverage){"an average woodland area."}else{"Scenario 1."}`
 Beneath is 
-`r if (refisaverage){"the properties of the average woodland area."}else{"is the Scenario 1 information."}`
+`r if (refisaverage){"the properties of the average woodland area."}else{"the Scenario 1 information."}`
 
 
 ```{r relativetomeansite, fig.height = 8, fig.width = 7}
@@ -263,7 +263,7 @@ knitr::kable(refpatchprops, digits = 3,
       format = "latex",
       booktabs = TRUE,
       row.names = TRUE,
-      col.names = paste("Patch", 1:ncol(refpatchprops)))
+      col.names = paste("Area", 1:ncol(refpatchprops)))
 plot_allspeciesprob(rpred$spec_prob) +
   ggtitle("Reference Occupancy Probability")
 ```
