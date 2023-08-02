@@ -231,11 +231,29 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
         session$sendCustomMessage("getwoodycanopyfromlatlon", "nothing") # for google tracking
         latlonerror("")
         latlonerror_short("")
+        wcfs <- tryCatch(
+          {
             lat <- parsechar(input$lat, "Latitude")
             lon <- parsechar(input$lon, "Longitude")
             year <- parsechar(input$yearforcanopy, "Year")
             wcfs <- canopyfromlatlon(lon,lat,year)
             checkfinalwcfs(wcfs)
+            wcfs
+          },
+          error = function(e) {
+	    if (grepl("(^Lat|Lon)", e$message)){
+              latlonerror_short("Please select a location")
+              latlonerror(e$message)
+	    } else if (grepl("^Year", e$message)){
+              latlonerror_short("Please choose a year")
+	      latlonerror("")
+	    }
+            pc_woody500m_latlon(NULL)
+            pc_woody3000m_latlon(NULL)
+            return(e)
+          },
+          warning = function(w) {latlonerror(w$message); return(wcfs)}
+        )            
         removeUI(paste0("#", ns("tickspinner")), immediate = TRUE, multiple = TRUE)
         if (!is.null(wcfs[["500m"]])){
               usedlon(lon); usedlat(lat); usedyear(year)
