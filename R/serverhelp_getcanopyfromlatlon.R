@@ -15,7 +15,7 @@ checkfinalwcfs <- function(wcfs){
       specwarn <- NULL
       if (any(wcfs < 2) & all(wcfs <= 20)){
          if (all(wcfs < 2)){
-      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m and %3.1f%% of the area within 3km. This are too low for accurate estimates.", wcfs[[1]], wcfs[[2]])
+      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m and %3.1f%% of the area within 3km. This is too low for accurate estimates.", wcfs[[1]], wcfs[[2]])
 	 } else if (wcfs[[1]] < 2){
       specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m, which is too low for accurate estimates.", wcfs[[1]])
 	 } else if (wcfs[[2]] < 2){
@@ -24,7 +24,7 @@ checkfinalwcfs <- function(wcfs){
       }
       if (any(wcfs > 20) & all(wcfs >= 2)){
          if (all(wcfs > 20)){
-      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m and %3.1f%% of the area within 3km. This are too high for accurate estimates.", wcfs[[1]], wcfs[[2]])
+      specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m and %3.1f%% of the area within 3km. This is too high for accurate estimates.", wcfs[[1]], wcfs[[2]])
 	 } else if (wcfs[[1]] > 20){
       specwarn <- sprintf("Woody vegetation canopy covered %3.1f%% of the area within 500m, which is too high for accurate estimates.", wcfs[[1]])
 	 } else if (wcfs[[2]] > 20){
