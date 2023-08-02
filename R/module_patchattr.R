@@ -252,10 +252,12 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
 	    }
             pc_woody500m_latlon(NULL)
             pc_woody3000m_latlon(NULL)
-            return(e)
+            return(data.frame(`500m` = 2, `3000m` = 2, check.names = FALSE))
           },
-          warning = function(w) {latlonerror(w$message); return(wcfs)}
-        )            
+          warning = function(w) {
+            latlonerror(w$message)
+            return(wcfs)}
+        )
         removeUI(paste0("#", ns("tickspinner")), immediate = TRUE, multiple = TRUE)
         if (!is.null(wcfs[["500m"]])){
               usedlon(lon); usedlat(lat); usedyear(year)

@@ -77,12 +77,13 @@ fetch_brick_Albers <- function(spobj, years, get_tile_filenames = get_bggwtile_f
   tilecodes <- get_tilecodes(spobj)
   austiles <- unlist(read.csv("./data/austilecodes.txt"))
   missingtiles <- setdiff(tilecodes, austiles)
+  tilecodes <- intersect(tilecodes, austiles)
+  if (length(tilecodes) == 0){stop("No data for this location.")}
   if (length(missingtiles) > 0){
     warning(paste("The following tiles are not available due to being outside of Australia mainland:",
                   paste(missingtiles, collapse = " "),
                   ". The returned raster will have NA values for locations in these tiles."))
   }
-  tilecodes <- intersect(tilecodes, austiles)
   
   #build brick for each tile
   brickfortile <- function(tilecode){
