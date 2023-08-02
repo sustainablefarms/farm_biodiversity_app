@@ -247,6 +247,8 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
 	    } else if (grepl("^Year", e$message)){
               latlonerror_short("Please choose a year")
 	      latlonerror("")
+	    } else {
+	      latlonerror(paste("Error: ", e$message))
 	    }
             pc_woody500m_latlon(NULL)
             pc_woody3000m_latlon(NULL)
