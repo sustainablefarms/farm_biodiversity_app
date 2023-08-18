@@ -77,7 +77,7 @@ twocolumns(heading = "Woody cover",
     "within the woodland area and in the surrounding landscape."),
     tags$p("Estimate woody cover in and around your woodland area by identifying its location on the map."),
     infotext("Zoom to your farm and click to place a pin on the map, or enter latitude and longitude."),
-    infotext("Select a representative year for your farm (between 1990 and 2019), click 'load woody cover,' then wait for vegetation cover amounts for this woodland area to appear."),
+    infotext("Select a representative year for your farm (between 1990 and 2019), then load woody vegetation cover amounts for this woodland area."),
   ),
   right = tagList(fluidRow(
       tags$h3("Select location"),

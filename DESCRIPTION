@@ -2,7 +2,7 @@ Type: Package
 Package: sfbiodiversityapp
 Title: An App Predicting Bird Biodiversit on Farms
 Version: 1.2
-Date: 2021-11-29
+Date: 2023-08-19
 Author: Kassel Liam Hingee
 Maintainer: Kassel Liam Hingee <kassel.hingee@anu.edu.au>
 Description: To be filled.
@@ -23,6 +23,7 @@ Imports:
     httr,
     sass,
     geojsonsf,
+    jsonlite,
     readr,
     shinyjs,
     waiter,

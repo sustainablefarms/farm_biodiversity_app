@@ -47,11 +47,11 @@ canopyfromlatlon <- function(lon, lat, year){
   point <- sf::st_point(x = c(lon, lat), dim = "XY")
   pointwcrs <- sf::st_sf(sf::st_sfc(point, crs = 4326))
  
-  within500m <- threddsget(pointwcrs, 500, year)
-  within3000m <- threddsget(pointwcrs, 3000, year)
+  within500m <- cloudget(pointwcrs, 500) %>% extractayear(year)
+  within3000m <- cloudget(pointwcrs, 3000) %>% extractayear(year)
   # threddsget(pointwcrs, 500, 2018:2019) #errors currently!
 
-  out <- data.frame(within500m, within3000m) 
+  out <- c(within500m, within3000m) 
   names(out) <- c("500m", "3000m")
   if (any(out == -9999)){stop(simpleError("Data is missing for this location."))}
   return(out)
@@ -64,7 +64,6 @@ cloudget <- function(pointwcrs, bufferdist){
   jsontxt <- geojsonsf::sf_geojson(buf, simplify = FALSE)
   
   # modify json to have info compatible to the server (this info is guessed from a request from Pablo)
-  
   jsonobj <- jsonlite::parse_json(jsontxt)
   jsonobj <- jsonobj[["features"]][1]
   names(jsonobj) <- "feature"
@@ -77,11 +76,6 @@ cloudget <- function(pointwcrs, bufferdist){
     output= "csv"
     )
   )
-  jsonobj$feature$properties <- NULL
-  
-  # jsonobj |> str(max.level = 3)
-  # jsonobj[[1]]$geometry$coordinates[[1]] <-
-  #   jsonobj[[1]]$geometry$coordinates[[1]][1:5]
   jsontxt <- jsonlite::toJSON(jsonobj, auto_unbox = TRUE)
   
   # send request to server
