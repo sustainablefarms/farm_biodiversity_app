@@ -61,21 +61,39 @@ cloudget <- function(pointwcrs, bufferdist){
   # compute the buffer polygon
   pointAA <- sf::st_transform(pointwcrs, 3577) #to GDA94 / Aust Albers so that buffers in metres make sense
   buf <- sf::st_transform(sf::st_buffer(pointAA, dist = bufferdist), crs = 4326)
-  json <- geojsonsf::sf_geojson(buf, simplify = FALSE)
+  jsontxt <- geojsonsf::sf_geojson(buf, simplify = FALSE)
   
   # modify json to have info compatible to the server (this info is guessed from a request from Pablo)
-  prefix <- "{\"layer_name\":\"wcf\",\"vector\":"
-  json <- gsub("{\"type\":\"FeatureCollection\",\"features\":[", prefix, as.character(json), fixed = TRUE)
-  json <- gsub("\\]\\}$", "}", json)
+  
+  jsonobj <- jsonlite::parse_json(jsontxt)
+  jsonobj <- jsonobj[["features"]][1]
+  names(jsonobj) <- "feature"
+  jsonobj <- c(jsonobj, 
+    list(
+    in_crs=  "epsg:4326",
+    out_crs = "epsg:3577",
+    resolution= -1,
+    expr= "mean:space(WCF.wcf)",
+    output= "csv"
+    )
+  )
+  jsonobj$feature$properties <- NULL
+  
+  # jsonobj |> str(max.level = 3)
+  # jsonobj[[1]]$geometry$coordinates[[1]] <-
+  #   jsonobj[[1]]$geometry$coordinates[[1]][1:5]
+  jsontxt <- jsonlite::toJSON(jsonobj, auto_unbox = TRUE)
   
   # send request to server
   returned <- httr::POST(
-    url = "https://australia-southeast1-wald-1526877012527.cloudfunctions.net/tree-change-drill",
-    body = json
+    url = "https://api.terrak.io/wcs",
+    body = jsontxt
   )
   values_allyears <- httr::content(returned, type = "text/csv", encoding = "UTF-8",
-                             col_names = c("Year", "WCF"), col_types = "id") # the server sends back all years
-  return(values_allyears)
+    col_types = "Dd") # the server sends back all years
+  colnames(values_allyears)[[2]] <- "WCF"
+  values_allyears$Year <- as.integer(format(values_allyears$time, "%Y"))
+  return(values_allyears[, c("Year", "WCF")])
 }
 
 threddsget <- function(pointwcrs, bufferdist, years){ # errors currently - produce NA values when should be good values!
