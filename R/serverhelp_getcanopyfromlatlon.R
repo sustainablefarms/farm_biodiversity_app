@@ -47,7 +47,8 @@ canopyfromlatlon <- function(lon, lat, year){
   point <- sf::st_point(x = c(lon, lat), dim = "XY")
   pointwcrs <- sf::st_sf(sf::st_sfc(point, crs = 4326))
 
-  if (file.exists("./data/wcfserver.txt"))
+  if (file.exists("./data/wcfserver.txt")) {
+    cat("Using wcfserver\n")
     within500m <- cloudget(pointwcrs, 500) %>% extractayear(year)
     within3000m <- cloudget(pointwcrs, 3000) %>% extractayear(year)
     out <- c(within500m, within3000m)
