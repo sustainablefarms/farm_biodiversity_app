@@ -1,11 +1,11 @@
 Type: Package
 Package: sfbiodiversityapp
-Title: An App Predicting Bird Biodiversit on Farms
-Version: 1.2
-Date: 2023-08-19
+Title: An App Predicting Bird Biodiversity on Farms
+Version: 1.3
+Date: 2023-08-22
 Author: Kassel Liam Hingee
 Maintainer: Kassel Liam Hingee <kassel.hingee@anu.edu.au>
-Description: To be filled.
+Description: An R shiny app for running a large multispecies statistical model for bird occupancy. See <https://doi.org/10.1111/emr.12556> for more detail. 
 License: GPL (>= 2)
 Depends:
     shiny (>= 1.7.1),

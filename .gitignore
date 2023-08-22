@@ -48,3 +48,6 @@ trash/
 farm_biodiversity_app.Rproj
 
 www/lowres-*
+
+data/wcfserver.txt
+
