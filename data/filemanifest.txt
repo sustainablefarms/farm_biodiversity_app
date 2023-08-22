@@ -17,6 +17,7 @@ NAMESPACE
 ./data/model_data.rds
 ./data/traits.rds
 ./data/austilecodes.txt
+./data/wcfserver.txt
 ./R/_disable_autoload.R
 ./R/main.R
 ./R/module_allspec_plot.R

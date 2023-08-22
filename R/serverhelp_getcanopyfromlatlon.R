@@ -46,12 +46,17 @@ canopyfromlatlon <- function(lon, lat, year){
   if (any(is.na(lat), is.na(lon), is.na(year))){return(NULL)}
   point <- sf::st_point(x = c(lon, lat), dim = "XY")
   pointwcrs <- sf::st_sf(sf::st_sfc(point, crs = 4326))
- 
-  within500m <- cloudget(pointwcrs, 500) %>% extractayear(year)
-  within3000m <- cloudget(pointwcrs, 3000) %>% extractayear(year)
-  # threddsget(pointwcrs, 500, 2018:2019) #errors currently!
 
-  out <- c(within500m, within3000m) 
+  if (file.exists("./data/wcfserver.txt"))
+    within500m <- cloudget(pointwcrs, 500) %>% extractayear(year)
+    within3000m <- cloudget(pointwcrs, 3000) %>% extractayear(year)
+    out <- c(within500m, within3000m)
+  } else {
+    within500m <- threddsget(pointwcrs, 500, year)
+    within3000m <- threddsget(pointwcrs, 3000, year)
+    out <- data.frame(within500m, within3000m)
+  }
+
   names(out) <- c("500m", "3000m")
   if (any(out == -9999)){stop(simpleError("Data is missing for this location."))}
   return(out)
@@ -80,7 +85,7 @@ cloudget <- function(pointwcrs, bufferdist){
   
   # send request to server
   returned <- httr::POST(
-    url = "https://api.terrak.io/wcs",
+    url = readLines("./data/wcfserver.txt"),
     body = jsontxt
   )
   values_allyears <- httr::content(returned, type = "text/csv", encoding = "UTF-8",
