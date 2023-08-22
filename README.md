@@ -14,7 +14,9 @@
 
 <!-- vim-markdown-toc -->
 ## Introduction
-This is the code repository for running the Sustainable Farms bird occupancy estimator web app. The web app is built using R shiny. It has a backend of R and a front-end based on Bootstrap 3. The app is deployed on shinyapps.io.
+This is the code repository for running the Sustainable Farms bird occupancy estimator web app. The web app is built using R shiny. It has a backend of R and a front-end based on Bootstrap 3. The app is deployed on shinyapps.io. 
+
+The url that is used by `cloudget()` to quickly get woody canopy cover is not included in the repository, without it the app will default to using the slower `threddsget()`. However if you want to, it seems highly likely that you can get access to the server by asking Pablo Rozas Larraondo.
 
 ## Running and Deploying the App
 ### Offline
@@ -50,7 +52,7 @@ rsconnect::deployApp(appName = "birdbio_dev4", appFileManifest = "./data/fileman
 
 If the app doesn't run as expected, logs kept by shinyapps.io can be accessed from the shinyapps.io (account dashboard)[https://www.shinyapps.io/admin/#/dashboard], these can help diagnose the problem when it isn't occurring when running the app offline.
 
-Note that a 2GB instance is required on shinyapps.io for the threddsget() method of obtaining woody cover fractions.
+Note that a 2GB instance is required on shinyapps.io for the `threddsget()` method of obtaining woody cover fractions.
 
 Once the app is running correctly on shinyapps.io, deploy the app under the release name, which is currently 'BirdCast'.
 
