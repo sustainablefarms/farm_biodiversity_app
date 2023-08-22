@@ -138,7 +138,6 @@ NAMESPACE
 ./www/lowres-ec55f568c55b42ef433328df89193d6b.jpg
 ./www/lowres-efb5d00d8483530f1140d59a5ca05027.jpg
 ./www/Sustainable Farms logo RGB.png
-./www/SF simple logo.svg
 ./www/SFsimple_title.svg
 ./www/ANU_Secondary_Horizontal_GoldBlack.svg
 ./www/speciestable.html
