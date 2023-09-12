@@ -66,7 +66,7 @@ canopyfromlatlon <- function(lon, lat, year){
 cloudget <- function(pointwcrs, bufferdist){
   # compute the buffer polygon
   pointAA <- sf::st_transform(pointwcrs, 3577) #to GDA94 / Aust Albers so that buffers in metres make sense
-  if (isTRUE(all.equal(sf::st_bbox(pointAA), sf::NA_bbox_, check.attributes = FALSE))){stop("Location is outside Australia")}
+  if (isTRUE(all.equal(sf::st_bbox(pointAA), sf::NA_bbox_, check.attributes = FALSE))){stop("Invalid coordinates.")}
   buf <- sf::st_transform(sf::st_buffer(pointAA, dist = bufferdist), crs = 4326)
   jsontxt <- geojsonsf::sf_geojson(buf, simplify = FALSE)
   
