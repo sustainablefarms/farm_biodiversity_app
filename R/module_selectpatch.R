@@ -83,12 +83,14 @@ app_selectpatch <- function(){
   enableBookmarking(store = "disable")
   
   shinyApp(
-    {fluidPage(
+    {bootstrapPage(
+      shinyjs::useShinyjs(),
       tags$head(tags$style(appcss),
-	      tags$link(href="https://fonts.googleapis.com/css?family=Poppins|Inter", rel="stylesheet"),
-              includeHTML("./www/extra.html"), #has the toggleexpand function
-	      ),
-      fluidRow(selectpatch_UI("patch")))
+                tags$link(href="https://fonts.googleapis.com/css?family=Poppins|Inter", rel="stylesheet"),
+                includeHTML("./www/extra.html"),
+      ),
+      fluidRow(selectpatch_UI("patch")),
+      theme = bslib::bs_theme(version = 5, "lumen"))
     },
     function(input, output, session){
       selected_region <- reactiveVal("")

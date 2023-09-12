@@ -59,13 +59,14 @@ canopyfromlatlon <- function(lon, lat, year){
   }
 
   names(out) <- c("500m", "3000m")
-  if (any(out == -9999)){stop(simpleError("Data is missing for this location."))}
+  if (any(is.na(out))){stop(simpleError("Data is missing for this location."))}
   return(out)
 }
 
 cloudget <- function(pointwcrs, bufferdist){
   # compute the buffer polygon
   pointAA <- sf::st_transform(pointwcrs, 3577) #to GDA94 / Aust Albers so that buffers in metres make sense
+  if (isTRUE(all.equal(sf::st_bbox(pointAA), sf::NA_bbox_, check.attributes = FALSE))){stop("Location is outside Australia")}
   buf <- sf::st_transform(sf::st_buffer(pointAA, dist = bufferdist), crs = 4326)
   jsontxt <- geojsonsf::sf_geojson(buf, simplify = FALSE)
   
@@ -89,6 +90,7 @@ cloudget <- function(pointwcrs, bufferdist){
     url = readLines("./data/wcfserver.txt"),
     body = jsontxt
   )
+  returned <- httr::stop_for_status(returned, task = "load woody cover")
   values_allyears <- httr::content(returned, type = "text/csv", encoding = "UTF-8",
     col_types = "Dd") # the server sends back all years
   colnames(values_allyears)[[2]] <- "WCF"

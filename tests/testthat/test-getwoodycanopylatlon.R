@@ -13,6 +13,13 @@ test_that("cloudget works", {
   expect_equal(within500m %>% extractayear(2018) %>% as.numeric(), 0.72, tol = 0.01)
 })
 
+test_that("cloudget fails nicely on flipped coords mistake", {
+  point <- sf::st_point(x = c(-35, 145), dim = "XY")
+  pointwcrs <- sf::st_sf(sf::st_sfc(point, crs = 4326))
+  
+  expect_error(within500m <- cloudget(pointwcrs, 500), "Australia")
+})
+
 test_that("cloudget and threddgets get same result for 2020", {
   point <- sf::st_point(x = c(146.3333, -34.3333), dim = "XY")
   pointwcrs <- sf::st_sf(sf::st_sfc(point, crs = 4326))

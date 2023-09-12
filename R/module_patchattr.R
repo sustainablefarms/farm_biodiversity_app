@@ -226,12 +226,12 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
                                style="width: 2rem; height: 2rem; position: absolute; color: #168BCB"),
                  immediate = TRUE)
         input$getwoodycanopy
-        }) %>% debounce(5000) # to stop heaps of clicking doing things
+        }) %>% debounce(2000) # to stop heaps of clicking doing things
       observeEvent(getwoodycanopy_d(), {
         session$sendCustomMessage("getwoodycanopyfromlatlon", "nothing") # for google tracking
         latlonerror("")
         latlonerror_short("")
-        wcfs <- tryCatch(
+        wcfs <- tryCatch( #finish with NULL WCF if there is an error - that will make tick turn to ban
           {
             lat <- parsechar(input$lat, "Latitude")
             lon <- parsechar(input$lon, "Longitude")
@@ -241,22 +241,20 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
             wcfs
           },
           error = function(e) {
-	    if (grepl("(^Lat|Lon)", e$message)){
+      	    if (grepl("(^Lat|Lon)", e$message)){
               latlonerror_short("Please select a location")
               latlonerror(e$message)
-	    } else if (grepl("^Year", e$message)){
+      	    } else if (grepl("Year", e$message)){
               latlonerror_short("Please choose a year")
-	      latlonerror("")
-	    } else {
-	      latlonerror(paste("Error: ", e$message))
-	    }
+      	      latlonerror(e$message)
+      	    } else {
+      	      latlonerror(paste("Error: ", e$message))
+      	    }
             pc_woody500m_latlon(NULL)
             pc_woody3000m_latlon(NULL)
-            return(data.frame(`500m` = 2, `3000m` = 2, check.names = FALSE))
+            return(NULL)
           },
-          warning = function(w) {
-            latlonerror(w$message)
-            return(wcfs)}
+          warning = function(w) {latlonerror(w$message); return(wcfs)}
         )
         removeUI(paste0("#", ns("tickspinner")), immediate = TRUE, multiple = TRUE)
         if (!is.null(wcfs[["500m"]])){
@@ -271,6 +269,13 @@ patchattr_Server <- function(id, pid, selector, presentindicator, bbox){
                 where = "afterBegin",
                 ui = tags$span(id = ns("tick"), 
                               icon("check-circle", style = "font-size: 2rem; color: #168BCB; position: absolute;"),
+                              style = "position: absolute;"),
+                immediate = TRUE)
+        } else {
+              insertUI(paste0("#", ns("tickplace")),
+                where = "afterBegin",
+                ui = tags$span(id = ns("tick"), 
+                              icon("ban", style = "font-size: 2rem; color: #FF0000; position: absolute;"),
                               style = "position: absolute;"),
                 immediate = TRUE)
         }
