@@ -5,6 +5,7 @@ output:
 ---
 
 # High Priority
++ Move to more modern `bslib` version. The package changes are large, so maybe use Claude Code to do it.
 + be consistent with warnings - choose notifications in the bottom right or otherwise - need to change this around the loading of woody cover
 + error: Error in <Anonymous>: arguments imply differing number of rows: 0, 1
   + in newXocc_fromselecteda

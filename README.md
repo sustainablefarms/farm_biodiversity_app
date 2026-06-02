@@ -16,7 +16,7 @@
 ## Introduction
 This is the code repository for running the Sustainable Farms bird occupancy estimator web app. The web app is built using R shiny. It has a backend of R and a front-end based on Bootstrap 3. The app is deployed on shinyapps.io. 
 
-The url that is used by `cloudget()` to quickly get woody canopy cover is not included in the repository, without it the app will default to using the slower `threddsget()`. However if you want to, it seems highly likely that you can get access to the server by asking Pablo Rozas Larraondo.
+The url that is used by `cloudget()` to quickly get woody canopy cover is not included in the repository (it is saved in an unversioned file called `./data/wcfserver.txt`), without it the app will default to using the slower `threddsget()`. However if you want to, it seems highly likely that you can get access to the server by asking Pablo Rozas Larraondo.
 
 ## Running and Deploying the App
 ### Offline
@@ -26,7 +26,13 @@ install.packages("remotes")
 remotes::install_github("https://github.com/sustainablefarms/msod", ref = "e22069c9cfd9e2c9e007396e97f0d2e22e088713")
 ```
 
-2. Open `app.R` in Rstudio. Press `Run App` in the top right of the 'app.R' screen. Rstudio will detect packages that need installation. Alternately, install R packages listed as dependencies in the DESCRIPTION file, then run shiny::runApp().
+2. Open `app.R` in Rstudio. Press `Run App` in the top right of the 'app.R' screen. If this button isn't shown, you can also run the whole `app.R` (e.g. by pressing 'Source'). Rstudio will detect packages that need installation. 
+
+Alternately, install R packages listed as dependencies in the DESCRIPTION file, then run shiny::runApp(). Currently version `0.3.1` of `bslib` is required due to large API changes in later versions of `bslib`; this version of `bslib` can be installed using:
+
+```
+remotes::install_version("bslib", version = "0.3.1")
+```
 
 Note that installing many R packages in one go can often have issues. This seems mostly due to the many packages required and the way R works. Keep trying though: getting things to install is usually an easy fix like restarting R, upgrading to a new version of R, and on Windows NOT installing CRAN packages from source.
 
