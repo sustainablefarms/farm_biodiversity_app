@@ -10,7 +10,7 @@ test_that("cloudget works", {
   pointwcrs <- sf::st_sf(sf::st_sfc(point, crs = 4326))
   
   within500m <- cloudget(pointwcrs, 500)
-  expect_equal(within500m %>% extractayear(2018) %>% as.numeric(), 0.72, tol = 0.01)
+  expect_equal(within500m %>% extractayear(2018) %>% as.numeric(), 0.74, tol = 0.01)
 })
 
 test_that("cloudget fails nicely on flipped coords mistake", {

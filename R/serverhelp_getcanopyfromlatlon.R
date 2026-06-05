@@ -87,7 +87,8 @@ cloudget <- function(pointwcrs, bufferdist){
   
   # send request to server
   returned <- httr::POST(
-    url = readLines("./data/wcfserver.txt"),
+    url = readLines("./data/wcfserver.txt")[1],
+    config = httr::add_headers(`x-api-key` = readLines("./data/wcfserver.txt")[2]),
     body = jsontxt
   )
   returned <- httr::stop_for_status(returned, task = "load woody cover")
