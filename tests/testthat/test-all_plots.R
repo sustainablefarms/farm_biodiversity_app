@@ -1,5 +1,5 @@
 # test that all plots can be built
-devtools::load_all()
+pkgload::load_all()
 library(msod)
 
 test_that("prediction plots for Gundagai and a single patch", {

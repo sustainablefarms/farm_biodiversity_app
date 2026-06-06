@@ -1,4 +1,4 @@
-devtools::load_all()
+pkgload::load_all()
 
 test_that("functonal diversity plot runs for single patch", {
   model_data <- load_model_data()

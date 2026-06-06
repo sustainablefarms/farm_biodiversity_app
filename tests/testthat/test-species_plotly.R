@@ -1,4 +1,4 @@
-devtools::load_all()
+pkgload::load_all()
 
 test_that("prediction plots for Gundagai and a single patch using plotly", {
   model_data <- load_model_data()
