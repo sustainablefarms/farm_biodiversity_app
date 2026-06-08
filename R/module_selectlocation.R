@@ -45,12 +45,16 @@ selectlocationUI <- function(id){
 	              style = "border-radius: 0;",
 	              style = "border-bottom-style: none; border-left-style:none; border-right-style: none;",
 	              style = paste("border-color: ", appcolors[["Dark Green"]], ";"),
-	              tags$div(class = "card-body d-flex justify-content-center", tags$div(
+	              tags$div(class = "card-body d-flex justify-content-center",
+	                       # text-center on this wrapper, not on the value's uiOutput:
+	                       # under the modern stack .shiny-html-output is display:contents
+	                       # (no box), so text-align on it is ignored and the value would
+	                       # otherwise fall back to the body's left alignment.
+	                       tags$div(class = "text-center",
 	                       tags$div(class = "bodysmall",
 			       style = paste("color:", appcolors[["Dark Green"]], ";"),
-	                       style = "text-align: center;",
 	                       HTML(name)),
-			       uiOutput(ns(uiid), style = "text-align: center;")
+			       uiOutput(ns(uiid))
 	              )))
 	     )
 	   },

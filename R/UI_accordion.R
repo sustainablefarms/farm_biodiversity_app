@@ -21,7 +21,11 @@ accordion <- function(id, ..., allstayopen = TRUE, opentype = "none") {
   }
   modded <- tagstructure$allTags()
   # modded <- gsub("#placeholderparentid", paste0("#", id), ...) #can't use gsub easily at it stuffs up the escaping
-  tags$div(class = "accordion-flush", id = id, modded)
+  # NB: the `accordion` class is required (alongside `accordion-flush`): Bootstrap
+  # 5.3 declares the --bs-accordion-* CSS variables (background, button chevron icon,
+  # body padding) on `.accordion`. Without it the item background falls back to
+  # transparent, the chevron disappears and the body padding is lost.
+  tags$div(class = "accordion accordion-flush", id = id, modded)
 }
 
 #' @param title Title of accordion item

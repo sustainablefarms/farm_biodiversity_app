@@ -4,7 +4,12 @@ carousel <- function(id,
                      slidecontents){
   nslides <- length(slidecontents)
   stopifnot(nslides >= 2)
-tags$div(id = id, class = "carousel carousel-dark slide", `data-bs-ride`="carousel", `data-bs-interval`="false",
+# No `data-bs-ride`: this is a manually navigated carousel (prev/next/indicators and
+# data-bs-slide-to from the thumbnails). Under Bootstrap 5.3, data-bs-ride="carousel"
+# autoplays when the modal becomes visible, so the carousel cycles through several
+# birds before settling on the selected slide. data-bs-interval="false" keeps it from
+# auto-advancing on any interaction.
+tags$div(id = id, class = "carousel carousel-dark slide", `data-bs-interval`="false",
   tags$div(class = "carousel-inner mb-2",
            tags$div(class = "carousel-item active",
 		    id = paste0(id,1),
