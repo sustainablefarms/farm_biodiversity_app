@@ -8,6 +8,7 @@
 * [Reactive Flow](#reactive-flow)
 * [Files and Directories](#files-and-directories)
 * [Testing](#testing)
+	* [Visual regression testing (modern container)](#visual-regression-testing-modern-container)
 * [Running Modules](#running-modules)
 * [Shiny Options](#shiny-options)
 * [Google Analytics Tracking](#google-analytics-tracking)
@@ -121,6 +122,28 @@ Snapshot testing using `shinytest` tests all the main feature of the app, and ho
 
 Take care with `predict_goulburn_1patch_moredetails.R` as the comparison of the downloaded pdf breaks the `shinytest` viewing functions. I've been getting away with looking at the .png snapshots in the corresponding expected and current directories.
 
+### Visual regression testing (modern container)
+`tests/visual/` is a separate harness used while modernising the package stack. It checks that the app still *looks* the same after upgrading R and the package versions. `capture.R` drives the app with `shinytest2` + headless Chrome through a fixed sequence of UI states (defined in `states.R`) and writes a screenshot per state to `tests/visual/out/<ENV_LABEL>/`. `compare.R` then pixel-diffs two such sets and fails any state that differs by more than a threshold. The frozen reference set captured in the September-2023 R 4.3.1 environment lives in `tests/visual/out/baseline-r431/`.
+
+Prerequisite: restore the package library from the renv cache, e.g.
+
+```
+RENV_PATHS_CACHE=/home/kassel/Rlib/renv-cache Rscript -e 'renv::restore(prompt = FALSE)'
+```
+
+To capture the modern screenshots and diff them against the baseline:
+
+```
+bash tests/visual/capture-modern.sh
+BASE_LABEL=baseline-r431 NEW_LABEL=modern Rscript tests/visual/compare.R
+```
+
+Running the harness in the modern container needs two workarounds, both handled for you by `capture-modern.sh` (they are *not* needed for the r431 baseline):
+
+* **Chrome won't start.** The bundled Chrome for Testing (`/opt/chrome-linux64/chrome`) crashes on every page load (exit 133): at startup it forks its crash-reporting helper `chrome_crashpad_handler` without the `--database` argument the helper requires, the helper exits, Chrome's socket to it resets, and Chrome traps — so `chromote` never gets a debug port ("Cannot find an available port"). `tests/visual/fix_chrome.sh` builds a working copy of Chrome whose handler injects the missing `--database`, and prints its path; `capture-modern.sh` points `CHROMOTE_CHROME` at it. (`chrome --version` works, but nothing that renders a page does, and no Chrome flag fixes it.)
+
+* **`shinytest2` escalates warnings to errors.** `shinytest2` forces `options(warn = 2)` for the whole run on dev-package apps (BirdCast is one, because `app.R` calls `pkgload::load_all(".")`). That turns the harmless informational `warning()` in `compute_richness()` (`R/serverhelp_compute_prediction_data.R`) into a fatal error, which kills the predictions reactive so the capture stalls and aborts at the predictions step. This is a harness artifact, not an app bug — run normally the warning is harmless. `app.R` sets `warn = 1` (see [Shiny Options](#shiny-options)) so the warning stays a warning.
+
 ## Running Modules 
 Most modules can be run stand alone with nearly all features intact (references for the predictions module is an exception). Functions for running these modules as a shiny app are in the same .R file as the other module functions. For example the predictionsdetail module can be run with the function below, which is in `module_predictionsdetail.R`
 
@@ -136,12 +159,12 @@ The main `app.R` file in the root directory contains some options for running sh
 options(
   shiny.launch.browser = FALSE,
   shiny.port = 7214,
-  shiny.testmode = FALSE
+  warn = 1
 )
 ```
 
 The first two options stops shiny from launching a browser window, and makes sure shiny always hosts pages visible to the port 7214.
-The option `shiny.testmode` is for testing purposes. Set to `TRUE` to get buttons that allows downloading covariate values and prediction values from the app (and maybe more things).
+`warn = 1` prints R warnings as they occur instead of batching them, and (importantly) stops them being treated as errors. It is here because the `shinytest2` visual-test harness forces `options(warn = 2)` on dev-package apps, which would turn a harmless warning in `compute_richness()` into a fatal error and break the predictions screen — see [Visual regression testing](#visual-regression-testing-modern-container). It has no effect on what the app renders.
 
 
 ## Google Analytics Tracking

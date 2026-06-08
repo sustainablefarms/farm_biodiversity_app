@@ -51,3 +51,11 @@ www/lowres-*
 
 data/wcfserver.txt
 
+# temporary symlink created by tests/testthat/setup.R (removed on teardown)
+tests/testthat/data
+
+# visual-regression harness: keep the committed baseline as ground truth,
+# ignore per-run captures (modern/...) and generated diff_* directories
+tests/visual/out/*
+!tests/visual/out/baseline-r431/
+

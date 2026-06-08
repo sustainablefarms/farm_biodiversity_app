@@ -8,30 +8,33 @@ Maintainer: Kassel Liam Hingee <kassel.hingee@anu.edu.au>
 Description: An R shiny app for running a large multispecies statistical model for bird occupancy. See <https://doi.org/10.1111/emr.12556> for more detail. 
 License: GPL (>= 2)
 Depends:
-    R (>= 4.3.1),
-    shiny (== 1.7.5),
-    rmarkdown (== 2.24),
-    ggplot2 (== 3.4.3),
-    plotly (== 4.10.2)
+    R (>= 4.4.0),
+    shiny (>= 1.7.5),
+    rmarkdown (>= 2.24),
+    ggplot2 (>= 3.4.3),
+    plotly (>= 4.10.2)
 Imports:
-    msod (== 0.0.2),
-    sf (== 1.0.14),
-    terra (== 1.7.46),
-    ncdf4 (== 1.21),
-    ggbeeswarm (== 0.7.2),
-    shinyWidgets (== 0.8.0),
-    htmlwidgets (== 1.6.2),
-    httr (== 1.4.7),
-    sass (== 0.4.7),
-    geojsonsf (== 2.0.3),
-    jsonlite (== 1.8.7),
-    readr (== 2.1.4),
-    shinyjs (== 2.1.0),
-    waiter (== 0.2.5),
-    bslib (== 0.3.1),
-    leaflet (== 2.2.0)
+    msod (>= 0.0.2),
+    sf (>= 1.0.14),
+    terra (>= 1.7.46),
+    ncdf4 (>= 1.21),
+    ggbeeswarm (>= 0.7.2),
+    shinyWidgets (>= 0.8.0),
+    htmlwidgets (>= 1.6.2),
+    httr (>= 1.4.7),
+    sass (>= 0.4.7),
+    geojsonsf (>= 2.0.3),
+    jsonlite (>= 1.8.7),
+    readr (>= 2.1.4),
+    shinyjs (>= 2.1.0),
+    waiter (>= 0.2.5),
+    bslib (>= 0.6.0),
+    leaflet (>= 2.2.0)
 Suggests:
-    testthat (== 3.1.10)
+    testthat (>= 3.1.10),
+    shinytest2 (>= 0.3.0),
+    chromote,
+    magick
 Encoding: UTF-8
 ByteCompile: true
 RoxygenNote: 7.1.1
