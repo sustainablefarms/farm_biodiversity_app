@@ -88,7 +88,7 @@ twocolumns(heading = "Woody cover",
       textInput(ns("lat"), "Latitude", value = attributes$usedlat, width = '100%',
                 placeholder = ""),
       selectInput(ns("yearforcanopy"), "Representative year",
-		  choices = c("", 2019:1990),
+		  choices = c("", 2025:1990),
 		  selected = if (isTruthy(attributes$usedyear)){attributes$usedyear}else{""}),
       tags$div(
 	style = "display: -webkit-inline-flex;",
