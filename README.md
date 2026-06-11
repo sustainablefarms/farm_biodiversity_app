@@ -54,8 +54,10 @@ See https://github.com/rstudio/rsconnect/issues/88 for more information on using
 Test that the app works on shinyapps.io by deploying to a development app name:
 
 ```
-rsconnect::deployApp(appName = "birdbio_dev4", appFileManifest = "./data/filemanifest.txt", logLevel = "verbose")
+rsconnect::deployApp(appName = "birdbio_dev4", appFileManifest = "./data/filemanifest.txt")
 ```
+
+Do **not** pass `logLevel = "verbose"` on the modern stack: it enables `rsconnect`'s per-request HTTP trace, which calls `httr2::resp_timing(resp)$total`. That assumes the old list-shaped `resp_timing()`; under the modernised `rsconnect` 1.8.0 / `httr2` 1.2.2 it returns a named atomic vector, so the deploy aborts with `Error in httr2::resp_timing(resp)$total : $ operator is invalid for atomic vectors`. The default `logLevel = "normal"` still prints deploy progress.
 
 If the app doesn't run as expected, logs kept by shinyapps.io can be accessed from the shinyapps.io (account dashboard)[https://www.shinyapps.io/admin/#/dashboard], these can help diagnose the problem when it isn't occurring when running the app offline.
 
